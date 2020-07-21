@@ -33,25 +33,25 @@
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/">
                             <i class="ni ni-planet"></i>
-                            <span class="nav-link-inner--text">Dashboard</span>
+                            <span class="nav-link-inner--text">게시판</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/register">
                             <i class="ni ni-circle-08"></i>
-                            <span class="nav-link-inner--text">Register</span>
+                            <span class="nav-link-inner--text">회원가입</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/login">
                             <i class="ni ni-key-25"></i>
-                            <span class="nav-link-inner--text">Login</span>
+                            <span class="nav-link-inner--text">로그인</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/profile">
                             <i class="ni ni-single-02"></i>
-                            <span class="nav-link-inner--text">Profile</span>
+                            <span class="nav-link-inner--text">프로필</span>
                         </router-link>
                     </li>
                 </ul>
@@ -63,9 +63,9 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <h1 class="text-white">Welcome!</h1>
-                            <p class="text-lead text-white">Use these awesome forms to login or create new account in
-                                your project for free.</p>
+                            <h1 class="text-white">환영합니다!</h1>
+                            <p class="text-lead text-white">SPOTs를 이용하기 위해 로그인해주세요. <br>
+                            계정이 없다면 회원가입 후 이용가능합니다.</p>
                         </div>
                     </div>
                 </div>
