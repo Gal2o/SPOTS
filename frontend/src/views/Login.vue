@@ -60,7 +60,11 @@
       return {
         model: {
           email: '',
-          password: ''
+          password: '',
+          error: {
+              email: false,
+              password: false,
+          },
         }
       }
     }
