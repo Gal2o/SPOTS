@@ -4,57 +4,59 @@
             <div class="card bg-secondary shadow border-0">
                 <div class="card-header bg-transparent pb-5">
                     <div class="text-muted text-center mt-2 mb-3">
-                        <small>Sign up with</small>
+                        <small>소셜 회원가입</small>
                     </div>
                     <div class="btn-wrapper text-center">
                         <a href="#" class="btn btn-neutral btn-icon">
-                            <span class="btn-inner--icon"><img src="img/icons/common/github.svg"></span>
-                            <span class="btn-inner--text">Github</span>
+                            <span class="btn-inner--icon"><img src="img/icons/common/kakao.svg"></span>
+                            <span class="btn-inner--text">카카오</span>
                         </a>
                         <a href="#" class="btn btn-neutral btn-icon">
                             <span class="btn-inner--icon"><img src="img/icons/common/google.svg"></span>
-                            <span class="btn-inner--text">Google</span>
+                            <span class="btn-inner--text">구글</span>
                         </a>
                     </div>
                 </div>
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                        <small>Or sign up with credentials</small>
+                        <small>회원가입을 위해 정보를 입력</small>
                     </div>
                     <form role="form">
 
                         <base-input class="input-group-alternative mb-3"
-                                    placeholder="Name"
+                                    placeholder="이름"
                                     addon-left-icon="ni ni-hat-3"
                                     v-model="model.name">
                         </base-input>
 
                         <base-input class="input-group-alternative mb-3"
-                                    placeholder="Email"
+                                    placeholder="이메일"
                                     addon-left-icon="ni ni-email-83"
                                     v-model="model.email">
                         </base-input>
 
                         <base-input class="input-group-alternative"
-                                    placeholder="Password"
+                                    placeholder="비밀번호"
                                     type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
                                     v-model="model.password">
                         </base-input>
-
-                        <div class="text-muted font-italic">
-                            <small>password strength: <span class="text-success font-weight-700">strong</span></small>
-                        </div>
+                        <base-input class="input-group-alternative"
+                                    placeholder="비밀번호 확인"
+                                    type="password"
+                                    addon-left-icon="ni ni-lock-circle-open"
+                                    v-model="model.passwordcheck">
+                        </base-input>
 
                         <div class="row my-4">
                             <div class="col-12">
                                 <base-checkbox class="custom-control-alternative">
-                                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                                    <span class="text-muted"><a href="#!">약관</a>에 동의합니다!</span>
                                 </base-checkbox>
                             </div>
                         </div>
                         <div class="text-center">
-                            <base-button type="primary" class="my-4">Create account</base-button>
+                            <base-button type="primary" class="my-4">계정 생성</base-button>
                         </div>
                     </form>
                 </div>
@@ -62,12 +64,12 @@
             <div class="row mt-3">
                 <div class="col-6">
                     <a href="#" class="text-light">
-                        <small>Forgot password?</small>
+                        <small>비밀번호를 잊으셨나요?</small>
                     </a>
                 </div>
                 <div class="col-6 text-right">
                     <router-link to="/login" class="text-light">
-                        <small>Login into your account</small>
+                        <small>로그인하러 가기</small>
                     </router-link>
                 </div>
             </div>
@@ -82,7 +84,8 @@
         model: {
           name: '',
           email: '',
-          password: ''
+          password: '',
+          passwordcheck: '',
         }
       }
     }
