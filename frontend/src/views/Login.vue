@@ -37,7 +37,7 @@
                                 <span class="text-muted">아이디를 기억합니다.</span>
                             </base-checkbox>
                             <div class="text-center">
-                                <base-button type="primary" class="my-4">로그인하기</base-button>
+                                <base-button type="primary" :disabled="!isSubmit" :class="{disabled : !isSubmit}" class="my-4">로그인하기</base-button>
                             </div>
                         </form>
                     </div>
@@ -61,13 +61,39 @@
         model: {
           email: '',
           password: '',
-          error: {
-              email: false,
-              password: false,
-          },
-        }
+        },
+        error: {
+            email: false,
+            password: false
+        },
+        isSubmit: false,
       }
-    }
+    },
+    watch: {
+        password: function(v) {
+            this.checkForm();
+        },
+        email: function(v) {
+            this.checkForm();
+        }
+    },
+    methods: {
+        checkForm() {
+            if (this.model.email.length >= 0 && (this.model.email.IndexOf("@") == -1 || this.model.email.IndexOf(".") == -1))
+                this.model.error.email = "이메일 형식이 아닙니다.";
+            else this.error.email = false;
+
+            if (this.model.password.length >= 0 && this.model.password.length < 8)
+                this.model.error.password = "비밀번호는 8자리 이상이어야합니다.";
+            else this.error.password = false;
+
+            let isSubmit = true;
+            Object.values(this.error).map(v => {
+                if (v) isSubmit = false
+            });
+            this.isSubmit = isSubmit;
+        },
+    },
   }
 </script>
 <style>

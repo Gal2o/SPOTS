@@ -119,7 +119,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/green.png',
+        default: 'img/brand/SPOTs/SPOTs_dark.JPG',
         description: 'Sidebar app logo'
       },
       autoClose: {

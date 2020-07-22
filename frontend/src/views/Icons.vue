@@ -68,7 +68,7 @@
                 <div class="col">
                     <div class="card shadow">
                         <div class="card-header bg-transparent">
-                            <h3 class="mb-0">Icons</h3>
+                            <h3 class="mb-0">아이콘</h3>
                         </div>
                         <div class="card-body">
                             <div class="row icon-examples">
