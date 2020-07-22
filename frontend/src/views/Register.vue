@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <base-button type="primary" class="my-4">계정 생성</base-button>
+                            <base-button type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
                         </div>
                     </form>
                 </div>
@@ -77,19 +77,33 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'register',
-    data() {
-      return {
-        model: {
-          name: '',
-          email: '',
-          password: '',
-          passwordcheck: '',
-        }
-      }
+import axios from 'axios'
+
+    export default {
+        name: 'register',
+        data() {
+            return {
+                model: {
+                    name: '',
+                    email: '',
+                    password: '',
+                    passwordcheck: '',
+                }
+            }
+        },
+        methods: {
+            signup() {
+                axios.post('rest-auth/signup/', this.model)
+                    .then(() => {
+                        this.$router.push({ name: 'login'})
+                    })
+                    .catch(err => {
+                        alert('회원가입을 다시 시도해주세요.');
+                        console.log(err);
+                    })
+            },
+        },
     }
-  }
 </script>
 <style>
 </style>
