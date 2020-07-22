@@ -1,101 +1,154 @@
 package com.spots.dto;
 
 public class UserInfo {
-	private String id;
-	private String pw;
-	private String name;
-	private String nickname;
+	private int uid;
 	private String email;
-	private String homepage;
-	private String address;
-	private String hobby;
-	private String isAdmin="0";
-	
+	private String password;
+	private String birthday;
+	private char skill;
+	private String position_uid;
+	private char ckMail;
+	private int win;
+	private int lose;
+	private int draw;
+	private int warning;
+	private int team_uid;
+
 	public UserInfo() {}
-	public UserInfo(String id, String pw, String name, String nickname, String email, String homepage, String address,
-			String hobby) {
-		super();
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
-		this.nickname = nickname;
-		this.email = email;
-		this.homepage = homepage;
-		this.address = address;
-		this.hobby = hobby;
-	}
-	public UserInfo(String id, String pw, String name, String nickname, String email, String homepage, String address,
-			String hobby, String isAdmin) {
-		super();
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
-		this.nickname = nickname;
-		this.email = email;
-		this.homepage = homepage;
-		this.address = address;
-		this.hobby = hobby;
-		this.isAdmin = isAdmin;
-	}
+
 	
-	public String getId() {
-		return id;
+	public UserInfo(String email, String password, String birthday, char skill, String position_uid) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.birthday = birthday;
+		this.skill = skill;
+		this.position_uid = position_uid;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	
+
+	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
+			char ckMail, int win, int lose, int draw, int warning, int team_uid) {
+		super();
+		this.uid = uid;
+		this.email = email;
+		this.password = password;
+		this.birthday = birthday;
+		this.skill = skill;
+		this.position_uid = position_uid;
+		this.ckMail = ckMail;
+		this.win = win;
+		this.lose = lose;
+		this.draw = draw;
+		this.warning = warning;
+		this.team_uid = team_uid;
 	}
-	public String getPw() {
-		return pw;
+
+
+	public int getUid() {
+		return uid;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getHomepage() {
-		return homepage;
+
+	public String getPassword() {
+		return password;
 	}
-	public void setHomepage(String homepage) {
-		this.homepage = homepage;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getAddress() {
-		return address;
+
+	public String getBirthday() {
+		return birthday;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
-	public String getHobby() {
-		return hobby;
+
+	public char getSkill() {
+		return skill;
 	}
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
+
+	public void setSkill(char skill) {
+		this.skill = skill;
 	}
-	public String getIsAdmin() {
-		return isAdmin;
+
+	public String getPosition_uid() {
+		return position_uid;
 	}
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
+
+	public void setPosition_uid(String position_uid) {
+		this.position_uid = position_uid;
 	}
-	
+
+	public char getCkMail() {
+		return ckMail;
+	}
+
+	public void setCkMail(char ckMail) {
+		this.ckMail = ckMail;
+	}
+
+	public int getWin() {
+		return win;
+	}
+
+	public void setWin(int win) {
+		this.win = win;
+	}
+
+	public int getLose() {
+		return lose;
+	}
+
+	public void setLose(int lose) {
+		this.lose = lose;
+	}
+
+	public int getDraw() {
+		return draw;
+	}
+
+	public void setDraw(int draw) {
+		this.draw = draw;
+	}
+
+	public int getWarning() {
+		return warning;
+	}
+
+	public void setWarning(int warning) {
+		this.warning = warning;
+	}
+
+	public int getTeam_uid() {
+		return team_uid;
+	}
+
+	public void setTeam_uid(int team_uid) {
+		this.team_uid = team_uid;
+	}
+
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + id + ", pw=" + pw + ", name=" + name + ", nickname=" + nickname + ", email=" + email
-				+ ", homepage=" + homepage + ", address=" + address + ", hobby=" + hobby + ", isAdmin=" + isAdmin + "]";
+		return "UserInfo [uid=" + uid + ", email=" + email + ", password=" + password + ", birthday=" + birthday
+				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", win=" + win
+				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid + "]";
 	}
+	
+	
+	
 }

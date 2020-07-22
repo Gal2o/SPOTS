@@ -1,9 +1,9 @@
 package com.spots.service;
 
-import com.ssafy.happyhouse.dto.UserInfo;
+import com.spots.dto.UserInfo;
 
 public interface LoginService {
 
-	public UserInfo login(String userid, String userpwd);
+	public UserInfo login(String email, String password);
 	
 }

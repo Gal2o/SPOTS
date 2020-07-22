@@ -3,8 +3,10 @@ package com.spots.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.happyhouse.dto.UserInfo;
-import com.ssafy.happyhouse.mapper.UserMapper;
+import com.spots.dto.UserInfo;
+import com.spots.mapper.UserMapper;
+
+
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -13,10 +15,10 @@ public class LoginServiceImpl implements LoginService {
 	UserMapper mapper;
 	
 	@Override
-	public UserInfo login(String userid, String userpwd){
-		if(userid == null || userpwd == null)
+	public UserInfo login(String email, String password){
+		if(email == null || password == null)
 			return null;
-		return mapper.login(userid, userpwd);
+		return mapper.login(email, password);
 	}
 	
 }
