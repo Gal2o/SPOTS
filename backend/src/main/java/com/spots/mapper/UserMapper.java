@@ -1,13 +1,11 @@
 package com.spots.mapper;
 
-import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.ssafy.happyhouse.dto.FavInfo;
-import com.ssafy.happyhouse.dto.UserInfo;
+import com.spots.dto.UserInfo;
+
 
 @Mapper
 public interface UserMapper {
@@ -18,7 +16,7 @@ public interface UserMapper {
 	 * @param id,pw // 아이디, 비밀번호 입력받음
 	 * @return UserInfo 리턴
 	 */
-	public UserInfo login(@Param("id") String id, @Param("pw") String pw);
+	public UserInfo login(@Param("email") String id, @Param("password") String password);
 
 	/**
 	 * 회원가입
@@ -27,7 +25,7 @@ public interface UserMapper {
 	 * @return 성공/실패
 	 */
 
-	public int signUp(UserInfo user);
+	//public int signUp(UserInfo user);
 
 	/**
 	 * 정보수정
@@ -36,7 +34,7 @@ public interface UserMapper {
 	 * @return 성공/실패
 	 */
 
-	public int modify(UserInfo user);
+	//public int modify(UserInfo user);
 
 	/**
 	 * 정보삭제
@@ -46,7 +44,7 @@ public interface UserMapper {
 	 * @throws SQLException
 	 */
 
-	public int delete(String id);
+	//public int delete(String id);
 
 	/**
 	 * 아이디로 비밀번호 찾기
@@ -54,10 +52,10 @@ public interface UserMapper {
 	 * @param id //id를 주면 비밀번호 찾아줌
 	 */
 
-	public UserInfo findPwdById(String id);
-	public UserInfo detail(String id);
-	public int registFav(FavInfo favInfo);
-	public List<FavInfo> userFavList(String id);
+	//public UserInfo findPwdById(String id);
+	//public UserInfo detail(String id);
+	//public int registFav(FavInfo favInfo);
+	//public List<FavInfo> userFavList(String id);
 
 	/********************* 관심지역 ***************/
 	/*	
