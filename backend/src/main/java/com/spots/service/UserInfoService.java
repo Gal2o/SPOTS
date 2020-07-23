@@ -6,11 +6,15 @@ import com.spots.dto.UserInfo;
 
 public interface UserInfoService {
 	
-	/*
-	 * public int signUp(UserInfo dto); public int modify(UserInfo dto);
-	 * 
-	 * public int delete(String id);
-	 * 
-	 * public UserInfo findPwdById(String id); public UserInfo detail(String id);
-	 */
+	public int signUp(UserInfo user);
+	
+	public int modify(UserInfo dto);
+	 
+	public UserInfo detail(String email);
+	  
+	public UserInfo findPwdByEmail(String email);
+	
+	public int joinTeam(int uid, int team_uid);
+
+	public int outTeam(int uid);
 }

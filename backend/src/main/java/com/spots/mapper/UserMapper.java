@@ -25,7 +25,7 @@ public interface UserMapper {
 	 * @return 성공/실패
 	 */
 
-	//public int signUp(UserInfo user);
+	public int signUp(UserInfo user);
 
 	/**
 	 * 정보수정
@@ -34,17 +34,8 @@ public interface UserMapper {
 	 * @return 성공/실패
 	 */
 
-	//public int modify(UserInfo user);
+	public int modify(UserInfo user);
 
-	/**
-	 * 정보삭제
-	 * 
-	 * @param id // 현재 사용자 정보 삭제
-	 * @return
-	 * @throws SQLException
-	 */
-
-	//public int delete(String id);
 
 	/**
 	 * 아이디로 비밀번호 찾기
@@ -52,35 +43,14 @@ public interface UserMapper {
 	 * @param id //id를 주면 비밀번호 찾아줌
 	 */
 
-	//public UserInfo findPwdById(String id);
-	//public UserInfo detail(String id);
-	//public int registFav(FavInfo favInfo);
-	//public List<FavInfo> userFavList(String id);
+	public UserInfo findPwdByEmail(String email);
+	
+	
+	public UserInfo detail(String email);
 
-	/********************* 관심지역 ***************/
-	/*	
-	*//**
-		 * 관심지역 저장
-		 * 
-		 * @param user_no, dong // 현재 사용자에게 관심지역(동) 추가
-		 */
-	/*
-	 * public int favInsert(int user_no, String dong);
-	 * 
-	 *//**
-		 * 관심지역 출력
-		 * 
-		 * @param user_no //현재 사용자의 관심지역들 출력
-		 */
-	/*
-	 * public List<String> favList(int user_no);
-	 * 
-	 *//**
-		 * 관심지역 삭제
-		 * 
-		 * @param user_no,dong / 현재 동 관심지역 삭제
-		 *//*
-			 * public int favDelete(int user_no, String dong);
-			 */
+	public int joinTeam(int uid, int team_uid);
+
+	public int outTeam(int uid);
+
 
 }

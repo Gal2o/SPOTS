@@ -15,17 +15,35 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	UserMapper mapper;
 
-	/*
-	 * @Override public int signUp(UserInfo user) { return 1; //return
-	 * mapper.signUp(user); }
-	 * 
-	 * @Override public int modify(UserInfo dto) { return mapper.modify(dto); }
-	 * 
-	 * @Override public int delete(String id) { return mapper.delete(id); }
-	 * 
-	 * @Override public UserInfo detail(String id) { return mapper.detail(id); }
-	 * 
-	 * @Override public UserInfo findPwdById(String id) { return
-	 * mapper.findPwdById(id); }
-	 */
+	
+	@Override 
+	public int signUp(UserInfo user) { 
+		return mapper.signUp(user); 
+	}
+	
+	@Override 
+	public int modify(UserInfo dto) { 
+		return mapper.modify(dto); 
+	}
+	 
+	@Override 
+	public UserInfo detail(String email) { 
+		return mapper.detail(email); 
+	}
+	  
+	@Override
+	public UserInfo findPwdByEmail(String email) { 
+		return mapper.findPwdByEmail(email); 
+	}
+
+	@Override
+	public int joinTeam(int uid, int team_uid) {
+		return mapper.joinTeam(uid, team_uid); 
+	}
+
+	@Override
+	public int outTeam(int uid) {
+		return mapper.outTeam(uid);
+	}
+	 
 }
