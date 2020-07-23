@@ -1,18 +1,27 @@
 package com.spots.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spots.dto.UserInfo;
 import com.spots.service.LoginService;
 
-@Controller
+
+
+@RestController
 public class LoginController {
 	
 	@Autowired
@@ -32,21 +41,30 @@ public class LoginController {
 //		return "loginForm";
 //	}
 	
+	@GetMapping(value="/") 
+	public String loginForm() {
+		return "user/login";
+	}
+	
+	@GetMapping(value="/login") 
+	public String test() {
+		System.out.println("들어옴3sp");
+		return "들어옴";
+	}
+	
 	//post방식으로 /login을 받았을때 같이 보내진 id와 password를 가지고 회원 확인함
 	@PostMapping(value="/login")
-	public String login(String email, String password, HttpSession session) {
+	public Map<String, Object> login(@RequestParam Map<String, String> param) {
 		System.out.println("들어옴");
-		// #1
-		UserInfo userinfo = loginService.login(email, password);
-		
-		
-		//해당 회원 없을시 result에 fail을 담아서 login을 호출한다
-		if( userinfo == null ) {
-			return "user/login";
-		}else {
-			session.setAttribute("userinfo", userinfo);
-			return "index";
-		}
+		System.out.println(param.get("email"));
+		String email =  param.get("email");
+		String password = param.get("password");
+		System.out.println(loginService.login(email, password));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", "Server message with ");
+        return map;
+        //return loginService.login(email, password);
+
 	}
 	
 	@RequestMapping(value="/logout")

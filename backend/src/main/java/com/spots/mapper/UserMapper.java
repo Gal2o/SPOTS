@@ -16,7 +16,7 @@ public interface UserMapper {
 	 * @param id,pw // 아이디, 비밀번호 입력받음
 	 * @return UserInfo 리턴
 	 */
-	public UserInfo login(@Param("email") String id, @Param("password") String password);
+	public UserInfo login(@Param("email") String email,@Param("password") String password);
 
 	/**
 	 * 회원가입

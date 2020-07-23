@@ -9,13 +9,6 @@ group = 'com.spots'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-}
-
 repositories {
 	mavenCentral()
 }
@@ -37,7 +30,7 @@ dependencies {
 	//for aop
 	compile 'org.springframework.boot:spring-boot-starter-aop'
 	
-	//JsonConveter( 而⑦듃濡ㅻ윭�뿉�꽌 �깮�꽦�븳 vo�뜲�씠�꽣瑜� json�쑝濡�)
+	//JsonConveter( 컨트롤러에서 생성한 vo데이터를 json으로)
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
 	
 	//Swagger2
@@ -46,9 +39,6 @@ dependencies {
 	
 	//Json-simple
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-	
-	//for crolling
-	compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 	
 }
 

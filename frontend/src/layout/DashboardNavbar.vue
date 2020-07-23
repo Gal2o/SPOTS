@@ -10,7 +10,7 @@
     >
       <div class="form-group mb-0">
         <base-input
-          placeholder="Search"
+          placeholder="검색"
           class="input-group-alternative"
           alternative=""
           addon-right-icon="fas fa-search"
@@ -42,7 +42,7 @@
               <i class="ni ni-settings-gear-65"></i>
               <span>설정</span>
             </router-link>
-            <router-link to="/date" class="dropdown-item">
+            <router-link to="/profile" class="dropdown-item">
               <i class="ni ni-calendar-grid-58"></i>
               <span>내 일정 기록</span>
             </router-link>

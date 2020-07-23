@@ -10,3 +10,4 @@
 	<select id="FList" resultType="com.spots.dto.FMatchInfo">
 		select * from free_matching
 	</select>
+</mapper>
