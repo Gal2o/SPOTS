@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.MatchMapper">
+
+
+	<select id="TList" resultType="com.spots.dto.TMatchInfo">
+		select * from team_matching
+	</select>
+	
+	<select id="FList" resultType="com.spots.dto.FMatchInfo">
+		select * from free_matching
+	</select>
+</mapper>
