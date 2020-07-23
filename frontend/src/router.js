@@ -22,12 +22,6 @@ export default new Router({
             import(/* webpackChunkName: "demo" */ "./views/Dashboard.vue"),
         },
         {
-          path: "/icons",
-          name: "icons",
-          component: () =>
-            import(/* webpackChunkName: "demo" */ "./views/Icons.vue"),
-        },
-        {
           path: "/profile",
           name: "프로필",
           component: () =>
@@ -50,6 +44,12 @@ export default new Router({
           name: "일정",
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/Date.vue"),
+        },
+        {
+          path: "/dashboard/FreeMatch",
+          name: "자유 SPOT",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/Dashboard/FreeMatchRoom.vue"),
         },
       ],
     },
