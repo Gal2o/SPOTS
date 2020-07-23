@@ -13,23 +13,24 @@ public class UserInfo {
 	private int draw;
 	private int warning;
 	private int team_uid;
+	private String nickname;
 
 	public UserInfo() {}
 
-	
-	public UserInfo(String email, String password, String birthday, char skill, String position_uid) {
+	public UserInfo(String email, String password, String birthday, char skill, String position_uid, String nickname) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.birthday = birthday;
 		this.skill = skill;
 		this.position_uid = position_uid;
+		this.nickname = nickname;
 	}
 
 	
 
 	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
-			char ckMail, int win, int lose, int draw, int warning, int team_uid) {
+			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -43,6 +44,17 @@ public class UserInfo {
 		this.draw = draw;
 		this.warning = warning;
 		this.team_uid = team_uid;
+		this.nickname = nickname;
+	}
+
+
+	public String getNickname() {
+		return nickname;
+	}
+
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 
@@ -146,7 +158,7 @@ public class UserInfo {
 	public String toString() {
 		return "UserInfo [uid=" + uid + ", email=" + email + ", password=" + password + ", birthday=" + birthday
 				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", win=" + win
-				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid + "]";
+				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid + ", nickname=" + nickname + "]";
 	}
 	
 	
