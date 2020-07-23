@@ -61,9 +61,7 @@
           </td>
 
           <td class="text-right">
-            <router-link to="/dashboard/FreeMatch">
-              <base-button type="success">입장하기</base-button>
-            </router-link>
+            <base-button type="success">입장하기</base-button>
           </td>
         </template>
       </base-table>
