@@ -4,8 +4,8 @@
         <base-nav class="navbar-top navbar-horizontal navbar-dark"
                   containerClasses="px-4 container"
                   expand>
-            <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/white.png"/>
+            <router-link slot="brand" class="navbar-brand" to="/dashboard">
+                <img src="img/brand/SPOTs/SPOTs_white.png"/>
             </router-link>
 
             <template v-slot="{closeMenu}">
