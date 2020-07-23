@@ -73,7 +73,10 @@
         },
         methods: {
             Login() {
-                axios.post('rest-auth/login/', this.model)
+                const LoginData = new LoginData();
+                LoginData.append('email', this.model.email);
+                LoginData.append('password', this.model.password);
+                axios.post('rest-auth/login/', LoginData)
                     .then(res => {
                         console.log(res)
                         this.$router.push({ name: 'SPOTs' })
