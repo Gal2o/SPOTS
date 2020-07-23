@@ -17,6 +17,7 @@ public class TMatchInfo {
 	private int head_price;
 	private String dong_code;
 	
+	public TMatchInfo() {}
 	
 	public TMatchInfo(int uid, int head_uid, int home_matching_entry_uid, int away_matching_entry_uid, Date create_date,
 			Date matching_date, int home_score, int away_score, int ready_num, int place_uid, int price, int head_price,
