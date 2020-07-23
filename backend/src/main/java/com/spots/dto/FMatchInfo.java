@@ -18,12 +18,13 @@ public class FMatchInfo {
 	private int price;
 	private int head_price;
 	private String dong_code;
+	private String title;
 	
 	public FMatchInfo() {}
 	
 	public FMatchInfo(int uid, int head_uid, int home_team_uid, int away_team_uid, int home_matching_entry_uid,
 			int away_matching_entry_uid, Date create_date, Date matching_date, int home_score, int away_score,
-			int ready_num, int place_uid, int price, int head_price, String dong_code) {
+			int ready_num, int place_uid, int price, int head_price, String dong_code, String title) {
 		super();
 		this.uid = uid;
 		this.head_uid = head_uid;
@@ -40,8 +41,9 @@ public class FMatchInfo {
 		this.price = price;
 		this.head_price = head_price;
 		this.dong_code = dong_code;
+		this.title = title;
 	}
-	
+
 	public int getUid() {
 		return uid;
 	}
@@ -132,6 +134,14 @@ public class FMatchInfo {
 	public void setDong_code(String dong_code) {
 		this.dong_code = dong_code;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	@Override
 	public String toString() {
@@ -140,6 +150,6 @@ public class FMatchInfo {
 				+ ", away_matching_entry_uid=" + away_matching_entry_uid + ", create_date=" + create_date
 				+ ", matching_date=" + matching_date + ", home_score=" + home_score + ", away_score=" + away_score
 				+ ", ready_num=" + ready_num + ", place_uid=" + place_uid + ", price=" + price + ", head_price="
-				+ head_price + ", dong_code=" + dong_code + "]";
+				+ head_price + ", dong_code=" + dong_code + ", title=" + title + "]";
 	}
 }
