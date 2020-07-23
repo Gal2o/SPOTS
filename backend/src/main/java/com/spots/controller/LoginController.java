@@ -1,5 +1,6 @@
 package com.spots.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -53,13 +54,16 @@ public class LoginController {
 	
 	//post방식으로 /login을 받았을때 같이 보내진 id와 password를 가지고 회원 확인함
 	@PostMapping(value="/login")
-	public UserInfo login(@RequestParam Map<String, String> param) {
+	public Map<String, Object> login(@RequestParam Map<String, String> param) {
 		System.out.println("들어옴");
 		System.out.println(param.get("email"));
 		String email =  param.get("email");
 		String password = param.get("password");
-
-		return loginService.login(email, password);
+		System.out.println(loginService.login(email, password));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", "Server message with ");
+        return map;
+        //return loginService.login(email, password);
 
 	}
 	
