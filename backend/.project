@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>backend_gradle</name>
-	<comment>Project backend_gradle created by Buildship.</comment>
+	<name>backend</name>
+	<comment>Project backend created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
