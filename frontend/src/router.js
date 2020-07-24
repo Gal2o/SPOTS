@@ -39,12 +39,12 @@ export default new Router({
           component: () =>
             import(/* webpackChunkName: "demo" */ "./views/Tables.vue"),
         },
-        {
-          path: "/date",
-          name: "일정",
-          component: () =>
-            import(/* webpackChunkName: "demo" */ "./views/Date.vue"),
-        },
+        // {
+        //   path: "/date",
+        //   name: "일정",
+        //   component: () =>
+        //     import(/* webpackChunkName: "demo" */ "./views/Date.vue"),
+        // },
         {
           path: "/dashboard/FreeMatch",
           name: "자유 SPOT",

@@ -97,7 +97,7 @@ import axios from 'axios'
                 SignData.append('name', this.model.name);
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
-                axios.post('rest-auth/signup/', SignData)
+                axios.post('http://localhost:8080/user/signUp/', SignData)
                     .then(() => {
                         this.$router.push({ name: 'login'})
                     })

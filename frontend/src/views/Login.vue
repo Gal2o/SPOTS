@@ -72,11 +72,14 @@
             }
         },
         methods: {
+            setCookie(uid) {
+                this.$cookies.set('uid', uid)
+            },
             Login() {
                 const LoginData = new LoginData();
                 LoginData.append('email', this.model.email);
                 LoginData.append('password', this.model.password);
-                axios.post('rest-auth/login/', LoginData)
+                axios.post('http://localhost:8080/login', LoginData)
                     .then(res => {
                         console.log(res)
                         this.$router.push({ name: 'SPOTs' })
