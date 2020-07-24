@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.spots.dto.FMatchInfo;
@@ -13,6 +14,7 @@ import com.spots.dto.TMatchInfo;
 import com.spots.service.FreeMatchService;
 import com.spots.service.TeamMatchService;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @Controller
 public class MatchController {
 
