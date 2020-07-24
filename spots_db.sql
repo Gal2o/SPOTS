@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- 호스트:                          127.0.0.1
+-- 호스트:                          127.17.0.1
 -- 서버 버전:                        10.5.4-MariaDB-1:10.5.4+maria~focal - mariadb.org binary distribution
 -- 서버 OS:                        debian-linux-gnu
 -- HeidiSQL 버전:                  11.0.0.5919
@@ -24,9 +24,8 @@ CREATE TABLE IF NOT EXISTS `city_code` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='시코드';
 
 -- 테이블 데이터 spots.city_code:~17 rows (대략적) 내보내기
-DELETE FROM `city_code`;
 /*!40000 ALTER TABLE `city_code` DISABLE KEYS */;
-INSERT INTO `city_code` (`city_code`, `city_name`) VALUES
+INSERT IGNORE INTO `city_code` (`city_code`, `city_name`) VALUES
 	('1100000000', '서울특별시'),
 	('2600000000', '부산광역시'),
 	('2700000000', '대구광역시'),
@@ -53,10 +52,9 @@ CREATE TABLE IF NOT EXISTS `dong_code` (
   PRIMARY KEY (`dong_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 spots.dong_code:~856 rows (대략적) 내보내기
-DELETE FROM `dong_code`;
+-- 테이블 데이터 spots.dong_code:~854 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `dong_code` DISABLE KEYS */;
-INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
+INSERT IGNORE INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 	('1111010100', '청운동'),
 	('1111010200', '신교동'),
 	('1111010300', '궁정동'),
@@ -919,30 +917,38 @@ INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 CREATE TABLE IF NOT EXISTS `free_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
-  `home_team_uid` int(11) NOT NULL,
-  `away_team_uid` int(11) NOT NULL,
   `home_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
   `away_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
   `create_date` datetime DEFAULT NULL COMMENT '만든날',
   `matching_date` datetime DEFAULT NULL COMMENT '매칭날, 시간',
-  `home_score` int(2) NOT NULL DEFAULT 0,
+  `home_scroe` int(2) NOT NULL DEFAULT 0,
   `away_score` int(2) NOT NULL DEFAULT 0,
   `ready_num` int(2) NOT NULL DEFAULT 0 COMMENT '한팀 전체 ready하면++ 22가 되면 매칭 완료',
   `place_uid` int(11) NOT NULL,
   `price` int(5) NOT NULL COMMENT '인당 가격',
   `head_price` int(5) NOT NULL COMMENT '방장 가격(22로 안나눠떨어지는건 방장이 더내는걸로)',
   `dong_code` varchar(50) DEFAULT NULL,
-  `title` varchar(50) DEFAULT NULL,
+  `title` varchar(50) NOT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='팀 매칭';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='자유 매칭';
 
--- 테이블 데이터 spots.free_matching:~0 rows (대략적) 내보내기
-DELETE FROM `free_matching`;
+-- 테이블 데이터 spots.free_matching:~3 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `free_matching` DISABLE KEYS */;
-INSERT INTO `free_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
-	(1, 1, 1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1111010200', '한판할사람111'),
-	(2, 1, 1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-02 00:00:00', 1, 1, 1, 1, 1, 1, '1111010300', '한판할사람222'),
-	(3, 1, 1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-03 00:00:00', 1, 1, 1, 1, 1, 1, '1111010400', '한판할사람333');
+INSERT IGNORE INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
+	(1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1111010200', '한판할사람111'),
+	(2, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-02 00:00:00', 1, 1, 1, 1, 1, 1, '1111010300', '한판할사람222'),
+	(3, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-03 00:00:00', 1, 1, 1, 1, 1, 1, '1111010400', '한판할사람333'),
+	(4, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3400, NULL, '같이 볼차실 분 구합니다'),
+	(5, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3401, NULL, '초보만~!!!@@@@@@@@@@@@@'),
+	(6, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3402, NULL, '고수만~!!@@@@@@@@@@@@2'),
+	(7, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3403, NULL, '축구원 모집합니다'),
+	(8, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3404, NULL, '축구 한게임 같이해요'),
+	(9, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3405, NULL, '여기여기 모여라!'),
+	(10, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3406, NULL, '같이 경기할 인원 구합니다'),
+	(11, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3407, NULL, '매너겜ㄱㄱ'),
+	(12, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3408, NULL, '11:11'),
+	(13, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3409, NULL, '한판같이해요'),
+	(14, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3410, NULL, 'ㄱㄱ ');
 /*!40000 ALTER TABLE `free_matching` ENABLE KEYS */;
 
 -- 테이블 spots.matching_entry 구조 내보내기
@@ -965,7 +971,6 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
 -- 테이블 데이터 spots.matching_entry:~0 rows (대략적) 내보내기
-DELETE FROM `matching_entry`;
 /*!40000 ALTER TABLE `matching_entry` DISABLE KEYS */;
 /*!40000 ALTER TABLE `matching_entry` ENABLE KEYS */;
 
@@ -984,7 +989,6 @@ CREATE TABLE IF NOT EXISTS `place` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
 
 -- 테이블 데이터 spots.place:~0 rows (대략적) 내보내기
-DELETE FROM `place`;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 
@@ -996,9 +1000,8 @@ CREATE TABLE IF NOT EXISTS `position` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='포지션';
 
 -- 테이블 데이터 spots.position:~4 rows (대략적) 내보내기
-DELETE FROM `position`;
 /*!40000 ALTER TABLE `position` DISABLE KEYS */;
-INSERT INTO `position` (`uid`, `position_name`) VALUES
+INSERT IGNORE INTO `position` (`uid`, `position_name`) VALUES
 	(1, '공격수'),
 	(2, '미드필더'),
 	(3, '수비수'),
@@ -1013,9 +1016,8 @@ CREATE TABLE IF NOT EXISTS `state_code` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='시코드';
 
 -- 테이블 데이터 spots.state_code:~85 rows (대략적) 내보내기
-DELETE FROM `state_code`;
 /*!40000 ALTER TABLE `state_code` DISABLE KEYS */;
-INSERT INTO `state_code` (`state_code`, `state_name`) VALUES
+INSERT IGNORE INTO `state_code` (`state_code`, `state_name`) VALUES
 	('1111000000', '서울특별시'),
 	('2611000000', '부산광역시'),
 	('2711000000', '대구광역시'),
@@ -1111,42 +1113,105 @@ CREATE TABLE IF NOT EXISTS `team` (
   `team_win` int(4) NOT NULL DEFAULT 0,
   `team_lose` int(4) NOT NULL DEFAULT 0,
   `team_draw` int(4) NOT NULL DEFAULT 0,
-  `captain_uid` int(11) NOT NULL,
+  `captain_uid` int(11) DEFAULT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `team_name` (`team_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='팀';
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COMMENT='팀';
 
--- 테이블 데이터 spots.team:~0 rows (대략적) 내보내기
-DELETE FROM `team`;
+-- 테이블 데이터 spots.team:~51 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
+INSERT IGNORE INTO `team` (`uid`, `team_name`, `team_intro`, `team_win`, `team_lose`, `team_draw`, `captain_uid`) VALUES
+	(52, '강원 FC', '강원 FC입니다', 8, 2, 0, NULL),
+	(53, '광주 FC', '광주 FC화이팅', 11, 3, 1, NULL),
+	(54, '대구 FC', '대구아인교', 123, 4, 2, NULL),
+	(55, '부산 아이파크', '마 뜨겁나?', 23, 5, 1, NULL),
+	(56, '상주 상무 축구단', '상주 파이팅', 52, 57, 3, NULL),
+	(57, 'FC 서울', '서울 자주합니다', 74, 6, 2, NULL),
+	(58, '성남 FC', '재밌게해봐요', 876, 2, 0, NULL),
+	(59, '수원 삼성 블루윙즈', '화이팅', 978, 3, 0, NULL),
+	(60, '울산 현대 축구단', '울산 현대 축구단 화이팅!~', 4, 4, 0, NULL),
+	(61, '인천 유나이티드 FC', '매주 10시 조기축구', 341, 45, 0, NULL),
+	(62, '전북 현대 모터스', '나가자 싸우자 이기자', 1, 7, 0, NULL),
+	(63, '포항 스틸러스', '축구같이 하실분 구해요', 3, 45, 0, NULL),
+	(64, '경남 FC', '경남 20대 환영', 34, 7, 0, NULL),
+	(65, '대전 시티즌', '대전 매달 회식', 23, 8, 0, NULL),
+	(66, '부천 FC 1995', '편히 들어오세요', 3, 53, 0, NULL),
+	(67, '서울 이랜드 FC', '서울 우오오오', 24, 4, 2, NULL),
+	(68, '수원 FC', '수원 FC', 1, 123, 1, NULL),
+	(69, '아산 무궁화 축구단', '아산 무궁화 축구단', 123, 3, 1, NULL),
+	(70, '안산 그리너스 FC', '안산 그리너스 FC', 12, 6, 2, NULL),
+	(71, 'FC 안양', 'FC 안양', 78, 2, 2, NULL),
+	(72, '전남 드래곤즈', '전남 드래곤즈', 5, 1, 13, NULL),
+	(73, '제주 유나이티드 FC', '제주 유나이티드 FC', 364, 4, 2, NULL),
+	(74, '강릉시청 축구단', '강릉시청 축구단', 246, 26, 1, NULL),
+	(75, '경주시민축구단', '경주시민축구단', 8, 23, 2, NULL),
+	(76, '경주 한국수력원자력 축구단', '경주 한국수력원자력 축구단', 3, 87, 0, NULL),
+	(77, '김포시민축구단', '김포시민축구단', 37, 4, 2, NULL),
+	(78, '김해시청 축구단', '김해시청 축구단', 54, 545, 0, NULL),
+	(79, '대전 코레일 축구단', '대전 코레일 축구단', 1, 6, 0, NULL),
+	(80, '목포시청 축구단', '목포시청 축구단', 1, 768, 0, NULL),
+	(81, '부산교통공사 축구단', '부산교통공사 축구단', 2, 65, 0, NULL),
+	(82, '양주시민축구단', '양주시민축구단', 572, 54, 0, NULL),
+	(83, '전주시민축구단', '전주시민축구단', 43, 31, 0, NULL),
+	(84, '창원시청 축구단', '창원시청 축구단', 4, 12, 0, NULL),
+	(85, '천안시청 축구단', '천안시청 축구단', 5, 13, 1, NULL),
+	(86, '청주 FC', '청주 FC', 6, 3, 11, NULL),
+	(87, '춘천시민축구단', '춘천시민축구단', 34, 2, 1, NULL),
+	(88, '평택시민축구단', '평택시민축구단', 3, 4, 1, NULL),
+	(89, '화성 FC', '화성 FC', 5, 2, 1, NULL),
+	(90, '고양시민축구단', '고양시민축구단', 6, 3, 1, NULL),
+	(91, 'FC 남동', 'FC 남동', 4, 435, 2, NULL),
+	(92, '서울 노원 유나이티드 FC', '우리들의 열정 놀이터', 45, 3, 11, NULL),
+	(93, '서울 중랑 축구단', '열정 놀이터 352', 2, 34, 2, NULL),
+	(94, '시흥 시민축구단', 'Talk about Soccer', 7, 34, 2, NULL),
+	(95, '양평 FC', '축구사랑의 중심', 7, 3, 3, NULL),
+	(96, '여주시민축구단', '더 넓은 세상으로 가는 열쇠', 64, 5, 2, NULL),
+	(97, '울산시민축구단', '열정과 도전, 그 이상을 위하여', 45, 4, 0, NULL),
+	(98, '이천시민축구단', '비상하라! 내일의 챔피언이여!', 88, 68, 3, NULL),
+	(99, '진주시민축구단', '거침없는 도전, 위대한 승리!', 67, 7, 34, NULL),
+	(100, '충주시민축구단', '멈추지 않는 도전, 승리의 환희! ', 9, 45, 1, NULL),
+	(101, '파주시민축구단', '뜨거운 열정, 깨끗한 승부!', 5, 2, 1, NULL),
+	(102, '포천시민축구단', '힘찬 도약, 끊임 없는 도전!', 23, 1, 2, NULL);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
 -- 테이블 spots.team_matching 구조 내보내기
 CREATE TABLE IF NOT EXISTS `team_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
+  `home_team_uid` int(11) NOT NULL,
+  `away_team_uid` int(11) NOT NULL,
   `home_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
   `away_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
   `create_date` datetime DEFAULT NULL COMMENT '만든날',
   `matching_date` datetime DEFAULT NULL COMMENT '매칭날, 시간',
-  `home_score` int(2) NOT NULL DEFAULT 0,
+  `home_scroe` int(2) NOT NULL DEFAULT 0,
   `away_score` int(2) NOT NULL DEFAULT 0,
   `ready_num` int(2) NOT NULL DEFAULT 0 COMMENT '한팀 전체 ready하면++ 2가 되면 매칭 완료',
   `place_uid` int(11) DEFAULT NULL,
   `price` int(5) NOT NULL COMMENT '인당 가격',
   `head_price` int(5) NOT NULL COMMENT '방장 가격(22로 안나눠떨어지는건 방장이 더내는걸로)',
   `dong_code` varchar(50) DEFAULT NULL,
-  `title` varchar(50) DEFAULT NULL,
+  `title` varchar(50) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='팀 매칭';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COMMENT='팀 매칭';
 
--- 테이블 데이터 spots.team_matching:~0 rows (대략적) 내보내기
-DELETE FROM `team_matching`;
+-- 테이블 데이터 spots.team_matching:~14 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `team_matching` DISABLE KEYS */;
-INSERT INTO `team_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
-	(1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-04 00:00:00', 1, 1, 1, 1, 1, 1, '1111010500', '한판할사람444'),
-	(2, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-05 00:00:00', 1, 1, 1, 1, 1, 1, '1111010600', '한판할사람555'),
-	(3, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-06 00:00:00', 1, 1, 1, 1, 1, 1, '1111010700', '한판할사람666');
+INSERT IGNORE INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
+	(1, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-04 00:00:00', 1, 1, 1, 1, 1, 1, '1111010500', '한판할사람444'),
+	(2, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-05 00:00:00', 1, 1, 1, 1, 1, 1, '1111010600', '한판할사람555'),
+	(3, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-06 00:00:00', 1, 1, 1, 1, 1, 1, '1111010700', '한판할사람666'),
+	(4, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3400, NULL, '같이 경기하실 팀 구해요'),
+	(5, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3401, NULL, '초보만~!!!@@@@@@@@@@@@@'),
+	(6, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3402, NULL, '고수만~!!@@@@@@@@@@@@2'),
+	(7, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3403, NULL, '시간되시는 분~!!'),
+	(8, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3404, NULL, '축구 한게임 같이해요'),
+	(9, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3405, NULL, '여기여기 모여라'),
+	(10, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3406, NULL, '같이 경기할 팀 구합니다'),
+	(11, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3407, NULL, '매너겜ㄱㄱ'),
+	(12, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3408, NULL, '동네축구단입니다'),
+	(13, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3409, NULL, '한판같이해요'),
+	(14, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3410, NULL, 'ㄱㄱ ');
 /*!40000 ALTER TABLE `team_matching` ENABLE KEYS */;
 
 -- 테이블 spots.user 구조 내보내기
@@ -1166,15 +1231,229 @@ CREATE TABLE IF NOT EXISTS `user` (
   `nickname` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`uid`) USING BTREE,
   UNIQUE KEY `email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
+) ENGINE=InnoDB AUTO_INCREMENT=434 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
 -- 테이블 데이터 spots.user:~3 rows (대략적) 내보내기
-DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`uid`, `email`, `password`, `birthday`, `skill`, `position_uid`, `ckMail`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`) VALUES
+INSERT IGNORE INTO `user` (`uid`, `email`, `password`, `birthday`, `skill`, `position_uid`, `ckMail`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`) VALUES
 	(1, 'aaa@aaa.com', '111', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'aaa'),
 	(2, 'bbb@bbb.com', '222', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'bbb'),
-	(3, 'ccc@ccc.com', '333', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'ccc');
+	(3, 'ccc@ccc.com', '333', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'ccc'),
+	(219, 'tmp1@ssafy.com', '1', '950619', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이광연'),
+	(220, 'tmp2', '1', '950620', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김영빈'),
+	(221, 'tmp3', '1', '950621', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신세계'),
+	(222, 'tmp4', '1', '950622', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이호인'),
+	(223, 'tmp5', '1', '950623', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조지훈'),
+	(224, 'tmp6', '1', '950624', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정석화'),
+	(225, 'tmp7', '1', '950625', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이재권'),
+	(226, 'tmp8', '1', '950626', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김지현'),
+	(227, 'tmp9', '1', '950627', '중', NULL, 'N', 0, 0, 0, 0, NULL, '고무열'),
+	(228, 'tmp10', '1', '950628', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김승대'),
+	(229, 'tmp11', '1', '950629', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정민우'),
+	(230, 'tmp12', '1', '950630', '중', NULL, 'N', 0, 0, 0, 0, NULL, '한국영 '),
+	(231, 'tmp13', '1', '950631', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정지용'),
+	(232, 'tmp14', '1', '950632', '중', NULL, 'N', 0, 0, 0, 0, NULL, '지의수'),
+	(233, 'tmp15', '1', '950633', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신광훈'),
+	(234, 'tmp16', '1', '950634', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조재완'),
+	(235, 'tmp17', '1', '950635', '중', NULL, 'N', 0, 0, 0, 0, NULL, '채광훈'),
+	(236, 'tmp18', '1', '950636', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조윤성'),
+	(237, 'tmp19', '1', '950637', '중', NULL, 'N', 0, 0, 0, 0, NULL, '서민우'),
+	(238, 'tmp20', '1', '950638', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이범수'),
+	(239, 'tmp21', '1', '950639', '중', NULL, 'N', 0, 0, 0, 0, NULL, '임채민 '),
+	(240, 'tmp22', '1', '950640', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김수혁'),
+	(241, 'tmp23', '1', '950641', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김수범'),
+	(242, 'tmp24', '1', '950642', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이현식'),
+	(243, 'tmp25', '1', '950643', '중', NULL, 'N', 0, 0, 0, 0, NULL, '가솔현'),
+	(244, 'tmp26', '1', '950644', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이병욱'),
+	(245, 'tmp27', '1', '950645', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이연규'),
+	(246, 'tmp28', '1', '950646', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이영재'),
+	(247, 'tmp29', '1', '950647', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신재욱'),
+	(248, 'tmp30', '1', '950648', '중', NULL, 'N', 0, 0, 0, 0, NULL, '홍원진'),
+	(249, 'tmp31', '1', '950649', '중', NULL, 'N', 0, 0, 0, 0, NULL, '나카자토'),
+	(250, 'tmp32', '1', '950650', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이강한'),
+	(251, 'tmp33', '1', '950651', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김경중'),
+	(252, 'tmp34', '1', '950652', '중', NULL, 'N', 0, 0, 0, 0, NULL, '권재범'),
+	(253, 'tmp35', '1', '950653', '중', NULL, 'N', 0, 0, 0, 0, NULL, '송승준'),
+	(254, 'tmp36', '1', '950654', '중', NULL, 'N', 0, 0, 0, 0, NULL, '문광석'),
+	(255, 'tmp37', '1', '950655', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박경배'),
+	(256, 'tmp38', '1', '950656', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정현우'),
+	(257, 'tmp39', '1', '950657', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이한도'),
+	(258, 'tmp40', '1', '950658', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이진형'),
+	(259, 'tmp41', '1', '950659', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김주공'),
+	(260, 'tmp42', '1', '950660', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김태곤'),
+	(261, 'tmp43', '1', '950661', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이희균'),
+	(262, 'tmp44', '1', '950662', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김진현'),
+	(263, 'tmp45', '1', '950663', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김창수'),
+	(264, 'tmp46', '1', '950664', '중', NULL, 'N', 0, 0, 0, 0, NULL, '최준혁'),
+	(265, 'tmp47', '1', '950665', '중', NULL, 'N', 0, 0, 0, 0, NULL, '한희훈'),
+	(266, 'tmp48', '1', '950666', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이민기'),
+	(267, 'tmp49', '1', '950667', '중', NULL, 'N', 0, 0, 0, 0, NULL, '한용수'),
+	(268, 'tmp50', '1', '950668', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이순민'),
+	(269, 'tmp51', '1', '950669', '중', NULL, 'N', 0, 0, 0, 0, NULL, '마르코'),
+	(270, 'tmp52', '1', '950670', '중', NULL, 'N', 0, 0, 0, 0, NULL, '윌리안'),
+	(271, 'tmp53', '1', '950671', '중', NULL, 'N', 0, 0, 0, 0, NULL, '허율'),
+	(272, 'tmp54', '1', '950672', '중', NULL, 'N', 0, 0, 0, 0, NULL, '아슐마토프'),
+	(273, 'tmp55', '1', '950673', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정준연'),
+	(274, 'tmp56', '1', '950674', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김태윤'),
+	(275, 'tmp57', '1', '950675', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박준희'),
+	(276, 'tmp58', '1', '950676', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박정수'),
+	(277, 'tmp59', '1', '950677', '중', NULL, 'N', 0, 0, 0, 0, NULL, '여름'),
+	(278, 'tmp60', '1', '950678', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이으뜸'),
+	(279, 'tmp61', '1', '950679', '중', NULL, 'N', 0, 0, 0, 0, NULL, '펠리페'),
+	(280, 'tmp62', '1', '950680', '중', NULL, 'N', 0, 0, 0, 0, NULL, '임민혁'),
+	(281, 'tmp63', '1', '950681', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김정환'),
+	(282, 'tmp64', '1', '950682', '중', NULL, 'N', 0, 0, 0, 0, NULL, '두현석'),
+	(283, 'tmp65', '1', '950683', '중', NULL, 'N', 0, 0, 0, 0, NULL, '여봉훈'),
+	(284, 'tmp66', '1', '950684', '중', NULL, 'N', 0, 0, 0, 0, NULL, '홍준호'),
+	(285, 'tmp67', '1', '950685', '중', NULL, 'N', 0, 0, 0, 0, NULL, '백도원'),
+	(286, 'tmp68', '1', '950686', '중', NULL, 'N', 0, 0, 0, 0, NULL, '엄원상'),
+	(287, 'tmp69', '1', '950687', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김효기'),
+	(288, 'tmp70', '1', '950688', '중', NULL, 'N', 0, 0, 0, 0, NULL, '양형모'),
+	(289, 'tmp71', '1', '950689', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김준형'),
+	(290, 'tmp72', '1', '950690', '중', NULL, 'N', 0, 0, 0, 0, NULL, '명준재'),
+	(291, 'tmp73', '1', '950691', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이상민'),
+	(292, 'tmp74', '1', '950692', '중', NULL, 'N', 0, 0, 0, 0, NULL, '최성근'),
+	(293, 'tmp75', '1', '950693', '중', NULL, 'N', 0, 0, 0, 0, NULL, '염기훈 '),
+	(294, 'tmp76', '1', '950694', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이풍연'),
+	(295, 'tmp77', '1', '950695', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신상휘'),
+	(296, 'tmp78', '1', '950696', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이이기'),
+	(297, 'tmp79', '1', '950697', '중', NULL, 'N', 0, 0, 0, 0, NULL, '장호익'),
+	(298, 'tmp80', '1', '950698', '중', NULL, 'N', 0, 0, 0, 0, NULL, '강현욱'),
+	(299, 'tmp81', '1', '950699', '중', NULL, 'N', 0, 0, 0, 0, NULL, '민상기'),
+	(300, 'tmp82', '1', '950700', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이강희'),
+	(301, 'tmp83', '1', '950701', '중', NULL, 'N', 0, 0, 0, 0, NULL, '윤서호'),
+	(302, 'tmp84', '1', '950702', '중', NULL, 'N', 0, 0, 0, 0, NULL, '손호준'),
+	(303, 'tmp85', '1', '950703', '중', NULL, 'N', 0, 0, 0, 0, NULL, '고승범'),
+	(304, 'tmp86', '1', '950704', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이용연'),
+	(305, 'tmp87', '1', '950705', '중', NULL, 'N', 0, 0, 0, 0, NULL, '구대영'),
+	(306, 'tmp88', '1', '950706', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정상빈'),
+	(307, 'tmp89', '1', '950707', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박상혁'),
+	(308, 'tmp90', '1', '950708', '중', NULL, 'N', 0, 0, 0, 0, NULL, '안찬기'),
+	(309, 'tmp91', '1', '950709', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박대원'),
+	(310, 'tmp92', '1', '950710', '중', NULL, 'N', 0, 0, 0, 0, NULL, '양상민'),
+	(311, 'tmp93', '1', '950711', '중', NULL, 'N', 0, 0, 0, 0, NULL, '헨리'),
+	(312, 'tmp94', '1', '950712', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조성진'),
+	(313, 'tmp95', '1', '950713', '중', NULL, 'N', 0, 0, 0, 0, NULL, '임선영'),
+	(314, 'tmp96', '1', '950714', '중', NULL, 'N', 0, 0, 0, 0, NULL, '크르피치'),
+	(315, 'tmp97', '1', '950715', '중', NULL, 'N', 0, 0, 0, 0, NULL, '안토니스'),
+	(316, 'tmp98', '1', '950716', '중', NULL, 'N', 0, 0, 0, 0, NULL, '한의권'),
+	(317, 'tmp99', '1', '950717', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김민우'),
+	(318, 'tmp100', '1', '950718', '중', NULL, 'N', 0, 0, 0, 0, NULL, '임상협'),
+	(319, 'tmp101', '1', '950719', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김태환'),
+	(320, 'tmp102', '1', '950720', '중', NULL, 'N', 0, 0, 0, 0, NULL, '한석희'),
+	(321, 'tmp103', '1', '950721', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김건희'),
+	(322, 'tmp104', '1', '950722', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이용혁'),
+	(323, 'tmp105', '1', '950723', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이종성'),
+	(324, 'tmp106', '1', '950724', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김종우'),
+	(325, 'tmp107', '1', '950725', '중', NULL, 'N', 0, 0, 0, 0, NULL, '타가트'),
+	(326, 'tmp108', '1', '950726', '중', NULL, 'N', 0, 0, 0, 0, NULL, '노동건'),
+	(327, 'tmp109', '1', '950727', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김상준'),
+	(328, 'tmp110', '1', '950728', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이진용'),
+	(329, 'tmp111', '1', '950729', '중', NULL, 'N', 0, 0, 0, 0, NULL, '데얀'),
+	(330, 'tmp112', '1', '950730', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이동건'),
+	(331, 'tmp113', '1', '950731', '중', NULL, 'N', 0, 0, 0, 0, NULL, '류재문'),
+	(332, 'tmp114', '1', '950732', '중', NULL, 'N', 0, 0, 0, 0, NULL, '윤종태'),
+	(333, 'tmp115', '1', '950733', '중', NULL, 'N', 0, 0, 0, 0, NULL, '하명래'),
+	(334, 'tmp116', '1', '950734', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정치인'),
+	(335, 'tmp117', '1', '950735', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김태한'),
+	(336, 'tmp118', '1', '950736', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이찬웅'),
+	(337, 'tmp119', '1', '950737', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이근섭'),
+	(338, 'tmp120', '1', '950738', '중', NULL, 'N', 0, 0, 0, 0, NULL, '장성원'),
+	(339, 'tmp121', '1', '950739', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박재경'),
+	(340, 'tmp122', '1', '950740', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신중'),
+	(341, 'tmp123', '1', '950741', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이학윤'),
+	(342, 'tmp124', '1', '950742', '중', NULL, 'N', 0, 0, 0, 0, NULL, '안창민'),
+	(343, 'tmp125', '1', '950743', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조우현'),
+	(344, 'tmp126', '1', '950744', '중', NULL, 'N', 0, 0, 0, 0, NULL, '츠바사'),
+	(345, 'tmp127', '1', '950745', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박한빈'),
+	(346, 'tmp128', '1', '950746', '중', NULL, 'N', 0, 0, 0, 0, NULL, '구성윤'),
+	(347, 'tmp129', '1', '950747', '중', NULL, 'N', 0, 0, 0, 0, NULL, '고태규'),
+	(348, 'tmp130', '1', '950748', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조진우'),
+	(349, 'tmp131', '1', '950749', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이진현'),
+	(350, 'tmp132', '1', '950750', '중', NULL, 'N', 0, 0, 0, 0, NULL, '황태현'),
+	(351, 'tmp133', '1', '950751', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김우석'),
+	(352, 'tmp134', '1', '950752', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정태욱'),
+	(353, 'tmp135', '1', '950753', '중', NULL, 'N', 0, 0, 0, 0, NULL, '홍정운 '),
+	(354, 'tmp136', '1', '950754', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김재우'),
+	(355, 'tmp137', '1', '950755', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신창무'),
+	(356, 'tmp138', '1', '950756', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김선민'),
+	(357, 'tmp139', '1', '950757', '중', NULL, 'N', 0, 0, 0, 0, NULL, '에드가'),
+	(358, 'tmp140', '1', '950758', '중', NULL, 'N', 0, 0, 0, 0, NULL, '세징야'),
+	(359, 'tmp141', '1', '950759', '중', NULL, 'N', 0, 0, 0, 0, NULL, '오후성'),
+	(360, 'tmp142', '1', '950760', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김대원'),
+	(361, 'tmp143', '1', '950761', '중', NULL, 'N', 0, 0, 0, 0, NULL, '임재혁'),
+	(362, 'tmp144', '1', '950762', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박민서'),
+	(363, 'tmp145', '1', '950763', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정승원'),
+	(364, 'tmp146', '1', '950764', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정영웅'),
+	(365, 'tmp147', '1', '950765', '중', NULL, 'N', 0, 0, 0, 0, NULL, '황순민'),
+	(366, 'tmp148', '1', '950766', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김동진'),
+	(367, 'tmp149', '1', '950767', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이준희'),
+	(368, 'tmp150', '1', '950768', '중', NULL, 'N', 0, 0, 0, 0, NULL, '고명진'),
+	(369, 'tmp151', '1', '950769', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김태환'),
+	(370, 'tmp152', '1', '950770', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이현승'),
+	(371, 'tmp153', '1', '950771', '중', NULL, 'N', 0, 0, 0, 0, NULL, '서주환'),
+	(372, 'tmp154', '1', '950772', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조현택'),
+	(373, 'tmp155', '1', '950773', '중', NULL, 'N', 0, 0, 0, 0, NULL, '장재원'),
+	(374, 'tmp156', '1', '950774', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이형경'),
+	(375, 'tmp157', '1', '950775', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정훈성'),
+	(376, 'tmp158', '1', '950776', '중', NULL, 'N', 0, 0, 0, 0, NULL, '홍철'),
+	(377, 'tmp159', '1', '950777', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박하빈'),
+	(378, 'tmp160', '1', '950778', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김기희'),
+	(379, 'tmp161', '1', '950779', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이기운'),
+	(380, 'tmp162', '1', '950780', '중', NULL, 'N', 0, 0, 0, 0, NULL, '설영우'),
+	(381, 'tmp163', '1', '950781', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이청용'),
+	(382, 'tmp164', '1', '950782', '중', NULL, 'N', 0, 0, 0, 0, NULL, '민동환'),
+	(383, 'tmp165', '1', '950783', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이상헌'),
+	(384, 'tmp166', '1', '950784', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박정인'),
+	(385, 'tmp167', '1', '950785', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정동호'),
+	(386, 'tmp168', '1', '950786', '중', NULL, 'N', 0, 0, 0, 0, NULL, '데이비슨'),
+	(387, 'tmp169', '1', '950787', '중', NULL, 'N', 0, 0, 0, 0, NULL, '불투이스'),
+	(388, 'tmp170', '1', '950788', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김민덕'),
+	(389, 'tmp171', '1', '950789', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박주호'),
+	(390, 'tmp172', '1', '950790', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김인성'),
+	(391, 'tmp173', '1', '950791', '중', NULL, 'N', 0, 0, 0, 0, NULL, '신진호 '),
+	(392, 'tmp174', '1', '950792', '중', NULL, 'N', 0, 0, 0, 0, NULL, '주니오'),
+	(393, 'tmp175', '1', '950793', '중', NULL, 'N', 0, 0, 0, 0, NULL, '윤빛가람'),
+	(394, 'tmp176', '1', '950794', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이근호'),
+	(395, 'tmp177', '1', '950795', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김민준'),
+	(396, 'tmp178', '1', '950796', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이동경'),
+	(397, 'tmp179', '1', '950797', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정승현'),
+	(398, 'tmp180', '1', '950798', '중', NULL, 'N', 0, 0, 0, 0, NULL, '원두재'),
+	(399, 'tmp181', '1', '950799', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김성준'),
+	(400, 'tmp182', '1', '950800', '중', NULL, 'N', 0, 0, 0, 0, NULL, '비욘 존슨'),
+	(401, 'tmp183', '1', '950801', '중', NULL, 'N', 0, 0, 0, 0, NULL, '조현우'),
+	(402, 'tmp184', '1', '950802', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정성민'),
+	(403, 'tmp185', '1', '950803', '중', NULL, 'N', 0, 0, 0, 0, NULL, '최필수'),
+	(404, 'tmp186', '1', '950804', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김승준'),
+	(405, 'tmp187', '1', '950805', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김진규'),
+	(406, 'tmp188', '1', '950806', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이규성'),
+	(407, 'tmp189', '1', '950807', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김정호'),
+	(408, 'tmp190', '1', '950808', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이상준'),
+	(409, 'tmp191', '1', '950809', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박경민'),
+	(410, 'tmp192', '1', '950810', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이지승'),
+	(411, 'tmp193', '1', '950811', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이래준'),
+	(412, 'tmp194', '1', '950812', '중', NULL, 'N', 0, 0, 0, 0, NULL, '권혁규'),
+	(413, 'tmp195', '1', '950813', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박관우'),
+	(414, 'tmp196', '1', '950814', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김문환'),
+	(415, 'tmp197', '1', '950815', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박호영'),
+	(416, 'tmp198', '1', '950816', '중', NULL, 'N', 0, 0, 0, 0, NULL, '성호영'),
+	(417, 'tmp199', '1', '950817', '중', NULL, 'N', 0, 0, 0, 0, NULL, '황준호'),
+	(418, 'tmp200', '1', '950818', '중', NULL, 'N', 0, 0, 0, 0, NULL, '정호정'),
+	(419, 'tmp201', '1', '950819', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박준강'),
+	(420, 'tmp202', '1', '950820', '중', NULL, 'N', 0, 0, 0, 0, NULL, '강민수'),
+	(421, 'tmp203', '1', '950821', '중', NULL, 'N', 0, 0, 0, 0, NULL, '도스톤벡'),
+	(422, 'tmp204', '1', '950822', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김동우'),
+	(423, 'tmp205', '1', '950823', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김병오'),
+	(424, 'tmp206', '1', '950824', '중', NULL, 'N', 0, 0, 0, 0, NULL, '박종우'),
+	(425, 'tmp207', '1', '950825', '중', NULL, 'N', 0, 0, 0, 0, NULL, '빈치씽코'),
+	(426, 'tmp208', '1', '950826', '중', NULL, 'N', 0, 0, 0, 0, NULL, '호물로'),
+	(427, 'tmp209', '1', '950827', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이동준'),
+	(428, 'tmp210', '1', '950828', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김현'),
+	(429, 'tmp211', '1', '950829', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김정현'),
+	(430, 'tmp212', '1', '950830', '중', NULL, 'N', 0, 0, 0, 0, NULL, '김명준'),
+	(431, 'tmp213', '1', '950831', '중', NULL, 'N', 0, 0, 0, 0, NULL, '윤석영'),
+	(432, 'tmp214', '1', '950832', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이정협'),
+	(433, 'tmp215', '1', '950833', '중', NULL, 'N', 0, 0, 0, 0, NULL, '이지민');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
