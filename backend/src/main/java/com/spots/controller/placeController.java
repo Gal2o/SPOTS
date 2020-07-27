@@ -1,0 +1,50 @@
+package com.spots.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.spots.dto.PlaceInfo;
+import com.spots.dto.UserInfo;
+import com.spots.service.PlaceInfoService;
+
+
+@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@RestController
+public class placeController {
+	@Autowired
+	PlaceInfoService placeInfoService;
+	
+	@ExceptionHandler
+	public ModelAndView handler(Exception ex) {
+		ModelAndView  mav = new ModelAndView("error/errorHandler");
+		mav.addObject("msg", ex.getMessage());
+		ex.printStackTrace();
+		return mav;
+	}
+	
+	@PostMapping(value="/place/list")
+	public <List>PlaceInfo placeList(UserInfo dto) {
+		return placeInfoService.placeList();
+	}
+	
+	@GetMapping(value="/place/detail")
+	public PlaceInfo placeDetail(@PathVariable int uid) {
+		return placeInfoService.placeDetail(uid);
+	}
+	
+	@PostMapping(value="/place/regist")
+	public int placeRegist(PlaceInfo dto) {
+		return placeInfoService.placeRegist(dto);
+	}
+	
+
+	
+}
+
