@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.PlaceMapper">
+	 
+	
+	<select id="placeList" resultType="com.spots.dto.PlaceInfo">
+		select * from place
+	</select>
+	
+	<select id="placeDetail" resultType="com.spots.dto.PlaceInfo">
+		select * from place where uid = #{uid}
+	</select>
+	<insert id="placeRegist">
+		insert into place
+		(place_name, price, address, code, open, close, lng, lat) 
+		VALUES(
+			#{place_name},#{price},#{address},#{code},#{open},#{close},#{lng},#{lat}
+		)
+	</insert>
+
+</mapper>
+
+
+
+
+
+
