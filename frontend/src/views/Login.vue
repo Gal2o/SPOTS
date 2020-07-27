@@ -37,7 +37,7 @@
                                 <span class="text-muted">아이디를 기억합니다.</span>
                             </base-checkbox>
                             <div class="text-center">
-                                <base-button type="primary" class="my-4" @click="Login">로그인하기</base-button>
+                                <base-button type="primary" class="my-4" @click="emitLoginSubmit">로그인하기</base-button>
                             </div>
                         </form>
                     </div>
@@ -54,8 +54,6 @@
         </div>
 </template>
 <script>
-    import axios from 'axios'
-
     export default {
         name: 'login',
         data() {
@@ -72,24 +70,11 @@
             }
         },
         methods: {
-            setCookie(uid) {
-                this.$cookies.set('uid', uid)
-            },
-            Login() {
-                const LoginData = new LoginData();
-                LoginData.append('email', this.model.email);
-                LoginData.append('password', this.model.password);
-                axios.post('http://localhost:8080/login', LoginData)
-                    .then(res => {
-                        console.log(res)
-                        this.$router.push({ name: 'SPOTs' })
-                    })
-                    .catch(err => {
-                        alert('실패했습니다.')
-                        console.log(err)
-                    })
-            },
-        },      
+            emitLoginSubmit() {
+                console.log(this.model)
+                this.$emit('login-submit', this.model)
+            }, 
+        },    
     }
 </script>
 <style>

@@ -80,7 +80,7 @@
         <!-- Page content -->
         <div class="container mt--8 pb-5">
             <slide-y-up-transition mode="out-in" origin="center top">
-                <router-view></router-view>
+                <router-view @login-submit="Login"></router-view>
             </slide-y-up-transition>
         </div>
         <footer class="py-5">
@@ -126,7 +126,13 @@
         year: new Date().getFullYear(),
         showMenu: false
       }
-    }
+    },
+    methods: {
+        Login(loginInfo) {
+            console.log(loginInfo, 'okPATH')
+            this.$emit('login-submit', loginInfo)
+        },
+    },
   }
 </script>
 <style>
