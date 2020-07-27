@@ -24,7 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.spots.dto.UserInfo;
 import com.spots.service.LoginService;
 
-@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 public class LoginController {
 	
@@ -47,11 +47,11 @@ public class LoginController {
 		return "user/login";
 	}
 		
-	//post방식으로 /login을 받았을때 같이 보내진 id와 password를 가지고 회원 확인함
+	//post諛⑹떇�쑝濡� /login�쓣 諛쏆븯�쓣�븣 媛숈씠 蹂대궡吏� id�� password瑜� 媛�吏�怨� �쉶�썝 �솗�씤�븿
 	@PostMapping(value="/login")
 	public UserInfo login(@RequestParam String email, @RequestParam String password) {
 	    
-		System.out.println("들어옴");
+		System.out.println("�뱾�뼱�샂");
 
 		System.out.println(loginService.login(email, password));
 

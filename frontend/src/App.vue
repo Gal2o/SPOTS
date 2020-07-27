@@ -7,6 +7,7 @@
 <script>
   import axios from 'axios'
 
+  const SERVER_URL = 'http://localhost:8080/'
   export default {
     name: 'login',
     data() {
@@ -18,13 +19,11 @@
       },
       Login(loginInfo) {
         console.log(loginInfo, 'last')
-        console.log(loginInfo.email)
-        console.log(loginData)
         const loginData = new FormData();
         loginData.append('email', loginInfo.email);
         loginData.append('password', loginInfo.password);
         console.log(loginData)
-        axios.post('http://localhost:8080/login', loginData)
+        axios.post(SERVER_URL + 'user/login/', loginData)
             .then(res => {
                 console.log(res)
                 this.$router.push({ name: 'SPOTs' })
