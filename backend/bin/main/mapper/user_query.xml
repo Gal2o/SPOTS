@@ -6,46 +6,40 @@
 	<select id="login" resultType="com.spots.dto.UserInfo">
 		select * from user where email= #{email} and password = #{password}
 	</select>
-	<!-- <select id="detail" resultType="com.ssafy.happyhouse.dto.UserInfo">
-		select * from ssafy_member where id= #{id}
+	<select id="detail" resultType="com.spots.dto.UserInfo">
+		select * from user where email= #{email}
 	</select>
 	<insert id="signUp">
-		insert into ssafy_member
-		(id, pw, name, nickname, email, homepage, address, hobby, isAdmin) 
+		insert into user
+		(email, password, birthday, skill, position_uid, nickname) 
 		VALUES(
-		#{id},#{pw},#{name},#{nickname},#{email},#{homepage},#{address},#{hobby},#{isAdmin}
+			#{email},#{password},#{birthday},#{skill},#{position_uid},#{nickname}
 		)
 	</insert>
-	<delete id="delete">
-		delete from ssafy_member where id = #{id}
-	</delete>
 	<update id="modify">
-		update ssafy_member 
-		   set 	 id 	= #{id}
-				,pw	= #{pw}			
+		update user 
+		   set 	 email 	= #{email}
+				,password	= #{password}			
 				,nickname	= #{nickname}			
-				,email	= #{email}			
-				,homepage	= #{homepage}			
-				,address	= #{address}			
-				,hobby	= #{hobby}			
-				,isAdmin	= #{isAdmin}			
-		 where name= #{name}
+				,birthday	= #{birthday}			
+				,skill	= #{skill}			
+				,position_uid	= #{position_uid}			
+				,nickname	= #{nickname}			
+		 where uid= #{uid}
 	</update>
-	<select id="findPwdById" resultType="com.ssafy.happyhouse.dto.UserInfo">
+	<select id="findPwdByEmail" resultType="com.spots.dto.UserInfo">
 		select * from ssafy_member where id= #{id}
 	</select>
-	<insert id="registFav">	
-		insert into favinfo(id, dong_name, dong_code) 
-			select #{id},#{dongName},#{dongCode} from dual
-			    where not exists 
-				(select id, dong_name, dong_code
-			        from favinfo 
-			        where id=#{id} and dong_name=#{dongName} and dong_code=#{dongCode})
-        
-	</insert>
-	<select id="userFavList" resultType="com.ssafy.happyhouse.dto.FavInfo">
-		select dong_name as dongName, dong_code as dongCode from favinfo where id= #{id}
-	</select> -->
+	<update id="joinTeam">
+		update user 
+		   set 	 team_uid 	= #{team_uid}			
+		 where uid= #{uid}
+	</update>
+	<update id="outTeam">
+		update user 
+		   set 	 team_uid 	= null		
+		 where uid= #{uid}
+	</update>
 </mapper>
 
 

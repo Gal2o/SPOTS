@@ -25,19 +25,15 @@ public class MatchController {
 	FreeMatchService FreeMatch;
 	
 	@PostMapping(value="/TeamMatch")
-	public String TeamMatchList(HttpSession session){
-		TMatchInfo TMatch = TeamMatch.TList();
-		
-		session.setAttribute("TeamMatch", TMatch);
-		return "index";
+	public TMatchInfo TeamMatchList(){
+		System.out.println("들어옴");
+		return TeamMatch.TList();
 	}
 	
 	@PostMapping(value="/FreeMatch")
-	public String FreeMatchList(HttpSession session){
-		FMatchInfo FMatch = FreeMatch.FList();
-		
-		session.setAttribute("FreeMatch", FMatch);
-		return "index";
+	public FMatchInfo FreeMatchList() {
+		System.out.println("들어옴");
+		return FreeMatch.FList();
 	}
 }
 
