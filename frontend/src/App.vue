@@ -32,7 +32,7 @@ export default {
             .then(res => {
                 console.log(res)
                 if (res.data == "") {
-                  alert('실패했습니다.')
+                  alert('잘 못된 정보입니다.')
                 }
                 else {
                   const Userdata = res.data
