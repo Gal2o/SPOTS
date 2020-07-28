@@ -104,8 +104,13 @@ import axios from 'axios'
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
                 axios.post('http://localhost:8080/user/signUp/', SignData)
-                    .then(() => {
-                        this.$router.push({ name: 'login'})
+                    .then(res => {
+                        if (res.data == "") {
+                            alert('잘 못 작성된 항목이 있습니다. 회원가입을 다시 진행해주세요.')
+                        }
+                        else {
+                            this.$router.push({ name: 'login'})
+                        }                        
                     })
                     .catch(err => {
                         alert('회원가입을 다시 시도해주세요.');
