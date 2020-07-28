@@ -67,7 +67,7 @@
       <div @click="toggleSidebar">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
-          <router-view></router-view>
+          <router-view @logoutSuccess="logoutSuccess"></router-view>
         </fade-transition>
         <content-footer v-if="!$route.meta.hideFooter"></content-footer>
       </div>
@@ -97,6 +97,10 @@ export default {
         this.$sidebar.displaySidebar(false);
       }
     },
+    logoutSuccess(logoutData) {
+      this.isLogined = logoutData
+      this.$emit('logoutSuccess', logoutData)
+    }
   },
   created() {
       if (this.$cookies.isKey('UserInfo')) {

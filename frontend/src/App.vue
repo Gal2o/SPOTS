@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <notifications></notifications>
-    <router-view @login-submit="Login" />
+    <router-view @login-submit="Login" @logoutSuccess="logoutSuccess" />
   </div>
 </template>
 <script>
@@ -39,6 +39,9 @@
                 console.log(err)
             })
       },
+      logoutSuccess(logoutData) {
+        this.isLogined = logoutData
+      }
     },  
     created() {
       if (this.$cookies.isKey('UserInfo')) {

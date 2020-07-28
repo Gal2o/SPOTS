@@ -95,6 +95,7 @@ export default {
         .then(() => {
           this.$cookies.remove('UserInfo')
           this.isLoggedIn = false
+          this.$emit('logoutSuccess', this.isLoggedIn)
           this.$router.push({ name: 'login'})
         })
     },
