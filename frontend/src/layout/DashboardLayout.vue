@@ -22,7 +22,7 @@
           }"
         />
         <sidebar-item
-          v-if="!isLogined"
+          v-if="isLogined"
           :link="{
             name: '프로필',
             icon: 'ni ni-single-02 text-yellow',
@@ -99,7 +99,7 @@ export default {
     },
   },
   created() {
-      if (this.$cookies.isKey('email')) {
+      if (this.$cookies.isKey('UserInfo')) {
         this.isLogined = true
     }
   }  
