@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spots.dto.TeamInfo;
-import com.spots.mapper.TeamInfoMapper;
+import com.spots.mapper.TeamMapper;
 
 @Service
 public class TeamInfoServiceImpl implements TeamInfoService {
 	
 	@Autowired
-	TeamInfoMapper mapper;
+	TeamMapper mapper;
 	
 	@Override
 	public int registTeam(TeamInfo team) {
