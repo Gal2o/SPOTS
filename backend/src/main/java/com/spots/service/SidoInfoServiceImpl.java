@@ -20,13 +20,15 @@ public class SidoInfoServiceImpl implements SidoInfoService {
 	}
 
 	@Override
-	public List<SidoInfo> stateList() {
-		return mapper.stateList();
+	public List<SidoInfo> stateList(String city_code) {
+		city_code = city_code.substring(0,2);
+		return mapper.stateList(city_code);
 	}
 
 	@Override
-	public List<SidoInfo> dongList() {
-		return mapper.dongList();
+	public List<SidoInfo> dongList(String state_code) {
+		state_code = state_code.substring(0,4);
+		return mapper.dongList(state_code);
 	}
 
 

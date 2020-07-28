@@ -13,9 +13,9 @@ public interface SidoMapper {
 
 	List<SidoInfo> cityList();
 
-	List<SidoInfo> stateList();
+	List<SidoInfo> stateList(String city_code);
 
-	List<SidoInfo> dongList();
+	List<SidoInfo> dongList(String state_code);
 
 
 }

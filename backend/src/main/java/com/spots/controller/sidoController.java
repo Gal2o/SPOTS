@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,12 +34,12 @@ public class sidoController {
 		return sidoInfoService.cityList();
 	}
 	@GetMapping(value="/stateList")
-	public List<SidoInfo> stateList() {
-		return sidoInfoService.stateList();
+	public List<SidoInfo> stateList(@PathVariable String city_code) {
+		return sidoInfoService.stateList(city_code);
 	}
 	@GetMapping(value="/dongList")
-	public List<SidoInfo> dongList() {
-		return sidoInfoService.dongList();
+	public List<SidoInfo> dongList(@PathVariable String state_code) {
+		return sidoInfoService.dongList(state_code);
 	}
 	
 }
