@@ -13,19 +13,21 @@
 
 
 -- spots 데이터베이스 구조 내보내기
+DROP DATABASE IF EXISTS `spots`;
 CREATE DATABASE IF NOT EXISTS `spots` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `spots`;
 
 -- 테이블 spots.city_code 구조 내보내기
+DROP TABLE IF EXISTS `city_code`;
 CREATE TABLE IF NOT EXISTS `city_code` (
   `city_code` varchar(50) NOT NULL,
   `city_name` varchar(50) NOT NULL,
   PRIMARY KEY (`city_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='시코드';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='도코드';
 
 -- 테이블 데이터 spots.city_code:~17 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `city_code` DISABLE KEYS */;
-INSERT IGNORE INTO `city_code` (`city_code`, `city_name`) VALUES
+INSERT INTO `city_code` (`city_code`, `city_name`) VALUES
 	('1100000000', '서울특별시'),
 	('2600000000', '부산광역시'),
 	('2700000000', '대구광역시'),
@@ -46,15 +48,16 @@ INSERT IGNORE INTO `city_code` (`city_code`, `city_name`) VALUES
 /*!40000 ALTER TABLE `city_code` ENABLE KEYS */;
 
 -- 테이블 spots.dong_code 구조 내보내기
+DROP TABLE IF EXISTS `dong_code`;
 CREATE TABLE IF NOT EXISTS `dong_code` (
   `dong_code` varchar(50) NOT NULL,
   `dong_name` varchar(50) NOT NULL,
   PRIMARY KEY (`dong_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='동코드';
 
 -- 테이블 데이터 spots.dong_code:~854 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `dong_code` DISABLE KEYS */;
-INSERT IGNORE INTO `dong_code` (`dong_code`, `dong_name`) VALUES
+INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 	('1111010100', '청운동'),
 	('1111010200', '신교동'),
 	('1111010300', '궁정동'),
@@ -914,6 +917,7 @@ INSERT IGNORE INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 /*!40000 ALTER TABLE `dong_code` ENABLE KEYS */;
 
 -- 테이블 spots.free_matching 구조 내보내기
+DROP TABLE IF EXISTS `free_matching`;
 CREATE TABLE IF NOT EXISTS `free_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -932,9 +936,9 @@ CREATE TABLE IF NOT EXISTS `free_matching` (
   PRIMARY KEY (`uid`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='자유 매칭';
 
--- 테이블 데이터 spots.free_matching:~3 rows (대략적) 내보내기
+-- 테이블 데이터 spots.free_matching:~14 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `free_matching` DISABLE KEYS */;
-INSERT IGNORE INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
+INSERT INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
 	(1, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1111010200', '한판할사람111'),
 	(2, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-02 00:00:00', 1, 1, 1, 1, 1, 1, '1111010300', '한판할사람222'),
 	(3, 1, 1, 1, '2018-01-01 13:30:50', '2020-01-03 00:00:00', 1, 1, 1, 1, 1, 1, '1111010400', '한판할사람333'),
@@ -952,6 +956,7 @@ INSERT IGNORE INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`
 /*!40000 ALTER TABLE `free_matching` ENABLE KEYS */;
 
 -- 테이블 spots.matching_entry 구조 내보내기
+DROP TABLE IF EXISTS `matching_entry`;
 CREATE TABLE IF NOT EXISTS `matching_entry` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `striker1_uid` int(5) DEFAULT NULL,
@@ -975,24 +980,50 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
 /*!40000 ALTER TABLE `matching_entry` ENABLE KEYS */;
 
 -- 테이블 spots.place 구조 내보내기
+DROP TABLE IF EXISTS `place`;
 CREATE TABLE IF NOT EXISTS `place` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `place_name` varchar(50) NOT NULL,
   `price` int(6) NOT NULL,
   `address` varchar(50) DEFAULT NULL,
-  `code` int(6) DEFAULT NULL,
+  `code` varchar(50) DEFAULT NULL,
   `open` time DEFAULT NULL,
   `close` time DEFAULT NULL,
   `lng` text DEFAULT NULL,
   `lat` text DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
 
 -- 테이블 데이터 spots.place:~0 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
+INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `close`, `lng`, `lat`) VALUES
+	(1, '안양천체육생태공원', 50000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
+	(2, '안양천체육생태공원', 60000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
+	(3, '고척근린공원 운동장', 70000, '구로구 고척동 산9-14번지', '1153010600', NULL, NULL, '37.505969', '126.853168'),
+	(4, '고척스카이돔 야외 축구장', 80000, '구로구 고척동 66-47', '1153010600', NULL, NULL, '37.4958302', '126.8674899'),
+	(5, '계남근린공원 인조잔디 축구장', 90000, '구로구 고척동 산6-1', '1153010600', NULL, NULL, '37.5086492', '126.8555162'),
+	(6, '천마공원 축구장', 100000, '송파구 마천동 산1-8번지', '1171011400', NULL, NULL, '37.50036', '127.1601091'),
+	(7, '송파구시각장애인축구장', 50000, '송파구 올림픽로 474', '1171011100', NULL, NULL, '37.5247175', '127.1175084'),
+	(8, '송파구 여성축구장', 60000, '송파구 올림픽로 474', '1171011100', NULL, NULL, '37.5247175', '127.1175084'),
+	(9, '성보고등학교', 70000, '관악구 남부순환로156길 39', '1162010200', NULL, NULL, '37.4801177', '126.9207947'),
+	(10, '광나루한강공원 축구장', 80000, '강동구 암사동 637-4', '1174010700', NULL, NULL, '37.5499421', '127.1216882'),
+	(11, '광나루축구장', 90000, '강동구 천호동 351-1', '1174010900', NULL, NULL, '37.5464653', '127.119443'),
+	(12, '동명근린공원 인조잔디축구장', 100000, '강동구 아리수로 78길 43-19', '1174010200', NULL, NULL, '37.5607615', '127.16486'),
+	(13, '양화한강공원', 50000, '영등포구 양화동 1-4', '1156013100', NULL, NULL, '37.538351', '126.902254'),
+	(14, '영롱이억새구장, 갈대구장', 60000, '영등포구 문래동 5가 31', '1156012300', NULL, NULL, '37.5179868', '126.8813009'),
+	(15, '대림운동장 인조잔디구장', 70000, '영등포구 대림동 780', '1156013300', NULL, NULL, '37.4996112', '126.8948104'),
+	(16, '양재근린공원 축구장', 80000, '서초구 양재2동 311', '1165010200', NULL, NULL, '37.4715434', '127.0423853'),
+	(17, '서울시인재개발원 축구장', 90000, '서초구 서초동 393-1', '1165010800', NULL, NULL, '37.4795371', '127.0218775'),
+	(18, '반포한강공원', 100000, '서초구 잠원동 122-1', '1165010600', NULL, NULL, '37.5173518', '127.0182303'),
+	(19, '잠원한강공원', 50000, '강남구 압구정동 386', '1168011000', NULL, NULL, '37.5275007', '127.0189266'),
+	(20, '탄천물재생센터축구장', 60000, '강남구 일원동 4-12', '1168011400', NULL, NULL, '37.495207', '127.0895837'),
+	(21, '보라매공원', 70000, '동작구 여의대방로20길 33', '1159010900', NULL, NULL, '37.4932342', '126.9197115'),
+	(22, '노들나루공원 인조잔디구장', 80000, '동작구 노량진로 247', '1159010400', NULL, NULL, '37.5138235', '126.953907'),
+	(23, '독산동 잔디축구장', 90000, '금천구 독산1동 1086번지', '1154510200', NULL, NULL, '37.4636133', '126.8841338');
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 
 -- 테이블 spots.position 구조 내보내기
+DROP TABLE IF EXISTS `position`;
 CREATE TABLE IF NOT EXISTS `position` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `position_name` varchar(50) DEFAULT NULL,
@@ -1001,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `position` (
 
 -- 테이블 데이터 spots.position:~4 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `position` DISABLE KEYS */;
-INSERT IGNORE INTO `position` (`uid`, `position_name`) VALUES
+INSERT INTO `position` (`uid`, `position_name`) VALUES
 	(1, '공격수'),
 	(2, '미드필더'),
 	(3, '수비수'),
@@ -1009,6 +1040,7 @@ INSERT IGNORE INTO `position` (`uid`, `position_name`) VALUES
 /*!40000 ALTER TABLE `position` ENABLE KEYS */;
 
 -- 테이블 spots.state_code 구조 내보내기
+DROP TABLE IF EXISTS `state_code`;
 CREATE TABLE IF NOT EXISTS `state_code` (
   `state_code` varchar(50) NOT NULL,
   `state_name` varchar(50) NOT NULL,
@@ -1017,7 +1049,7 @@ CREATE TABLE IF NOT EXISTS `state_code` (
 
 -- 테이블 데이터 spots.state_code:~85 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `state_code` DISABLE KEYS */;
-INSERT IGNORE INTO `state_code` (`state_code`, `state_name`) VALUES
+INSERT INTO `state_code` (`state_code`, `state_name`) VALUES
 	('1111000000', '서울특별시'),
 	('2611000000', '부산광역시'),
 	('2711000000', '대구광역시'),
@@ -1106,6 +1138,7 @@ INSERT IGNORE INTO `state_code` (`state_code`, `state_name`) VALUES
 /*!40000 ALTER TABLE `state_code` ENABLE KEYS */;
 
 -- 테이블 spots.team 구조 내보내기
+DROP TABLE IF EXISTS `team`;
 CREATE TABLE IF NOT EXISTS `team` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `team_name` varchar(50) NOT NULL,
@@ -1120,7 +1153,7 @@ CREATE TABLE IF NOT EXISTS `team` (
 
 -- 테이블 데이터 spots.team:~51 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT IGNORE INTO `team` (`uid`, `team_name`, `team_intro`, `team_win`, `team_lose`, `team_draw`, `captain_uid`) VALUES
+INSERT INTO `team` (`uid`, `team_name`, `team_intro`, `team_win`, `team_lose`, `team_draw`, `captain_uid`) VALUES
 	(52, '강원 FC', '강원 FC입니다', 8, 2, 0, NULL),
 	(53, '광주 FC', '광주 FC화이팅', 11, 3, 1, NULL),
 	(54, '대구 FC', '대구아인교', 123, 4, 2, NULL),
@@ -1175,6 +1208,7 @@ INSERT IGNORE INTO `team` (`uid`, `team_name`, `team_intro`, `team_win`, `team_l
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
 -- 테이블 spots.team_matching 구조 내보내기
+DROP TABLE IF EXISTS `team_matching`;
 CREATE TABLE IF NOT EXISTS `team_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -1197,7 +1231,7 @@ CREATE TABLE IF NOT EXISTS `team_matching` (
 
 -- 테이블 데이터 spots.team_matching:~14 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `team_matching` DISABLE KEYS */;
-INSERT IGNORE INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
+INSERT INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_scroe`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`) VALUES
 	(1, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-04 00:00:00', 1, 1, 1, 1, 1, 1, '1111010500', '한판할사람444'),
 	(2, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-05 00:00:00', 1, 1, 1, 1, 1, 1, '1111010600', '한판할사람555'),
 	(3, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-06 00:00:00', 1, 1, 1, 1, 1, 1, '1111010700', '한판할사람666'),
@@ -1215,6 +1249,7 @@ INSERT IGNORE INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_te
 /*!40000 ALTER TABLE `team_matching` ENABLE KEYS */;
 
 -- 테이블 spots.user 구조 내보내기
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
@@ -1233,9 +1268,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=434 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
--- 테이블 데이터 spots.user:~3 rows (대략적) 내보내기
+-- 테이블 데이터 spots.user:~218 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT IGNORE INTO `user` (`uid`, `email`, `password`, `birthday`, `skill`, `position_uid`, `ckMail`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`) VALUES
+INSERT INTO `user` (`uid`, `email`, `password`, `birthday`, `skill`, `position_uid`, `ckMail`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`) VALUES
 	(1, 'aaa@aaa.com', '111', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'aaa'),
 	(2, 'bbb@bbb.com', '222', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'bbb'),
 	(3, 'ccc@ccc.com', '333', '1', '1', '1', '1', 1, 1, 1, 1, 1, 'ccc'),
