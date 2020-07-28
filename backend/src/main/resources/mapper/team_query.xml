@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.TeamMapper">
+	 
+	
+	<insert id="registTeam">
+		insert into team
+		(team_name, team_intro, captain_uid) 
+		VALUES(
+			#{team_name},#{team_intro},#{captain_uid}
+		)
+	</insert>
+	<update id="modifyTeam">
+		update team 
+		   set 	 team_name 	= #{team_name}
+				,team_intro	= #{team_intro}			
+				,captain_uid	= #{captain_uid}					
+		 where uid= #{uid}
+	</update>
+	<select id="detailTeam" resultType="com.spots.dto.TeamInfo">
+		select * from team where uid= #{uid}
+	</select>
+	<delete id="deleteTeam">
+		delete from team where uid = #{uid};
+		update user 
+			set team_uid = null
+		where team_uid = #{uid}
+	</delete>
+	<select id="listTeam" resultType="com.spots.dto.TeamInfo">
+		select * from team
+	</select>
+	
+</mapper>
+
+
+
+
+
+
