@@ -1,5 +1,7 @@
 package com.spots.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +53,7 @@ public class teamController {
 	}
 	
 	@GetMapping(value="/team/list")
-	public <List>TeamInfo listTeam() {
+	public List<TeamInfo> listTeam() {
 		return teamInfoService.listTeam();
 	}
 	

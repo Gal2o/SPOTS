@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class PlaceInfoServiceImpl implements PlaceInfoService {
 	PlaceMapper mapper;
 
 	@Override
-	public <List>PlaceInfo placeList() {
+	public List<PlaceInfo> placeList() {
 		return mapper.placeList();
 	}
 

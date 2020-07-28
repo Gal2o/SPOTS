@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,7 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	}
 
 	@Override
-	public <List>TeamInfo listTeam() {
+	public List<TeamInfo> listTeam() {
 		return mapper.listTeam();
 	}
 	
