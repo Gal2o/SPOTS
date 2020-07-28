@@ -156,9 +156,9 @@ export default {
     };
   },
   created() {
-      if (this.$cookies.isKey('UserInfo')) {
-        this.userInfo = this.$cookies.get('UserInfo')
-        console.log(this.userInfo)
+    if (this.$cookies.isKey('UserInfo')) {
+      this.userInfo = this.$cookies.get('UserInfo')
+      console.log(this.userInfo)
     }
   }
 };
