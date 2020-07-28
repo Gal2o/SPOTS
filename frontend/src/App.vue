@@ -16,9 +16,9 @@
       }
     },
     methods: {
-      setCookie(uid) {
-        console.log(typeof(uid))
-        this.$cookies.set('uid', uid)
+      setCookie(email) {
+        console.log(this)
+        this.$cookies.set('email', email)
       },
       Login(loginInfo) {
         console.log(loginInfo, 'last')
@@ -29,15 +29,21 @@
         axios.post(SERVER_URL + 'login/', loginData)
             .then(res => {
                 console.log(res)
-                const Loginuid = String(res.data.uid)
-                this.setCookie(Loginuid)
+                const Loginemail = String(res.data.email)
+                this.setCookie(Loginemail)
                 this.isLogined = true
+                this.$router.push({ name: 'SPOTs' })
             })
             .catch(err => {
                 alert('실패했습니다.')
                 console.log(err)
             })
       },
-    },      
+    },  
+    created() {
+      if (this.$cookies.isKey('email')) {
+        this.isLogined = true
+      }
+    }    
   }
 </script>
