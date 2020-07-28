@@ -13,8 +13,18 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 	MatchMapper mapper;
 	
 	@Override
-	public TMatchInfo TList() {
-		return mapper.TList();
+	public TMatchInfo TListMain() {
+		return mapper.TListMain();
+	}
+
+	@Override
+	public TMatchInfo TListAll() {
+		return mapper.TListAll();
+	}
+
+	@Override
+	public TMatchInfo TListRoom(int uid) {
+		return mapper.TListRoom(uid);
 	}
 
 }
