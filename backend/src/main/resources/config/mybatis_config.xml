@@ -10,5 +10,6 @@
  		<mapper resource="mapper/sido_query.xml" />
  		<!-- merge  -->
  		<mapper resource="mapper/Match_query.xml" />
+ 		<mapper resource="mapper/rank_query.xml" />
 	</mappers>
 </configuration>
