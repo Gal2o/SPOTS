@@ -27,7 +27,7 @@
               <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">유저 이름</span>
+              <span class="mb-0 text-sm font-weight-bold">{{ userInfo.nickname }}</span>
             </div>
           </div>
 
@@ -77,6 +77,7 @@ export default {
       showMenu: false,
       searchQuery: "",
       isLogined: false,
+      userInfo: Object,
     };
   },
   methods: {
@@ -92,7 +93,7 @@ export default {
     Logout() {
       axios.post(SERVER_URL + 'logout/', null)
         .then(() => {
-          this.$cookies.remove('email')
+          this.$cookies.remove('UserInfo')
           this.isLoggedIn = false
           this.$router.push({ name: 'login'})
         })
@@ -100,8 +101,10 @@ export default {
 
   },
   created() {
-      if (this.$cookies.isKey('email')) {
+      if (this.$cookies.isKey('UserInfo')) {
         this.isLogined = true
+        this.userInfo = this.$cookies.get('UserInfo')
+        console.log(this.userInfo)
     }
   }
 };

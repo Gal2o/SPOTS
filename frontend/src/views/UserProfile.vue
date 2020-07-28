@@ -10,9 +10,9 @@
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-12 col-md-10">
-            <h1 class="display-2 text-white">{{ username }}의 프로필</h1>
+            <h1 class="display-2 text-white">{{ userInfo.nickname }}의 프로필</h1>
             <p class="text-white mt-0 mb-5">
-              유저님의 프로필 페이지입니다.
+              {{ userInfo.nickname }}님의 프로필 페이지입니다.
               <br />
               본인의 정보 확인 및 수정이 가능합니다.
             </p>
@@ -62,13 +62,10 @@
                 </div>
               </div>
               <div class="text-center">
-                <h3>이름 : {{ username }}</h3>
+                <h3>이름 : {{ userInfo.nickname }}</h3>
                 <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>이메일 :
-                  {{ email }}
-                </div>
-                <div>
-                  <i class="ni education_hat mr-2"></i>주소 : {{ address }}
+                  <i class="ni education_hat mr-2"></i>이메일 :
+                  {{ userInfo.email }}
                 </div>
               </div>
             </div>
@@ -94,7 +91,7 @@
                         label="이름"
                         placeholder="이름을 입력해주세요"
                         input-classes="form-control-alternative"
-                        v-model="model.username"
+                        v-model="userInfo.nickname"
                       />
                     </div>
                     <div class="col-lg-6">
@@ -103,23 +100,12 @@
                         label="이메일"
                         placeholder="이메일을 입력해주세요"
                         input-classes="form-control-alternative"
-                        v-model="model.email"
+                        v-model="userInfo.email"
                       />
                     </div>
                   </div>
                 </div>
                 <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <base-input
-                        alternative=""
-                        label="상세 주소"
-                        placeholder="상세 주소를 입력해주세요"
-                        input-classes="form-control-alternative"
-                        v-model="model.address"
-                      />
-                    </div>
-                  </div>
                   <div class="row">
                     <div class="col-lg-4">
                       <base-input
@@ -139,19 +125,6 @@
                         v-model="model.country"
                       />
                     </div>
-                  </div>
-                </div>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <base-input alternative="" label="자기 소개">
-                      <textarea
-                        rows="4"
-                        class="form-control form-control-alternative"
-                        placeholder="A few words about you ..."
-                      >
-간략히 자기를 소개해 주세요
-                      </textarea>
-                    </base-input>
                   </div>
                 </div>
                 <a href="#!" class="btn btn-info center">내정보 수정</a>
@@ -179,8 +152,15 @@ export default {
         zipCode: "",
         about: "",
       },
+      userInfo: Object,
     };
   },
+  created() {
+      if (this.$cookies.isKey('UserInfo')) {
+        this.userInfo = this.$cookies.get('UserInfo')
+        console.log(this.userInfo)
+    }
+  }
 };
 </script>
 <style></style>

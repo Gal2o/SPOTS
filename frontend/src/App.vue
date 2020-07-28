@@ -16,9 +16,9 @@
       }
     },
     methods: {
-      setCookie(email) {
+      setCookie(UserInfo) {
         console.log(this)
-        this.$cookies.set('email', email)
+        this.$cookies.set('UserInfo', UserInfo)
       },
       Login(loginInfo) {
         console.log(loginInfo, 'last')
@@ -29,8 +29,8 @@
         axios.post(SERVER_URL + 'login/', loginData)
             .then(res => {
                 console.log(res)
-                const Loginemail = String(res.data.email)
-                this.setCookie(Loginemail)
+                const Userdata = res.data
+                this.setCookie(Userdata)
                 this.isLogined = true
                 this.$router.push({ name: 'SPOTs' })
             })
@@ -41,7 +41,7 @@
       },
     },  
     created() {
-      if (this.$cookies.isKey('email')) {
+      if (this.$cookies.isKey('UserInfo')) {
         this.isLogined = true
       }
     }    
