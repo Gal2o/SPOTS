@@ -2,12 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.spots.mapper.MatchMapper">
 
-
-	<select id="TList" resultType="com.spots.dto.TMatchInfo">
-		select * from team_matching
+	<!-- 메인페이지 -->
+	<select id="TListMain" resultType="com.spots.dto.TMatchInfo">
+		select * from team_matching limit 5;
 	</select>
 	
-	<select id="FList" resultType="com.spots.dto.FMatchInfo">
-		select * from free_matching
+	<select id="FListMain" resultType="com.spots.dto.FMatchInfo">
+		select * from free_matching limit 5;
 	</select>
+	
+	<!-- 전체 리스트  -->
+	<select id="TListAll" resultType="com.spots.dto.TMatchInfo">
+		select * from team_matching;
+	</select>
+	
+	<select id="FListAll" resultType="com.spots.dto.FMatchInfo">
+		select * from free_matching;
+	</select>
+	
+	<!-- 매칭 방 정보 조회  -->
+	<select id="TListRoom" resultType="com.spots.dto.TMatchInfo">
+		select * from team_matching where uid = #{uid};
+	</select>
+	
+	<select id="FListRoom" resultType="com.spots.dto.FMatchInfo">
+		select * from free_matching where uid = #{uid};
+	</select>
+	
+	<!-- 매칭 방 만들기 -->
+	<insert id="TRoomCreate">
+		insert into team_matching
+		( head_uid, home_team_uid, home_matching_entry_uid,
+		create_date, matching_date, place_uid, dong_code, title)
+		values
+		( #{head_uid}, #{home_team_uid}, #{home_matching_entry_uid},
+		#{create_date}, #{matching_date}, #{place_uid},
+		#{dong_code}, #{title} )
+	</insert>
+	
+	<insert id="FRoomCreate">
+		insert into free_matching
+		( head_uid, home_team_uid, home_matching_entry_uid,
+		create_date, matching_date, place_uid, dong_code, title)
+		values
+		( #{head_uid}, #{home_team_uid}, #{home_matching_entry_uid},
+		#{create_date}, #{matching_date}, #{place_uid},
+		#{dong_code}, #{title} )
+	</insert>
 </mapper>

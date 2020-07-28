@@ -4,5 +4,9 @@ import com.spots.dto.FMatchInfo;
 
 public interface FreeMatchService {
 	
-	public FMatchInfo FList();
+	public FMatchInfo FListMain();
+
+	public FMatchInfo FListAll();
+
+	public FMatchInfo FListRoom(int uid);
 }

@@ -6,6 +6,10 @@ import com.spots.dto.TMatchInfo;
 
 public interface TeamMatchService {
 
-	public TMatchInfo TList();
+	public TMatchInfo TListMain();
+
+	public TMatchInfo TListAll();
+
+	public TMatchInfo TListRoom(int uid);
 	
 }

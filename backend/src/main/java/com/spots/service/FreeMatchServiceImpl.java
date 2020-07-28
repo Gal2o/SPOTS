@@ -14,7 +14,17 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 	MatchMapper mapper;
 	
 	@Override
-	public FMatchInfo FList() {
-		return mapper.FList();
+	public FMatchInfo FListMain() {
+		return mapper.FListMain();
+	}
+
+	@Override
+	public FMatchInfo FListAll() {
+		return mapper.FListAll();
+	}
+
+	@Override
+	public FMatchInfo FListRoom(int uid) {
+		return mapper.FListRoom(uid);
 	}
 }

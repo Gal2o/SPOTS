@@ -9,7 +9,15 @@ import com.spots.dto.TMatchInfo;
 @Mapper
 public interface MatchMapper {
 
-	public TMatchInfo TList();
+	public TMatchInfo TListMain();
 	
-	public FMatchInfo FList();
+	public FMatchInfo FListMain();
+
+	public TMatchInfo TListAll();
+
+	public FMatchInfo FListAll();
+
+	public TMatchInfo TListRoom(int uid);
+
+	public FMatchInfo FListRoom(int uid);
 }
