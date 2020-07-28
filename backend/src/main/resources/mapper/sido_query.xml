@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.UserMapper">
+	 
+	
+	<select id="cityList" resultType="com.spots.dto.SidoInfo">
+		select * from city_code
+	</select>
+	<select id="stateList" resultType="com.spots.dto.SidoInfo">
+		select * from state_code
+	</select>
+	<select id="dongList" resultType="com.spots.dto.SidoInfo">
+		select * from dong_code
+	</select>
+
+</mapper>
+
+
+
+
+
+
