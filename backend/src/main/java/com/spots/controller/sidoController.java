@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,12 +35,15 @@ public class sidoController {
 		System.out.println("asd");
 		return sidoInfoService.cityList();
 	}
-	@GetMapping(value="/stateList")
-	public List<SidoInfo> stateList(@PathVariable String city_code) {
+	@PostMapping(value="/stateList")
+	public List<SidoInfo> stateList(@RequestParam String city_code) {
+		city_code = city_code.substring(0,2);
+		System.out.println(sidoInfoService.stateList(city_code));
 		return sidoInfoService.stateList(city_code);
 	}
-	@GetMapping(value="/dongList")
+	@PostMapping(value="/dongList")
 	public List<SidoInfo> dongList(@PathVariable String state_code) {
+		state_code = state_code.substring(0,4);
 		return sidoInfoService.dongList(state_code);
 	}
 	
