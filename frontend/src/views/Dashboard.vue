@@ -9,25 +9,27 @@
             class="dropdown-item"
             v-for="cityData in cityDatas"
             v-bind:key="cityData"
-            @click="choice(cityData)"
+            @click="choice1(cityData)"
           >{{ cityData.city_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">시</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.stateN }}</base-button>
           <a
             class="dropdown-item"
             v-for="stateData in stateDatas"
             v-bind:key="stateData"
+            @click="choice2(stateData)"
           >{{ stateData.state_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">동</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.dongN }}</base-button>
           <a
             class="dropdown-item"
             v-for="dongData in dongDatas"
             v-bind:key="dongData"
+            @click="choice3(dongData)"
           >{{ dongData.dong_name }}</a>
         </base-dropdown>
 
@@ -76,16 +78,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    axios
-      .get(SERVER_URL + "dongList")
-      .then((res) => {
-        console.log(res);
-        this.dongDatas = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   },
   components: {
     ProjectsTable,
@@ -96,17 +88,26 @@ export default {
       stateDatas: "",
       dongDatas: "",
       cityN: "도",
-      iscity: true,
-      isstate: false,
-      isdong: false,
+      stateN: "시",
+      dongN: "동",
     };
   },
   methods: {
-    choice(city) {
+    choice1(city) {
       this.cityN = city.city_name;
       console.log("check");
       this.choicestate(city.city_code);
     },
+    choice2(state) {
+      this.stateN = state.state_name;
+      console.log("check");
+      this.choicedong(state.state_code);
+    },
+    choice3(dong) {
+      this.dongN = dong.dong_name;
+      console.log("check");
+    },
+
     choicestate(b) {
       const stateForm = new FormData();
       b = String(b);
@@ -116,6 +117,20 @@ export default {
         .then((res) => {
           console.log(res);
           this.stateDatas = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    choicedong(c) {
+      const dongForm = new FormData();
+      c = String(c);
+      dongForm.append("state_code", c);
+      axios
+        .post(SERVER_URL + "dongList", dongForm)
+        .then((res) => {
+          console.log(res);
+          this.dongDatas = res.data;
         })
         .catch((err) => {
           console.log(err);

@@ -17,7 +17,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="tableData"
+        :data="FreetableData"
       >
         <template slot="columns">
           <th>제목</th>
@@ -76,10 +76,20 @@ export default {
   name: "projects-table",
   created() {
     axios
-      .get(SERVER_URL + "FreeMatchAll/")
+      .get(SERVER_URL + "FreeMatchMain/")
       .then((res) => {
         console.log(res);
-        this.tableData = res;
+        this.FreetableData = res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(SERVER_URL + "TeamMatchMain/")
+      .then((res) => {
+        console.log(res);
+        this.TeamtableData = res;
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +103,8 @@ export default {
   },
   data() {
     return {
-      tableData: [],
+      FreetableData: [],
+      TeamtableData: [],
     };
   },
 };
