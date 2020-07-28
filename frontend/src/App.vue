@@ -11,11 +11,14 @@
   export default {
     name: 'login',
     data() {
-      return {}
+      return {
+        isLogined : false
+      }
     },
     methods: {
       setCookie(uid) {
-          this.$cookies.set('uid', uid)
+        console.log(typeof(uid))
+        this.$cookies.set('uid', uid)
       },
       Login(loginInfo) {
         console.log(loginInfo, 'last')
@@ -23,10 +26,12 @@
         loginData.append('email', loginInfo.email);
         loginData.append('password', loginInfo.password);
         console.log(loginData)
-        axios.post(SERVER_URL + 'user/login/', loginData)
+        axios.post(SERVER_URL + 'login/', loginData)
             .then(res => {
                 console.log(res)
-                this.$router.push({ name: 'SPOTs' })
+                const Loginuid = String(res.data.uid)
+                this.setCookie(Loginuid)
+                this.isLogined = true
             })
             .catch(err => {
                 alert('실패했습니다.')

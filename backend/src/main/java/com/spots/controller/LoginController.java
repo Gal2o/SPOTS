@@ -24,7 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.spots.dto.UserInfo;
 import com.spots.service.LoginService;
 
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
 @RestController
 public class LoginController {
 	
