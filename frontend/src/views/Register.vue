@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <base-button type="primary" class="my-4" @click="Signup">계정 생성</base-button>
+                            <base-button type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
                         </div>
                     </form>
                 </div>
@@ -85,7 +85,6 @@
 <script>
 import axios from 'axios'
 
-    const SERVER_URL = 'http://localhost:8080/'
     export default {
         name: 'register',
         data() {
@@ -95,18 +94,16 @@ import axios from 'axios'
                     email: '',
                     password: '',
                     passwordcheck: '',
-                    birthday: '',
                 }
             }
         },
         methods: {
-            Signup() {
-                const SignData = new FormData();
-                SignData.append('nickname', this.model.name);
+            signup() {
+                const SignData = new SignData();
+                SignData.append('name', this.model.name);
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
-                SignData.append('birthday', this.model.birthday)
-                axios.post(SERVER_URL + 'user/signUp/', SignData)
+                axios.post('http://localhost:8080/user/signUp/', SignData)
                     .then(() => {
                         this.$router.push({ name: 'login'})
                     })

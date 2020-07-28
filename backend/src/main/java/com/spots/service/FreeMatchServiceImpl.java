@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,19 +14,21 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 
 	@Autowired
 	MatchMapper mapper;
-	
+
 	@Override
-	public FMatchInfo FListMain() {
+	public List<FMatchInfo> FListMain() {
 		return mapper.FListMain();
 	}
 
 	@Override
-	public FMatchInfo FListAll() {
+	public List<FMatchInfo> FListAll() {
 		return mapper.FListAll();
 	}
 
 	@Override
-	public FMatchInfo FListRoom(int uid) {
+	public List<FMatchInfo> FListRoom(int uid) {
 		return mapper.FListRoom(uid);
 	}
+	
+	
 }

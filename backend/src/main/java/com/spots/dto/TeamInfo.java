@@ -4,8 +4,15 @@ public class TeamInfo {
 	private int uid;
 	private String team_name;
 	private String team_intro;
+	private double team_rate;
 	private int team_win;
 	private int team_lose;
+	public double getTeam_rate() {
+		return team_rate;
+	}
+	public void setTeam_rate(double team_rate) {
+		this.team_rate = team_rate;
+	}
 	private int team_draw;
 	private int captain_uid;
 	
@@ -16,12 +23,13 @@ public class TeamInfo {
 		this.team_intro = team_intro;
 		this.captain_uid = captain_uid;
 	}
-	public TeamInfo(int uid, String team_name, String team_intro, int team_win, int team_lose, int team_draw,
+	public TeamInfo(int uid, String team_name, String team_intro, double team_rate, int team_win, int team_lose, int team_draw,
 			int captain_uid) {
 		super();
 		this.uid = uid;
 		this.team_name = team_name;
 		this.team_intro = team_intro;
+		this.team_rate = team_rate;
 		this.team_win = team_win;
 		this.team_lose = team_lose;
 		this.team_draw = team_draw;

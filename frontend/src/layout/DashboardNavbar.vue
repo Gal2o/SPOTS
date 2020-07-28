@@ -9,75 +9,65 @@
       class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
     >
       <div class="form-group mb-0">
-        
+        <base-input
+          placeholder="검색"
+          class="input-group-alternative"
+          alternative=""
+          addon-right-icon="fas fa-search"
+        >
+        </base-input>
       </div>
     </form>
     <ul class="navbar-nav align-items-center d-none d-md-flex">
       <li class="nav-item dropdown">
         <base-dropdown class="nav-link pr-0">
-          <div v-if="!isLogined" class="media align-items-center" slot="title">
-            <router-link to="/login">
-              <div class="media-body ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">로그인</span>
-              </div>
-            </router-link>
-          </div>
-          <div v-if="isLogined" class="media align-items-center" slot="title">
+          <div class="media align-items-center" slot="title">
             <span class="avatar avatar-sm rounded-circle">
               <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm font-weight-bold">{{ userInfo.nickname }}</span>
+              <span class="mb-0 text-sm  font-weight-bold">유저 이름</span>
             </div>
           </div>
 
           <template>
-            <div v-if="isLogined">
-              <div class=" dropdown-header noti-title">
-                <h6 class="text-overflow m-0">환영합니다!</h6>
-              </div>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-single-02"></i>
-                <span>프로필</span>
-              </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>설정</span>
-              </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>내 일정 기록</span>
-              </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>지원</span>
-              </router-link>
-              <div class="dropdown-divider"></div>
-              <div @click="Logout" class="dropdown-item">
-                <i class="ni ni-user-run"></i>
-                <span>로그아웃</span>
-              </div>
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">환영합니다!</h6>
             </div>
+            <router-link to="/profile" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>프로필</span>
+            </router-link>
+            <router-link to="/profile" class="dropdown-item">
+              <i class="ni ni-settings-gear-65"></i>
+              <span>설정</span>
+            </router-link>
+            <router-link to="/profile" class="dropdown-item">
+              <i class="ni ni-calendar-grid-58"></i>
+              <span>내 일정 기록</span>
+            </router-link>
+            <router-link to="/profile" class="dropdown-item">
+              <i class="ni ni-support-16"></i>
+              <span>지원</span>
+            </router-link>
+            <div class="dropdown-divider"></div>
+            <router-link to="/profile" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>로그아웃</span>
+            </router-link>
           </template>
         </base-dropdown>
       </li>
     </ul>
   </base-nav>
 </template>
-
 <script>
-import axios from 'axios'
-
-const SERVER_URL = 'http://localhost:8080/'
-
 export default {
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchQuery: "",
-      isLogined: false,
-      userInfo: Object,
     };
   },
   methods: {
@@ -90,23 +80,6 @@ export default {
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
-    Logout() {
-      axios.post(SERVER_URL + 'logout/', null)
-        .then(() => {
-          this.$cookies.remove('UserInfo')
-          this.isLoggedIn = false
-          this.$emit('logoutSuccess', this.isLoggedIn)
-          this.$router.push({ name: 'login'})
-        })
-    },
-
   },
-  created() {
-      if (this.$cookies.isKey('UserInfo')) {
-        this.isLogined = true
-        this.userInfo = this.$cookies.get('UserInfo')
-        console.log(this.userInfo)
-    }
-  }
 };
 </script>

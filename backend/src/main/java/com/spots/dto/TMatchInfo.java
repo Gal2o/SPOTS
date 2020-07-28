@@ -5,6 +5,8 @@ import java.util.Date;
 public class TMatchInfo {
 	private int uid;
 	private int head_uid;
+	private int home_team_uid;
+	private int away_team_uid;
 	private int home_matching_entry_uid;
 	private int away_matching_entry_uid;
 	private Date create_date;
@@ -20,12 +22,14 @@ public class TMatchInfo {
 	
 	public TMatchInfo() {}
 	
-	public TMatchInfo(int uid, int head_uid, int home_matching_entry_uid, int away_matching_entry_uid, Date create_date,
+	public TMatchInfo(int uid, int head_uid, int home_team_uid, int away_team_uid, int home_matching_entry_uid, int away_matching_entry_uid, Date create_date,
 			Date matching_date, int home_score, int away_score, int ready_num, int place_uid, int price, int head_price,
 			String dong_code, String title) {
 		super();
 		this.uid = uid;
 		this.head_uid = head_uid;
+		this.home_team_uid = home_team_uid;
+		this.away_team_uid = away_team_uid;
 		this.home_matching_entry_uid = home_matching_entry_uid;
 		this.away_matching_entry_uid = away_matching_entry_uid;
 		this.create_date = create_date;
@@ -38,6 +42,22 @@ public class TMatchInfo {
 		this.head_price = head_price;
 		this.dong_code = dong_code;
 		this.title = title;
+	}
+
+	public int getHome_team_uid() {
+		return home_team_uid;
+	}
+
+	public void setHome_team_uid(int home_team_uid) {
+		this.home_team_uid = home_team_uid;
+	}
+
+	public int getAway_team_uid() {
+		return away_team_uid;
+	}
+
+	public void setAway_team_uid(int away_team_uid) {
+		this.away_team_uid = away_team_uid;
 	}
 
 	public int getUid() {
@@ -128,7 +148,8 @@ public class TMatchInfo {
 
 	@Override
 	public String toString() {
-		return "TMatchInfo [uid=" + uid + ", head_uid=" + head_uid + ", home_matching_entry_uid="
+		return "TMatchInfo [uid=" + uid + ", head_uid=" + head_uid + ", home_team_uid=" + home_team_uid
+				+ ", away_team_uid=" + away_team_uid + ", home_matching_entry_uid="
 				+ home_matching_entry_uid + ", away_matching_entry_uid=" + away_matching_entry_uid + ", create_date="
 				+ create_date + ", matching_date=" + matching_date + ", home_score=" + home_score + ", away_score="
 				+ away_score + ", ready_num=" + ready_num + ", place_uid=" + place_uid + ", price=" + price

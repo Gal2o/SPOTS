@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +13,22 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 
 	@Autowired
 	MatchMapper mapper;
-	
+
 	@Override
-	public TMatchInfo TListMain() {
+	public List<TMatchInfo> TListMain() {
 		return mapper.TListMain();
 	}
 
 	@Override
-	public TMatchInfo TListAll() {
+	public List<TMatchInfo> TListAll() {
 		return mapper.TListAll();
 	}
 
 	@Override
-	public TMatchInfo TListRoom(int uid) {
+	public List<TMatchInfo> TListRoom(int uid) {
 		return mapper.TListRoom(uid);
 	}
 
+	
 }
 

@@ -4,15 +4,31 @@
       <!-- Card stats -->
       <div class="row">
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">시</base-button>
-          <a class="dropdown-item">{{cityDatas}}</a>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.cityN }}</base-button>
+          <a
+            class="dropdown-item"
+            v-for="cityData in cityDatas"
+            v-bind:key="cityData"
+            @click="choice(cityData)"
+          >{{ cityData.city_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">구</base-button>
-          <a class="dropdown-item" href="#">성북</a>
-          <a class="dropdown-item" href="#">강북</a>
-          <a class="dropdown-item" href="#">용산</a>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">시</base-button>
+          <a
+            class="dropdown-item"
+            v-for="stateData in stateDatas"
+            v-bind:key="stateData"
+          >{{ stateData.state_name }}</a>
+        </base-dropdown>
+
+        <base-dropdown class="mr-3">
+          <base-button slot="title" type="secondary" class="dropdown-toggle">동</base-button>
+          <a
+            class="dropdown-item"
+            v-for="dongData in dongDatas"
+            v-bind:key="dongData"
+          >{{ dongData.dong_name }}</a>
         </base-dropdown>
 
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex">
@@ -55,7 +71,17 @@ export default {
       .get(SERVER_URL + "cityList")
       .then((res) => {
         console.log(res);
-        this.cityDatas.append(res.data);
+        this.cityDatas = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(SERVER_URL + "dongList")
+      .then((res) => {
+        console.log(res);
+        this.dongDatas = res.data;
       })
       .catch((err) => {
         console.log(err);
@@ -66,10 +92,36 @@ export default {
   },
   data() {
     return {
-      cityDatas: [],
+      cityDatas: "",
+      stateDatas: "",
+      dongDatas: "",
+      cityN: "도",
+      iscity: true,
+      isstate: false,
+      isdong: false,
     };
   },
-  methods: {},
+  methods: {
+    choice(city) {
+      this.cityN = city.city_name;
+      console.log("check");
+      this.choicestate(city.city_code);
+    },
+    choicestate(b) {
+      const stateForm = new FormData();
+      b = String(b);
+      stateForm.append("city_code", b);
+      axios
+        .post(SERVER_URL + "stateList", stateForm)
+        .then((res) => {
+          console.log(res);
+          this.stateDatas = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
   mounted() {},
 };
 </script>

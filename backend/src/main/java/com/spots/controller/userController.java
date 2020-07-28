@@ -51,7 +51,7 @@ public class userController {
 		return userInfoService.detail(email);
 	}
 	
-	@GetMapping(value="/user/joinTeam")
+	@PostMapping(value="/user/joinTeam")
 	public int joinTeam(@RequestParam Map<String, Integer> param) {
 		int uid= param.get("uid");
 		int team_uid= param.get("team_uid");

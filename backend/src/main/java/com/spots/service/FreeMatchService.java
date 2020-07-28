@@ -1,12 +1,14 @@
 package com.spots.service;
 
+import java.util.List;
+
 import com.spots.dto.FMatchInfo;
 
 public interface FreeMatchService {
 	
-	public FMatchInfo FListMain();
+	public List <FMatchInfo> FListMain();
 
-	public FMatchInfo FListAll();
+	public List <FMatchInfo> FListAll();
 
-	public FMatchInfo FListRoom(int uid);
+	public List <FMatchInfo> FListRoom(int uid);
 }

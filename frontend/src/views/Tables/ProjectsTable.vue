@@ -1,14 +1,9 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div
-      class="card-header border-0"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            {{ title }}
-          </h3>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ title }}</h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">더보기</base-button>
@@ -44,15 +39,11 @@
               </div>
             </div>
           </th>
-          <td class="time">
-            {{ row.time }}
-          </td>
+          <td class="time">{{ row.time }}</td>
           <td>
             <span class="status">{{ row.place }}</span>
           </td>
-          <td>
-            {{ row.numberofuser }}
-          </td>
+          <td>{{ row.numberofuser }}</td>
 
           <td>
             <div class="d-flex align-items-center">
@@ -61,7 +52,9 @@
           </td>
 
           <td class="text-right">
-            <base-button type="success">입장하기</base-button>
+            <router-link to="/dashboard/FreeMatch">
+              <base-button type="success">입장하기</base-button>
+            </router-link>
           </td>
         </template>
       </base-table>
@@ -76,8 +69,22 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+const SERVER_URL = "http://localhost:8080/";
+
 export default {
   name: "projects-table",
+  created() {
+    axios
+      .get(SERVER_URL + "FreeMatchAll/")
+      .then((res) => {
+        console.log(res);
+        this.tableData = res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   props: {
     type: {
       type: String,
@@ -86,48 +93,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          img: "img/theme/bootstrap.jpg",
-          title: "너만 오면 고",
-          time: "2020/08/02",
-          place: "서울시 성북구",
-          numberofuser: "11/22",
-          wait: "대기중",
-        },
-        {
-          img: "img/theme/angular.jpg",
-          title: "초보도 환영 ㅎㅎ",
-          time: "2020/08/23",
-          place: "서울시 용산구",
-          numberofuser: "17/22",
-          wait: "대기중",
-        },
-        {
-          img: "img/theme/sketch.jpg",
-          title: "구로구 메시 대기중",
-          time: "2020/08/30",
-          place: "서울시 구로구",
-          numberofuser: "20/22",
-          wait: "대기중",
-        },
-        {
-          img: "img/theme/react.jpg",
-          title: "여자분도 환영 놀러오세요",
-          time: "2020/09/05",
-          place: "서울시 종로구",
-          numberofuser: "21/22",
-          wait: "대기중",
-        },
-        {
-          img: "img/theme/vue.jpg",
-          title: "중고수 방",
-          time: "2020/09/13",
-          place: "서울시 강북구",
-          numberofuser: "14/22",
-          wait: "대기중",
-        },
-      ],
+      tableData: [],
     };
   },
 };

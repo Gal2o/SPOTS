@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.RankMapper">
+	<update id="TWin">
+		update team 
+		   set 	 team_win = team_win + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100			
+		 where uid= #{home_team_uid}
+		 
+		 update team 
+		   set 	 team_lose = team_win + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
+		 where uid= #{away_team_uid}
+	</update>
+	
+	<update id="TLose">
+		update team 
+		   set 	 team_win = team_win + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
+		 where uid= #{away_team_uid}
+		 
+		 update team 
+		   set 	 team_lose = team_win + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
+		 where uid= #{home_team_uid}
+	</update>
+	
+	<update id="TDraw">
+		update team 
+		   set 	 team_draw = team_draw + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+		 where uid= #{home_team_uid}
+		 
+		 update team 
+		   set 	 team_draw = team_draw + 1
+				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
+		 where uid= #{away_team_uid}
+	</update>
+	
+	<select id="listTeam" resultType="com.spots.dto.TeamInfo">
+		select * from team
+		order by team_rate DESC
+		limit 20
+	</select>
+	
+</mapper>

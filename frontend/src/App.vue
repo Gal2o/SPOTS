@@ -1,19 +1,46 @@
 <template>
   <div id="app">
     <notifications></notifications>
-    <router-view @login-submit="Login" @logoutSuccess="logoutSuccess" />
+    <router-view @login-submit="Login" />
   </div>
 </template>
-<script>
-  import axios from 'axios'
 
-  const SERVER_URL = 'http://localhost:8080/'
-  export default {
-    name: 'login',
-    data() {
-      return {
-        isLogined : false
-      }
+
+<script>
+import axios from "axios";
+
+const SERVER_URL = "http://localhost:8080/";
+export default {
+  name: "login",
+  data() {
+    return {
+      isLogined: false,
+    };
+  },
+  methods: {
+    setCookie(email) {
+      console.log(this);
+      this.$cookies.set("email", email);
+    },
+    Login(loginInfo) {
+      console.log(loginInfo, "last");
+      const loginData = new FormData();
+      loginData.append("email", loginInfo.email);
+      loginData.append("password", loginInfo.password);
+      console.log(loginData);
+      axios
+        .post(SERVER_URL + "login/", loginData)
+        .then((res) => {
+          console.log(res);
+          const Loginemail = String(res.data.email);
+          this.setCookie(Loginemail);
+          this.isLogined = true;
+          this.$router.push({ name: "SPOTs" });
+        })
+        .catch((err) => {
+          alert("실패했습니다.");
+          console.log(err);
+        });
     },
     methods: {
       setCookie(UserInfo) {
