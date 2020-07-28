@@ -18,9 +18,7 @@ public class RankController {
 
 	@Autowired
 	RankService TeamMatch;
-	
-	@Autowired
-	TeamInfoService teamInfoService;
+
 	
 	@GetMapping(value="/TeamMatch/win")
 	public int TeamMatchWin(TMatchInfo dto) {
@@ -42,7 +40,7 @@ public class RankController {
 	
 	@GetMapping(value="/rank")
 	public List<TeamInfo> listTeam() {
-		return teamInfoService.listTeam();
+		return TeamMatch.listTeam();
 	}
 
 }
