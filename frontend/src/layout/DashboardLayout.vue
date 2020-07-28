@@ -22,6 +22,7 @@
           }"
         />
         <sidebar-item
+          v-if="!isLogined"
           :link="{
             name: '프로필',
             icon: 'ni ni-single-02 text-yellow',
@@ -43,6 +44,7 @@
           }"
         />
         <sidebar-item
+          v-if="!isLogined"
           :link="{
             name: '로그인',
             icon: 'ni ni-key-25 text-info',
@@ -50,6 +52,7 @@
           }"
         />
         <sidebar-item
+          v-if="!isLogined"
           :link="{
             name: '회원가입',
             icon: 'ni ni-circle-08 text-pink',
@@ -84,7 +87,8 @@ export default {
   },
   data() {
     return {
-      sidebarBackground: "vue", //vue|blue|orange|green|red|primary
+      sidebarBackground: "vue", //vue|blue|orange|green|red|primary,
+      isLogined: false,
     };
   },
   methods: {
@@ -94,6 +98,11 @@ export default {
       }
     },
   },
+  created() {
+      if (this.$cookies.isKey('email')) {
+        this.isLogined = true
+    }
+  }  
 };
 </script>
 <style lang="scss"></style>
