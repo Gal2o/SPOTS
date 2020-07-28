@@ -29,10 +29,15 @@
         axios.post(SERVER_URL + 'login/', loginData)
             .then(res => {
                 console.log(res)
-                const Userdata = res.data
-                this.setCookie(Userdata)
-                this.isLogined = true
-                this.$router.push({ name: 'SPOTs' })
+                if (res.data == "") {
+                  alert('실패했습니다.')
+                }
+                else {
+                  const Userdata = res.data
+                  this.setCookie(Userdata)
+                  this.isLogined = true
+                  this.$router.push({ name: 'SPOTs' })
+                }
             })
             .catch(err => {
                 alert('실패했습니다.')

@@ -35,6 +35,12 @@
                                     v-model="model.email">
                         </base-input>
 
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="생년월일6자리 ex)850101"
+                                    addon-left-icon="ni ni-calendar-grid-58"
+                                    v-model="model.birthday">
+                        </base-input>
+
                         <base-input class="input-group-alternative"
                                     placeholder="비밀번호"
                                     type="password"
