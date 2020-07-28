@@ -1,9 +1,12 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spots.dto.TMatchInfo;
+import com.spots.dto.TeamInfo;
 import com.spots.mapper.RankMapper;
 
 @Service
@@ -25,6 +28,11 @@ public class RankServiceImpl implements RankService {
 	@Override
 	public int TDraw(TMatchInfo dto) {
 		return mapper.TDraw(dto);
+	}
+
+	@Override
+	public List<TeamInfo> listTeam() {
+		return mapper.listTeam();
 	}
 
 
