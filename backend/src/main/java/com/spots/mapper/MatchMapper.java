@@ -1,5 +1,7 @@
 package com.spots.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,15 +11,16 @@ import com.spots.dto.TMatchInfo;
 @Mapper
 public interface MatchMapper {
 
-	public TMatchInfo TListMain();
+	List <TMatchInfo> TListMain();
 	
-	public FMatchInfo FListMain();
+	List <TMatchInfo> TListAll();
+	
+	List <TMatchInfo> TListRoom(int uid);
 
-	public TMatchInfo TListAll();
+	List<FMatchInfo> FListMain();
 
-	public FMatchInfo FListAll();
+	List<FMatchInfo> FListAll();
 
-	public TMatchInfo TListRoom(int uid);
+	List<FMatchInfo> FListRoom(int uid);
 
-	public FMatchInfo FListRoom(int uid);
 }
