@@ -1,10 +1,11 @@
 package com.spots.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,16 +28,16 @@ public class sidoController {
 	}
 	
 	@GetMapping(value="/cityList")
-	public <List>SidoInfo cityList() {
+	public List<SidoInfo> cityList() {
 		System.out.println("asd");
 		return sidoInfoService.cityList();
 	}
 	@GetMapping(value="/stateList")
-	public <List>SidoInfo stateList() {
+	public List<SidoInfo> stateList() {
 		return sidoInfoService.stateList();
 	}
 	@GetMapping(value="/dongList")
-	public <List>SidoInfo dongList() {
+	public List<SidoInfo> dongList() {
 		return sidoInfoService.dongList();
 	}
 	

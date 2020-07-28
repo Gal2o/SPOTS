@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,17 @@ public class SidoInfoServiceImpl implements SidoInfoService {
 	SidoMapper mapper;
 
 	@Override
-	public <List> SidoInfo cityList() {
+	public List<SidoInfo> cityList() {
 		return mapper.cityList();
 	}
 
 	@Override
-	public <List> SidoInfo stateList() {
+	public List<SidoInfo> stateList() {
 		return mapper.stateList();
 	}
 
 	@Override
-	public <List> SidoInfo dongList() {
+	public List<SidoInfo> dongList() {
 		return mapper.dongList();
 	}
 

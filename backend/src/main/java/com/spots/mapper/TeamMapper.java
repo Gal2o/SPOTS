@@ -1,6 +1,8 @@
 package com.spots.mapper;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.spots.dto.TeamInfo;
@@ -17,6 +19,6 @@ public interface TeamMapper {
 
 	public int deleteTeam(int uid);
 
-	public <List>TeamInfo listTeam();
+	public List<TeamInfo> listTeam();
 
 }
