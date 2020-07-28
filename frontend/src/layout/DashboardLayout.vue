@@ -22,7 +22,6 @@
           }"
         />
         <sidebar-item
-          v-if="isLogined"
           :link="{
             name: '프로필',
             icon: 'ni ni-single-02 text-yellow',
@@ -44,7 +43,6 @@
           }"
         />
         <sidebar-item
-          v-if="!isLogined"
           :link="{
             name: '로그인',
             icon: 'ni ni-key-25 text-info',
@@ -52,7 +50,6 @@
           }"
         />
         <sidebar-item
-          v-if="!isLogined"
           :link="{
             name: '회원가입',
             icon: 'ni ni-circle-08 text-pink',
@@ -67,7 +64,7 @@
       <div @click="toggleSidebar">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
-          <router-view @logoutSuccess="logoutSuccess"></router-view>
+          <router-view></router-view>
         </fade-transition>
         <content-footer v-if="!$route.meta.hideFooter"></content-footer>
       </div>
@@ -87,8 +84,7 @@ export default {
   },
   data() {
     return {
-      sidebarBackground: "vue", //vue|blue|orange|green|red|primary,
-      isLogined: false,
+      sidebarBackground: "vue", //vue|blue|orange|green|red|primary
     };
   },
   methods: {
@@ -97,16 +93,7 @@ export default {
         this.$sidebar.displaySidebar(false);
       }
     },
-    logoutSuccess(logoutData) {
-      this.isLogined = logoutData
-      this.$emit('logoutSuccess', logoutData)
-    }
   },
-  created() {
-      if (this.$cookies.isKey('UserInfo')) {
-        this.isLogined = true
-    }
-  }  
 };
 </script>
 <style lang="scss"></style>
