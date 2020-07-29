@@ -33,13 +33,22 @@
 	<update id="joinTeam">
 		update user 
 		   set 	 team_uid 	= #{team_uid}			
-		 where uid= #{uid}
+		 where uid= #{uid};
+		 delete from team_apply where user_uid = #{uid};
 	</update>
 	<update id="outTeam">
 		update user 
 		   set 	 team_uid 	= null		
 		 where uid= #{uid}
 	</update>
+	
+	<insert id="applyTeam">
+		insert into team_apply
+		(team_uid, user_uid, comment) 
+		VALUES(
+			#{team_uid},#{uid},#{comment}
+		)
+	</insert>
 </mapper>
 
 
