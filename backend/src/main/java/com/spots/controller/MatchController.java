@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spots.dto.FMatchInfo;
@@ -20,7 +21,7 @@ import com.spots.service.FreeMatchService;
 import com.spots.service.TeamMatchService;
 
 @CrossOrigin(origins = { "http://localhost:3000" })
-@Controller
+@RestController
 public class MatchController {
 
 	@Autowired
