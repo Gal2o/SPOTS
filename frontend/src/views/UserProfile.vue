@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-header
-      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+      class="header pb-4 pt-5 pt-lg-8 d-flex align-items-center"
       style="min-height: 600px; background-size: cover; background-position: center top;"
     >
       <!-- Mask -->
@@ -13,8 +13,7 @@
             <h1 class="display-2 text-white">{{ username }}의 프로필</h1>
             <p class="text-white mt-0 mb-5">
               유저님의 프로필 페이지입니다.
-              <br />
-              본인의 정보 확인 및 수정이 가능합니다.
+              <br />본인의 정보 확인 및 수정이 가능합니다.
             </p>
           </div>
         </div>
@@ -29,23 +28,16 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img
-                      src="img/theme/team-4-800x800.jpg"
-                      class="rounded-circle"
-                    />
+                    <img src="img/theme/team-4-800x800.jpg" class="rounded-circle" />
                   </a>
                 </div>
               </div>
             </div>
-            <div
-              class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"
-            ></div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
             <div class="card-body pt-0 pt-md-4">
               <div class="row">
                 <div class="col">
-                  <div
-                    class="card-profile-stats d-flex justify-content-center mt-md-5"
-                  >
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                     <div>
                       <span class="heading">22</span>
                       <span class="description">친구</span>
@@ -64,11 +56,13 @@
               <div class="text-center">
                 <h3>이름 : {{ username }}</h3>
                 <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>이메일 :
+                  <i class="ni business_briefcase-24 mr-2"></i>
+                  이메일 :
                   {{ email }}
                 </div>
                 <div>
-                  <i class="ni education_hat mr-2"></i>주소 : {{ address }}
+                  <i class="ni education_hat mr-2"></i>
+                  주소 : {{ address }}
                 </div>
               </div>
             </div>
@@ -90,7 +84,7 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <base-input
-                        alternative=""
+                        alternative
                         label="이름"
                         placeholder="이름을 입력해주세요"
                         input-classes="form-control-alternative"
@@ -99,7 +93,7 @@
                     </div>
                     <div class="col-lg-6">
                       <base-input
-                        alternative=""
+                        alternative
                         label="이메일"
                         placeholder="이메일을 입력해주세요"
                         input-classes="form-control-alternative"
@@ -112,7 +106,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <base-input
-                        alternative=""
+                        alternative
                         label="상세 주소"
                         placeholder="상세 주소를 입력해주세요"
                         input-classes="form-control-alternative"
@@ -123,7 +117,7 @@
                   <div class="row">
                     <div class="col-lg-4">
                       <base-input
-                        alternative=""
+                        alternative
                         label="시"
                         placeholder="시"
                         input-classes="form-control-alternative"
@@ -132,7 +126,7 @@
                     </div>
                     <div class="col-lg-4">
                       <base-input
-                        alternative=""
+                        alternative
                         label="구"
                         placeholder="구"
                         input-classes="form-control-alternative"
@@ -143,7 +137,7 @@
                 </div>
                 <div class="pl-lg-4">
                   <div class="form-group">
-                    <base-input alternative="" label="자기 소개">
+                    <base-input alternative label="자기 소개">
                       <textarea
                         rows="4"
                         class="form-control form-control-alternative"

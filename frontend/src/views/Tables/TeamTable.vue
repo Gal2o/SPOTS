@@ -17,7 +17,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="FreetableData"
+        :data="TeamtableData"
       >
         <template slot="columns">
           <th>제목</th>
@@ -31,6 +31,9 @@
         <template slot-scope="{ row }">
           <th scope="row">
             <div class="media align-items-center">
+              <!-- <a href="#" class="avatar rounded-circle mr-3">
+                <img alt="Image placeholder" :src="row.img" />
+              </a>-->
               <div class="media-body">
                 <span class="name mb-0 text-sm">{{ row.title }}</span>
               </div>
@@ -38,7 +41,7 @@
           </th>
           <td class="time">{{ row.matching_date }}</td>
           <td>
-            <span class="status">{{ row.dong_name }}</span>
+            <span class="status">{{ row.place }}</span>
           </td>
           <td>{{ row.numberofuser }}</td>
 
@@ -70,13 +73,13 @@ import axios from "axios";
 const SERVER_URL = "http://localhost:8080/";
 
 export default {
-  name: "projects-table",
+  name: "team-table",
   created() {
     axios
-      .get(SERVER_URL + "FreeMatchMain/")
+      .get(SERVER_URL + "TeamMatchMain/")
       .then((res) => {
-        console.log(res.data);
-        this.FreetableData = res.data;
+        console.log(res);
+        this.TeamtableData = res.data;
       })
       .catch((err) => {
         console.log(err);
@@ -90,7 +93,7 @@ export default {
   },
   data() {
     return {
-      FreetableData: [],
+      TeamtableData: [],
     };
   },
 };

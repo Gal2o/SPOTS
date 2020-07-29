@@ -52,5 +52,7 @@ public interface UserMapper {
 
 	public int outTeam(int uid);
 
+	public int applyTeam(int uid, int team_uid, String comment);
+
 
 }
