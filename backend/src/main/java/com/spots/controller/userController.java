@@ -46,23 +46,25 @@ public class userController {
 		return userInfoService.modify(dto);
 	}
 	
-	@GetMapping(value="/user/detail")
-	public UserInfo detail(@PathVariable String email) {
+	@PostMapping(value="/user/detail")
+	public UserInfo detail(@RequestParam String email) {
 		return userInfoService.detail(email);
 	}
 	
-	@PostMapping(value="/user/joinTeam")
-	public int joinTeam(@RequestParam Map<String, Integer> param) {
-		int uid= param.get("uid");
-		int team_uid= param.get("team_uid");
+	@PutMapping(value="/user/joinTeam")
+	public int joinTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.joinTeam(uid, team_uid);
 	}
 	
-	@GetMapping(value="/user/outTeam")
-	public int outTeam(@PathVariable int uid) {
+	@PutMapping(value="/user/outTeam")
+	public int outTeam(@RequestParam int uid) {
 		return userInfoService.outTeam(uid);
 	}
 
+	@PostMapping(value="/user/applyTeam")
+	public int applyTeam(@RequestParam int uid, @RequestParam int team_uid, @RequestParam String comment ) {
+		return userInfoService.applyTeam(uid, team_uid, comment);
+	}
 	
 }
 

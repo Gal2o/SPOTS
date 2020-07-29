@@ -30,6 +30,9 @@
 		select * from team
 	</select>
 	
+	<select id="applyList" resultType="com.spots.dto.ApplyTeamInfo">
+		select * from apply_team where team_uid = #{team_uid}
+	</select>
 </mapper>
 
 

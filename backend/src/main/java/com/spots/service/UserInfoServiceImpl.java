@@ -45,5 +45,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public int outTeam(int uid) {
 		return mapper.outTeam(uid);
 	}
+
+	@Override
+	public int applyTeam(int uid, int team_uid, String comment) {
+		return mapper.applyTeam(uid, team_uid, comment);
+	}
 	 
 }

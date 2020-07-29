@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.TeamInfo;
 import com.spots.mapper.TeamMapper;
 
@@ -37,6 +38,11 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	@Override
 	public List<TeamInfo> listTeam() {
 		return mapper.listTeam();
+	}
+
+	@Override
+	public List<ApplyTeamInfo> applyList(int team_uid) {
+		return mapper.applyList(team_uid);
 	}
 	
 
