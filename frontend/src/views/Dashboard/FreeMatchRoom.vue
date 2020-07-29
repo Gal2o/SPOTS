@@ -28,15 +28,11 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="tableData"
+          :data="tableDatas"
         >
           <template slot="columns">
-            <th>제목</th>
-            <th>날짜</th>
-            <th>주소</th>
-            <th>유저 수</th>
-            <th>대기 상태</th>
-            <th></th>
+            <th>유저 명</th>
+            <th>포지션</th>
           </template>
 
           <template slot-scope="{ row }">
@@ -46,7 +42,7 @@
                   <img alt="Image placeholder" :src="row.img" />
                 </a>
                 <div class="media-body">
-                  <span class="name mb-0 text-sm">{{ row.title }}</span>
+                  <span class="name mb-0 text-sm">{{ tabledata }}</span>
                 </div>
               </div>
             </th>
@@ -61,17 +57,9 @@
                 <span class="completion mr-2">{{ row.wait }}</span>
               </div>
             </td>
-
-            <td class="text-right">
-              <router-link to="/dashboard/FreeMatch">
-                <base-button type="success">입장하기</base-button>
-              </router-link>
-            </td>
           </template>
         </base-table>
       </div>
-
-      <div class="vertical-line"></div>
 
       <div class="table-responsive col-6">
         <base-table
@@ -82,12 +70,8 @@
           :data="tableData"
         >
           <template slot="columns">
-            <th>제목</th>
-            <th>날짜</th>
-            <th>주소</th>
-            <th>유저 수</th>
-            <th>대기 상태</th>
-            <th></th>
+            <th>유저 명</th>
+            <th>포지션</th>
           </template>
 
           <template slot-scope="{ row }">
@@ -97,7 +81,7 @@
                   <img alt="Image placeholder" :src="row.img" />
                 </a>
                 <div class="media-body">
-                  <span class="name mb-0 text-sm">{{ row.title }}</span>
+                  <span class="name mb-0 text-sm">{{ tabledata }}</span>
                 </div>
               </div>
             </th>
@@ -111,12 +95,6 @@
               <div class="d-flex align-items-center">
                 <span class="completion mr-2">{{ row.wait }}</span>
               </div>
-            </td>
-
-            <td class="text-right">
-              <router-link to="/dashboard/FreeMatch">
-                <base-button type="success">입장하기</base-button>
-              </router-link>
             </td>
           </template>
         </base-table>
@@ -129,7 +107,7 @@ export default {
   components: {},
   data() {
     return {
-      tableData: [
+      tableDatas: [
         {
           name: "SPOTs관리자",
           position: "랜덤",
