@@ -17,10 +17,17 @@ public interface MatchMapper {
 	
 	List <TMatchInfo> TListRoom(int uid);
 
+	void TRoomCreate(TMatchInfo info);
+	
+	void TRoomModify(TMatchInfo info);
+	
 	List<FMatchInfo> FListMain();
 
 	List<FMatchInfo> FListAll();
 
 	List<FMatchInfo> FListRoom(int uid);
 
+	void FRoomCreate(FMatchInfo info);
+
+	void FRoomModify(FMatchInfo info);
 }

@@ -11,5 +11,9 @@ public interface TeamMatchService {
 	public List <TMatchInfo> TListAll();
 
 	public List <TMatchInfo> TListRoom(int uid);
+
+	public void TRoomCreate(TMatchInfo info);
+
+	public void TRoomUpdate(TMatchInfo info);
 	
 }

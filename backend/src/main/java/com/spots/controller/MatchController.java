@@ -73,9 +73,59 @@ public class MatchController {
 		return FreeMatch.FListRoom(uid);
 	}
 	
+	//방 중복 체크
+	@PostMapping(value ="/TRoomCheck")
+	public boolean CheckT(@RequestParam int uid) {
+		List<TMatchInfo> info = TeamMatch.TListRoom(uid);
+		
+		if(info.isEmpty())
+			return false;
+		else
+			return true;
+	}
+	
+	@PostMapping(value ="/FRoomCheck")
+	public boolean CheckF(@RequestParam int uid) {
+		List<FMatchInfo> info = FreeMatch.FListRoom(uid);
+		
+		if(info.isEmpty())
+			return false;
+		else
+			return true;
+	}
+	
 	// 방만들기 
 	@PostMapping(value ="/TRoomCreate")
-	public void InsertT(TeamInfo info) {
+	public List<TMatchInfo> InsertT(TMatchInfo info) {
+		TeamMatch.TRoomCreate(info);
 		
+		return TeamMatch.TListRoom(info.getUid());
 	}
+	
+	@PostMapping(value="/FRoomCreate")
+	public List<FMatchInfo> InsertF(FMatchInfo info) {
+		FreeMatch.FRoomCreate(info);
+		
+		return FreeMatch.FListRoom(info.getUid());
+	}
+	
+	//방 정보 수정
+	@PostMapping(value="/TRoomModify")
+	public List<TMatchInfo> UpdateT(TMatchInfo info){
+		TeamMatch.TRoomUpdate(info);
+		
+		return TeamMatch.TListRoom(info.getUid());
+	}
+	
+	@PostMapping(value="/FRoomModify")
+	public List<FMatchInfo> UpdateF(FMatchInfo info){
+		FreeMatch.FRoomUpdate(info);
+		
+		return FreeMatch.FListRoom(info.getUid());
+	}
+	
+	
+	
+	
+	
 }
