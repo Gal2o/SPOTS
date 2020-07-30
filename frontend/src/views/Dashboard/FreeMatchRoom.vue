@@ -23,11 +23,11 @@
 
     <div class="row d-flex flex-row" :class="type === 'dark' ? 'bg-default' : ''">
       <div class="table-responsive col m-2">
-        <div class="text-center p-2 mb-2 bg-danger">
+        <div class="text-center p-2 mb-2 bg-danger rounded-top">
           <h2>Red Team</h2>
         </div>
         <base-table
-          class="table align-items-center table-flush border-solid table-danger"
+          class="table align-items-center table-flush border-solid table-danger rounded-bottom text-center"
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
@@ -57,11 +57,11 @@
       </div>
 
       <div class="table-responsive col m-2">
-        <div class="text-center p-2 mb-2 bg-primary">
+        <div class="text-center p-2 mb-2 bg-primary rounded-top">
           <h2 class="text-white">Blue Team</h2>
         </div>
         <base-table
-          class="table align-items-center table-flush border-solid table-primary"
+          class="table align-items-center table-flush border-solid table-primary rounded-bottom text-center"
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
@@ -113,10 +113,16 @@ export default {
           position: "수비수",
         },
       ],
-    };
+      isLogined: false,
+    }
   },
   methods: {},
   mounted() {},
+  created() {
+    if (this.$cookies.isKey("UserInfo")) {
+      this.isLogined = true;
+    }
+  },
 };
 </script>
 <style>

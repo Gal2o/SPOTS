@@ -92,17 +92,19 @@ import axios from 'axios'
                 model: {
                     name: '',
                     email: '',
+                    birthday: '',
                     password: '',
                     passwordcheck: '',
                 }
             }
         },
         methods: {
-            signup() {
-                const SignData = new SignData();
-                SignData.append('name', this.model.name);
+            Signup() {
+                const SignData = new FormData();
+                SignData.append('nickname', this.model.name);
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
+                SignData.append('birthday', this.model.birthday);
                 axios.post('http://localhost:8080/user/signUp/', SignData)
                     .then(res => {
                         if (res.data == "") {
