@@ -162,17 +162,28 @@ export default {
       stadiumN: "경기장을 골라주세요",
       stadiumDatas: [],
       title: "",
+      placeuid: 0,
+      placeprice: 0,
+      placecode: 0,
+      userInfo: Object,
     };
   },
   methods: {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
+      this.placeuid = stadium.place_uid;
+      this.placeprice = stadium.placeprice;
+      this.placecode = stadium.code;
     },
     getSpot() {
+      this.userInfo = this.$cookies.get("UserInfo");
       const makeData = new FormData();
       makeData.append("title", this.title);
-      makeData.append("Date", this.dates.simple);
-      makeData.append("place", this.stadiumN);
+      makeData.append("matching_date", this.dates.simple);
+      makeData.append("place_uid", this.placeuid);
+      makeData.append("place_price", this.placeprice);
+      makeData.append("place_code", this.placecode);
+      makeData.append("uid", this.userInfo.uid);
       axios
         .post(SERVER_URL + "FRoomCreate/", makeData)
         .then((res) => {
