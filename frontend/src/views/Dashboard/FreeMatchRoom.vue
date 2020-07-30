@@ -92,10 +92,36 @@
     </div>
 
     <div class="d-flex flex-row justify-content-end mr-5">
-      <card title="Room information" class="mb-4 mb-xl-0 bg-warning">
-        <h2>입장하기</h2>
-      </card>
+      <base-button v-if="!isLogined" type="warning" size="lg" @click="modals.loginalert = true">
+        입장하기
+      </base-button>
+      <base-button v-if="isLogined" type="warning" size="lg">
+        입장하기
+      </base-button>
     </div>
+
+    <modal :show.sync="modals.loginalert"
+            gradient="danger"
+            modal-classes="modal-danger modal-dialog-centered">
+
+        <div class="py-3 text-center">
+            <i class="ni ni-bell-55 ni-3x"></i>
+            <h4 class="heading mt-4">로그인을 하셔야 이용할 수 있습니다.</h4>
+            <p>로그인 페이지로 이동하셔서 로그인을 먼저 진행해주세요.</p>
+        </div>
+
+        <template slot="footer">
+          <router-link to="/login">
+            <base-button type="white">로그인하기</base-button>
+          </router-link>
+            <base-button type="link"
+                          text-color="white"
+                          class="ml-auto"
+                          @click="modals.loginalert = false">
+                닫기
+            </base-button>
+        </template>
+    </modal>
   </div>
 </template>
 <script>
@@ -114,6 +140,9 @@ export default {
         },
       ],
       isLogined: false,
+      modals: {
+        loginalert: false
+      }
     }
   },
   methods: {},
