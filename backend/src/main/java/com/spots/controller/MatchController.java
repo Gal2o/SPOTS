@@ -21,7 +21,7 @@ import com.spots.service.FreeMatchService;
 import com.spots.service.TeamMatchService;
 
 @CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
-@Controller
+@RestController
 public class MatchController {
 
 	@Autowired
@@ -109,7 +109,7 @@ public class MatchController {
 		return FreeMatch.FListRoom(info.getUid());
 	}
 	
-	//방 정보 수정
+	//방 정보 수정 (미완료)
 	@PostMapping(value="/TRoomModify")
 	public List<TMatchInfo> UpdateT(TMatchInfo info){
 		TeamMatch.TRoomUpdate(info);

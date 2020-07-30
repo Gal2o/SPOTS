@@ -12,5 +12,7 @@
  		<mapper resource="mapper/Match_query.xml" />
  		<mapper resource="mapper/rank_query.xml" />
  		<mapper resource="mapper/entry_query.xml" />
+ 		<mapper resource="mapper/place_query.xml" />
+ 		<mapper resource="mapper/TeamInfo_query.xml" />
 	</mappers>
 </configuration>
