@@ -17,7 +17,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="FreetableData"
+        :data="TeamtableData"
       >
         <template slot="columns">
           <th>제목</th>
@@ -31,6 +31,9 @@
         <template slot-scope="{ row }">
           <th scope="row">
             <div class="media align-items-center">
+              <!-- <a href="#" class="avatar rounded-circle mr-3">
+                <img alt="Image placeholder" :src="row.img" />
+              </a>-->
               <div class="media-body">
                 <span class="name mb-0 text-sm">{{ row.title }}</span>
               </div>
@@ -38,7 +41,7 @@
           </th>
           <td class="time">{{ row.matching_date }}</td>
           <td>
-            <span class="status">{{ row.dong_name }}</span>
+            <span class="status">{{ row.place }}</span>
           </td>
           <td>{{ row.numberofuser }}</td>
 
@@ -56,57 +59,11 @@
         </template>
       </base-table>
     </div>
+
     <div
-      class="card-footer d-flex justify-content-between"
+      class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-      <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true">방만들기</base-button>
-
-        <modal
-          :show.sync="modals"
-          body-classes="p-0"
-          modal-classes="modal-dialog-centered modal-sm"
-        >
-          <card
-            type="secondary"
-            shadow
-            header-classes="bg-white pb-5"
-            body-classes="px-lg-5 py-lg-5"
-            class="border-0"
-          >
-            <template>
-              <div class="text-muted text-center mb-3">
-                <small>Sign in with</small>
-              </div>
-            </template>
-            <template>
-              <div class="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
-              </div>
-              <form role="form">
-                <base-input
-                  alternative
-                  class="mb-3"
-                  placeholder="Email"
-                  addon-left-icon="ni ni-email-83"
-                ></base-input>
-                <base-input
-                  alternative
-                  type="password"
-                  placeholder="Password"
-                  addon-left-icon="ni ni-lock-circle-open"
-                ></base-input>
-                <base-checkbox>Remember me</base-checkbox>
-                <div class="text-center">
-                  <base-button type="primary" class="my-4">Sign In</base-button>
-                  <base-button type="secondary" @click="modals = false">Close</base-button>
-                </div>
-              </form>
-            </template>
-          </card>
-        </modal>
-      </div>
       <base-pagination total="30"></base-pagination>
     </div>
   </div>
@@ -116,13 +73,13 @@ import axios from "axios";
 const SERVER_URL = "http://localhost:8080/";
 
 export default {
-  name: "projects-table",
+  name: "team-table",
   created() {
     axios
-      .get(SERVER_URL + "FreeMatchMain/")
+      .get(SERVER_URL + "TeamMatchMain/")
       .then((res) => {
-        console.log(res.data);
-        this.FreetableData = res.data;
+        console.log(res);
+        this.TeamtableData = res.data;
       })
       .catch((err) => {
         console.log(err);
@@ -136,11 +93,9 @@ export default {
   },
   data() {
     return {
-      FreetableData: [],
-      modals: false,
+      TeamtableData: [],
     };
   },
-  methods: {},
 };
 </script>
 <style></style>

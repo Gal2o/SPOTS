@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
       <!-- Card stats -->
       <div class="row">
         <base-dropdown class="mr-3">
@@ -9,25 +9,27 @@
             class="dropdown-item"
             v-for="cityData in cityDatas"
             v-bind:key="cityData"
-            @click="choice(cityData)"
+            @click="choice1(cityData)"
           >{{ cityData.city_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">시</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.stateN }}</base-button>
           <a
             class="dropdown-item"
             v-for="stateData in stateDatas"
             v-bind:key="stateData"
+            @click="choice2(stateData)"
           >{{ stateData.state_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">동</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.dongN }}</base-button>
           <a
             class="dropdown-item"
             v-for="dongData in dongDatas"
             v-bind:key="dongData"
+            @click="choice3(dongData)"
           >{{ dongData.dong_name }}</a>
         </base-dropdown>
 
@@ -43,7 +45,7 @@
         </form>
       </div>
     </base-header>
-    <div class="container-fluid mt--7">
+    <div class="container-fluid">
       <div class="row">
         <div class="col">
           <projects-table title="자유 SPOT"></projects-table>
@@ -51,7 +53,7 @@
       </div>
       <div class="row mt-5">
         <div class="col">
-          <projects-table type="dark" title="팀 SPOT"></projects-table>
+          <team-table type="dark" title="팀 SPOT"></team-table>
         </div>
       </div>
     </div>
@@ -61,6 +63,7 @@
 
 <script>
 import ProjectsTable from "./Tables/ProjectsTable";
+import TeamTable from "./Tables/TeamTable";
 import axios from "axios";
 const SERVER_URL = "http://localhost:8080/";
 
@@ -76,19 +79,10 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
-    axios
-      .get(SERVER_URL + "dongList")
-      .then((res) => {
-        console.log(res);
-        this.dongDatas = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   },
   components: {
     ProjectsTable,
+    TeamTable,
   },
   data() {
     return {
@@ -96,17 +90,23 @@ export default {
       stateDatas: "",
       dongDatas: "",
       cityN: "도",
-      iscity: true,
-      isstate: false,
-      isdong: false,
+      stateN: "시",
+      dongN: "동",
     };
   },
   methods: {
-    choice(city) {
+    choice1(city) {
       this.cityN = city.city_name;
-      console.log("check");
       this.choicestate(city.city_code);
     },
+    choice2(state) {
+      this.stateN = state.state_name;
+      this.choicedong(state.state_code);
+    },
+    choice3(dong) {
+      this.dongN = dong.dong_name;
+    },
+
     choicestate(b) {
       const stateForm = new FormData();
       b = String(b);
@@ -114,8 +114,20 @@ export default {
       axios
         .post(SERVER_URL + "stateList", stateForm)
         .then((res) => {
-          console.log(res);
           this.stateDatas = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    choicedong(c) {
+      const dongForm = new FormData();
+      c = String(c);
+      dongForm.append("state_code", c);
+      axios
+        .post(SERVER_URL + "dongList", dongForm)
+        .then((res) => {
+          this.dongDatas = res.data;
         })
         .catch((err) => {
           console.log(err);

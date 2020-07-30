@@ -38,11 +38,10 @@ public class sidoController {
 	@PostMapping(value="/stateList")
 	public List<SidoInfo> stateList(@RequestParam String city_code) {
 		city_code = city_code.substring(0,2);
-		System.out.println(sidoInfoService.stateList(city_code));
 		return sidoInfoService.stateList(city_code);
 	}
 	@PostMapping(value="/dongList")
-	public List<SidoInfo> dongList(@PathVariable String state_code) {
+	public List<SidoInfo> dongList(@RequestParam String state_code) {
 		state_code = state_code.substring(0,4);
 		return sidoInfoService.dongList(state_code);
 	}

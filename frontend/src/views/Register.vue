@@ -35,6 +35,12 @@
                                     v-model="model.email">
                         </base-input>
 
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="생년월일6자리 ex)850101"
+                                    addon-left-icon="ni ni-calendar-grid-58"
+                                    v-model="model.birthday">
+                        </base-input>
+
                         <base-input class="input-group-alternative"
                                     placeholder="비밀번호"
                                     type="password"
@@ -86,20 +92,27 @@ import axios from 'axios'
                 model: {
                     name: '',
                     email: '',
+                    birthday: '',
                     password: '',
                     passwordcheck: '',
                 }
             }
         },
         methods: {
-            signup() {
-                const SignData = new SignData();
-                SignData.append('name', this.model.name);
+            Signup() {
+                const SignData = new FormData();
+                SignData.append('nickname', this.model.name);
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
+                SignData.append('birthday', this.model.birthday);
                 axios.post('http://localhost:8080/user/signUp/', SignData)
-                    .then(() => {
-                        this.$router.push({ name: 'login'})
+                    .then(res => {
+                        if (res.data == "") {
+                            alert('잘 못 작성된 항목이 있습니다. 회원가입을 다시 진행해주세요.')
+                        }
+                        else {
+                            this.$router.push({ name: 'login'})
+                        }                        
                     })
                     .catch(err => {
                         alert('회원가입을 다시 시도해주세요.');
