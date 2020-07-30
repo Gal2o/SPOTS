@@ -29,6 +29,16 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 		return mapper.TListRoom(uid);
 	}
 
+	@Override
+	public void TRoomCreate(TMatchInfo info) {
+		mapper.TRoomCreate(info);
+	}
+
+	@Override
+	public void TRoomUpdate(TMatchInfo info) {
+		mapper.TRoomModify(info);
+	}
+
 	
 }
 

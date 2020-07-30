@@ -29,6 +29,16 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 	public List<FMatchInfo> FListRoom(int uid) {
 		return mapper.FListRoom(uid);
 	}
+
+	@Override
+	public void FRoomCreate(FMatchInfo info) {
+		mapper.FRoomCreate(info);
+	}
+
+	@Override
+	public void FRoomUpdate(FMatchInfo info) {
+		mapper.FRoomModify(info);
+	}
 	
 	
 }

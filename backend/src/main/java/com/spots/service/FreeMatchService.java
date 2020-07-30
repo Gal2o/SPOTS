@@ -11,4 +11,8 @@ public interface FreeMatchService {
 	public List <FMatchInfo> FListAll();
 
 	public List <FMatchInfo> FListRoom(int uid);
+
+	public void FRoomCreate(FMatchInfo info);
+
+	public void FRoomUpdate(FMatchInfo info);
 }
