@@ -125,10 +125,15 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
+const SERVER_URL = "http://localhost:8080/";
+
 export default {
   components: {},
   data() {
     return {
+      head_uid: 4,
       tableDatas: [
         {
           name: "SPOTs관리자",
@@ -145,13 +150,31 @@ export default {
       }
     }
   },
-  methods: {},
+  methods: {
+    PositionChange() {
+      console.log(this)
+    },
+  },
   mounted() {},
   created() {
     if (this.$cookies.isKey("UserInfo")) {
-      this.isLogined = true;
+      this.isLogined = true
     }
-  },
+    const FreeRoomData = new FormData();
+    FreeRoomData.append("uid", this.head_uid);
+    axios.post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .then(res => {
+        console.log(res)
+        if (res.data == "") {
+          alert('요청이 실패되었습니다.')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        alert('문제가 발생하였습니다. 메인페이지로 돌아갑니다.');
+        this.$router.push({ name: "SPOTs" });
+      })  
+  }
 };
 </script>
 <style>
