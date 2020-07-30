@@ -160,6 +160,7 @@ export default {
     }
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.head_uid);
+    console.log('되라')
     axios.post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then(res => {
         console.log(res)
