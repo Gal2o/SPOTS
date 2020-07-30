@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spots.mapper.EntryMapper">
+	 
+	<update id="S1">
+		update matching_entry 
+		   set	striker1_uid = #{uid} 			
+		 where team_entry_uid= #{team_entry_uid}
+	</update>
+	
+	
+</mapper>
+
+
+
+
+
+

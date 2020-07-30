@@ -20,8 +20,8 @@ import com.spots.dto.TeamInfo;
 import com.spots.service.FreeMatchService;
 import com.spots.service.TeamMatchService;
 
-@CrossOrigin(origins = { "http://localhost:3000" })
-@RestController
+@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@Controller
 public class MatchController {
 
 	@Autowired
