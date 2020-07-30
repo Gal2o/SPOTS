@@ -81,7 +81,7 @@
                 <small>정보를 입력해주세요</small>
               </div>
               <form role="form">
-                <base-input alternative class="mb-3" placeholder="제목을 적어주세요"></base-input>
+                <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
                 <base-input addon-left-icon="ni ni-calendar-grid-58">
                   <flat-picker
                     slot-scope="{focus, blur}"
@@ -106,9 +106,7 @@
                   >{{ stadiumData.place_name }}</a>
                 </base-dropdown>
                 <div class="text-center">
-                  <router-link to="/dashboard/FreeMatch">
-                    <base-button type="success" class="my-4 mr-4">친구 모아보기</base-button>
-                  </router-link>
+                  <base-button type="success" @click="getSpot" class="my-4 mr-4">친구 모아보기</base-button>
                   <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
@@ -139,16 +137,20 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios.get(SERVER_URL, "place/list").then((res) => {
-      console.log(res);
-      this.stadiumDatas = res.data;
-    });
+    axios
+      .get(SERVER_URL + "place/list")
+      .then((rest) => {
+        console.log(rest.data);
+        this.stadiumDatas = rest.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   props: {
     type: {
       type: String,
     },
-    title: String,
   },
   data() {
     return {
@@ -159,11 +161,31 @@ export default {
       modals: false,
       stadiumN: "경기장을 골라주세요",
       stadiumDatas: [],
+      title: "",
     };
   },
   methods: {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
+    },
+    getSpot() {
+      const makeData = new FormData();
+      makeData.append("title", this.title);
+      makeData.append("Date", this.dates.simple);
+      makeData.append("place", this.stadiumN);
+      axios
+        .post(SERVER_URL + "FRoomCreate/", makeData)
+        .then((res) => {
+          console.log(res);
+          if (res.data == "") {
+            alert("제대로 입력해주세요.");
+          } else {
+            this.$router.push({ name: "freematchroom" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
