@@ -109,7 +109,7 @@ public class MatchController {
 		return FreeMatch.FListRoom(info.getUid());
 	}
 	
-	//방 정보 수정
+	//방 정보 수정 (미완료)
 	@PostMapping(value="/TRoomModify")
 	public List<TMatchInfo> UpdateT(TMatchInfo info){
 		TeamMatch.TRoomUpdate(info);
