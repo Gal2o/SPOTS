@@ -56,11 +56,57 @@
         </template>
       </base-table>
     </div>
-
     <div
-      class="card-footer d-flex justify-content-end"
+      class="card-footer d-flex justify-content-between"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
+      <div class="col-md-4">
+        <base-button type="secondary" @click="modals = true">방만들기</base-button>
+
+        <modal
+          :show.sync="modals"
+          body-classes="p-0"
+          modal-classes="modal-dialog-centered modal-sm"
+        >
+          <card
+            type="secondary"
+            shadow
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+            class="border-0"
+          >
+            <template>
+              <div class="text-muted text-center mb-3">
+                <small>Sign in with</small>
+              </div>
+            </template>
+            <template>
+              <div class="text-center text-muted mb-4">
+                <small>Or sign in with credentials</small>
+              </div>
+              <form role="form">
+                <base-input
+                  alternative
+                  class="mb-3"
+                  placeholder="Email"
+                  addon-left-icon="ni ni-email-83"
+                ></base-input>
+                <base-input
+                  alternative
+                  type="password"
+                  placeholder="Password"
+                  addon-left-icon="ni ni-lock-circle-open"
+                ></base-input>
+                <base-checkbox>Remember me</base-checkbox>
+                <div class="text-center">
+                  <base-button type="primary" class="my-4">Sign In</base-button>
+                  <base-button type="secondary" @click="modals = false">Close</base-button>
+                </div>
+              </form>
+            </template>
+          </card>
+        </modal>
+      </div>
       <base-pagination total="30"></base-pagination>
     </div>
   </div>
@@ -91,8 +137,10 @@ export default {
   data() {
     return {
       FreetableData: [],
+      modals: false,
     };
   },
+  methods: {},
 };
 </script>
 <style></style>
