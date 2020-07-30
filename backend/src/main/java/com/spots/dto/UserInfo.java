@@ -14,6 +14,11 @@ public class UserInfo {
 	private int warning;
 	private int team_uid;
 	private String nickname;
+	private String city_code;
+	private String state_code;
+	private String dong_code;
+	private String comment;
+	
 
 	public UserInfo() {}
 
@@ -30,7 +35,8 @@ public class UserInfo {
 	
 
 	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
-			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname) {
+			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname, String city_code,
+			String state_code, String dong_code, String comment) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -45,8 +51,11 @@ public class UserInfo {
 		this.warning = warning;
 		this.team_uid = team_uid;
 		this.nickname = nickname;
+		this.city_code = city_code;
+		this.state_code = state_code;
+		this.dong_code = dong_code;
+		this.comment = comment;
 	}
-
 
 	public String getNickname() {
 		return nickname;
@@ -158,9 +167,12 @@ public class UserInfo {
 	public String toString() {
 		return "UserInfo [uid=" + uid + ", email=" + email + ", password=" + password + ", birthday=" + birthday
 				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", win=" + win
-				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid + ", nickname=" + nickname + "]";
+				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid
+				+ ", nickname=" + nickname + ", city_code=" + city_code + ", state_code=" + state_code + ", dong_code="
+				+ dong_code + ", comment=" + comment + "]";
 	}
-	
+
+
 	
 	
 }

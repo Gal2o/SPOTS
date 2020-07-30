@@ -56,31 +56,93 @@
         </template>
       </base-table>
     </div>
-
     <div
-      class="card-footer d-flex justify-content-end"
+      class="card-footer d-flex justify-content-between"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
+      <div class="col-md-4">
+        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
+
+        <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
+          <card
+            type="secondary"
+            shadow
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+            class="border-0"
+          >
+            <template>
+              <div class="text-muted text-center mb-3">
+                <medium>자유 SPOT 만들기</medium>
+              </div>
+            </template>
+            <template>
+              <div class="text-center text-muted mb-4">
+                <small>정보를 입력해주세요</small>
+              </div>
+              <form role="form">
+                <base-input alternative class="mb-3" placeholder="제목을 적어주세요"></base-input>
+                <base-input addon-left-icon="ni ni-calendar-grid-58">
+                  <flat-picker
+                    slot-scope="{focus, blur}"
+                    @on-open="focus"
+                    @on-close="blur"
+                    :config="{allowInput: true}"
+                    class="form-control datepicker"
+                    v-model="dates.simple"
+                  ></flat-picker>
+                </base-input>
+                <base-dropdown class="mr-3">
+                  <base-button
+                    slot="title"
+                    type="secondary"
+                    class="dropdown-toggle"
+                  >{{ this.stadiumN }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="stadiumData in stadiumDatas"
+                    v-bind:key="stadiumData"
+                    @click="choice1(stadiumData)"
+                  >{{ stadiumData.place_name }}</a>
+                </base-dropdown>
+                <div class="text-center">
+                  <router-link to="/dashboard/FreeMatch">
+                    <base-button type="success" class="my-4 mr-4">친구 모아보기</base-button>
+                  </router-link>
+                  <base-button type="secondary" @click="modals = false">닫기</base-button>
+                </div>
+              </form>
+            </template>
+          </card>
+        </modal>
+      </div>
       <base-pagination total="30"></base-pagination>
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
+import flatPicker from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+
 const SERVER_URL = "http://localhost:8080/";
 
 export default {
   name: "projects-table",
+  components: { flatPicker },
   created() {
     axios
       .get(SERVER_URL + "FreeMatchMain/")
       .then((res) => {
-        console.log(res.data);
         this.FreetableData = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
+    axios.get(SERVER_URL, "place/list").then((res) => {
+      console.log(res);
+      this.stadiumDatas = res.data;
+    });
   },
   props: {
     type: {
@@ -90,8 +152,19 @@ export default {
   },
   data() {
     return {
+      dates: {
+        simple: "2020-07-30",
+      },
       FreetableData: [],
+      modals: false,
+      stadiumN: "경기장을 골라주세요",
+      stadiumDatas: [],
     };
+  },
+  methods: {
+    choice1(stadium) {
+      this.stadiumN = stadium.place_name;
+    },
   },
 };
 </script>
