@@ -21,7 +21,7 @@ import com.spots.service.FreeMatchService;
 import com.spots.service.TeamMatchService;
 
 @CrossOrigin(origins = { "http://localhost:3000" })
-@RestController
+@Controller
 public class MatchController {
 
 	@Autowired
