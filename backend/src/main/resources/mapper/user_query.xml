@@ -25,6 +25,10 @@
 				,skill	= #{skill}			
 				,position_uid	= #{position_uid}			
 				,nickname	= #{nickname}			
+				,city_code	= #{city_code}			
+				,state_code	= #{state_code}			
+				,dong_code	= #{dong_code}			
+				,comment	= #{comment}			
 		 where uid= #{uid}
 	</update>
 	<select id="findPwdByEmail" resultType="com.spots.dto.UserInfo">
