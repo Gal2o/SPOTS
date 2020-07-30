@@ -39,7 +39,7 @@ public class teamController {
 		return teamInfoService.registTeam(dto);
 	}
 	
-	@PutMapping(value="/team/modify")
+	@PostMapping(value="/team/modify")
 	public int modifyTeam(TeamInfo dto) {
 		return teamInfoService.modifyTeam(dto);
 	}
@@ -49,7 +49,7 @@ public class teamController {
 		return teamInfoService.detailTeam(uid);
 	}
 	
-	@DeleteMapping(value="/team/delete")
+	@GetMapping(value="/team/delete")
 	public int deleteTeam(@RequestParam int uid) {
 		return teamInfoService.deleteTeam(uid);
 	}

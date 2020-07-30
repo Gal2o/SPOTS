@@ -4,6 +4,7 @@ package com.spots.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.UserInfo;
 
 
@@ -52,7 +53,8 @@ public interface UserMapper {
 
 	public int outTeam(int uid);
 
-	public int applyTeam(int uid, int team_uid, String comment);
+
+	public int applyTeam(ApplyTeamInfo dto);
 
 
 }

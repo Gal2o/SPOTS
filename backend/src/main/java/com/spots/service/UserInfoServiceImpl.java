@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.UserInfo;
 import com.spots.mapper.UserMapper;
 
@@ -47,8 +48,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public int applyTeam(int uid, int team_uid, String comment) {
-		return mapper.applyTeam(uid, team_uid, comment);
+	public int applyTeam(ApplyTeamInfo dto) {
+		return mapper.applyTeam(dto);
 	}
 	 
 }

@@ -30,12 +30,12 @@ public class placeController {
 		return mav;
 	}
 	
-	@PostMapping(value="/place/list")
-	public List<PlaceInfo> placeList(UserInfo dto) {
+	@GetMapping(value="/place/list")
+	public List<PlaceInfo> placeList() {
 		return placeInfoService.placeList();
 	}
 	
-	@GetMapping(value="/place/detail")
+	@PostMapping(value="/place/detail")
 	public PlaceInfo placeDetail(@PathVariable int uid) {
 		return placeInfoService.placeDetail(uid);
 	}

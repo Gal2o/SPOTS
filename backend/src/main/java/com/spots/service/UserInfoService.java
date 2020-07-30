@@ -2,6 +2,7 @@ package com.spots.service;
 
 import java.util.List;
 
+import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.UserInfo;
 
 public interface UserInfoService {
@@ -18,5 +19,5 @@ public interface UserInfoService {
 
 	public int outTeam(int uid);
 
-	public int applyTeam(int uid, int team_uid, String comment);
+	public int applyTeam(ApplyTeamInfo dto);
 }

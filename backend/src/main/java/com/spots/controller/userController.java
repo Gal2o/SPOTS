@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.UserInfo;
 import com.spots.service.UserInfoService;
 
@@ -41,29 +42,29 @@ public class userController {
 		return userInfoService.findPwdByEmail(email);
 	}
 	
-	@PutMapping(value="/user/modify")
+	@GetMapping(value="/user/modify")
 	public int modify(UserInfo dto) {
 		return userInfoService.modify(dto);
 	}
 	
-	@PostMapping(value="/user/detail")
+	@GetMapping(value="/user/detail")
 	public UserInfo detail(@RequestParam String email) {
 		return userInfoService.detail(email);
 	}
 	
-	@PutMapping(value="/user/joinTeam")
+	@GetMapping(value="/user/joinTeam")
 	public int joinTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.joinTeam(uid, team_uid);
 	}
 	
-	@PutMapping(value="/user/outTeam")
+	@GetMapping(value="/user/outTeam")
 	public int outTeam(@RequestParam int uid) {
 		return userInfoService.outTeam(uid);
 	}
 
-	@PostMapping(value="/user/applyTeam")
-	public int applyTeam(@RequestParam int uid, @RequestParam int team_uid, @RequestParam String comment ) {
-		return userInfoService.applyTeam(uid, team_uid, comment);
+	@GetMapping(value="/user/applyTeam")
+	public int applyTeam(ApplyTeamInfo dto) {
+		return userInfoService.applyTeam(dto);
 	}
 	
 }
