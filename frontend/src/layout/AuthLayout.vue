@@ -33,7 +33,7 @@
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/">
                             <i class="ni ni-planet"></i>
-                            <span class="nav-link-inner--text">게시판</span>
+                            <span class="nav-link-inner--text">SPOTs</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -46,12 +46,6 @@
                         <router-link class="nav-link nav-link-icon" to="/login">
                             <i class="ni ni-key-25"></i>
                             <span class="nav-link-inner--text">로그인</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/profile">
-                            <i class="ni ni-single-02"></i>
-                            <span class="nav-link-inner--text">프로필</span>
                         </router-link>
                     </li>
                 </ul>
