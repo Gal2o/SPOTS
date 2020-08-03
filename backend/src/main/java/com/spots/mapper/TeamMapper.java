@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 
 
 @Mapper
@@ -23,5 +24,7 @@ public interface TeamMapper {
 	public List<TeamInfo> listTeam();
 
 	public List<ApplyTeamInfo> applyList(int team_uid);
+
+	public List<UserInfo> userList(int uid);
 
 }

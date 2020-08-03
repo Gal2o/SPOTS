@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 import com.spots.service.TeamInfoService;
 
 
@@ -57,6 +58,11 @@ public class teamController {
 	@GetMapping(value="/team/list")
 	public List<TeamInfo> listTeam() {
 		return teamInfoService.listTeam();
+	}
+	
+	@GetMapping(value="/team/userList")
+	public List<UserInfo> userList(@RequestParam int uid) {
+		return teamInfoService.userList(uid);
 	}
 	
 	@GetMapping(value="/team/applyList")

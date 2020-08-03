@@ -51,5 +51,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public int applyTeam(ApplyTeamInfo dto) {
 		return mapper.applyTeam(dto);
 	}
+
+	@Override
+	public UserInfo detail2(int uid) {
+		return mapper.detail2(uid); 
+	}
 	 
 }
