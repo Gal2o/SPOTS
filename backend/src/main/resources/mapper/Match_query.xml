@@ -43,6 +43,7 @@
 	</insert>
 	
 	<insert id="FRoomCreate">
+<<<<<<< HEAD
 		insert into matching_entry (goalkeeper_uid) values(null), (null);
 		
 		insert into free_matching
@@ -54,6 +55,17 @@
 		#{create_date}, #{matching_date}, #{place_uid},
 		#{dong_code}, #{title} )
 	</insert>
+=======
+        insert into free_matching
+        (head_uid, home_scroe, away_score,
+         ready_num, place_uid, price, head_price,
+          dong_code, title)
+        values
+        (#{uid}, 0, 0, 0,
+        #{place_uid}, #{price}, 0,
+        #{dong_code}, #{title} )
+    </insert>
+>>>>>>> 8e59c0c948c89ae7e97af5f3d95434cd04540739
 	
 	<!-- 방 정보 수정 -->
 	<update id="TRoomModify">

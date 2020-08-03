@@ -1,17 +1,9 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div
-      class="card-header border-0"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            {{ title }}
-          </h3>
-        </div>
-        <div class="col text-right">
-          <base-button type="primary" size="sm">더보기</base-button>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ title }}</h3>
         </div>
       </div>
     </div>
@@ -25,11 +17,11 @@
         :data="FreetableData"
       >
         <template slot="columns">
-          <th>제목</th>
-          <th>날짜</th>
-          <th>주소</th>
-          <th>유저 수</th>
-          <th>대기 상태</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
           <th></th>
         </template>
 
@@ -54,7 +46,7 @@
           </td>
 
           <td class="text-right">
-            <router-link :to="{ name: '자유 SPOT', params: { head_uid: FreetableData.head_uid }}">
+            <router-link to="/dashboard/FreeMatch">
               <base-button type="success">입장하기</base-button>
             </router-link>
           </td>
@@ -66,15 +58,9 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true"
-          >자유SPOT 만들기</base-button
-        >
+        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
 
-        <modal
-          :show.sync="modals"
-          body-classes="p-0"
-          modal-classes="modal-dialog modal-md"
-        >
+        <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
             type="secondary"
             shadow
@@ -92,18 +78,13 @@
                 <small>정보를 입력해주세요</small>
               </div>
               <form role="form">
-                <base-input
-                  alternative
-                  class="mb-3"
-                  v-model="title"
-                  placeholder="제목을 적어주세요"
-                ></base-input>
+                <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
                 <base-input addon-left-icon="ni ni-calendar-grid-58">
                   <flat-picker
-                    slot-scope="{ focus, blur }"
+                    slot-scope="{focus, blur}"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="{ allowInput: true }"
+                    :config="{allowInput: true}"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -113,23 +94,17 @@
                     slot="title"
                     type="secondary"
                     class="dropdown-toggle"
-                    >{{ this.stadiumN }}</base-button
-                  >
+                  >{{ this.stadiumN }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="stadiumData in stadiumDatas"
                     v-bind:key="stadiumData"
                     @click="choice1(stadiumData)"
-                    >{{ stadiumData.place_name }}</a
-                  >
+                  >{{ stadiumData.place_name }}</a>
                 </base-dropdown>
                 <div class="text-center">
-                  <base-button type="success" @click="getSpot" class="my-4 mr-4"
-                    >친구 모아보기</base-button
-                  >
-                  <base-button type="secondary" @click="modals = false"
-                    >닫기</base-button
-                  >
+                  <base-button type="success" @click="getSpot" class="my-4 mr-4">친구 모아보기</base-button>
+                  <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
             </template>
@@ -148,7 +123,7 @@ import "flatpickr/dist/flatpickr.css";
 const SERVER_URL = "http://localhost:8080/";
 
 export default {
-  name: "projects-table",
+  name: "ranking-table",
   components: { flatPicker },
   created() {
     axios
@@ -201,11 +176,11 @@ export default {
       this.userInfo = this.$cookies.get("UserInfo");
       const makeData = new FormData();
       makeData.append("title", this.title);
-      // makeData.append("matching_date", this.dates.simple);
-      makeData.append("place_uid", 0);
+      makeData.append("matching_date", this.dates.simple);
+      makeData.append("place_uid", this.placeuid);
       makeData.append("place_price", this.placeprice);
       makeData.append("place_code", this.placecode);
-      makeData.append("head_uid", this.userInfo.uid);
+      makeData.append("uid", this.userInfo.uid);
       axios
         .post(SERVER_URL + "FRoomCreate/", makeData)
         .then((res) => {
@@ -213,7 +188,7 @@ export default {
           if (res.data == "") {
             alert("제대로 입력해주세요.");
           } else {
-            this.$router.push({ name: "자유 SPOT" });
+            this.$router.push({ name: "freematchroom" });
           }
         })
         .catch((err) => {
