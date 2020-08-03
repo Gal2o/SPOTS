@@ -154,7 +154,8 @@
                   </base-dropdown>
                 </div>   
                 <div class="text-center text-muted mb-4">
-                  <small>포지션을 선택하였으면 결재를 해주세요.</small>
+                  <small>포지션을 선택하였으면 결재를 해주세요. <br>
+                  결재 금액은 <big style="font-size:30px;" class="text-warning"><b>3000원</b></big> 입니다.</small>
                 </div>
                 <div class="text-center">
                   <router-link to="/dashboard/FreeMatch">
