@@ -52,6 +52,11 @@ public class userController {
 		return userInfoService.detail(email);
 	}
 	
+	@GetMapping(value="/user/detail2")
+	public UserInfo detail2(@RequestParam int uid) {
+		return userInfoService.detail2(uid);
+	}
+	
 	@GetMapping(value="/user/joinTeam")
 	public int joinTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.joinTeam(uid, team_uid);
