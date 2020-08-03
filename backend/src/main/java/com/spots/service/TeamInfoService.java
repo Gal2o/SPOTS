@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 
 public interface TeamInfoService {
 	
@@ -18,5 +19,7 @@ public interface TeamInfoService {
 	public List<TeamInfo> listTeam();
 
 	public List<ApplyTeamInfo> applyList(int team_uid);
+
+	public List<UserInfo> userList(int uid);
 	
 }
