@@ -54,15 +54,10 @@
                 </div>
               </div>
               <div class="text-center">
-                <h3>이름 : {{ username }}</h3>
-                <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>
-                  이메일 :
-                  {{ email }}
-                </div>
+                <h3>이름 : {{ model.username }}</h3>
                 <div>
                   <i class="ni education_hat mr-2"></i>
-                  주소 : {{ address }}
+                  이메일 : {{ model.email }}
                 </div>
               </div>
             </div>
@@ -111,6 +106,7 @@
                         placeholder="상세 주소를 입력해주세요"
                         input-classes="form-control-alternative"
                         v-model="model.address"
+                        readonly
                       />
                     </div>
                   </div>
@@ -175,6 +171,11 @@ export default {
       },
     };
   },
+  created() {
+    const userInfo = this.$cookies.get("UserInfo")
+    this.model.username = userInfo.nickname
+    this.model.email = userInfo.email
+  }
 };
 </script>
 <style></style>

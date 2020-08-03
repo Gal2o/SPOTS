@@ -1,9 +1,14 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
+    <div
+      class="card-header border-0"
+      :class="type === 'dark' ? 'bg-transparent' : ''"
+    >
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ title }}</h3>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
+            {{ title }}
+          </h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">더보기</base-button>
@@ -61,9 +66,15 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
+        <base-button type="secondary" @click="modals = true"
+          >자유SPOT 만들기</base-button
+        >
 
-        <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
+        <modal
+          :show.sync="modals"
+          body-classes="p-0"
+          modal-classes="modal-dialog modal-md"
+        >
           <card
             type="secondary"
             shadow
@@ -81,13 +92,18 @@
                 <small>정보를 입력해주세요</small>
               </div>
               <form role="form">
-                <base-input alternative class="mb-3" placeholder="제목을 적어주세요"></base-input>
+                <base-input
+                  alternative
+                  class="mb-3"
+                  v-model="title"
+                  placeholder="제목을 적어주세요"
+                ></base-input>
                 <base-input addon-left-icon="ni ni-calendar-grid-58">
                   <flat-picker
-                    slot-scope="{focus, blur}"
+                    slot-scope="{ focus, blur }"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="{allowInput: true}"
+                    :config="{ allowInput: true }"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -97,19 +113,23 @@
                     slot="title"
                     type="secondary"
                     class="dropdown-toggle"
-                  >{{ this.stadiumN }}</base-button>
+                    >{{ this.stadiumN }}</base-button
+                  >
                   <a
                     class="dropdown-item"
                     v-for="stadiumData in stadiumDatas"
                     v-bind:key="stadiumData"
                     @click="choice1(stadiumData)"
-                  >{{ stadiumData.place_name }}</a>
+                    >{{ stadiumData.place_name }}</a
+                  >
                 </base-dropdown>
                 <div class="text-center">
-                  <router-link to="/dashboard/FreeMatch">
-                    <base-button type="success" class="my-4 mr-4">친구 모아보기</base-button>
-                  </router-link>
-                  <base-button type="secondary" @click="modals = false">닫기</base-button>
+                  <base-button type="success" @click="getSpot" class="my-4 mr-4"
+                    >친구 모아보기</base-button
+                  >
+                  <base-button type="secondary" @click="modals = false"
+                    >닫기</base-button
+                  >
                 </div>
               </form>
             </template>
@@ -139,16 +159,20 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios.get(SERVER_URL, "place/list").then((res) => {
-      console.log(res);
-      this.stadiumDatas = res.data;
-    });
+    axios
+      .get(SERVER_URL + "place/list")
+      .then((rest) => {
+        console.log(rest.data);
+        this.stadiumDatas = rest.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   props: {
     type: {
       type: String,
     },
-    title: String,
   },
   data() {
     return {
@@ -159,11 +183,42 @@ export default {
       modals: false,
       stadiumN: "경기장을 골라주세요",
       stadiumDatas: [],
+      title: "",
+      placeuid: 0,
+      placeprice: 0,
+      placecode: 0,
+      userInfo: Object,
     };
   },
   methods: {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
+      this.placeuid = stadium.place_uid;
+      this.placeprice = stadium.placeprice;
+      this.placecode = stadium.code;
+    },
+    getSpot() {
+      this.userInfo = this.$cookies.get("UserInfo");
+      const makeData = new FormData();
+      makeData.append("title", this.title);
+      // makeData.append("matching_date", this.dates.simple);
+      makeData.append("place_uid", 0);
+      makeData.append("place_price", this.placeprice);
+      makeData.append("place_code", this.placecode);
+      makeData.append("head_uid", this.userInfo.uid);
+      axios
+        .post(SERVER_URL + "FRoomCreate/", makeData)
+        .then((res) => {
+          console.log(res);
+          if (res.data == "") {
+            alert("제대로 입력해주세요.");
+          } else {
+            this.$router.push({ name: "자유 SPOT" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
