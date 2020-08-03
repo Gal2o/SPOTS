@@ -5,92 +5,116 @@
       <div class="row">
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Total traffic"
+            title="이번주 최대 승률팀"
             type="gradient-red"
-            sub-title="350,897"
+            sub-title="성남FC"
             icon="ni ni-active-40"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
               <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
+                <i class="fa fa-arrow-up">순위 업! 1등</i>
               </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"
+                >승률 {{ this.FreerankData[0].team_rate }}%</span
+              >
             </template>
           </stats-card>
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Total traffic"
+            title="이번주 최소 승률팀"
             type="gradient-orange"
-            sub-title="2,356"
+            sub-title="서울 노원 유나이티드 FC"
             icon="ni ni-chart-pie-35"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
+              <span class="text-danger mr-2">
+                <i class="fa fa-arrow-down"></i> 분발하세요!
               </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"
+                >승률 {{ this.FreerankData[19].team_rate }}%</span
+              >
             </template>
           </stats-card>
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Sales"
+            title="이번주 최다 승리팀"
             type="gradient-green"
-            sub-title="924"
+            sub-title="수원 삼성 블루윙즈"
             icon="ni ni-money-coins"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
+              <span class="text-success mr-2">
+                <i class="fa fa-arrow-up"></i> 대단해요!
               </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"
+                >승리 수 {{ this.FreerankData[1].team_win }}</span
+              >
             </template>
           </stats-card>
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Performance"
+            title="이번주 최다 패배팀"
             type="gradient-info"
-            sub-title="49,65%"
+            sub-title="양주시민축구단"
             icon="ni ni-chart-bar-32"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
+              <span class="text-danger mr-2">
+                <i class="fa fa-arrow-down"></i> 화이팅!
               </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"
+                >승률 {{ this.FreerankData[8].team_lose }}</span
+              >
             </template>
           </stats-card>
         </div>
       </div>
     </base-header>
-
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt-4">
       <div class="row">
         <div class="col">
-          <projects-table title="Light Table"></projects-table>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col">
-          <projects-table type="dark" title="Dark Table"></projects-table>
+          <trank-table title="Light Table"></trank-table>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import ProjectsTable from "./Tables/ProjectsTable";
+import teamRanking from "./Tables/teamRanking";
+import axios from "axios";
+const SERVER_URL = "http://localhost:8080/";
+
 export default {
   name: "tables",
-  components: {
-    ProjectsTable,
+  created() {
+    axios
+      .get(SERVER_URL + "rank/")
+      .then((res) => {
+        this.FreerankData = res.data;
+        console.log(this.FreerankData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
+  components: {
+    "trank-table": teamRanking,
+  },
+  data() {
+    return {
+      FreerankData: [],
+    };
+  },
+  methods: {},
+  mounted() {},
 };
 </script>
 <style></style>
