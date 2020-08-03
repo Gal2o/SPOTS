@@ -226,6 +226,7 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
     }
+    console.log(this)
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.head_uid);
     axios.post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
