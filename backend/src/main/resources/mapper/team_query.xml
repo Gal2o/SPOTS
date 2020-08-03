@@ -29,6 +29,9 @@
 	<select id="listTeam" resultType="com.spots.dto.TeamInfo">
 		select * from team
 	</select>
+	<select id="userList" resultType="com.spots.dto.UserInfo">
+		select * from user where team_uid = #{uid}
+	</select>
 	
 	<select id="applyList" resultType="com.spots.dto.ApplyTeamInfo">
 		select * from apply_team where team_uid = #{team_uid}

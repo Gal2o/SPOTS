@@ -9,6 +9,9 @@
 	<select id="detail" resultType="com.spots.dto.UserInfo">
 		select * from user where email= #{email}
 	</select>
+	<select id="detail2" resultType="com.spots.dto.UserInfo">
+		select * from user where uid= #{uid}
+	</select>
 	<insert id="signUp">
 		insert into user
 		(email, password, birthday, skill, position_uid, nickname) 
