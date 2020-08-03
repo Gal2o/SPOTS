@@ -56,5 +56,8 @@ public interface UserMapper {
 
 	public int applyTeam(ApplyTeamInfo dto);
 
+	public UserInfo detail2(int uid);
+
+
 
 }

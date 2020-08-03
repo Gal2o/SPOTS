@@ -20,4 +20,6 @@ public interface UserInfoService {
 	public int outTeam(int uid);
 
 	public int applyTeam(ApplyTeamInfo dto);
+
+	public UserInfo detail2(int uid);
 }
