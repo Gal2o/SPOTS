@@ -31,7 +31,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="RedtableDatas"
+          :data="tableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -62,7 +62,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="BluetableDatas"
+          :data="othertableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -133,23 +133,10 @@
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>팀과 포지션을 선택해주세요.</small>
+                <small>포지션을 선택해주세요.</small>
               </div>
               <form role="form">
                 <div class="d-flex justify-content-center">                
-                  <base-dropdown class="mr-3">
-                    <base-button
-                      slot="title"
-                      type="secondary"
-                      class="dropdown-toggle"
-                    >{{ this.myTeam }}</base-button>
-                    <a
-                      class="dropdown-item"
-                      v-for="teamitem in teamList"
-                      :key="teamitem"
-                      @click="TeamChange(teamitem.name)"
-                    >{{ teamitem.name }}</a>
-                  </base-dropdown>
                   <base-dropdown class="mr-3">
                     <base-button
                       slot="title"
@@ -192,7 +179,7 @@ export default {
     return {
       isMine: "",
       RoomData: Object,
-      RedtableDatas: [
+      tableDatas: [
         {
           name: "SPOTs관리자",
           position: "랜덤",
@@ -202,7 +189,7 @@ export default {
           position: "수비수",
         },
       ],
-      BluetableDatas: [
+      othertableDatas: [
         {
           name: "SPOTs테스터2",
           position: "공격수",
@@ -214,7 +201,6 @@ export default {
       ],
       isLogined: false,
       myPosition: '랜덤',
-      myTeam: 'RED',
       postionList: [
         {name: '랜덤'},
         {name: '공격수'},
