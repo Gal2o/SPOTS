@@ -137,10 +137,23 @@
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>포지션을 선택해주세요.</small>
+                <small>팀과 포지션을 선택해주세요.</small>
               </div>
               <form role="form">
                 <div class="d-flex justify-content-center">                
+                  <base-dropdown class="mr-3">
+                    <base-button
+                      slot="title"
+                      type="secondary"
+                      class="dropdown-toggle"
+                    >{{ this.myTeam }}</base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="teamitem in teamList"
+                      :key="teamitem"
+                      @click="TeamChange(teamitem.name)"
+                    >{{ teamitem.name }}</a>
+                  </base-dropdown>
                   <base-dropdown class="mr-3">
                     <base-button
                       slot="title"
@@ -205,12 +218,17 @@ export default {
       ],
       isLogined: false,
       myPosition: '랜덤',
+      myTeam: 'RED',
       postionList: [
         {name: '랜덤'},
         {name: '공격수'},
         {name: '미드필더'},
         {name: '수비수'},
         {name: '골키퍼'},
+      ],
+      teamList: [
+        {name: 'RED'},
+        {name: 'BLUE'},
       ],
       modals: {
         loginalert: false,
@@ -221,6 +239,9 @@ export default {
   methods: {
     PositionChange(name) {
       this.myPosition = name
+    },
+    TeamChange(name) {
+      this.myTeam = name
     },
   },
   mounted() {},
