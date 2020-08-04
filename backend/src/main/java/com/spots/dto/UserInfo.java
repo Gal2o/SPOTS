@@ -20,6 +20,38 @@ public class UserInfo {
 	private String comment;
 	
 
+	public String getCity_code() {
+		return city_code;
+	}
+
+	public void setCity_code(String city_code) {
+		this.city_code = city_code;
+	}
+
+	public String getState_code() {
+		return state_code;
+	}
+
+	public void setState_code(String state_code) {
+		this.state_code = state_code;
+	}
+
+	public String getDong_code() {
+		return dong_code;
+	}
+
+	public void setDong_code(String dong_code) {
+		this.dong_code = dong_code;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	public UserInfo() {}
 
 	public UserInfo(String email, String password, String birthday, char skill, String position_uid, String nickname) {
