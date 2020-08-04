@@ -1,9 +1,14 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
+    <div
+      class="card-header border-0"
+      :class="type === 'dark' ? 'bg-transparent' : ''"
+    >
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ title }}</h3>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
+            {{ title }}
+          </h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">더보기</base-button>
@@ -78,7 +83,6 @@ export default {
     axios
       .get(SERVER_URL + "TeamMatchMain/")
       .then((res) => {
-        console.log(res);
         this.TeamtableData = res.data;
       })
       .catch((err) => {
