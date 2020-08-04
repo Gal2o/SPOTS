@@ -2,7 +2,7 @@ package com.spots.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +16,8 @@ public class EntryController {
 	@Autowired
 	EntryService Entry;
 	
-	@GetMapping(value="/FreeMatchRoom/entry")
-	public int FreeMatchEntry(@RequestParam int team_entry_uid, @RequestParam int uid, int positionnum) {
+	@PostMapping(value="/FreeMatchRoom/entry")
+	public int FreeMatchEntry(@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum) {
 		System.out.println("자리배치 시작");
 		if(positionnum == 1)
 			return Entry.S1(team_entry_uid, uid);
@@ -49,7 +49,7 @@ public class EntryController {
 			return 0;
 	}
 	
-	@GetMapping(value="/FreeMatchRoom/entrylist")
+	@PostMapping(value="/FreeMatchRoom/entrylist")
 	public EntryInfo entrylist(@RequestParam int team_entry_uid) {
 		return Entry.entrylist(team_entry_uid);
 	}
