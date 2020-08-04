@@ -17,7 +17,7 @@ public interface UserInfoService {
 	
 	public int joinTeam(int uid, int team_uid);
 
-	public int outTeam(int uid);
+	public int outTeam(int uid, int team_uid);
 
 	public int applyTeam(ApplyTeamInfo dto);
 
