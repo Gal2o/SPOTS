@@ -111,19 +111,25 @@ export default {
       stateN: "시",
       dongN: "동",
       sidolist: [],
+      citycode: null,
+      statecode: null,
+      dongcode: null,
       keyword: null,
     };
   },
   methods: {
     choice1(state) {
       this.cityN = state.state_name;
+      this.citycode = state.state_code;
       this.choicestate(state.state_code);
     },
     choice2(city) {
       this.stateN = city.city_name;
+      this.statecode = city.city_code;
       this.choicedong(city.city_code);
     },
     choice3(dong) {
+      this.dongcode = dong.dong_code;
       this.dongN = dong.dong_name;
     },
 
@@ -155,9 +161,9 @@ export default {
     },
     checksido() {
       this.sidolist = [];
-      this.sidolist.push(this.cityN);
-      this.sidolist.push(this.stateN);
-      this.sidolist.push(this.dongN);
+      this.sidolist.push(this.citycode);
+      this.sidolist.push(this.statecode);
+      this.sidolist.push(this.dongcode);
       this.sidolist.push(this.keyword);
     },
   },
