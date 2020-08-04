@@ -4,36 +4,47 @@
       <!-- Card stats -->
       <div class="row">
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.cityN }}</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+            this.cityN
+          }}</base-button>
           <a
             class="dropdown-item"
             v-for="cityData in cityDatas"
             v-bind:key="cityData"
             @click="choice1(cityData)"
-          >{{ cityData.city_name }}</a>
+            >{{ cityData.state_name }}</a
+          >
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.stateN }}</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+            this.stateN
+          }}</base-button>
           <a
             class="dropdown-item"
             v-for="stateData in stateDatas"
             v-bind:key="stateData"
             @click="choice2(stateData)"
-          >{{ stateData.state_name }}</a>
+            >{{ stateData.city_name }}</a
+          >
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.dongN }}</base-button>
+          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+            this.dongN
+          }}</base-button>
           <a
             class="dropdown-item"
             v-for="dongData in dongDatas"
             v-bind:key="dongData"
             @click="choice3(dongData)"
-          >{{ dongData.dong_name }}</a>
+            >{{ dongData.dong_name }}</a
+          >
         </base-dropdown>
 
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex">
+        <form
+          class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex"
+        >
           <div class="form-group mb-0">
             <base-input
               placeholder="검색"
@@ -60,7 +71,6 @@
   </div>
 </template>
 
-
 <script>
 import ProjectsTable from "./Tables/ProjectsTable";
 import TeamTable from "./Tables/TeamTable";
@@ -71,9 +81,8 @@ export default {
   name: "dashboard",
   created() {
     axios
-      .get(SERVER_URL + "cityList")
+      .get(SERVER_URL + "stateList")
       .then((res) => {
-        console.log(res);
         this.cityDatas = res.data;
       })
       .catch((err) => {
@@ -95,13 +104,13 @@ export default {
     };
   },
   methods: {
-    choice1(city) {
-      this.cityN = city.city_name;
-      this.choicestate(city.city_code);
+    choice1(state) {
+      this.cityN = state.state_name;
+      this.choicestate(state.state_code);
     },
-    choice2(state) {
-      this.stateN = state.state_name;
-      this.choicedong(state.state_code);
+    choice2(city) {
+      this.stateN = city.city_name;
+      this.choicedong(city.city_code);
     },
     choice3(dong) {
       this.dongN = dong.dong_name;
@@ -110,9 +119,9 @@ export default {
     choicestate(b) {
       const stateForm = new FormData();
       b = String(b);
-      stateForm.append("city_code", b);
+      stateForm.append("state_code", b);
       axios
-        .post(SERVER_URL + "stateList", stateForm)
+        .post(SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
         })
@@ -123,7 +132,7 @@ export default {
     choicedong(c) {
       const dongForm = new FormData();
       c = String(c);
-      dongForm.append("state_code", c);
+      dongForm.append("city_code", c);
       axios
         .post(SERVER_URL + "dongList", dongForm)
         .then((res) => {
