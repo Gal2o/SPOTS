@@ -1,15 +1,13 @@
 package com.spots.dto;
 
-import java.util.Date;
-
 public class FMatchInfo {
 	private int uid;
 	private int head_uid;
 
 	private int home_matching_entry_uid;
 	private int away_matching_entry_uid;
-	private Date create_date;
-	private Date matching_date;
+	private String create_date;
+	private String matching_date;
 	private int home_score;
 	private int away_score;
 	private int ready_num;
@@ -22,7 +20,7 @@ public class FMatchInfo {
 	public FMatchInfo() {}
 	
 	public FMatchInfo(int uid, int head_uid, int home_matching_entry_uid,
-			int away_matching_entry_uid, Date create_date, Date matching_date, int home_score, int away_score,
+			int away_matching_entry_uid, String create_date, String matching_date, int home_score, int away_score,
 			int ready_num, int place_uid, int price, int head_price, String dong_code, String title) {
 		super();
 		this.uid = uid;
@@ -67,16 +65,16 @@ public class FMatchInfo {
 	public void setAway_matching_entry_uid(int away_matching_entry_uid) {
 		this.away_matching_entry_uid = away_matching_entry_uid;
 	}
-	public Date getCreate_date() {
+	public String getCreate_date() {
 		return create_date;
 	}
-	public void setCreate_date(Date create_date) {
+	public void setCreate_date(String create_date) {
 		this.create_date = create_date;
 	}
-	public Date getMatching_date() {
+	public String getMatching_date() {
 		return matching_date;
 	}
-	public void setMatching_date(Date matching_date) {
+	public void setMatching_date(String matching_date) {
 		this.matching_date = matching_date;
 	}
 	public int getHome_score() {
