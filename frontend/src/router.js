@@ -51,6 +51,12 @@ export default new Router({
           component: () =>
             import("./views/Dashboard/FreeMatchRoom.vue"),
         },
+        {
+          path: "/teamlist",
+          name: "teamlist",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/TeamList.vue"),
+        },
       ],
     },
     {
