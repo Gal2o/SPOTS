@@ -15,23 +15,18 @@ public class SidoInfoServiceImpl implements SidoInfoService {
 	SidoMapper mapper;
 
 	@Override
-	public List<SidoInfo> cityList() {
-		return mapper.cityList();
+	public List<SidoInfo> stateList() {
+		return mapper.stateList();
 	}
 
 	@Override
-	public List<SidoInfo> stateList(String city_code) {
-		return mapper.stateList(city_code);
+	public List<SidoInfo> cityList(String state_code) {
+		return mapper.cityList(state_code);
 	}
 
 	@Override
-	public List<SidoInfo> dongList(String state_code) {
-		return mapper.dongList(state_code);
+	public List<SidoInfo> dongList(String city_code) {
+		return mapper.dongList(city_code);
 	}
-
-
-
-
-
 	 
 }

@@ -46,10 +46,10 @@ export default new Router({
         //     import(/* webpackChunkName: "demo" */ "./views/Date.vue"),
         // },
         {
-          path: "/dashboard/FreeMatch",
+          path: "/dashboard/FreeMatch/:head_uid",
           name: "자유 SPOT",
           component: () =>
-            import(/* webpackChunkName: "demo" */ "./views/Dashboard/FreeMatchRoom.vue"),
+            import("./views/Dashboard/FreeMatchRoom.vue"),
         },
       ],
     },
