@@ -43,10 +43,10 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
-              <base-dropdown v-if="row-mine == isMine">
+              <base-button slot="title" class="dropdown-toggle" v-if="row.mine != isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="row.mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
-                <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
+                <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem" @click="MyPositionChange(positonitem.name)">{{ positonitem.name }}</a>
               </base-dropdown>
             </td>
           </template>
@@ -74,8 +74,8 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
-              <base-dropdown v-if="row-mine == isMine">
+              <base-button slot="title" class="dropdown-toggle" v-if="row.mine != isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="row.mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                 <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
               </base-dropdown>
@@ -237,6 +237,9 @@ export default {
   },
   methods: {
     PositionChange(name) {
+      this.myPosition = name
+    },
+    MyPositionChange(name) {
       this.myPosition = name
     },
     TeamChange(name) {
