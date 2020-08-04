@@ -11,11 +11,11 @@ import com.spots.dto.SidoInfo;
 @Mapper
 public interface SidoMapper {
 
-	List<SidoInfo> cityList();
+	List<SidoInfo> stateList();
 
-	List<SidoInfo> stateList(String city_code);
+	List<SidoInfo> cityList(String state_code);
 
-	List<SidoInfo> dongList(String state_code);
+	List<SidoInfo> dongList(String city_code);
 
 
 }

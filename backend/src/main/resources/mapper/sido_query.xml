@@ -4,13 +4,13 @@
 	 
 	
 	<select id="cityList" resultType="com.spots.dto.SidoInfo">
-		select * from city_code
+		select * from state_code
 	</select>
 	<select id="stateList" resultType="com.spots.dto.SidoInfo">
-		select * from state_code where state_code like concat(#{city_code},'%')
+		select * from city_code where city_code like concat(#{state_code},'%')
 	</select>
 	<select id="dongList" resultType="com.spots.dto.SidoInfo">
-		select * from dong_code where dong_code like concat(#{state_code},'%')
+		select * from dong_code where dong_code like concat(#{city_code},'%')
 	</select>
 
 </mapper>
