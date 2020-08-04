@@ -31,7 +31,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="tableDatas"
+          :data="RedtableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -65,7 +65,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="othertableDatas"
+          :data="BluetableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -194,7 +194,7 @@ export default {
     return {
       head_uid: 1,
       RoomData: Object,
-      tableDatas: [
+      RedtableDatas: [
         {
           name: "SPOTs관리자",
           position: "랜덤",
@@ -204,7 +204,7 @@ export default {
           position: "수비수",
         },
       ],
-      othertableDatas: [
+      BluetableDatas: [
         {
           name: "SPOTs테스터2",
           position: "공격수",
@@ -260,6 +260,15 @@ export default {
         else {
           this.RoomData = res.data[0]
           console.log(this.RoomData)
+          const Team_entry_uid = new FormData();
+          Team_entry_uid.append("team_entry_uid", this.RoomData.home_matching_entry_uid);
+          axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
+            .then(res => {
+              console.log(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
       })
       .catch(err => {
