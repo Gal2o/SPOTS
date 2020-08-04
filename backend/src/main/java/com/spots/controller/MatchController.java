@@ -52,12 +52,12 @@ public class MatchController {
 	}
 
 	// 매칭 페이지 리스트
-	@PostMapping(value = "/TeamMatchAll")
+	@GetMapping(value = "/TeamMatchAll")
 	public List <TMatchInfo> TListAll() {
 		return TeamMatch.TListAll();
 	}
 
-	@PostMapping(value = "/FreeMatchAll")
+	@GetMapping(value = "/FreeMatchAll")
 	public List <FMatchInfo> FListAll() {
 		return FreeMatch.FListAll();
 	}
