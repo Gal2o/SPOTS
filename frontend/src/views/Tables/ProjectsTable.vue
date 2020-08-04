@@ -7,7 +7,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            {{ title }}
+            {{ tabletitle }}
           </h3>
         </div>
         <div class="col text-right">
@@ -22,7 +22,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="FreetableData"
+        :data="FreeTable"
       >
         <template slot="columns">
           <th>제목</th>
@@ -57,7 +57,7 @@
             <router-link
               :to="{
                 name: '자유 SPOT',
-                params: { head_uid: row.head_uid },
+                params: { head_uid: FreetableData.head_uid },
               }"
             >
               <base-button type="success">입장하기</base-button>
@@ -142,10 +142,7 @@
         </modal>
       </div>
       <div>
-        <base-pagination
-          :page-count="4"
-          v-model="pagination.default"
-        ></base-pagination>
+        <base-pagination :page-count="5" v-model="pagination"></base-pagination>
       </div>
     </div>
   </div>
@@ -161,10 +158,12 @@ export default {
   name: "projects-table",
   components: { flatPicker },
   created() {
+    console.log("dfa", this);
     axios
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
+        this.FreeTable = this.FreetableData.slice(1, 6);
       })
       .catch((err) => {
         console.log(err);
@@ -181,7 +180,12 @@ export default {
   },
   watch: {
     sidolist: function() {
+      console.log("check", this.sidolist);
       this.sidoinfo();
+    },
+    pagination: function() {
+      // console.log(this.FreeTable);
+      this.selectpage();
     },
   },
   props: {
@@ -190,11 +194,13 @@ export default {
     },
     sidolist: [],
   },
+
   data() {
     return {
       dates: {
-        simple: "2020-07-30",
+        simple: "2020-08-05",
       },
+      tabletitle: "자유 SPOT",
       FreetableData: [],
       modals: false,
       stadiumN: "경기장을 골라주세요",
@@ -204,11 +210,11 @@ export default {
       placeprice: 0,
       placecode: 0,
       userInfo: Object,
-      pagination: {
-        default: 1,
-      },
+      pagination: 1,
+      FreeTable: [],
     };
   },
+
   methods: {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
@@ -244,12 +250,24 @@ export default {
     },
     sidoinfo() {
       const sidoData = new FormData();
-      sidoData.append("state", this.sidoList[0]);
-      sidoData.append("city", this.sidoList[1]);
-      sidoData.append("dong", this.sidoList[2]);
+      // console.log("dfdfdf");
+      console.log("dfdfd", this.sidolist);
+      sidoData.append("state_code", this.sidolist[0]);
+      sidoData.append("city_code", this.sidolist[1]);
+      sidoData.append("dong_code", this.sidolist[2]);
+      sidoData.append("title", this.sidolist[3]);
       axios.post(SERVER_URL + "sidoinfo", sidoData).then((res) => {
-        this.freetableData = res.data;
+        this.FreetableData = res.data;
       });
+    },
+    selectpage() {
+      console.log(this);
+      (this.FreeTable = []),
+        (this.FreeTable = this.FreetableData.slice(
+          (this.pagination - 1) * 5 + 1,
+          (this.pagination - 1) * 5 + 6
+        ));
+      console.log(this.FreeTable);
     },
   },
 };
