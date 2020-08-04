@@ -43,12 +43,14 @@
 	</insert>
 	
 	<insert id="FRoomCreate">
+		insert into matching_entry (goalkeeper_uid) values(null), (null);
+        
         insert into free_matching
-        (head_uid, home_scroe, away_score,
+        (head_uid, home_matching_entry_uid, away_matching_entry_uid, home_scroe, away_score,
          ready_num, place_uid, price, head_price,
           dong_code, title)
         values
-        (#{uid}, 0, 0, 0,
+        (#{uid}, LAST_INSERT_ID(), LAST_INSERT_ID() + 1, 0, 0, 0,
         #{place_uid}, #{price}, 0,
         #{dong_code}, #{title} )
     </insert>

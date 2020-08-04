@@ -1,5 +1,7 @@
 package com.spots.service;
 
+import com.spots.dto.EntryInfo;
+
 public interface EntryService {
 
 	public int S1(int team_entry_uid, int uid);
@@ -15,5 +17,6 @@ public interface EntryService {
 	public int S11(int team_entry_uid, int uid);
 	public int S12(int team_entry_uid, int uid);
 	public int S13(int team_entry_uid, int uid);
+	public EntryInfo entrylist(int team_entry_uid);
 	
 }

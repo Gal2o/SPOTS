@@ -4,7 +4,7 @@ package com.spots.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.spots.dto.UserInfo;
+import com.spots.dto.EntryInfo;
 
 
 @Mapper
@@ -23,6 +23,7 @@ public interface EntryMapper {
 	public int S11(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
 	public int S12(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
 	public int S13(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public EntryInfo entrylist(@Param("team_entry_uid") int team_entry_uid);
 	
 
 
