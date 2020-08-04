@@ -3,6 +3,7 @@ package com.spots.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spots.dto.EntryInfo;
 import com.spots.mapper.EntryMapper;
 
 @Service
@@ -74,6 +75,11 @@ public class EntryServiceImpl implements EntryService {
 	@Override
 	public int S13(int team_entry_uid, int uid) {
 		return mapper.S13(team_entry_uid, uid);
+	}
+
+	@Override
+	public EntryInfo entrylist(int team_entry_uid) {
+		return mapper.entrylist(team_entry_uid);
 	}
 
 }

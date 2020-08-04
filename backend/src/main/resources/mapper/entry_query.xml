@@ -5,9 +5,86 @@
 	<update id="S1">
 		update matching_entry 
 		   set	striker1_uid = #{uid} 			
-		 where team_entry_uid= #{team_entry_uid}
+		 where uid= #{team_entry_uid}
 	</update>
 	
+	<update id="S2">
+		update matching_entry 
+		   set	striker2_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S3">
+		update matching_entry 
+		   set	striker3_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S4">
+		update matching_entry 
+		   set	striker4_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S5">
+		update matching_entry 
+		   set	midfielder1_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S6">
+		update matching_entry 
+		   set	midfielder2_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S7">
+		update matching_entry 
+		   set	midfielder3_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S8">
+		update matching_entry 
+		   set	midfielder4_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S9">
+		update matching_entry 
+		   set	defender1_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S10">
+		update matching_entry 
+		   set	defender2_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S11">
+		update matching_entry 
+		   set	defender3_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S12">
+		update matching_entry 
+		   set	defender4_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="S13">
+		update matching_entry 
+		   set	goalkeeper_uid = #{uid} 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<select id="entrylist" resultType="com.spots.dto.EntryInfo">
+		select *
+		from matching_entry
+		where uid = #{team_entry_uid}
+	</select>
 	
 </mapper>
 

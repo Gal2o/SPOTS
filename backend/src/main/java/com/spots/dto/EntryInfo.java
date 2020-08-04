@@ -2,7 +2,6 @@ package com.spots.dto;
 
 public class EntryInfo {
 	private int uid;
-	private int team_entry_uid;
 	private int striker1_uid;
 	private int striker2_uid;
 	private int striker3_uid;
@@ -21,12 +20,6 @@ public class EntryInfo {
 	}
 	public void setUid(int uid) {
 		this.uid = uid;
-	}
-	public int getTeam_entry_uid() {
-		return team_entry_uid;
-	}
-	public void setTeam_entry_uid(int team_entry_uid) {
-		this.team_entry_uid = team_entry_uid;
 	}
 	public int getStriker1_uid() {
 		return striker1_uid;
@@ -108,7 +101,7 @@ public class EntryInfo {
 	}
 	@Override
 	public String toString() {
-		return "EntryInfo [uid=" + uid + ", team_entry_uid=" + team_entry_uid + ", striker1_uid=" + striker1_uid
+		return "EntryInfo [uid=" + uid + ", striker1_uid=" + striker1_uid
 				+ ", striker2_uid=" + striker2_uid + ", striker3_uid=" + striker3_uid + ", striker4_uid=" + striker4_uid
 				+ ", midfielder1_uid=" + midfielder1_uid + ", midfielder2_uid=" + midfielder2_uid + ", midfielder3_uid="
 				+ midfielder3_uid + ", midfielder4_uid=" + midfielder4_uid + ", defender1_uid=" + defender1_uid
