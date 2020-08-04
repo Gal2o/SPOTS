@@ -63,8 +63,8 @@ public class userController {
 	}
 	
 	@GetMapping(value="/user/outTeam")
-	public int outTeam(@RequestParam int uid) {
-		return userInfoService.outTeam(uid);
+	public int outTeam(@RequestParam int uid, @RequestParam int team_uid) {
+		return userInfoService.outTeam(uid, team_uid);
 	}
 
 	@GetMapping(value="/user/applyTeam")
