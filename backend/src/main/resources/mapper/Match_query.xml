@@ -32,26 +32,25 @@
     
     <!-- 매칭 방 만들기 -->
     <insert id="TRoomCreate">
-        insert into team_matching
-        ( head_uid, home_team_uid,
-        create_date, matching_date, place_uid, price, head_price, 
-        dong_code, title)
-        values
-        ( #{head_uid}, #{home_team_uid},
-        #{create_date}, #{matching_date}, #{place_uid},
-        #{dong_code}, #{title} );
-
-    </insert>
+		insert into team_matching
+		( head_uid, home_team_uid, away_team_uid, home_score, away_score, ready_num,
+		  place_uid, price, head_price, 
+		  dong_code, title)
+		values
+		( #{uid}, 0, 0, 0, 0, 0, 
+		  #{place_uid}, #{price}, 0,
+		  #{dong_code}, #{title} );
+	</insert>
     
     <insert id="FRoomCreate">
         insert into free_matching
-        (head_uid, home_scroe, away_score,
-         ready_num, place_uid, price, head_price,
+        ( head_uid, home_score, away_score, ready_num,
+          place_uid, price, head_price,
           dong_code, title)
         values
-        (#{uid}, 0, 0, 0,
-        #{place_uid}, #{price}, 0,
-        #{dong_code}, #{title} )
+        ( #{uid}, 0, 0, 0,
+          #{place_uid}, #{price}, 0,
+          #{dong_code}, #{title} )
     </insert>
     
     <!-- 방 정보 수정 -->
