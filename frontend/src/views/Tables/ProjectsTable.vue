@@ -180,11 +180,11 @@ export default {
   },
   watch: {
     sidolist: function() {
-      // console.log("check", this.sidolist);
+      console.log("check", this.sidolist);
       this.sidoinfo();
     },
     pagination: function() {
-      console.log(this.FreeTable);
+      // console.log(this.FreeTable);
       this.selectpage();
     },
   },
@@ -251,10 +251,10 @@ export default {
     sidoinfo() {
       const sidoData = new FormData();
       // console.log("dfdfdf");
-      // console.log("dfdfd", this.sidolist);
-      sidoData.append("state", this.sidolist[0]);
-      sidoData.append("city", this.sidolist[1]);
-      sidoData.append("dong", this.sidolist[2]);
+      console.log("dfdfd", this.sidolist);
+      sidoData.append("state_code", this.sidolist[0]);
+      sidoData.append("city_code", this.sidolist[1]);
+      sidoData.append("dong_code", this.sidolist[2]);
       sidoData.append("title", this.sidolist[3]);
       axios.post(SERVER_URL + "sidoinfo", sidoData).then((res) => {
         this.FreetableData = res.data;
