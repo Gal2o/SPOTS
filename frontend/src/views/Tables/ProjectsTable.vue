@@ -23,6 +23,7 @@
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
         :data="FreetableData"
+        v-model="pagination.default"
       >
         <template slot="columns">
           <th>제목</th>
@@ -54,7 +55,12 @@
           </td>
 
           <td class="text-right">
-            <router-link to="/dashboard/FreeMatch">
+            <router-link
+              :to="{
+                name: '자유 SPOT',
+                params: { head_uid: FreetableData.head_uid },
+              }"
+            >
               <base-button type="success">입장하기</base-button>
             </router-link>
           </td>
@@ -136,7 +142,12 @@
           </card>
         </modal>
       </div>
-      <base-pagination total="30"></base-pagination>
+      <div>
+        <base-pagination
+          :page-count="4"
+          v-model="pagination.default"
+        ></base-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -152,7 +163,7 @@ export default {
   components: { flatPicker },
   created() {
     axios
-      .get(SERVER_URL + "FreeMatchMain/")
+      .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
       })
@@ -188,6 +199,9 @@ export default {
       placeprice: 0,
       placecode: 0,
       userInfo: Object,
+      pagination: {
+        default: 1,
+      },
     };
   },
   methods: {
