@@ -30,20 +30,19 @@ public class sidoController {
 		return mav;
 	}
 	
-	@GetMapping(value="/cityList")
-	public List<SidoInfo> cityList() {
-		System.out.println("asd");
-		return sidoInfoService.cityList();
+	@GetMapping(value="/stateList")
+	public List<SidoInfo> stateList() {
+		return sidoInfoService.stateList();
 	}
-	@PostMapping(value="/stateList")
-	public List<SidoInfo> stateList(@RequestParam String city_code) {
-		city_code = city_code.substring(0,2);
-		return sidoInfoService.stateList(city_code);
+	@PostMapping(value="/cityList")
+	public List<SidoInfo> cityList(@RequestParam String state_code) {
+		state_code = state_code.substring(0,2);
+		return sidoInfoService.cityList(state_code);
 	}
 	@PostMapping(value="/dongList")
-	public List<SidoInfo> dongList(@RequestParam String state_code) {
-		state_code = state_code.substring(0,4);
-		return sidoInfoService.dongList(state_code);
+	public List<SidoInfo> dongList(@RequestParam String city_code) {
+		city_code = city_code.substring(0,4);
+		return sidoInfoService.dongList(city_code);
 	}
 	
 }

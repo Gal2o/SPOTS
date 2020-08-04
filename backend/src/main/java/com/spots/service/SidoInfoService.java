@@ -6,11 +6,11 @@ import com.spots.dto.SidoInfo;
 
 public interface SidoInfoService {
 
-	List<SidoInfo> cityList();
+	List<SidoInfo> stateList();
+	
+	List<SidoInfo> cityList(String state_code);
 
-	List<SidoInfo> stateList(String city_code);
-
-	List<SidoInfo> dongList(String state_code);
+	List<SidoInfo> dongList(String city_code);
 
 
 }
