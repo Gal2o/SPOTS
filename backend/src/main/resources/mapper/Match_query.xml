@@ -1,78 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.spots.mapper.MatchMapper">
 
-	<!-- 메인페이지 -->
-	<select id="TListMain" resultType="com.spots.dto.TMatchInfo">
-		select * from team_matching limit 5;
-	</select>
-	
-	<select id="FListMain" resultType="com.spots.dto.FMatchInfo">
-		select * from free_matching limit 5;
-	</select>
-	
-	<!-- 전체 리스트  -->
-	<select id="TListAll" resultType="com.spots.dto.TMatchInfo">
-		select * from team_matching;
-	</select>
-	
-	<select id="FListAll" resultType="com.spots.dto.FMatchInfo">
-		select * from free_matching;
-	</select>
-	
-	<!-- 매칭 방 정보 조회 or 방 중복 체크  -->
-	<select id="TListRoom" resultType="com.spots.dto.TMatchInfo">
-		select * from team_matching where head_uid = #{uid};
-	</select>
-	
-	<select id="FListRoom" resultType="com.spots.dto.FMatchInfo">
-		select * from free_matching where head_uid = #{uid};
-	</select>
-	
-	<!-- 매칭 방 만들기 -->
-	<insert id="TRoomCreate">
-		insert into team_matching
-		( head_uid, home_team_uid,
-		create_date, matching_date, place_uid, price, head_price, 
-		dong_code, title)
-		values
-		( #{head_uid}, #{home_team_uid},
-		#{create_date}, #{matching_date}, #{place_uid},
-		#{dong_code}, #{title} );
-		
-	</insert>
-	
-	<insert id="FRoomCreate">
-<<<<<<< HEAD
-		insert into matching_entry (goalkeeper_uid) values(null), (null);
-		
-		insert into free_matching
-		( head_uid, home_matching_entry_uid, away_matching_entry_uid,
-		create_date, matching_date, place_uid, price, head_price, 
-		dong_code, title)
-		values
-		( #{head_uid}, LAST_INSERT_ID(), LAST_INSERT_ID() + 1,
-		#{create_date}, #{matching_date}, #{place_uid},
-		#{dong_code}, #{title} )
-	</insert>
-=======
-        insert into free_matching
-        (head_uid, home_scroe, away_score,
-         ready_num, place_uid, price, head_price,
-          dong_code, title)
-        values
-        (#{uid}, 0, 0, 0,
-        #{place_uid}, #{price}, 0,
-        #{dong_code}, #{title} )
-    </insert>
->>>>>>> 8e59c0c948c89ae7e97af5f3d95434cd04540739
-	
-	<!-- 방 정보 수정 -->
-	<update id="TRoomModify">
-	
-	</update>
-	
-	<update id="FRoomModify">
-	
-	</update>
+<mapper namespace="com.spots.mapper.RankMapper">
+    <update id="TWin">
+        update team 
+           set      team_win = team_win + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{home_team_uid}
+
+         update team 
+           set      team_lose = team_win + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{away_team_uid}
+    </update>
+    
+    <update id="TLose">
+        update team 
+           set      team_win = team_win + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{away_team_uid}
+
+         update team 
+           set      team_lose = team_win + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{home_team_uid}
+    </update>
+    
+    <update id="TDraw">
+        update team 
+           set      team_draw = team_draw + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{home_team_uid}
+
+         update team 
+           set      team_draw = team_draw + 1
+                ,team_rate = team_win / (team_win + team_lose + team_draw) * 100
+         where uid= #{away_team_uid}
+    </update>
+    
+    <select id="listTeam" resultType="com.spots.dto.TeamInfo">
+        select * from team
+        order by team_rate DESC
+        limit 20
+    </select>
+    
 </mapper>
