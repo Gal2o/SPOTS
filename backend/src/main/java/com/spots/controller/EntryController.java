@@ -18,7 +18,7 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entry")
 	public int FreeMatchEntry(@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum) {
-		System.out.println("자리배치 시작");
+		System.out.println("자리배치 시작!!!!!");
 		if(positionnum == 1)
 			return Entry.S1(team_entry_uid, uid);
 		else if(positionnum == 2)
