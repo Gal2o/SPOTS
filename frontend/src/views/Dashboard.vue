@@ -59,7 +59,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-          <projects-table title="자유 SPOT"></projects-table>
+          <projects-table
+            :sidolist="sidolist"
+            title="자유 SPOT"
+          ></projects-table>
         </div>
       </div>
       <div class="row mt-5">
@@ -95,12 +98,13 @@ export default {
   },
   data() {
     return {
-      cityDatas: "",
-      stateDatas: "",
-      dongDatas: "",
+      cityDatas: null,
+      stateDatas: null,
+      dongDatas: null,
       cityN: "도",
       stateN: "시",
       dongN: "동",
+      sidolist: [],
     };
   },
   methods: {
@@ -141,6 +145,11 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    checksido() {
+      this.sidolist.append(this.cityDatas);
+      this.sidolist.append(this.stateDatas);
+      this.sidolist.append(this.dongDatas);
     },
   },
   mounted() {},

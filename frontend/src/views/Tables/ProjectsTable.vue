@@ -23,7 +23,6 @@
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
         :data="FreetableData"
-        v-model="pagination.default"
       >
         <template slot="columns">
           <th>제목</th>
@@ -126,7 +125,7 @@
                     v-for="stadiumData in stadiumDatas"
                     v-bind:key="stadiumData"
                     @click="choice1(stadiumData)"
-                    >{{ stadiumData.place_name }}</a
+                    >{{ stadiumData.place_name }}({{ stadiumData.address }})</a
                   >
                 </base-dropdown>
                 <div class="text-center">
@@ -180,10 +179,16 @@ export default {
         console.log(err);
       });
   },
+  watch: {
+    sidolist: function() {
+      this.sidoinfo();
+    },
+  },
   props: {
     type: {
       type: String,
     },
+    sidolist: [],
   },
   data() {
     return {
@@ -227,12 +232,24 @@ export default {
           if (res.data == "") {
             alert("제대로 입력해주세요.");
           } else {
-            this.$router.push({ name: "자유 SPOT" });
+            this.$router.push({
+              name: "자유 SPOT",
+              params: { head_uid: res.data.head_uid },
+            });
           }
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    sidoinfo() {
+      const sidoData = new FormData();
+      sidoData.append("state", this.sidoList[0]);
+      sidoData.append("city", this.sidoList[1]);
+      sidoData.append("dong", this.sidoList[2]);
+      axios.post(SERVER_URL + "sidoinfo", sidoData).then((res) => {
+        this.freetableData = res.data;
+      });
     },
   },
 };
