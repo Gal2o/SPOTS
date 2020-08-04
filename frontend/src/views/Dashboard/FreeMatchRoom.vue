@@ -43,7 +43,8 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-dropdown>
+              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                 <a class="dropdown-item" @click="PositionChange('랜덤')">랜덤</a>
                 <a class="dropdown-item" @click="PositionChange('공격수')">공격수</a>
@@ -77,7 +78,8 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-dropdown>
+              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                 <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
               </base-dropdown>
@@ -179,7 +181,7 @@ export default {
   components: {},
   data() {
     return {
-      head_uid: 1,
+      isMine: false,
       RoomData: Object,
       tableDatas: [
         {
@@ -226,9 +228,9 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
     }
-    console.log(this)
+    console.log('head', this.$route.params.head_uid)
     const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.head_uid);
+    FreeRoomData.append("uid", this.$route.params.head_uid);
     axios.post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then(res => {
         console.log(res)

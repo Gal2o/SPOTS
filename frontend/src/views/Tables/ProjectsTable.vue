@@ -54,7 +54,7 @@
           </td>
 
           <td class="text-right">
-            <router-link :to="{ name: '자유 SPOT', params: { head_uid: FreetableData.head_uid }}">
+            <router-link :to="{ name: '자유 SPOT', params: { head_uid: row.head_uid }}">
               <base-button type="success">입장하기</base-button>
             </router-link>
           </td>
