@@ -5,201 +5,21 @@
 
     <div class="container-fluid mt-4">
       <div class="row">
-        <div class="col-xl-3 col-lg-6">
+        <div
+          class="col-xl-4 col-lg-6 mt-4"
+          v-for="stadiumdata in stadiumDatas"
+          v-bind:key="stadiumdata"
+        >
           <stats-card
-            :title="title"
+            :title="stadiumdata.address"
             type="gradient-red"
-            sub-title="350,897"
+            :sub-title="stadiumdata.place_name"
             icon="ni ni-active-40"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Performance"
-            type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            :title="title"
-            type="gradient-red"
-            sub-title="350,897"
-            icon="ni ni-active-40"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Performance"
-            type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            :title="title"
-            type="gradient-red"
-            sub-title="350,897"
-            icon="ni ni-active-40"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Performance"
-            type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
-              </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-success mr-2"> 가격 </span>
+              <span class="text-nowrap">{{ stadiumdata.price }}원</span>
             </template>
           </stats-card>
         </div>
@@ -208,10 +28,24 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+const SERVER_URL = "http://localhost:8080/";
+
 export default {
+  created() {
+    axios
+      .get(SERVER_URL + "place/list")
+      .then((rest) => {
+        console.log(rest.data);
+        this.stadiumDatas = rest.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   data() {
     return {
-      title: "ㅎㅎ",
+      stadiumDatas: [],
     };
   },
 };
