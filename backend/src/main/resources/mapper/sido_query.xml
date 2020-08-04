@@ -3,10 +3,10 @@
 <mapper namespace="com.spots.mapper.SidoMapper">
 	 
 	
-	<select id="cityList" resultType="com.spots.dto.SidoInfo">
+	<select id="stateList" resultType="com.spots.dto.SidoInfo">
 		select * from state_code
 	</select>
-	<select id="stateList" resultType="com.spots.dto.SidoInfo">
+	<select id="cityList" resultType="com.spots.dto.SidoInfo">
 		select * from city_code where city_code like concat(#{state_code},'%')
 	</select>
 	<select id="dongList" resultType="com.spots.dto.SidoInfo">
