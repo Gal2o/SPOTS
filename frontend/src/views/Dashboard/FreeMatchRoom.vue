@@ -43,13 +43,10 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-dropdown>
+              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="row-mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
-                <a class="dropdown-item" @click="PositionChange('랜덤')">랜덤</a>
-                <a class="dropdown-item" @click="PositionChange('공격수')">공격수</a>
-                <a class="dropdown-item" @click="PositionChange('수비수')">수비수</a>
-                <a class="dropdown-item" @click="PositionChange('미드필더')">미드필더</a>
-                <a class="dropdown-item" @click="PositionChange('골키퍼')">골키퍼</a>
+                <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
               </base-dropdown>
             </td>
           </template>
@@ -77,7 +74,8 @@
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
             <td>
-              <base-dropdown>
+              <base-button slot="title" class="dropdown-toggle" v-if="!isMine">{{ row.position }}</base-button>
+              <base-dropdown v-if="row-mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                 <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
               </base-dropdown>
@@ -179,7 +177,7 @@ export default {
   components: {},
   data() {
     return {
-      head_uid: 1,
+      isMine: "",
       RoomData: Object,
       tableDatas: [
         {
@@ -210,6 +208,27 @@ export default {
         {name: '수비수'},
         {name: '골키퍼'},
       ],
+      teamList: [
+        {name: 'RED'},
+        {name: 'BLUE'},
+      ],
+      posRedList: [],
+      posBlueList: [],
+      posNameList: [
+        'defender1_uid',
+        'defender2_uid',
+        'defender3_uid',
+        'defender4_uid',
+        'goalkeeper_uid',
+        'midfielder1_uid',
+        'midfielder2_uid',
+        'midfielder3_uid',
+        'midfielder4_uid',
+        'striker1_uid',
+        'striker2_uid',
+        'striker3_uid',
+        'striker4_uid'
+      ],
       modals: {
         loginalert: false,
         entermessage: false,
@@ -220,15 +239,105 @@ export default {
     PositionChange(name) {
       this.myPosition = name
     },
+    TeamChange(name) {
+      this.myTeam = name
+    },
+    RedTeamList() {
+      const Team_entry_uid = new FormData();
+          Team_entry_uid.append("team_entry_uid", this.RoomData.home_matching_entry_uid);
+          axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
+            .then(res => {
+              console.log('2', res.data)
+              this.posList.push(res.data.defender1_uid)
+              this.posList.push(res.data.defender2_uid)
+              this.posList.push(res.data.defender3_uid)
+              this.posList.push(res.data.defender4_uid)
+              this.posList.push(res.data.goalkeeper_uid)
+              this.posList.push(res.data.midfielder1_uid)
+              this.posList.push(res.data.midfielder2_uid)
+              this.posList.push(res.data.midfielder3_uid)
+              this.posList.push(res.data.midfielder4_uid)
+              this.posList.push(res.data.striker1_uid)
+              this.posList.push(res.data.striker2_uid)
+              this.posList.push(res.data.striker3_uid)
+              this.posList.push(res.data.striker4_uid)
+              for(var i=0; i<this.posList.length; i++) {
+                if (this.posList[i] != 0) {
+                  this.RedTeamUser(this.posRedList[i], this.posNameList[i])
+                }
+              }
+              
+            })
+            .catch(err => {
+              console.log(err)
+            })
+    },
+    RedTeamUser(uid, name) {
+      console.log('3', uid)
+      const usid = new FormData()
+      usid.append('uid', uid)
+      axios.get(SERVER_URL + 'user/detail2/', usid)
+        .then(res => {
+          console.log('4', res)
+          this.RedtableDatas.append(name, res.data)
+        })
+        .catch(err => {
+              console.log(err)
+        })
+    },
+    BlueTeamList() {
+      const Team_entry_uid = new FormData();
+          Team_entry_uid.append("team_entry_uid", this.RoomData.away_matching_entry_uid);
+          axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
+            .then(res => {
+              console.log('2', res.data)
+              this.posList.push(res.data.defender1_uid)
+              this.posList.push(res.data.defender2_uid)
+              this.posList.push(res.data.defender3_uid)
+              this.posList.push(res.data.defender4_uid)
+              this.posList.push(res.data.goalkeeper_uid)
+              this.posList.push(res.data.midfielder1_uid)
+              this.posList.push(res.data.midfielder2_uid)
+              this.posList.push(res.data.midfielder3_uid)
+              this.posList.push(res.data.midfielder4_uid)
+              this.posList.push(res.data.striker1_uid)
+              this.posList.push(res.data.striker2_uid)
+              this.posList.push(res.data.striker3_uid)
+              this.posList.push(res.data.striker4_uid)
+              for(var i=0; i<this.posList.length; i++) {
+                if (this.posList[i] != 0) {
+                  this.BlueTeamUser(this.posBlueList[i], this.posNameList[i])
+                }
+              }
+              
+            })
+            .catch(err => {
+              console.log(err)
+            })
+    },
+    BlueTeamUser(uid, name) {
+      console.log('3', uid)
+      const usid = new FormData()
+      usid.append('uid', uid)
+      axios.get(SERVER_URL + 'user/detail2/', usid)
+        .then(res => {
+          console.log('4', res)
+          this.BluetableDatas.append(name, res.data)
+        })
+        .catch(err => {
+              console.log(err)
+        })
+    },
   },
   mounted() {},
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
     }
-    console.log(this)
+    this.isMine = this.$cookies.get('UserInfo').nickname
+    console.log('0',this)
     const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.head_uid);
+    FreeRoomData.append("uid", this.$route.params.head_uid);
     axios.post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then(res => {
         console.log(res)
@@ -238,7 +347,11 @@ export default {
         }
         else {
           this.RoomData = res.data[0]
-          console.log(this.RoomData)
+          console.log('1',this.RoomData)
+          this.RedtableDatas = []
+          this.RedTeamList()
+          this.BluetableDatas = []
+          this.BlueTeamList()          
         }
       })
       .catch(err => {
