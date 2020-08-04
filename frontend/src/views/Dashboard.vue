@@ -49,9 +49,15 @@
             <base-input
               placeholder="검색"
               class="input-group-alternative"
-              alternative
-              addon-right-icon="fas fa-search"
-            ></base-input>
+              v-model="keyword"
+            >
+            </base-input>
+            <base-button
+              class="ml-3"
+              type="success"
+              icon="ni ni-bold-right"
+              @click="checksido"
+            ></base-button>
           </div>
         </form>
       </div>
@@ -105,6 +111,7 @@ export default {
       stateN: "시",
       dongN: "동",
       sidolist: [],
+      keyword: null,
     };
   },
   methods: {
@@ -147,9 +154,11 @@ export default {
         });
     },
     checksido() {
-      this.sidolist.append(this.cityDatas);
-      this.sidolist.append(this.stateDatas);
-      this.sidolist.append(this.dongDatas);
+      this.sidolist = [];
+      this.sidolist.push(this.cityN);
+      this.sidolist.push(this.stateN);
+      this.sidolist.push(this.dongN);
+      this.sidolist.push(this.keyword);
     },
   },
   mounted() {},
