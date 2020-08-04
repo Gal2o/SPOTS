@@ -7,6 +7,14 @@ public class TeamInfo {
 	private double team_rate;
 	private int team_win;
 	private int team_lose;
+	private int player_num;
+	
+	public int getPlayer_num() {
+		return player_num;
+	}
+	public void setPlayer_num(int player_num) {
+		this.player_num = player_num;
+	}
 	public double getTeam_rate() {
 		return team_rate;
 	}
