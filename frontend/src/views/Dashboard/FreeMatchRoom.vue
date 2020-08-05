@@ -559,7 +559,7 @@ export default {
     }    
     console.log('0',this)
     const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.$route.params.head_uid);
+    FreeRoomData.append("uid", this.$route.params.uid);
     axios
       .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
