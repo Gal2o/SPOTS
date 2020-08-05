@@ -27,6 +27,8 @@ public interface MatchMapper {
 	
 	void TRoomModify(TMatchInfo info);
 
+	List<TMatchInfo> TRoomCheck(@Param("head_uid") int head_uid);
+	
 	List<FMatchInfo> FListAll(
 			@Param("doe") String doe, 
 			@Param("si") String si, 
@@ -38,5 +40,8 @@ public interface MatchMapper {
 	void FRoomCreate(FMatchInfo info);
 
 	void FRoomModify(FMatchInfo info);
+
+	List<FMatchInfo> FRoomCheck(@Param("head_uid") int head_uid);
+
 
 }

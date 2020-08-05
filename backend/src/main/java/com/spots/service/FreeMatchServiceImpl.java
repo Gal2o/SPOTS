@@ -40,6 +40,11 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 		mapper.FRoomModify(info);
 	}
 
+	@Override
+	public List<FMatchInfo> FRoomCheck(int head_uid) {
+		return mapper.FRoomCheck(head_uid);
+	}
+
 
 	
 	
