@@ -31,7 +31,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="tableDatas"
+          :data="RedtableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -46,7 +46,7 @@
               <base-button slot="title" class="dropdown-toggle" v-if="row.mine != isMine">{{ row.position }}</base-button>
               <base-dropdown v-if="row.mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
-                <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem" @click="MyPositionChange(positonitem.name)">{{ positonitem.name }}</a>
+                <a class="dropdown-item" v-for="positonitem in RedpostionList" :key="positonitem" @click="PositionChange(positonitem.name)">{{ positonitem.name }}</a>
               </base-dropdown>
             </td>
           </template>
@@ -62,7 +62,7 @@
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
-          :data="othertableDatas"
+          :data="BluetableDatas"
         >
           <template slot="columns">
             <th>유저 명</th>
@@ -77,7 +77,7 @@
               <base-button slot="title" class="dropdown-toggle" v-if="row.mine != isMine">{{ row.position }}</base-button>
               <base-dropdown v-if="row.mine == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
-                <a class="dropdown-item" v-for="positonitem in postionList" :key="positonitem">{{ positonitem.name }}</a>
+                <a class="dropdown-item" v-for="positonitem in BluepostionList" :key="positonitem" @click="PositionChange(positonitem.name)">{{ positonitem.name }}</a>
               </base-dropdown>
             </td>
           </template>
@@ -133,11 +133,25 @@
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>포지션을 선택해주세요.</small>
+                <small>팀과 포지션을 선택해주세요.</small>
               </div>
               <form role="form">
-                <div class="d-flex justify-content-center">                
+                <div class="d-flex justify-content-center">
                   <base-dropdown class="mr-3">
+                    <base-button
+                      slot="title"
+                      type="secondary"
+                      class="dropdown-toggle"
+                    >{{ this.myTeam }}</base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="teamitem in teamList"
+                      :key="teamitem"
+                      @click="TeamChange(teamitem.name)"
+                    >{{ teamitem.name }}</a>
+                  </base-dropdown>
+               
+                  <base-dropdown class="mr-3" v-if="myTeam === 'RED'">
                     <base-button
                       slot="title"
                       type="secondary"
@@ -145,7 +159,20 @@
                     >{{ this.myPosition }}</base-button>
                     <a
                       class="dropdown-item"
-                      v-for="positonitem in postionList"
+                      v-for="positonitem in RedpostionList"
+                      :key="positonitem"
+                      @click="PositionChange(positonitem.name)"
+                    >{{ positonitem.name }}</a>
+                  </base-dropdown>
+                  <base-dropdown class="mr-3" v-if="myTeam === 'BLUE'">
+                    <base-button
+                      slot="title"
+                      type="secondary"
+                      class="dropdown-toggle"
+                    >{{ this.myPosition }}</base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="positonitem in BluepostionList"
                       :key="positonitem"
                       @click="PositionChange(positonitem.name)"
                     >{{ positonitem.name }}</a>
@@ -179,7 +206,7 @@ export default {
     return {
       isMine: "",
       RoomData: Object,
-      tableDatas: [
+      RedtableDatas: [
         {
           name: "SPOTs관리자",
           position: "랜덤",
@@ -189,7 +216,7 @@ export default {
           position: "수비수",
         },
       ],
-      othertableDatas: [
+      BluetableDatas: [
         {
           name: "SPOTs테스터2",
           position: "공격수",
@@ -200,7 +227,23 @@ export default {
         },
       ],
       isLogined: false,
+      myTeam: 'RED',
       myPosition: '랜덤',
+      myPosUid: 0,
+      RedpostionList: [
+        {name: '랜덤'},
+        {name: '공격수'},
+        {name: '미드필더'},
+        {name: '수비수'},
+        {name: '골키퍼'},
+      ],
+      BluepostionList: [
+        {name: '랜덤'},
+        {name: '공격수'},
+        {name: '미드필더'},
+        {name: '수비수'},
+        {name: '골키퍼'},
+      ],
       postionList: [
         {name: '랜덤'},
         {name: '공격수'},
@@ -237,43 +280,117 @@ export default {
   },
   methods: {
     PositionChange(name) {
-      this.myPosition = name
-    },
-    MyPositionChange(name) {
-      this.myPosition = name
+      if (name == "랜덤") {
+        if (this.myTeam == "RED") {
+          this.myPosition = Math.floor(Math.random()*(this.RedpostionList.length-1))
+        } else {
+          this.myPosition = Math.floor(Math.random()*(this.BluepostionList.length-1))
+        }
+      } else {
+        this.myPosition = name
+      }      
     },
     TeamChange(name) {
       this.myTeam = name
     },
+    SearchPosition() {
+      var entry_uid = 0
+      if (this.myTeam === 'RED') {
+        entry_uid = this.RoomData.home_matching_entry_uid
+      }
+      else {
+        entry_uid = this.RoomData.away_matching_entry_uid
+      }
+      const entryUid = new FormData();
+      entryUid.append("team_entry_uid", entry_uid);
+        axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', entryUid)
+        .then(res => {
+          if (this.myPosition === '공격수') {
+            if (res.data.striker1_uid == 0) {
+              this.myPosUid = 1
+            } else if (res.data.striker2_uid == 0) {
+              this.myPosUid = 2
+            } else if (res.data.striker3_uid == 0) {
+              this.myPosUid = 3
+            } else if (res.data.striker4_uid == 0) {
+              this.myPosUid = 4
+            }
+          } else if (this.myPosition === '미드필더') {
+            if (res.data.midfielder1_uid == 0) {
+              this.myPosUid = 5
+            } else if (res.data.midfielder2_uid == 0) {
+              this.myPosUid = 6
+            } else if (res.data.midfielder3_uid == 0) {
+              this.myPosUid = 7
+            } else if (res.data.midfielder4_uid == 0) {
+              this.myPosUid = 8
+            }
+          } else if (this.myPosition === '수비수') {
+            if (res.data.defender1_uid == 0) {
+              this.myPosUid = 9
+            } else if (res.data.defender2_uid == 0) {
+              this.myPosUid = 10
+            } else if (res.data.defender3_uid == 0) {
+              this.myPosUid = 11
+            } else if (res.data.defender4_uid == 0) {
+              this.myPosUid = 12
+            }
+          } else if (this.myPosition === '골키퍼') {
+            if (res.data.goalkeeper_uid == 0) {
+              this.myPosUid = 13
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    UserEnter() {
+      this.SearchPosition
+      if (this.myPosUid != 0) {
+        const EnterInfo = new FormData();
+        EnterInfo.append('uid', this.$cookies.get('UserInfo').uid)
+        EnterInfo.append('positionnum', this.myPosUid)
+        axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', EnterInfo)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }      
+    },
     RedTeamList() {
       const Team_entry_uid = new FormData();
-          Team_entry_uid.append("team_entry_uid", this.RoomData.home_matching_entry_uid);
-          axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
-            .then(res => {
-              console.log('2', res.data)
-              this.posList.push(res.data.defender1_uid)
-              this.posList.push(res.data.defender2_uid)
-              this.posList.push(res.data.defender3_uid)
-              this.posList.push(res.data.defender4_uid)
-              this.posList.push(res.data.goalkeeper_uid)
-              this.posList.push(res.data.midfielder1_uid)
-              this.posList.push(res.data.midfielder2_uid)
-              this.posList.push(res.data.midfielder3_uid)
-              this.posList.push(res.data.midfielder4_uid)
-              this.posList.push(res.data.striker1_uid)
-              this.posList.push(res.data.striker2_uid)
-              this.posList.push(res.data.striker3_uid)
-              this.posList.push(res.data.striker4_uid)
-              for(var i=0; i<this.posList.length; i++) {
-                if (this.posList[i] != 0) {
-                  this.RedTeamUser(this.posRedList[i], this.posNameList[i])
-                }
-              }
-              
-            })
-            .catch(err => {
-              console.log(err)
-            })
+      Team_entry_uid.append("team_entry_uid", this.RoomData.home_matching_entry_uid);
+      axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
+        .then(res => {
+          console.log('2', res.data)
+          this.posRedList.push(res.data.defender1_uid)
+          this.posRedList.push(res.data.defender2_uid)
+          this.posRedList.push(res.data.defender3_uid)
+          this.posRedList.push(res.data.defender4_uid)
+          this.posRedList.push(res.data.goalkeeper_uid)
+          this.posRedList.push(res.data.midfielder1_uid)
+          this.posRedList.push(res.data.midfielder2_uid)
+          this.posRedList.push(res.data.midfielder3_uid)
+          this.posRedList.push(res.data.midfielder4_uid)
+          this.posRedList.push(res.data.striker1_uid)
+          this.posRedList.push(res.data.striker2_uid)
+          this.posRedList.push(res.data.striker3_uid)
+          this.posRedList.push(res.data.striker4_uid)
+          this.RedpostionList = []
+          this.RedpostionList.append("name", "랜덤")
+          for(var i=0; i<this.posList.length; i++) {
+            this.RedListChange(this.posRedList[i], this.posNameList[i])
+            if (this.posList[i] != 0) {
+              this.RedTeamUser(this.posRedList[i], this.posNameList[i])
+            }
+          }              
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     RedTeamUser(uid, name) {
       console.log('3', uid)
@@ -288,35 +405,53 @@ export default {
               console.log(err)
         })
     },
+    RedListChange(uid, position) {
+      if (uid == 0 && !(position in this.RedpostionList)) {
+        var newPosition = new String("");
+        if (position.indexOf("striker") != -1) {
+          newPosition = "공격수"
+        } else if (position.indexOf("mid") != -1) {
+          newPosition = "미드필더"
+        } else if (position.indexOf("defend") != -1) {
+          newPosition = "수비수"
+        } else if (position.indexOf("goal") != -1) {
+          newPosition = "골키퍼"
+        }       
+        this.RedpostionList.append("name", newPosition)
+      }
+    },
     BlueTeamList() {
       const Team_entry_uid = new FormData();
-          Team_entry_uid.append("team_entry_uid", this.RoomData.away_matching_entry_uid);
-          axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
-            .then(res => {
-              console.log('2', res.data)
-              this.posList.push(res.data.defender1_uid)
-              this.posList.push(res.data.defender2_uid)
-              this.posList.push(res.data.defender3_uid)
-              this.posList.push(res.data.defender4_uid)
-              this.posList.push(res.data.goalkeeper_uid)
-              this.posList.push(res.data.midfielder1_uid)
-              this.posList.push(res.data.midfielder2_uid)
-              this.posList.push(res.data.midfielder3_uid)
-              this.posList.push(res.data.midfielder4_uid)
-              this.posList.push(res.data.striker1_uid)
-              this.posList.push(res.data.striker2_uid)
-              this.posList.push(res.data.striker3_uid)
-              this.posList.push(res.data.striker4_uid)
-              for(var i=0; i<this.posList.length; i++) {
-                if (this.posList[i] != 0) {
-                  this.BlueTeamUser(this.posBlueList[i], this.posNameList[i])
-                }
-              }
-              
-            })
-            .catch(err => {
-              console.log(err)
-            })
+      Team_entry_uid.append("team_entry_uid", this.RoomData.away_matching_entry_uid);
+      axios.post(SERVER_URL + 'FreeMatchRoom/entrylist/', Team_entry_uid)
+        .then(res => {
+          console.log('2', res.data)
+          this.posBlueList.push(res.data.defender1_uid)
+          this.posBlueList.push(res.data.defender2_uid)
+          this.posBlueList.push(res.data.defender3_uid)
+          this.posBlueList.push(res.data.defender4_uid)
+          this.posBlueList.push(res.data.goalkeeper_uid)
+          this.posBlueList.push(res.data.midfielder1_uid)
+          this.posBlueList.push(res.data.midfielder2_uid)
+          this.posBlueList.push(res.data.midfielder3_uid)
+          this.posBlueList.push(res.data.midfielder4_uid)
+          this.posBlueList.push(res.data.striker1_uid)
+          this.posBlueList.push(res.data.striker2_uid)
+          this.posBlueList.push(res.data.striker3_uid)
+          this.posBlueList.push(res.data.striker4_uid)
+          this.BluepostionList = []
+          this.BluepostionList.append("name", "랜덤")
+          for(var i=0; i<this.posList.length; i++) {
+            this.BlueListChange(this.posRedList[i], this.posNameList[i])
+            if (this.posList[i] != 0) {
+              this.BlueTeamUser(this.posBlueList[i], this.posNameList[i])
+            }
+          }
+          
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     BlueTeamUser(uid, name) {
       console.log('3', uid)
@@ -330,6 +465,21 @@ export default {
         .catch(err => {
               console.log(err)
         })
+    },
+    BluelistChange(uid, position) {
+      if (uid == 0 && !(position in this.RedpostionList)) {
+        var newPosition = new String("");
+        if (position.indexOf("striker") != -1) {
+          newPosition = "공격수"
+        } else if (position.indexOf("mid") != -1) {
+          newPosition = "미드필더"
+        } else if (position.indexOf("defend") != -1) {
+          newPosition = "수비수"
+        } else if (position.indexOf("goal") != -1) {
+          newPosition = "골키퍼"
+        }       
+        this.BluepostionList.append("name", newPosition)
+      }
     },
   },
   mounted() {},
