@@ -34,7 +34,7 @@ public class MatchController {
 		return mav;
 	}
 
-	// 메인페이지 5개 리스트
+	// 메인페이지 GET (Created)
 	@GetMapping(value = "/TeamMatchAll")
 	public List<TMatchInfo> TListMain() {
 		System.out.println(TeamMatch.TListMain());
@@ -71,7 +71,7 @@ public class MatchController {
 		return FreeMatch.FListAll(doe, si, dong, word);
 	}
 
-	// 방 1개 상세정보
+	// 방 1개 상세정보 UID
 	@PostMapping(value = "/TeamMatchRoom")
 	public List<TMatchInfo> TListRoom(@RequestParam int uid) {
 		return TeamMatch.TListRoom(uid);
@@ -82,25 +82,15 @@ public class MatchController {
 		return FreeMatch.FListRoom(uid);
 	}
 
-	// 방 중복 체크
+	// 방 중복 체크 head_UID
 	@PostMapping(value = "/TRoomCheck")
-	public boolean CheckT(@RequestParam int uid) {
-		List<TMatchInfo> info = TeamMatch.TListRoom(uid);
-
-		if (info.isEmpty())
-			return false;
-		else
-			return true;
+	public List<TMatchInfo> CheckT(@RequestParam int head_uid) {
+		return TeamMatch.TRoomCheck(head_uid);
 	}
 
 	@PostMapping(value = "/FRoomCheck")
-	public boolean CheckF(@RequestParam int uid) {
-		List<FMatchInfo> info = FreeMatch.FListRoom(uid);
-
-		if (info.isEmpty())
-			return false;
-		else
-			return true;
+	public List<FMatchInfo> CheckF(@RequestParam int head_uid) {
+		return FreeMatch.FRoomCheck(head_uid);
 	}
 
 	// 방만들기
@@ -108,14 +98,15 @@ public class MatchController {
 	public List<TMatchInfo> InsertT(TMatchInfo info) {
 		TeamMatch.TRoomCreate(info);
 
-		return TeamMatch.TListRoom(info.getUid());
+		return TeamMatch.TRoomCheck(info.getHead_uid());
 	}
 
 	@PostMapping(value = "/FRoomCreate")
 	public List<FMatchInfo> InsertF(FMatchInfo info) {
 		FreeMatch.FRoomCreate(info);
 
-		return FreeMatch.FListRoom(info.getUid());
+		System.out.println(FreeMatch.FListRoom(info.getHead_uid()));
+		return FreeMatch.FRoomCheck(info.getHead_uid());
 	}
 
 	// 방 정보 수정 (미완료)

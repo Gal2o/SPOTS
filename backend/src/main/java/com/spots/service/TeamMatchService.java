@@ -6,7 +6,7 @@ import com.spots.dto.TMatchInfo;
 
 public interface TeamMatchService {
 
-	public List<TMatchInfo> TListMain();
+	public List <TMatchInfo> TListMain();
 	
 	public List <TMatchInfo> TListAll(String doe, String si, String dong, String word);
 
@@ -15,6 +15,8 @@ public interface TeamMatchService {
 	public void TRoomCreate(TMatchInfo info);
 
 	public void TRoomUpdate(TMatchInfo info);
+
+	public List<TMatchInfo> TRoomCheck(int head_uid);
 
 	
 }

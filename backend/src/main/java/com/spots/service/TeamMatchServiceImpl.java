@@ -39,5 +39,10 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 		mapper.TRoomModify(info);
 	}
 
+	@Override
+	public List<TMatchInfo> TRoomCheck(int head_uid) {
+		return mapper.TRoomCheck(head_uid);
+	}
+
 
 }
