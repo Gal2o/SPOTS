@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spots.dto.EntryInfo;
+import com.spots.dto.FMatchInfo;
+import com.spots.dto.TMatchInfo;
 import com.spots.mapper.EntryMapper;
 
 @Service
@@ -80,6 +82,21 @@ public class EntryServiceImpl implements EntryService {
 	@Override
 	public EntryInfo entrylist(int team_entry_uid) {
 		return mapper.entrylist(team_entry_uid);
+	}
+
+	@Override
+	public int FWin(FMatchInfo dto) {
+		return mapper.FWin(dto);
+	}
+
+	@Override
+	public int FLose(FMatchInfo dto) {
+		return mapper.FLose(dto);
+	}
+
+	@Override
+	public int FDraw(FMatchInfo dto) {
+		return mapper.FDraw(dto);
 	}
 
 }
