@@ -210,7 +210,7 @@ export default {
         makeData.append("place_uid", 0);
         makeData.append("place_price", this.placeprice);
         makeData.append("place_code", this.placecode);
-        makeData.append("uid", this.userInfo.uid);
+        makeData.append("head_uid", this.userInfo.uid);
         if (this.title != "" && this.placecode != 0) {
           axios
             .post(SERVER_URL + "FRoomCreate", makeData)
