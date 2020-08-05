@@ -13,15 +13,15 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 
 	@Autowired
 	MatchMapper mapper;
-
+	
 	@Override
 	public List<TMatchInfo> TListMain() {
 		return mapper.TListMain();
 	}
 
 	@Override
-	public List<TMatchInfo> TListAll() {
-		return mapper.TListAll();
+	public List<TMatchInfo> TListAll(String doe, String si, String dong, String word) {
+		return mapper.TListAll(doe, si, dong, word);
 	}
 
 	@Override
@@ -39,6 +39,5 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 		mapper.TRoomModify(info);
 	}
 
-	
-}
 
+}

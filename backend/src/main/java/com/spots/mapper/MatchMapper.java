@@ -10,24 +10,33 @@ import com.spots.dto.TMatchInfo;
 
 @Mapper
 public interface MatchMapper {
-
-	List <TMatchInfo> TListMain();
 	
-	List <TMatchInfo> TListAll();
+	List<TMatchInfo> TListMain();
 	
-	List <TMatchInfo> TListRoom(int uid);
+	List<FMatchInfo> FListMain();
+	
+	List <TMatchInfo> TListAll(
+			@Param("doe") String doe, 
+			@Param("si") String si, 
+			@Param("dong") String dong,
+			@Param("word") String word);
+	
+	List <TMatchInfo> TListRoom(@Param("uid") int uid);
 
 	void TRoomCreate(TMatchInfo info);
 	
 	void TRoomModify(TMatchInfo info);
-	
-	List<FMatchInfo> FListMain();
 
-	List<FMatchInfo> FListAll();
+	List<FMatchInfo> FListAll(
+			@Param("doe") String doe, 
+			@Param("si") String si, 
+			@Param("dong") String dong,
+			@Param("word") String word);
 
-	List<FMatchInfo> FListRoom(int uid);
+	List<FMatchInfo> FListRoom(@Param("uid") int uid);
 
 	void FRoomCreate(FMatchInfo info);
 
 	void FRoomModify(FMatchInfo info);
+
 }

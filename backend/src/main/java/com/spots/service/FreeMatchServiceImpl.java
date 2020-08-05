@@ -19,10 +19,10 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 	public List<FMatchInfo> FListMain() {
 		return mapper.FListMain();
 	}
-
+	
 	@Override
-	public List<FMatchInfo> FListAll() {
-		return mapper.FListAll();
+	public List<FMatchInfo> FListAll(String doe, String si, String dong, String word) {
+		return mapper.FListAll(doe, si, dong, word);
 	}
 
 	@Override
@@ -39,6 +39,8 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 	public void FRoomUpdate(FMatchInfo info) {
 		mapper.FRoomModify(info);
 	}
+
+
 	
 	
 }
