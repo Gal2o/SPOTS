@@ -52,10 +52,10 @@
             <router-link
               :to="{
                 name: '자유 SPOT',
-                params: { head_uid: row.uid },
+                params: { uid: row.uid },
               }"
             >
-              <base-button type="success" v-if="row.title != null">입장하기</base-button>
+              <base-button type="success">입장하기</base-button>
             </router-link>
           </td>
         </template>
