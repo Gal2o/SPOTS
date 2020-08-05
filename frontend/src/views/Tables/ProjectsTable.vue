@@ -52,7 +52,7 @@
             <router-link
               :to="{
                 name: '자유 SPOT',
-                params: { head_uid: row.head_uid },
+                params: { head_uid: row.uid },
               }"
             >
               <base-button type="success" v-if="row.title != null">입장하기</base-button>
@@ -218,7 +218,7 @@ export default {
               console.log("chcek", res);
               this.$router.push({
                 name: "자유 SPOT",
-                params: { uid: res.data[3].uid },
+                params: { uid: res.data[res.data.length - 1].uid },
               });
             })
             .catch((err) => {
