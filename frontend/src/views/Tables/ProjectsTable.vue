@@ -235,10 +235,10 @@ export default {
       const sidoData = new FormData();
       // console.log("dfdfdf");
       // console.log("dfdfd", this.sidolist);
-      sidoData.append("state_code", this.sidolist[0]);
-      sidoData.append("city_code", this.sidolist[1]);
-      sidoData.append("dong_code", this.sidolist[2]);
-      sidoData.append("title", this.sidolist[3]);
+      sidoData.append("doe", this.sidolist[0]);
+      sidoData.append("si", this.sidolist[1]);
+      sidoData.append("dong", this.sidolist[2]);
+      sidoData.append("word", this.sidolist[3]);
       axios.post(SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
       });

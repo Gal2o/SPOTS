@@ -224,6 +224,7 @@ export default {
   data() {
     return {
       isMine: "",
+      isStart: false,
       RoomData: Object,
       RedtableDatas: [
         {
@@ -371,6 +372,7 @@ export default {
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
         EnterInfo.append("positionnum", this.myPosUid);
+        EnterInfo.append("team_entry_uid", this.myTeam);
         axios
           .post(SERVER_URL + "FreeMatchRoom/entrylist/", EnterInfo)
           .then((res) => {
