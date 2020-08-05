@@ -1,14 +1,9 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div
-      class="card-header border-0"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            {{ tabletitle }}
-          </h3>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ tabletitle }}</h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">더보기</base-button>
@@ -60,7 +55,7 @@
                 params: { head_uid: row.head_uid },
               }"
             >
-              <base-button type="success">입장하기</base-button>
+              <base-button type="success" v-if="row.title != null">입장하기</base-button>
             </router-link>
           </td>
         </template>
@@ -71,15 +66,9 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true"
-          >자유SPOT 만들기</base-button
-        >
+        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
 
-        <modal
-          :show.sync="modals"
-          body-classes="p-0"
-          modal-classes="modal-dialog modal-md"
-        >
+        <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
             type="secondary"
             shadow
@@ -97,12 +86,7 @@
                 <small>정보를 입력해주세요</small>
               </div>
               <form role="form">
-                <base-input
-                  alternative
-                  class="mb-3"
-                  v-model="title"
-                  placeholder="제목을 적어주세요"
-                ></base-input>
+                <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
                 <base-input addon-left-icon="ni ni-calendar-grid-58">
                   <flat-picker
                     slot-scope="{ focus, blur }"
@@ -118,23 +102,17 @@
                     slot="title"
                     type="secondary"
                     class="dropdown-toggle"
-                    >{{ this.stadiumN }}</base-button
-                  >
+                  >{{ this.stadiumN }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="stadiumData in stadiumDatas"
                     v-bind:key="stadiumData"
                     @click="choice1(stadiumData)"
-                    >{{ stadiumData.place_name }}({{ stadiumData.address }})</a
-                  >
+                  >{{ stadiumData.place_name }}({{ stadiumData.address }})</a>
                 </base-dropdown>
                 <div class="text-center">
-                  <base-button type="success" @click="getSpot" class="my-4 mr-4"
-                    >친구 모아보기</base-button
-                  >
-                  <base-button type="secondary" @click="modals = false"
-                    >닫기</base-button
-                  >
+                  <base-button type="success" @click="getSpot" class="my-4 mr-4">친구 모아보기</base-button>
+                  <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
             </template>
@@ -142,7 +120,7 @@
         </modal>
       </div>
       <div>
-        <base-pagination :page-count="5" v-model="pagination"></base-pagination>
+        <base-pagination :page-count="parseInt(FreetableData.length/5)+1" v-model="pagination"></base-pagination>
       </div>
     </div>
   </div>
@@ -163,7 +141,7 @@ export default {
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
-        this.FreeTable = this.FreetableData.slice(1, 6);
+        this.FreeTable = this.FreetableData.slice(0, 5);
       })
       .catch((err) => {
         console.log(err);
@@ -179,11 +157,11 @@ export default {
       });
   },
   watch: {
-    sidolist: function() {
+    sidolist: function () {
       console.log("check", this.sidolist);
       this.sidoinfo();
     },
-    pagination: function() {
+    pagination: function () {
       // console.log(this.FreeTable);
       this.selectpage();
     },
@@ -261,12 +239,11 @@ export default {
       });
     },
     selectpage() {
-      console.log(this);
-      (this.FreeTable = []),
-        (this.FreeTable = this.FreetableData.slice(
-          (this.pagination - 1) * 5 + 1,
-          (this.pagination - 1) * 5 + 6
-        ));
+      this.FreeTable = [];
+      this.FreeTable = this.FreetableData.slice(
+        (this.pagination - 1) * 5,
+        (this.pagination - 1) * 5 + 5
+      );
       console.log(this.FreeTable);
     },
   },
