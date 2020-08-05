@@ -46,11 +46,10 @@
             <td>
               <base-button
                 slot="title"
-                class="dropdown-toggle"
-                v-if="row.mine != isMine"
+                v-if="row.name != isMine"
               >{{ row.position }}</base-button>
-              <base-dropdown v-if="row.mine == isMine">
-                <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
+              <base-dropdown v-if="row.name == isMine">
+                <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                 <a
                   class="dropdown-item"
                   v-for="positonitem in RedpostionList"
@@ -86,10 +85,9 @@
             <td>
               <base-button
                 slot="title"
-                class="dropdown-toggle"
-                v-if="row.mine != isMine"
+                v-if="row.name != isMine"
               >{{ row.position }}</base-button>
-              <base-dropdown v-if="row.mine == isMine">
+              <base-dropdown v-if="row.name == isMine">
                 <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                 <a
                   class="dropdown-item"
@@ -236,26 +234,8 @@ export default {
       isMine: "",
       isStart: false,
       RoomData: Object,
-      RedtableDatas: [
-        {
-          name: "SPOTs관리자",
-          position: "랜덤",
-        },
-        {
-          name: "SPOTs테스터",
-          position: "수비수",
-        },
-      ],
-      BluetableDatas: [
-        {
-          name: "SPOTs테스터2",
-          position: "공격수",
-        },
-        {
-          name: "SPOTs테스터3",
-          position: "골키퍼",
-        },
-      ],
+      RedtableDatas: [],
+      BluetableDatas: [],
       isLogined: false,
       myTeam: "RED",
       myPosition: "랜덤",
@@ -307,15 +287,16 @@ export default {
   },
   methods: {
     PositionChange(name) {
+      console.log(this.BluepostionList)
       if (name == "랜덤") {
         if (this.myTeam == "RED") {
-          this.myPosition = Math.floor(
+          this.myPosition = this.RedpostionList[Math.floor(
             Math.random() * (this.RedpostionList.length - 1)
-          );
+          )].name
         } else {
-          this.myPosition = Math.floor(
+          this.myPosition = this.BluepostionList[Math.floor(
             Math.random() * (this.BluepostionList.length - 1)
-          );
+          )].name
         }
       } else {
         this.myPosition = name;
@@ -402,7 +383,7 @@ export default {
       axios
         .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
-          console.log("2", res.data);
+          console.log("red2", res.data);
           this.posRedList.push(res.data.defender1_uid);
           this.posRedList.push(res.data.defender2_uid);
           this.posRedList.push(res.data.defender3_uid);
@@ -417,11 +398,15 @@ export default {
           this.posRedList.push(res.data.striker3_uid);
           this.posRedList.push(res.data.striker4_uid);
           this.RedpostionList = [];
-          this.RedpostionList.append("name", "랜덤");
-          for (var i = 0; i < this.posList.length; i++) {
-            this.RedListChange(this.posRedList[i], this.posNameList[i]);
-            if (this.posList[i] != 0) {
-              this.RedTeamUser(this.posRedList[i], this.posNameList[i]);
+          var Redsub = new Object
+          Redsub.name = "랜덤"
+          this.RedpostionList.push(Redsub)
+          for(var i=0; i < this.posRedList.length; i++) { 
+            console.log(i, this.posRedList[i], this.posNameList[i])           
+            if (this.posRedList[i] != 0) {
+              this.RedTeamUser(this.posRedList[i], this.posNameList[i])
+            } else {
+              this.RedListChange(this.posNameList[i])
             }
           }
         })
@@ -430,32 +415,50 @@ export default {
         });
     },
     RedTeamUser(uid, name) {
-      console.log("3", uid);
-      const usid = new FormData();
-      usid.append("uid", uid);
-      axios
-        .get(SERVER_URL + "user/detail2/", usid)
-        .then((res) => {
-          console.log("4", res);
-          this.RedtableDatas.append(name, res.data);
+      console.log('res3', uid)
+      const usid = new FormData()
+      usid.append('uid', uid)
+      axios.post(SERVER_URL + 'user/detail2/', usid)
+        .then(res => {
+          console.log('red4', res)
+          var newPosition = new String("");
+          if (name.indexOf("striker") != -1) {
+            newPosition = "공격수"
+          } else if (name.indexOf("mid") != -1) {
+            newPosition = "미드필더"
+          } else if (name.indexOf("defend") != -1) {
+            newPosition = "수비수"
+          } else if (name.indexOf("goal") != -1) {
+            newPosition = "골키퍼"
+          }
+          var Redsub = new Object
+          Redsub.position = newPosition
+          Redsub.name = res.data.nickname
+          this.RedtableDatas.push(Redsub)
+          if (res.data.nickname == this.isMine) {
+            this.myPosition = newPosition
+          }
+          console.log('red5', this.RedtableDatas)
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(err => {
+              console.log(err)
         });
     },
-    RedListChange(uid, position) {
-      if (uid == 0 && !(position in this.RedpostionList)) {
-        var newPosition = new String("");
-        if (position.indexOf("striker") != -1) {
-          newPosition = "공격수";
-        } else if (position.indexOf("mid") != -1) {
-          newPosition = "미드필더";
-        } else if (position.indexOf("defend") != -1) {
-          newPosition = "수비수";
-        } else if (position.indexOf("goal") != -1) {
-          newPosition = "골키퍼";
-        }
-        this.RedpostionList.append("name", newPosition);
+    RedListChange(position) {
+      var newPosition = new String("");
+      if (position.indexOf("striker") != -1) {
+        newPosition = "공격수"
+      } else if (position.indexOf("mid") != -1) {
+        newPosition = "미드필더"
+      } else if (position.indexOf("defend") != -1) {
+        newPosition = "수비수"
+      } else if (position.indexOf("goal") != -1) {
+        newPosition = "골키퍼"
+      }
+      if (!this.RedpostionList.find(v => v.name == newPosition)) {     
+        var Redsub = new Object
+        Redsub.name = newPosition
+        this.RedpostionList.push(Redsub)
       }
     },
     BlueTeamList() {
@@ -467,7 +470,7 @@ export default {
       axios
         .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
-          console.log("2", res.data);
+          console.log("blue2", res.data);
           this.posBlueList.push(res.data.defender1_uid);
           this.posBlueList.push(res.data.defender2_uid);
           this.posBlueList.push(res.data.defender3_uid);
@@ -482,11 +485,15 @@ export default {
           this.posBlueList.push(res.data.striker3_uid);
           this.posBlueList.push(res.data.striker4_uid);
           this.BluepostionList = [];
-          this.BluepostionList.append("name", "랜덤");
-          for (var i = 0; i < this.posList.length; i++) {
-            this.BlueListChange(this.posRedList[i], this.posNameList[i]);
-            if (this.posList[i] != 0) {
-              this.BlueTeamUser(this.posBlueList[i], this.posNameList[i]);
+          var Bluesub = new Object
+          Bluesub.name = "랜덤"
+          this.BluepostionList.push(Bluesub)
+          for(var i=0; i < this.posBlueList.length; i++) { 
+            console.log('blue!',i, this.posBlueList[i], this.posNameList[i])
+            if (this.posBlueList[i] != 0) {
+              this.BlueTeamUser(this.posBlueList[i], this.posNameList[i])
+            } else {
+              this.BlueListChange(this.posNameList[i])
             }
           }
         })
@@ -495,32 +502,50 @@ export default {
         });
     },
     BlueTeamUser(uid, name) {
-      console.log("3", uid);
-      const usid = new FormData();
-      usid.append("uid", uid);
-      axios
-        .get(SERVER_URL + "user/detail2/", usid)
-        .then((res) => {
-          console.log("4", res);
-          this.BluetableDatas.append(name, res.data);
+      console.log('blue3', uid)
+      const usid = new FormData()
+      usid.append('uid', uid)
+      axios.post(SERVER_URL + 'user/detail2/', usid)
+        .then(res => {
+          console.log('blue4', res)
+          var newPosition = new String("");
+          if (name.indexOf("striker") != -1) {
+            newPosition = "공격수"
+          } else if (name.indexOf("mid") != -1) {
+            newPosition = "미드필더"
+          } else if (name.indexOf("defend") != -1) {
+            newPosition = "수비수"
+          } else if (name.indexOf("goal") != -1) {
+            newPosition = "골키퍼"
+          }
+          var Bluesub = new Object
+          Bluesub.position = newPosition
+          Bluesub.name = res.data.nickname
+          this.BluetableDatas.push(Bluesub)
+          if (res.data.nickname == this.isMine) {
+            this.myPosition = newPosition
+          }
+          console.log('blue5',this.BluetableDatas)
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(err => {
+              console.log(err)
         });
     },
-    BluelistChange(uid, position) {
-      if (uid == 0 && !(position in this.RedpostionList)) {
-        var newPosition = new String("");
-        if (position.indexOf("striker") != -1) {
-          newPosition = "공격수";
-        } else if (position.indexOf("mid") != -1) {
-          newPosition = "미드필더";
-        } else if (position.indexOf("defend") != -1) {
-          newPosition = "수비수";
-        } else if (position.indexOf("goal") != -1) {
-          newPosition = "골키퍼";
-        }
-        this.BluepostionList.append("name", newPosition);
+    BlueListChange(position) {
+      var newPosition = new String("");
+      if (position.indexOf("striker") != -1) {
+        newPosition = "공격수"
+      } else if (position.indexOf("mid") != -1) {
+        newPosition = "미드필더"
+      } else if (position.indexOf("defend") != -1) {
+        newPosition = "수비수"
+      } else if (position.indexOf("goal") != -1) {
+        newPosition = "골키퍼"
+      }
+      if (!this.BluepostionList.find(v => v.name == newPosition)) {   
+        var Bluesub = new Object
+        Bluesub.name = newPosition
+        this.BluepostionList.push(Bluesub)
       }
     },
   },
@@ -528,8 +553,8 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
-    }
-    this.isMine = this.$cookies.get("UserInfo").nickname;
+      this.isMine = this.$cookies.get("UserInfo").nickname;
+    }    
     console.log("0", this);
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.$route.params.uid);
