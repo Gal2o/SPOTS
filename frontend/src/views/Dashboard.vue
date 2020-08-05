@@ -4,60 +4,51 @@
       <!-- Card stats -->
       <div class="row">
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+          <base-button slot="title" type="secondary" class="dropdown-toggle">
+            시(도) : {{
             this.cityN
-          }}</base-button>
+            }}
+          </base-button>
           <a
             class="dropdown-item"
             v-for="cityData in cityDatas"
             v-bind:key="cityData"
             @click="choice1(cityData)"
-            >{{ cityData.state_name }}</a
-          >
+          >{{ cityData.state_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+          <base-button slot="title" type="secondary" class="dropdown-toggle">
+            구(시) : {{
             this.stateN
-          }}</base-button>
+            }}
+          </base-button>
           <a
             class="dropdown-item"
             v-for="stateData in stateDatas"
             v-bind:key="stateData"
             @click="choice2(stateData)"
-            >{{ stateData.city_name }}</a
-          >
+          >{{ stateData.city_name }}</a>
         </base-dropdown>
 
         <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
+          <base-button slot="title" type="secondary" class="dropdown-toggle">
+            동 : {{
             this.dongN
-          }}</base-button>
+            }}
+          </base-button>
           <a
             class="dropdown-item"
             v-for="dongData in dongDatas"
             v-bind:key="dongData"
             @click="choice3(dongData)"
-            >{{ dongData.dong_name }}</a
-          >
+          >{{ dongData.dong_name }}</a>
         </base-dropdown>
 
-        <form
-          class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex"
-        >
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex">
           <div class="form-group mb-0">
-            <base-input
-              placeholder="검색"
-              class="input-group-alternative"
-              v-model="keyword"
-            >
-            </base-input>
-            <base-button
-              class="ml-3"
-              type="success"
-              icon="ni ni-bold-right"
-              @click="checksido"
-            ></base-button>
+            <base-input placeholder="검색" class="input-group-alternative" v-model="keyword"></base-input>
+            <base-button class="ml-3" type="success" icon="ni ni-bold-right" @click="checksido"></base-button>
           </div>
         </form>
       </div>
@@ -65,10 +56,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-          <projects-table
-            :sidolist="sidolist"
-            title="자유 SPOT"
-          ></projects-table>
+          <projects-table :sidolist="sidolist" title="자유 SPOT"></projects-table>
         </div>
       </div>
       <div class="row mt-5">
@@ -107,9 +95,9 @@ export default {
       cityDatas: null,
       stateDatas: null,
       dongDatas: null,
-      cityN: "도",
-      stateN: "시",
-      dongN: "동",
+      cityN: null,
+      stateN: null,
+      dongN: null,
       sidolist: [],
       citycode: null,
       statecode: null,
