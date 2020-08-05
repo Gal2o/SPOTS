@@ -1,6 +1,7 @@
 package com.spots.service;
 
 import com.spots.dto.EntryInfo;
+import com.spots.dto.FMatchInfo;
 
 public interface EntryService {
 
@@ -18,5 +19,8 @@ public interface EntryService {
 	public int S12(int team_entry_uid, int uid);
 	public int S13(int team_entry_uid, int uid);
 	public EntryInfo entrylist(int team_entry_uid);
+	public int FWin(FMatchInfo dto);
+	public int FLose(FMatchInfo dto);
+	public int FDraw(FMatchInfo dto);
 	
 }

@@ -86,6 +86,82 @@
 		where uid = #{team_entry_uid}
 	</select>
 	
+	<update id="FreeMatchWin">
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+	</update>
+	
+	<update id="FreeMatchLose">
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		UPDATE user SET lose = lose + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid})
+		
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+		UPDATE user SET win = win + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+	</update>
+	
+	<update id="FreeMatchDraw">
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+	</update>
+	
 </mapper>
 
 

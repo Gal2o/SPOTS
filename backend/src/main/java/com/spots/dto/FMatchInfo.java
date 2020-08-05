@@ -5,7 +5,6 @@ import java.util.Date;
 public class FMatchInfo {
 	private int uid;
 	private int head_uid;
-
 	private int home_matching_entry_uid;
 	private int away_matching_entry_uid;
 	private String create_date;
