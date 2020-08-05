@@ -1,14 +1,9 @@
 <template>
   <div class="card shadow" :class="type === 'dark' ? 'bg-default' : ''">
-    <div
-      class="card-header border-0"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-header border-0" :class="type === 'dark' ? 'bg-transparent' : ''">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">
-            {{ tabletitle }}
-          </h3>
+          <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ tabletitle }}</h3>
         </div>
         <div class="col text-right">
           <base-button type="primary" size="sm">더보기</base-button>
@@ -60,7 +55,7 @@
                 params: { head_uid: row.head_uid },
               }"
             >
-              <base-button type="success">입장하기</base-button>
+              <base-button type="success" v-if="row.title != null">입장하기</base-button>
             </router-link>
           </td>
         </template>
@@ -71,15 +66,9 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true"
-          >자유SPOT 만들기</base-button
-        >
+        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
 
-        <modal
-          :show.sync="modals"
-          body-classes="p-0"
-          modal-classes="modal-dialog modal-md"
-        >
+        <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
             type="secondary"
             shadow
@@ -97,12 +86,7 @@
                 <small>정보를 입력해주세요</small>
               </div>
               <form role="form">
-                <base-input
-                  alternative
-                  class="mb-3"
-                  v-model="title"
-                  placeholder="제목을 적어주세요"
-                ></base-input>
+                <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
                 <base-input addon-left-icon="ni ni-calendar-grid-58">
                   <flat-picker
                     slot-scope="{ focus, blur }"
@@ -118,23 +102,17 @@
                     slot="title"
                     type="secondary"
                     class="dropdown-toggle"
-                    >{{ this.stadiumN }}</base-button
-                  >
+                  >{{ this.stadiumN }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="stadiumData in stadiumDatas"
                     v-bind:key="stadiumData"
                     @click="choice1(stadiumData)"
-                    >{{ stadiumData.place_name }}({{ stadiumData.address }})</a
-                  >
+                  >{{ stadiumData.place_name }}({{ stadiumData.address }})</a>
                 </base-dropdown>
                 <div class="text-center">
-                  <base-button type="success" @click="getSpot" class="my-4 mr-4"
-                    >친구 모아보기</base-button
-                  >
-                  <base-button type="secondary" @click="modals = false"
-                    >닫기</base-button
-                  >
+                  <base-button type="success" @click="getSpot" class="my-4 mr-4">친구 모아보기</base-button>
+                  <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
             </template>
@@ -142,7 +120,7 @@
         </modal>
       </div>
       <div>
-        <base-pagination :page-count="5" v-model="pagination"></base-pagination>
+        <base-pagination :page-count="parseInt(FreetableData.length/5)+1" v-model="pagination"></base-pagination>
       </div>
     </div>
   </div>
@@ -158,12 +136,11 @@ export default {
   name: "projects-table",
   components: { flatPicker },
   created() {
-    console.log("dfa", this);
     axios
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
-        this.FreeTable = this.FreetableData.slice(1, 6);
+        this.FreeTable = this.FreetableData.slice(0, 5);
       })
       .catch((err) => {
         console.log(err);
@@ -179,11 +156,11 @@ export default {
       });
   },
   watch: {
-    sidolist: function() {
+    sidolist: function () {
       console.log("check", this.sidolist);
       this.sidoinfo();
     },
-    pagination: function() {
+    pagination: function () {
       // console.log(this.FreeTable);
       this.selectpage();
     },
@@ -198,7 +175,7 @@ export default {
   data() {
     return {
       dates: {
-        simple: "2020-08-05",
+        simple: "2020-08-08",
       },
       tabletitle: "자유 SPOT",
       FreetableData: [],
@@ -223,50 +200,55 @@ export default {
       this.placecode = stadium.code;
     },
     getSpot() {
-      this.userInfo = this.$cookies.get("UserInfo");
-      const makeData = new FormData();
-      makeData.append("title", this.title);
-      // makeData.append("matching_date", this.dates.simple);
-      makeData.append("place_uid", 0);
-      makeData.append("place_price", this.placeprice);
-      makeData.append("place_code", this.placecode);
-      makeData.append("head_uid", this.userInfo.uid);
-      axios
-        .post(SERVER_URL + "FRoomCreate/", makeData)
-        .then((res) => {
-          console.log(res);
-          if (res.data == "") {
-            alert("제대로 입력해주세요.");
-          } else {
-            this.$router.push({
-              name: "자유 SPOT",
-              params: { head_uid: res.data.head_uid },
+      if (this.$cookies.isKey("UserInfo")) {
+        this.userInfo = this.$cookies.get("UserInfo");
+        console.log("uid", this.userInfo.uid);
+
+        const makeData = new FormData();
+        makeData.append("title", this.title);
+        // makeData.append("matching_date", this.dates.simple);
+        makeData.append("place_uid", 0);
+        makeData.append("place_price", this.placeprice);
+        makeData.append("place_code", this.placecode);
+        makeData.append("uid", this.userInfo.uid);
+        if (this.title != "" && this.placecode != 0) {
+          axios
+            .post(SERVER_URL + "FRoomCreate", makeData)
+            .then((res) => {
+              console.log("chcek", res);
+              this.$router.push({
+                name: "자유 SPOT",
+                params: { uid: res.data[3].uid },
+              });
+            })
+            .catch((err) => {
+              console.log(err);
             });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        } else {
+          alert("방 이름과 경기장 모두를 선택해 주세요");
+        }
+      } else {
+        alert("로그인이 필요합니다! 로그인 해주세요.");
+      }
     },
     sidoinfo() {
       const sidoData = new FormData();
       // console.log("dfdfdf");
-      console.log("dfdfd", this.sidolist);
+      // console.log("dfdfd", this.sidolist);
       sidoData.append("state_code", this.sidolist[0]);
       sidoData.append("city_code", this.sidolist[1]);
       sidoData.append("dong_code", this.sidolist[2]);
       sidoData.append("title", this.sidolist[3]);
-      axios.post(SERVER_URL + "sidoinfo", sidoData).then((res) => {
+      axios.post(SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
       });
     },
     selectpage() {
-      console.log(this);
-      (this.FreeTable = []),
-        (this.FreeTable = this.FreetableData.slice(
-          (this.pagination - 1) * 5 + 1,
-          (this.pagination - 1) * 5 + 6
-        ));
+      this.FreeTable = [];
+      this.FreeTable = this.FreetableData.slice(
+        (this.pagination - 1) * 5,
+        (this.pagination - 1) * 5 + 5
+      );
       console.log(this.FreeTable);
     },
   },
