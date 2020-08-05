@@ -47,12 +47,12 @@ public class userController {
 		return userInfoService.modify(dto);
 	}
 	
-	@GetMapping(value="/user/detail")
+	@PostMapping(value="/user/detail")
 	public UserInfo detail(@RequestParam String email) {
 		return userInfoService.detail(email);
 	}
 	
-	@GetMapping(value="/user/detail2")
+	@PostMapping(value="/user/detail2")
 	public UserInfo detail2(@RequestParam int uid) {
 		return userInfoService.detail2(uid);
 	}
