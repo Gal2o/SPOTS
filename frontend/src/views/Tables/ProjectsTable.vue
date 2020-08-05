@@ -136,7 +136,6 @@ export default {
   name: "projects-table",
   components: { flatPicker },
   created() {
-    console.log("dfa", this);
     axios
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
@@ -176,7 +175,7 @@ export default {
   data() {
     return {
       dates: {
-        simple: "2020-08-05",
+        simple: "2020-08-08",
       },
       tabletitle: "자유 SPOT",
       FreetableData: [],
@@ -201,40 +200,46 @@ export default {
       this.placecode = stadium.code;
     },
     getSpot() {
-      this.userInfo = this.$cookies.get("UserInfo");
-      const makeData = new FormData();
-      makeData.append("title", this.title);
-      // makeData.append("matching_date", this.dates.simple);
-      makeData.append("place_uid", 0);
-      makeData.append("place_price", this.placeprice);
-      makeData.append("place_code", this.placecode);
-      makeData.append("head_uid", this.userInfo.uid);
-      axios
-        .post(SERVER_URL + "FRoomCreate/", makeData)
-        .then((res) => {
-          console.log(res);
-          if (res.data == "") {
-            alert("제대로 입력해주세요.");
-          } else {
-            this.$router.push({
-              name: "자유 SPOT",
-              params: { head_uid: res.data.head_uid },
+      if (this.$cookies.isKey("UserInfo")) {
+        this.userInfo = this.$cookies.get("UserInfo");
+        console.log("uid", this.userInfo.uid);
+
+        const makeData = new FormData();
+        makeData.append("title", this.title);
+        // makeData.append("matching_date", this.dates.simple);
+        makeData.append("place_uid", 0);
+        makeData.append("place_price", this.placeprice);
+        makeData.append("place_code", this.placecode);
+        makeData.append("uid", this.userInfo.uid);
+        if (this.title != "" && this.placecode != 0) {
+          axios
+            .post(SERVER_URL + "FRoomCreate", makeData)
+            .then((res) => {
+              console.log("chcek", res);
+              this.$router.push({
+                name: "자유 SPOT",
+                params: { uid: res.data[3].uid },
+              });
+            })
+            .catch((err) => {
+              console.log(err);
             });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        } else {
+          alert("방 이름과 경기장 모두를 선택해 주세요");
+        }
+      } else {
+        alert("로그인이 필요합니다! 로그인 해주세요.");
+      }
     },
     sidoinfo() {
       const sidoData = new FormData();
       // console.log("dfdfdf");
-      console.log("dfdfd", this.sidolist);
+      // console.log("dfdfd", this.sidolist);
       sidoData.append("state_code", this.sidolist[0]);
       sidoData.append("city_code", this.sidolist[1]);
       sidoData.append("dong_code", this.sidolist[2]);
       sidoData.append("title", this.sidolist[3]);
-      axios.post(SERVER_URL + "sidoinfo", sidoData).then((res) => {
+      axios.post(SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
       });
     },
