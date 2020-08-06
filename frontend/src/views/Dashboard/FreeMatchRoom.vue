@@ -219,7 +219,7 @@
               </small>
             </div>
             <div class="text-center">
-              <base-button type="success" class="my-4 mr-4" @click="CreditGo">결제하기</base-button>
+              <base-button type="success" class="my-4 mr-4" @click="SearchPosition">결제하기</base-button>
               <base-button type="secondary" @click="modals.entermessage = false">닫기</base-button>
             </div>
           </form>
@@ -339,6 +339,7 @@ export default {
       axios
         .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
+          console.log(this.myPosition)
           if (this.myPosition === "공격수") {
             if (res.data.striker1_uid == 0) {
               this.myPosUid = 1;
@@ -374,13 +375,17 @@ export default {
               this.myPosUid = 13;
             }
           }
+          console.log('change',this.myPosUid)
         })
+          .then(() => {
+            this.CreditGo()
+          })
         .catch((err) => {
           console.log(err);
         });
     },
     UserEnter() {
-      this.SearchPosition
+      this.SearchPosition()
       console.log('entry',this.myPosUid)
       if (this.myPosUid != 0) {
         const EnterInfo = new FormData();
@@ -398,10 +403,8 @@ export default {
       }
     },
     CreditGo() {
-      this.SearchPosition
+      console.log('end',this.myPosUid)
       const roomPrice = String(this.RoomData.price)
-      console.log('entry',this.myPosUid)
-      console.log(this.myPosUid)
       if (this.myPosUid != 0) {
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
