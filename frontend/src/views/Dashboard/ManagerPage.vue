@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="justify-content-between">
     <base-header type="gradient-success" class="pb-4 pt-3 pt-md-6">
       <div class="row d-flex flex-row justify-content-between">
         <div class="col-7">
@@ -30,25 +30,52 @@
 
           <template slot-scope="{ row }">
             <th scope="row">
-              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
+              <span class="name mb-0 text-sm text-secondary">{{ row.name }}</span>
             </th>
-            <td>
-              <button class = "mr-3">득점 : {{ goal }}<base-dropdown>
+            <td class="row justify-content-between ml-4 mr-4">
+              <button  class="btn-secondary ml-3 btn-lg" > 득점 : {{ rgoal }} <base-dropdown>
+                  <a class="dropdown-item" v-for="sc in score" 
+                  v-bind:key="sc" @click="inputrgoal(sc)" >{{sc}}</a>
+              </base-dropdown></button>
+
+              <button class="btn-secondary btn-lg">도움 : {{ rassist }}<base-dropdown>
               <a class="dropdown-item" v-for="sc in score" 
-              v-bind:key="sc" @click="inputgoal(sc)">{{sc}}</a></base-dropdown></button>
-            
-              <button class = "mr-3">도움 : {{ assist }}<base-dropdown>
-              <a class="dropdown-item" v-for="sc in score" 
-              v-bind:key="sc" @click="inputassist(sc)">{{sc}}</a></base-dropdown></button>
+              v-bind:key="sc" @click="inputrassist(sc)">{{sc}}</a></base-dropdown></button>
               
-              <base-button>신고
+              <base-button block type="secondary" size="lg" class="col-4 mr-3"  @click="modal1 = true">신고
               </base-button>
+              <modal :show.sync="modal1" body-classes="p-0" modal-classes="modal-dialog modal-md">
+          <card
+            type="secondary"
+            shadow
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+            class="border-0"
+          >
+            <template>
+              <div class="text-muted text-center mb-3">
+                <medium>블랙리스트 신고하기</medium>
+              </div>
+            </template>
+            <template>
+              <div class="text-center text-muted mb-4">
+                <small>신고 인원과 사유를 선택해주세요</small>
+              </div>
+              <form role="form">
+                <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
+                <div class="text-center">
+                  <base-button type="secondary" @click="modal1 = false">닫기</base-button>
+                </div>
+              </form>
+            </template>
+          </card>
+        </modal>
             </td>
           </template>
         </base-table>
       </div>
 
-      <div class="table-responsive col m-2" style="position:relative">
+      <div class="table-responsive col m-2">
         <div class="text-center p-2 mb-2 bg-primary rounded-top">
           <h2 class="text-white">Blue Team</h2>
         </div>
@@ -69,23 +96,27 @@
             <th scope="row">
               <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </th>
-            <td>
-              
-              <button class = "mr-3">득점 : {{ goal }}<base-dropdown>
-              <a class="dropdown-item" v-for="sc in score" 
-              v-bind:key="sc" @click="inputgoal(sc)">{{sc}}</a></base-dropdown></button>
-            
-              <button class = "mr-3">도움 : {{ assist }}<base-dropdown>
-              <a class="dropdown-item" v-for="sc in score" 
-              v-bind:key="sc" @click="inputassist(sc)">{{sc}}</a></base-dropdown></button>
+            <td class="row justify-content-between ml-4 mr-4">
+              <button  class="btn-secondary ml-3 btn-lg" > 득점 : {{ bgoal }} <base-dropdown>
+                  <a class="dropdown-item" v-for="sc in score" 
+                  v-bind:key="sc" @click="inputbgoal(sc)" >{{sc}}</a>
+              </base-dropdown></button>
 
-              <base-button>신고
+              <button class="btn-secondary btn-lg">도움 : {{ bassist }}<base-dropdown>
+              <a class="dropdown-item" v-for="sc in score" 
+              v-bind:key="sc" @click="inputbassist(sc)">{{sc}}</a></base-dropdown></button>
+              
+              <base-button block type="secondary" size="lg" class="col-4 mr-3">신고
               </base-button>
             </td>
           </template>
         </base-table>
       </div>
     </div>
+    <div class=" d-flex justify-content-between">
+    <base-button type="success" size="lg" class="col-2 ml-4">오늘의 MVP 선정</base-button>
+    <base-button type="warning" size="lg" class="col-2 mr-4">평가 및 경기 마치기</base-button> 
+  </div>
   </div>
 </template>
 <script>
@@ -102,7 +133,6 @@ export default {
       RedtableDatas: [],
       BluetableDatas: [],
       myTeam: "RED",
-      myPosition: "랜덤",
       myPosUid: 0,
       teamList: [{ name: "RED" }, { name: "BLUE" }],
       posRedList: [],
@@ -122,89 +152,28 @@ export default {
         "striker3_uid",
         "striker4_uid",
       ],
-      goal:0,
-      assist:0,
-      score:[1,2,3,4,5,6,7,8,9,10]
+      bgoal:0,
+      bassist:0,
+      rgoal:0,
+      rassist:0,
+      score:[1,2,3,4,5,6,7,8,9,10],
+      modal1:false,
      };
   },
   methods: {
-    inputgoal(sc) {
-      this.goal = sc
+    inputrgoal(sc) {
+      this.rgoal = sc
     },
-    inputassist(sc) {
-      this.assist = sc
+    inputrassist(sc) {
+      this.rassist = sc
     },
-    PositionChange(name) {
-      console.log(this.BluepostionList)
-      if (name == "랜덤") {
-        if (this.myTeam == "RED") {
-          this.myPosition = this.RedpostionList[Math.floor(
-            Math.random() * (this.RedpostionList.length - 1)
-          )].name
-        } else {
-          this.myPosition = this.BluepostionList[Math.floor(
-            Math.random() * (this.BluepostionList.length - 1)
-          )].name
-        }
-      } else {
-        this.myPosition = name;
-      }
+    inputbgoal(sc) {
+      this.bgoal = sc
     },
-    TeamChange(name) {
-      this.myTeam = name;
+    inputbassist(sc) {
+      this.bassist = sc
     },
-    SearchPosition() {
-      var entry_uid = 0;
-      if (this.myTeam === "RED") {
-        entry_uid = this.RoomData.home_matching_entry_uid;
-      } else {
-        entry_uid = this.RoomData.away_matching_entry_uid;
-      }
-      const entryUid = new FormData();
-      entryUid.append("team_entry_uid", entry_uid);
-      axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
-        .then((res) => {
-          if (this.myPosition === "공격수") {
-            if (res.data.striker1_uid == 0) {
-              this.myPosUid = 1;
-            } else if (res.data.striker2_uid == 0) {
-              this.myPosUid = 2;
-            } else if (res.data.striker3_uid == 0) {
-              this.myPosUid = 3;
-            } else if (res.data.striker4_uid == 0) {
-              this.myPosUid = 4;
-            }
-          } else if (this.myPosition === "미드필더") {
-            if (res.data.midfielder1_uid == 0) {
-              this.myPosUid = 5;
-            } else if (res.data.midfielder2_uid == 0) {
-              this.myPosUid = 6;
-            } else if (res.data.midfielder3_uid == 0) {
-              this.myPosUid = 7;
-            } else if (res.data.midfielder4_uid == 0) {
-              this.myPosUid = 8;
-            }
-          } else if (this.myPosition === "수비수") {
-            if (res.data.defender1_uid == 0) {
-              this.myPosUid = 9;
-            } else if (res.data.defender2_uid == 0) {
-              this.myPosUid = 10;
-            } else if (res.data.defender3_uid == 0) {
-              this.myPosUid = 11;
-            } else if (res.data.defender4_uid == 0) {
-              this.myPosUid = 12;
-            }
-          } else if (this.myPosition === "골키퍼") {
-            if (res.data.goalkeeper_uid == 0) {
-              this.myPosUid = 13;
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+   
     UserEnter() {
       this.SearchPosition
       console.log('entry',this.myPosUid)
@@ -307,23 +276,7 @@ export default {
               console.log(err)
         });
     },
-    RedListChange(position) {
-      var newPosition = new String("");
-      if (position.indexOf("striker") != -1) {
-        newPosition = "공격수"
-      } else if (position.indexOf("mid") != -1) {
-        newPosition = "미드필더"
-      } else if (position.indexOf("defend") != -1) {
-        newPosition = "수비수"
-      } else if (position.indexOf("goal") != -1) {
-        newPosition = "골키퍼"
-      }
-      if (!this.RedpostionList.find(v => v.name == newPosition)) {     
-        var Redsub = new Object
-        Redsub.name = newPosition
-        this.RedpostionList.push(Redsub)
-      }
-    },
+    
     BlueTeamList() {
       const Team_entry_uid = new FormData();
       Team_entry_uid.append(
@@ -394,23 +347,6 @@ export default {
         .catch(err => {
               console.log(err)
         });
-    },
-    BlueListChange(position) {
-      var newPosition = new String("");
-      if (position.indexOf("striker") != -1) {
-        newPosition = "공격수"
-      } else if (position.indexOf("mid") != -1) {
-        newPosition = "미드필더"
-      } else if (position.indexOf("defend") != -1) {
-        newPosition = "수비수"
-      } else if (position.indexOf("goal") != -1) {
-        newPosition = "골키퍼"
-      }
-      if (!this.BluepostionList.find(v => v.name == newPosition)) {   
-        var Bluesub = new Object
-        Bluesub.name = newPosition
-        this.BluepostionList.push(Bluesub)
-      }
     },
   },
   mounted() {},
