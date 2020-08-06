@@ -42,7 +42,7 @@ public class KakaoPayController {
 	}
 	
 	@PostMapping(value="/kakaoPay")
-	public String login(@RequestParam String price) {
+	public String login(@RequestParam String price,@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum) {
 		System.out.println("통신"); 
 		KakaoPayReadyVO kakaoPayReadyVO = new KakaoPayReadyVO();
 		RestTemplate restTemplate = new RestTemplate();
@@ -64,7 +64,7 @@ public class KakaoPayController {
 	    params.add("quantity", "1");
 	    params.add("total_amount", price);
 	    params.add("tax_free_amount", "0");
-	    params.add("approval_url", "http://localhost:8080/kakaoPay/success");
+	    params.add("approval_url", "http://localhost:8080/FreeMatchRoom/entry/"+team_entry_uid+"/"+uid+"/"+positionnum);
 	    params.add("cancel_url", "http://localhost:8080/");
 	    params.add("fail_url", "http://localhost:8080/");
 	    
