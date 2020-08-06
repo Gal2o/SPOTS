@@ -6,7 +6,7 @@
           <card title="Room information" class="mb-4 mb-xl-0">
             <h2>{{ RoomData.title }}</h2>
           </card>
-          <h3>담당 매니저 : 이동옥</h3>
+          <h3>담당 매니저 : </h3>
         </div>
 
         <div>
@@ -484,6 +484,7 @@ export default {
           Redsub.name = res.data.nickname
           this.RedtableDatas.push(Redsub)
           if (res.data.nickname == this.isMine) {
+            this.isEnter = true
             this.myPosition = newPosition
           }
           console.log('red5', this.RedtableDatas)
@@ -627,6 +628,9 @@ export default {
           this.BlueTeamList();
         }
       })
+        .then(() => {
+          console.log('ente',this.isEnter)
+        })
       .catch((err) => {
         console.log(err);
         alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
