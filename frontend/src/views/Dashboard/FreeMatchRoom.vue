@@ -411,11 +411,12 @@ export default {
         EnterInfo.append("positionnum", this.myPosUid);
         EnterInfo.append("team_entry_uid", this.myTeam);
         EnterInfo.append('price', roomPrice)
+        EnterInfo.append("room_uid", this.RoomData.uid)
         axios
           .post(SERVER_URL + "kakaoPay/", EnterInfo)
           .then(res => {
             console.log(res)
-            window.open(res.data, "결제창")
+            window.location.replace(res.data)
           })
           .catch(err => {
             console.log(err);

@@ -76,5 +76,11 @@ export default new Router({
         },
       ],
     },
+    {
+      path: "/:room_uid/:uid/:positionnum/:team_entry_uid",
+      name: "CreditComplete",
+      component: () =>
+        import("./views/CreditComplete.vue"),
+    },
   ],
 });
