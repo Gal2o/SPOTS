@@ -17,7 +17,12 @@ const SERVER_URL = "http://localhost:8080/";
 export default {
     methods: {
         returnPage() {
-            this.$router.push({ name: '자유 SPOT', params: { uid: this.$route.params.room_uid }})
+            var bepage = this.$route.params.room_uid
+            if (bepage == 0) {
+                this.$router.push({ name: 'SPOTs' })
+            } else {
+                this.$router.push({ name: '자유 SPOT', params: { uid: this.$route.params.room_uid }})
+            }            
         }
     },
     created() {

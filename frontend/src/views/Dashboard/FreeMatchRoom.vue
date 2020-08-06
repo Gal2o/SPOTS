@@ -241,7 +241,7 @@
                 포지션을 선택하였으면 결제를 해주세요.
                 <br />결제 금액은
                 <big style="font-size:30px;" class="text-warning">
-                  <b>3000원</b>
+                  <b>{{ RoomData.price }}원</b>
                 </big> 입니다.
               </small>
             </div>
