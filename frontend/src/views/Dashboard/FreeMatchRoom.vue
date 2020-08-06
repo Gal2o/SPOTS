@@ -46,17 +46,20 @@
             <td>
               <base-button
                 slot="title"
-                v-if="row.name != isMine"
+                v-if="row.name != isMine || isStart"
               >{{ row.position }}</base-button>
-              <base-dropdown v-if="row.name == isMine">
-                <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
-                <a
-                  class="dropdown-item"
-                  v-for="positonitem in RedpostionList"
-                  :key="positonitem"
-                  @click="PositionChange(positonitem.name)"
-                >{{ positonitem.name }}</a>
-              </base-dropdown>
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine && isStart">
+                <base-dropdown>
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in RedpostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-button type="info" @click="modals.changeCheck = true">변경</base-button>
+              </div>
             </td>
           </template>
         </base-table>
@@ -85,17 +88,20 @@
             <td>
               <base-button
                 slot="title"
-                v-if="row.name != isMine"
+                v-if="row.name != isMine || isStart"
               >{{ row.position }}</base-button>
-              <base-dropdown v-if="row.name == isMine">
-                <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
-                <a
-                  class="dropdown-item"
-                  v-for="positonitem in BluepostionList"
-                  :key="positonitem"
-                  @click="PositionChange(positonitem.name)"
-                >{{ positonitem.name }}</a>
-              </base-dropdown>
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine && isStart">
+                <base-dropdown>
+                  <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in BluepostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-button type="info" @click="modals.changeCheck = true">변경</base-button>
+              </div>
             </td>
           </template>
         </base-table>
@@ -108,11 +114,14 @@
           <h4>매니저 평가</h4>
         </router-link>
       </base-button>
-      <base-button v-if="!isLogined" type="success" @click="modals.loginalert = true">
+      <base-button v-if="!isLogined && !isStart" type="success" @click="modals.loginalert = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button v-if="isLogined" type="success" @click="modals.entermessage = true">
+      <base-button v-if="isLogined && !isStart && !this.isEnter && !this.isHeader" type="success" @click="modals.entermessage = true">
         <h4 class="text-white">입장하기</h4>
+      </base-button>
+      <base-button v-if="isLogined && !isStart && this.isHeader" type="success">
+        <h4 class="text-white">시작하기</h4>
       </base-button>
     </div>
 
@@ -210,14 +219,24 @@
               </small>
             </div>
             <div class="text-center">
-              <router-link to="/dashboard/FreeMatch">
-                <base-button type="success" class="my-4 mr-4">결제하기</base-button>
-              </router-link>
+              <base-button type="success" class="my-4 mr-4" @click="CreditGo">결제하기</base-button>
               <base-button type="secondary" @click="modals.entermessage = false">닫기</base-button>
             </div>
           </form>
         </template>
       </card>
+    </modal>
+
+    <modal :show.sync="modals.changeCheck">
+      <h4 slot="header" class="modal-title" id="modal-title-default">포지션을 변경하시겠습니까?</h4>
+
+      <p>포지션을 정말로 바꿀것인지 확인해주십시오.</p>
+
+      <template slot="footer">
+          <base-button type="primary" @click="UserEnter">변경하기</base-button>
+          <base-button type="link" class="ml-auto" @click="modals.changeCheck = false">취소
+          </base-button>
+      </template>
     </modal>
   </div>
 </template>
@@ -233,6 +252,8 @@ export default {
     return {
       isMine: "",
       isStart: false,
+      isEnter: false,
+      isHeader: false,
       RoomData: Object,
       RedtableDatas: [],
       BluetableDatas: [],
@@ -282,6 +303,7 @@ export default {
       modals: {
         loginalert: false,
         entermessage: false,
+        changeCheck: false,
       },
     };
   },
@@ -358,7 +380,8 @@ export default {
         });
     },
     UserEnter() {
-      this.SearchPosition;
+      this.SearchPosition
+      console.log('entry',this.myPosUid)
       if (this.myPosUid != 0) {
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
@@ -373,6 +396,20 @@ export default {
             console.log(err);
           });
       }
+    },
+    CreditGo() {
+      const roomPrice = String(this.RoomData.price)
+      const Price = new FormData();
+      Price.append('price', roomPrice)      
+      axios
+        .post(SERVER_URL + "kakaoPay/", Price)
+        .then(res => {
+          console.log(res)
+          window.open(res.data, "결제창")
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     RedTeamList() {
       const Team_entry_uid = new FormData();
@@ -523,6 +560,7 @@ export default {
           Bluesub.name = res.data.nickname
           this.BluetableDatas.push(Bluesub)
           if (res.data.nickname == this.isMine) {
+            this.isEnter = true
             this.myPosition = newPosition
           }
           console.log('blue5',this.BluetableDatas)
@@ -567,6 +605,10 @@ export default {
           this.$router.push({ name: "SPOTs" });
         } else {
           this.RoomData = res.data[0];
+          var kuid = this.$cookies.get("UserInfo").uid
+          if (res.data[0].head_uid == kuid) {
+            this.isHeader = true
+          }
           console.log("1", this.RoomData);
           this.RedtableDatas = [];
           this.RedTeamList();
