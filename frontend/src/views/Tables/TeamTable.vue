@@ -57,7 +57,7 @@
           </td>
 
           <td class="text-right">
-            <router-link to="/dashboard/FreeMatch">
+            <router-link to="/dashboard/TeamMatch">
               <base-button type="success">입장하기</base-button>
             </router-link>
           </td>
@@ -81,7 +81,7 @@ export default {
   name: "team-table",
   created() {
     axios
-      .get(SERVER_URL + "TeamMatchMain/")
+      .get(SERVER_URL + "TeamMatchAll/")
       .then((res) => {
         this.TeamtableData = res.data;
       })
