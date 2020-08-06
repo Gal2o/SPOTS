@@ -110,7 +110,7 @@
 
     <div class="d-flex flex-row justify-content-between mr-5">
       <base-button class="ml-3" type="secondary">
-        <router-link to="/dashboard/FreeMatch/:uid/ManagerPage">
+        <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4>매니저 평가</h4>
         </router-link>
       </base-button>
