@@ -48,7 +48,7 @@
                 slot="title"
                 v-if="row.name != isMine || isStart"
               >{{ row.position }}</base-button>
-              <div class="row d-flex justify-content-center" v-if="row.name == isMine && isStart">
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine && !isStart">
                 <base-dropdown>
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
@@ -90,7 +90,7 @@
                 slot="title"
                 v-if="row.name != isMine || isStart"
               >{{ row.position }}</base-button>
-              <div class="row d-flex justify-content-center" v-if="row.name == isMine && isStart">
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine && !isStart">
                 <base-dropdown>
                   <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                   <a
@@ -259,7 +259,7 @@ export default {
       BluetableDatas: [],
       isLogined: false,
       myTeam: "RED",
-      myPosition: "랜덤",
+      myPosition: "선택해주세요",
       myPosUid: 0,
       RedpostionList: [
         { name: "랜덤" },
@@ -388,7 +388,7 @@ export default {
         EnterInfo.append("positionnum", this.myPosUid);
         EnterInfo.append("team_entry_uid", this.myTeam);
         axios
-          .post(SERVER_URL + "FreeMatchRoom/entrylist/", EnterInfo)
+          .post(SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
           .then((res) => {
             console.log(res);
           })
@@ -398,18 +398,26 @@ export default {
       }
     },
     CreditGo() {
+      this.SearchPosition
       const roomPrice = String(this.RoomData.price)
-      const Price = new FormData();
-      Price.append('price', roomPrice)      
-      axios
-        .post(SERVER_URL + "kakaoPay/", Price)
-        .then(res => {
-          console.log(res)
-          window.open(res.data, "결제창")
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      console.log('entry',this.myPosUid)
+      console.log(this.myPosUid)
+      if (this.myPosUid != 0) {
+        const EnterInfo = new FormData();
+        EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
+        EnterInfo.append("positionnum", this.myPosUid);
+        EnterInfo.append("team_entry_uid", this.myTeam);
+        EnterInfo.append('price', roomPrice)
+        axios
+          .post(SERVER_URL + "kakaoPay/", EnterInfo)
+          .then(res => {
+            console.log(res)
+            window.open(res.data, "결제창")
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     RedTeamList() {
       const Team_entry_uid = new FormData();
