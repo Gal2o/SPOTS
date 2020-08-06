@@ -67,4 +67,10 @@
 		limit 20
 	</select>
 	
+	<select id="listFree" resultType="com.spots.dto.UserInfo">
+		select * from user
+		order by rate DESC
+		limit 20
+	</select>
+	
 </mapper>

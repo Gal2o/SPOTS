@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spots.dto.TMatchInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 import com.spots.service.RankService;
 
 @CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
@@ -42,4 +43,8 @@ public class RankController {
 		return Rank.listTeam();
 	}
 
+	@GetMapping(value="/rank/free")
+	public List<UserInfo> listFree() {
+		return Rank.listFree();
+	}
 }
