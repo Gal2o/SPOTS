@@ -85,7 +85,7 @@
 	</insert>
 	
 	<insert id="FRoomCreate"> 
-		<!-- insert into matching_entry (goalkeeper_uid) values(null), (null); -->
+		insert into matching_entry (goalkeeper_uid) values(null), (null);
         
         insert into free_matching
         (head_uid, home_matching_entry_uid, away_matching_entry_uid, home_score, away_score, ready_num, 
