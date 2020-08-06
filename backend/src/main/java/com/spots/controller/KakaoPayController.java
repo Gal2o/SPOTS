@@ -64,7 +64,7 @@ public class KakaoPayController {
 	    params.add("quantity", "1");
 	    params.add("total_amount", price);
 	    params.add("tax_free_amount", "0");
-	    params.add("approval_url", "http://localhost:3000/success/"+room_uid+"/"+uid+"/"+positionnum+"/"+team_entry_uid);
+	    params.add("approval_url", "http://localhost:3000/#/success/"+room_uid+"/"+uid+"/"+positionnum+"/"+team_entry_uid);
 	    params.add("cancel_url", "http://localhost:8080/");
 	    params.add("fail_url", "http://localhost:8080/");
 	    
