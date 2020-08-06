@@ -406,10 +406,16 @@ export default {
       console.log('end',this.myPosUid)
       const roomPrice = String(this.RoomData.price)
       if (this.myPosUid != 0) {
+        var myTeam_uid = 0
+        if (this.myTeam == "RED") {
+          myTeam_uid = this.RoomData.home_matching_entry_uid
+        } else {
+          myTeam_uid = this.RoomData.away_matching_entry_uid
+        }
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
         EnterInfo.append("positionnum", this.myPosUid);
-        EnterInfo.append("team_entry_uid", this.myTeam);
+        EnterInfo.append("team_entry_uid", myTeam_uid);
         EnterInfo.append('price', roomPrice)
         EnterInfo.append("room_uid", this.RoomData.uid)
         axios
