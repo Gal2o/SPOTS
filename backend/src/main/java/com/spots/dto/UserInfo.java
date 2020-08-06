@@ -8,6 +8,9 @@ public class UserInfo {
 	private char skill;
 	private String position_uid;
 	private char ckMail;
+	private double rate;
+
+
 	private int win;
 	private int lose;
 	private int draw;
@@ -238,7 +241,7 @@ public class UserInfo {
 	@Override
 	public String toString() {
 		return "UserInfo [uid=" + uid + ", email=" + email + ", password=" + password + ", birthday=" + birthday
-				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", win=" + win
+				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", rate=" + rate + ", win=" + win
 				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid
 				+ ", nickname=" + nickname + ", city_code=" + city_code + ", state_code=" + state_code + ", dong_code="
 				+ dong_code + ", comment=" + comment + "]";
