@@ -53,7 +53,7 @@ public class EntryController {
 			return 0;
 	}
 	
-	@PostMapping(value="/FreeMatchRoom/entry/change")
+	@PostMapping(value="/FreeMatchRoom/entrychange")
 	public int FreeMatchEntryChange(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before, @RequestParam int positionnum_after, @RequestParam int team_entry_uid_after) {
 		System.out.println("자리변경 시작!!!!!");
 		if(positionnum_after == 1)
@@ -113,7 +113,7 @@ public class EntryController {
 		return 0;
 	}
 	
-	@PostMapping(value="/FreeMatchRoom/entry/cancel")
+	@PostMapping(value="/FreeMatchRoom/entrycancel")
 	public int FreeMatchEntryCancel(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before) {
 		System.out.println("자리취소 시작!!!!!");
 		if(positionnum_before == 1)
