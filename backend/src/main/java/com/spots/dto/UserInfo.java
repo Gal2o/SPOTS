@@ -22,8 +22,18 @@ public class UserInfo {
 	private int blacklist;
 	private int goal;
 	private int assist;
+	private int rate;
+	
 
 	
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
 	public int getMvp() {
 		return mvp;
 	}
@@ -102,9 +112,12 @@ public class UserInfo {
 
 	
 
+	
+
 	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
 			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname, String city_code,
-			String state_code, String dong_code, String comment, int mvp, int blacklist, int goal, int assist) {
+			String state_code, String dong_code, String comment, int mvp, int blacklist, int goal, int assist,
+			int rate) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -127,6 +140,7 @@ public class UserInfo {
 		this.blacklist = blacklist;
 		this.goal = goal;
 		this.assist = assist;
+		this.rate = rate;
 	}
 
 	public String getNickname() {
