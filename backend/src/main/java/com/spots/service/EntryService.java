@@ -18,6 +18,20 @@ public interface EntryService {
 	public int S11(int team_entry_uid, int uid);
 	public int S12(int team_entry_uid, int uid);
 	public int S13(int team_entry_uid, int uid);
+	
+	public int D1(int team_entry_uid, int uid);
+	public int D2(int team_entry_uid, int uid);
+	public int D3(int team_entry_uid, int uid);
+	public int D4(int team_entry_uid, int uid);
+	public int D5(int team_entry_uid, int uid);
+	public int D6(int team_entry_uid, int uid);
+	public int D7(int team_entry_uid, int uid);
+	public int D8(int team_entry_uid, int uid);
+	public int D9(int team_entry_uid, int uid);
+	public int D10(int team_entry_uid, int uid);
+	public int D11(int team_entry_uid, int uid);
+	public int D12(int team_entry_uid, int uid);
+	public int D13(int team_entry_uid, int uid);
 	public EntryInfo entrylist(int team_entry_uid);
 	public int FWin(FMatchInfo dto);
 	public int FLose(FMatchInfo dto);

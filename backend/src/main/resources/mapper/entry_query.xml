@@ -80,6 +80,87 @@
 		 where uid= #{team_entry_uid}
 	</update>
 	
+	
+	<update id="D1">
+		update matching_entry 
+		   set	striker1_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	<update id="D2">
+		update matching_entry 
+		   set	striker2_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D3">
+		update matching_entry 
+		   set	striker3_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D4">
+		update matching_entry 
+		   set	striker4_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D5">
+		update matching_entry 
+		   set	midfielder1_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D6">
+		update matching_entry 
+		   set	midfielder2_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D7">
+		update matching_entry 
+		   set	midfielder3_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D8">
+		update matching_entry 
+		   set	midfielder4_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D9">
+		update matching_entry 
+		   set	defender1_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D10">
+		update matching_entry 
+		   set	defender2_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D11">
+		update matching_entry 
+		   set	defender3_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D12">
+		update matching_entry 
+		   set	defender4_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+		
+	<update id="D13">
+		update matching_entry 
+		   set	goalkeeper_uid = null 			
+		 where uid= #{team_entry_uid}
+	</update>
+	
+	
+	
 	<select id="entrylist" resultType="com.spots.dto.EntryInfo">
 		select *
 		from matching_entry

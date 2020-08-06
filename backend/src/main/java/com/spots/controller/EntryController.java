@@ -53,6 +53,98 @@ public class EntryController {
 			return 0;
 	}
 	
+	@PostMapping(value="/FreeMatchRoom/entry/change")
+	public int FreeMatchEntryChange(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before, @RequestParam int positionnum_after, @RequestParam int team_entry_uid_after) {
+		System.out.println("자리변경 시작!!!!!");
+		if(positionnum_after == 1)
+			Entry.S1(team_entry_uid_after, uid);
+		else if(positionnum_after == 2)
+			Entry.S2(team_entry_uid_after, uid);
+		else if(positionnum_after == 3)
+			Entry.S3(team_entry_uid_after, uid);
+		else if(positionnum_after == 4)
+			Entry.S4(team_entry_uid_after, uid);
+		else if(positionnum_after == 5)
+			Entry.S5(team_entry_uid_after, uid);
+		else if(positionnum_after == 6)
+			Entry.S6(team_entry_uid_after, uid);
+		else if(positionnum_after == 7)
+			Entry.S7(team_entry_uid_after, uid);
+		else if(positionnum_after == 8)
+			Entry.S8(team_entry_uid_after, uid);
+		else if(positionnum_after == 9)
+			Entry.S9(team_entry_uid_after, uid);
+		else if(positionnum_after == 10)
+			Entry.S10(team_entry_uid_after, uid);
+		else if(positionnum_after == 11)
+			Entry.S11(team_entry_uid_after, uid);
+		else if(positionnum_after == 12)
+			Entry.S12(team_entry_uid_after, uid);
+		else if(positionnum_after == 13)
+			Entry.S13(team_entry_uid_after, uid);
+		
+		
+		if(positionnum_before == 1)
+			Entry.D1(team_entry_uid_before, uid);
+		else if(positionnum_before == 2)
+			Entry.D2(team_entry_uid_before, uid);
+		else if(positionnum_before == 3)
+			Entry.D3(team_entry_uid_before, uid);
+		else if(positionnum_before == 4)
+			Entry.D4(team_entry_uid_before, uid);
+		else if(positionnum_before == 5)
+			Entry.D5(team_entry_uid_before, uid);
+		else if(positionnum_before == 6)
+			Entry.D6(team_entry_uid_before, uid);
+		else if(positionnum_before == 7)
+			Entry.D7(team_entry_uid_before, uid);
+		else if(positionnum_before == 8)
+			Entry.D8(team_entry_uid_before, uid);
+		else if(positionnum_before == 9)
+			Entry.D9(team_entry_uid_before, uid);
+		else if(positionnum_before == 10)
+			Entry.D10(team_entry_uid_before, uid);
+		else if(positionnum_before == 11)
+			Entry.D11(team_entry_uid_before, uid);
+		else if(positionnum_before == 12)
+			Entry.D12(team_entry_uid_before, uid);
+		else if(positionnum_before == 13)
+			Entry.D13(team_entry_uid_before, uid);
+		return 0;
+	}
+	
+	@PostMapping(value="/FreeMatchRoom/entry/cancel")
+	public int FreeMatchEntryCancel(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before) {
+		System.out.println("자리취소 시작!!!!!");
+		if(positionnum_before == 1)
+			Entry.D1(team_entry_uid_before, uid);
+		else if(positionnum_before == 2)
+			Entry.D2(team_entry_uid_before, uid);
+		else if(positionnum_before == 3)
+			Entry.D3(team_entry_uid_before, uid);
+		else if(positionnum_before == 4)
+			Entry.D4(team_entry_uid_before, uid);
+		else if(positionnum_before == 5)
+			Entry.D5(team_entry_uid_before, uid);
+		else if(positionnum_before == 6)
+			Entry.D6(team_entry_uid_before, uid);
+		else if(positionnum_before == 7)
+			Entry.D7(team_entry_uid_before, uid);
+		else if(positionnum_before == 8)
+			Entry.D8(team_entry_uid_before, uid);
+		else if(positionnum_before == 9)
+			Entry.D9(team_entry_uid_before, uid);
+		else if(positionnum_before == 10)
+			Entry.D10(team_entry_uid_before, uid);
+		else if(positionnum_before == 11)
+			Entry.D11(team_entry_uid_before, uid);
+		else if(positionnum_before == 12)
+			Entry.D12(team_entry_uid_before, uid);
+		else if(positionnum_before == 13)
+			Entry.D13(team_entry_uid_before, uid);
+		return 0;
+	}
+	
 	@PostMapping(value="/FreeMatchRoom/entrylist")
 	public EntryInfo entrylist(@RequestParam int team_entry_uid) {
 		return Entry.entrylist(team_entry_uid);
