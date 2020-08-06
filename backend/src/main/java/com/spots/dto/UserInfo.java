@@ -21,13 +21,42 @@ public class UserInfo {
 	private String state_code;
 	private String dong_code;
 	private String comment;
+	private int mvp;
+	private int blacklist;
+	private int goal;
+	private int assist;
+
 	
-	public double getRate() {
-		return rate;
+	public int getMvp() {
+		return mvp;
 	}
 
-	public void setRate(double rate) {
-		this.rate = rate;
+	public void setMvp(int mvp) {
+		this.mvp = mvp;
+	}
+
+	public int getBlacklist() {
+		return blacklist;
+	}
+
+	public void setBlacklist(int blacklist) {
+		this.blacklist = blacklist;
+	}
+
+	public int getGoal() {
+		return goal;
+	}
+
+	public void setGoal(int goal) {
+		this.goal = goal;
+	}
+
+	public int getAssist() {
+		return assist;
+	}
+
+	public void setAssist(int assist) {
+		this.assist = assist;
 	}
 
 	public String getCity_code() {
@@ -78,7 +107,7 @@ public class UserInfo {
 
 	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
 			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname, String city_code,
-			String state_code, String dong_code, String comment) {
+			String state_code, String dong_code, String comment, int mvp, int blacklist, int goal, int assist) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -97,6 +126,10 @@ public class UserInfo {
 		this.state_code = state_code;
 		this.dong_code = dong_code;
 		this.comment = comment;
+		this.mvp = mvp;
+		this.blacklist = blacklist;
+		this.goal = goal;
+		this.assist = assist;
 	}
 
 	public String getNickname() {
