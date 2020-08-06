@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.spots.dto.EntryInfo;
 import com.spots.dto.FMatchInfo;
-import com.spots.dto.TMatchInfo;
 import com.spots.mapper.EntryMapper;
 
 @Service
@@ -77,6 +76,72 @@ public class EntryServiceImpl implements EntryService {
 	@Override
 	public int S13(int team_entry_uid, int uid) {
 		return mapper.S13(team_entry_uid, uid);
+	}
+	
+	
+	@Override
+	public int D1(int team_entry_uid, int uid) {
+		return mapper.D1(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D2(int team_entry_uid, int uid) {
+		return mapper.D2(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D3(int team_entry_uid, int uid) {
+		return mapper.D3(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D4(int team_entry_uid, int uid) {
+		return mapper.D4(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D5(int team_entry_uid, int uid) {
+		return mapper.D5(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D6(int team_entry_uid, int uid) {
+		return mapper.D6(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D7(int team_entry_uid, int uid) {
+		return mapper.D7(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D8(int team_entry_uid, int uid) {
+		return mapper.D8(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D9(int team_entry_uid, int uid) {
+		return mapper.D9(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D10(int team_entry_uid, int uid) {
+		return mapper.D10(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D11(int team_entry_uid, int uid) {
+		return mapper.D11(team_entry_uid, uid);
+	}
+
+	@Override
+	public int D12(int team_entry_uid, int uid) {
+		return mapper.D12(team_entry_uid, uid);
+	}
+	
+	@Override
+	public int D13(int team_entry_uid, int uid) {
+		return mapper.D13(team_entry_uid, uid);
 	}
 
 	@Override

@@ -8,6 +8,9 @@ public class UserInfo {
 	private char skill;
 	private String position_uid;
 	private char ckMail;
+
+
+
 	private int win;
 	private int lose;
 	private int draw;
@@ -18,7 +21,53 @@ public class UserInfo {
 	private String state_code;
 	private String dong_code;
 	private String comment;
+	private int mvp;
+	private int blacklist;
+	private int goal;
+	private int assist;
+	private int rate;
 	
+
+	
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
+	public int getMvp() {
+		return mvp;
+	}
+
+	public void setMvp(int mvp) {
+		this.mvp = mvp;
+	}
+
+	public int getBlacklist() {
+		return blacklist;
+	}
+
+	public void setBlacklist(int blacklist) {
+		this.blacklist = blacklist;
+	}
+
+	public int getGoal() {
+		return goal;
+	}
+
+	public void setGoal(int goal) {
+		this.goal = goal;
+	}
+
+	public int getAssist() {
+		return assist;
+	}
+
+	public void setAssist(int assist) {
+		this.assist = assist;
+	}
 
 	public String getCity_code() {
 		return city_code;
@@ -66,9 +115,12 @@ public class UserInfo {
 
 	
 
+	
+
 	public UserInfo(int uid, String email, String password, String birthday, char skill, String position_uid,
 			char ckMail, int win, int lose, int draw, int warning, int team_uid, String nickname, String city_code,
-			String state_code, String dong_code, String comment) {
+			String state_code, String dong_code, String comment, int mvp, int blacklist, int goal, int assist,
+			int rate) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -87,6 +139,11 @@ public class UserInfo {
 		this.state_code = state_code;
 		this.dong_code = dong_code;
 		this.comment = comment;
+		this.mvp = mvp;
+		this.blacklist = blacklist;
+		this.goal = goal;
+		this.assist = assist;
+		this.rate = rate;
 	}
 
 	public String getNickname() {
@@ -198,7 +255,7 @@ public class UserInfo {
 	@Override
 	public String toString() {
 		return "UserInfo [uid=" + uid + ", email=" + email + ", password=" + password + ", birthday=" + birthday
-				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", win=" + win
+				+ ", skill=" + skill + ", position_uid=" + position_uid + ", ckMail=" + ckMail + ", rate=" + rate + ", win=" + win
 				+ ", lose=" + lose + ", draw=" + draw + ", warning=" + warning + ", team_uid=" + team_uid
 				+ ", nickname=" + nickname + ", city_code=" + city_code + ", state_code=" + state_code + ", dong_code="
 				+ dong_code + ", comment=" + comment + "]";

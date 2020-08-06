@@ -24,6 +24,20 @@ public interface EntryMapper {
 	public int S11(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
 	public int S12(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
 	public int S13(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	
+	public int D1(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D2(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D3(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D4(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D5(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D6(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D7(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D8(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D9(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D10(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D11(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D12(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
+	public int D13(@Param("team_entry_uid") int team_entry_uid, @Param("uid") int uid);
 	public EntryInfo entrylist(@Param("team_entry_uid") int team_entry_uid);
 	public int FWin(FMatchInfo dto);
 	public int FLose(FMatchInfo dto);

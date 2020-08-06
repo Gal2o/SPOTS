@@ -203,10 +203,10 @@ export default {
       if (this.$cookies.isKey("UserInfo")) {
         this.userInfo = this.$cookies.get("UserInfo");
         console.log("uid", this.userInfo.uid);
-
+        console.log("date",typeof(this.dates.simple));
         const makeData = new FormData();
         makeData.append("title", this.title);
-        // makeData.append("matching_date", this.dates.simple);
+        makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
         makeData.append("place_price", this.placeprice);
         makeData.append("place_code", this.placecode);
