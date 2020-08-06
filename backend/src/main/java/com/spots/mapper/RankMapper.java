@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.spots.dto.TMatchInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 
 @Mapper
 public interface RankMapper {
@@ -17,4 +18,6 @@ public interface RankMapper {
 	public int TDraw(TMatchInfo dto);
 	
 	public List<TeamInfo> listTeam();
+	
+	public List<UserInfo> listFree();
 }

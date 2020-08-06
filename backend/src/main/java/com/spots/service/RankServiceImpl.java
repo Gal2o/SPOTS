@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spots.dto.TMatchInfo;
 import com.spots.dto.TeamInfo;
+import com.spots.dto.UserInfo;
 import com.spots.mapper.RankMapper;
 
 @Service
@@ -35,5 +36,8 @@ public class RankServiceImpl implements RankService {
 		return mapper.listTeam();
 	}
 
-
+	@Override
+	public List<UserInfo> listFree() {
+		return mapper.listFree();
+	}
 }
