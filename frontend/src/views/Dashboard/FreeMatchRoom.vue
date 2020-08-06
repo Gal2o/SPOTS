@@ -259,8 +259,10 @@ export default {
       BluetableDatas: [],
       isLogined: false,
       myTeam: "RED",
+      myRealTeam: 0,
       myPosition: "선택해주세요",
       myPosUid: 0,
+      myOriginUid: 0,
       RedpostionList: [
         { name: "랜덤" },
         { name: "공격수" },
@@ -378,26 +380,87 @@ export default {
           console.log('change',this.myPosUid)
         })
           .then(() => {
-            this.CreditGo()
+            if (this.isEnter) {
+              this.SearchMyPosition
+            } else {              
+              this.CreditGo
+            }
           })
         .catch((err) => {
           console.log(err);
         });
     },
-    UserEnter() {
-      this.SearchPosition()
+    SearchMyPosition() {
+      var entry_uid = 0;
+      if (this.myTeam === "RED") {
+        entry_uid = this.RoomData.home_matching_entry_uid;
+      } else {
+        entry_uid = this.RoomData.away_matching_entry_uid;
+      }
+      const entryUid = new FormData();
+      entryUid.append("team_entry_uid", entry_uid);
+      axios
+        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
+        .then((res) => {
+          console.log(this.myPosition)
+          var Myuid = this.$cookies.get('UserInfo').uid
+          if (res.data.striker1_uid == Myuid) {
+            this.myOriginUid = 1;
+          } else if (res.data.striker2_uid == Myuid) {
+            this.myOriginUid = 2;
+          } else if (res.data.striker3_uid == Myuid) {
+            this.myOriginUid = 3;
+          } else if (res.data.striker4_uid == Myuid) {
+            this.myOriginUid = 4;
+          } else if (res.data.midfielder1_uid == Myuid) {
+            this.myOriginUid = 5;
+          } else if (res.data.midfielder2_uid == Myuid) {
+            this.myOriginUid = 6;
+          } else if (res.data.midfielder3_uid == Myuid) {
+            this.myOriginUid = 7;
+          } else if (res.data.midfielder4_uid == Myuid) {
+            this.myOriginUid = 8;
+          } else if (res.data.defender1_uid == Myuid) {
+            this.myOriginUid = 9;
+          } else if (res.data.defender2_uid == Myuid) {
+            this.myOriginUid = 10;
+          } else if (res.data.defender3_uid == Myuid) {
+            this.myOriginUid = 11;
+          } else if (res.data.defender4_uid == Myuid) {
+            this.myOriginUid = 12;
+          } else if (res.data.goalkeeper_uid == Myuid) {
+            this.myOriginUid = 13;
+          }
+          console.log('change',this.myOriginUid)
+        })
+          .then(() => {
+            this.UserChange
+          })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    UserChange() {
       console.log('entry',this.myPosUid)
       if (this.myPosUid != 0) {
-        const EnterInfo = new FormData();
-        EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
-        EnterInfo.append("positionnum", this.myPosUid);
-        EnterInfo.append("team_entry_uid", this.myTeam);
+        var myTeam_uid = 0
+        if (this.myTeam == "RED") {
+          myTeam_uid = this.RoomData.home_matching_entry_uid
+        } else {
+          myTeam_uid = this.RoomData.away_matching_entry_uid
+        }
+        const ChangeInfo = new FormData();
+        ChangeInfo.append("uid", this.$cookies.get("UserInfo").uid);
+        ChangeInfo.append("positionnum_before", this.myOriginUid);
+        ChangeInfo.append("positionnum_after", this.myPosUid);
+        ChangeInfo.append("team_entry_uid_after", myTeam_uid);
+        ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
         axios
-          .post(SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
-          .then((res) => {
-            console.log(res);
+          .post(SERVER_URL + "/FreeMatchRoom/entry/change", ChangeInfo)
+          .then(res => {
+            console.log(res)
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       }
@@ -492,6 +555,7 @@ export default {
           this.RedtableDatas.push(Redsub)
           if (res.data.nickname == this.isMine) {
             this.isEnter = true
+            this.myRealTeam = this.RoomData.home_matching_entry_uid
             this.myPosition = newPosition
           }
           console.log('red5', this.RedtableDatas)
@@ -580,6 +644,7 @@ export default {
           this.BluetableDatas.push(Bluesub)
           if (res.data.nickname == this.isMine) {
             this.isEnter = true
+            this.myRealTeam = this.RoomData.home_matching_entry_uid
             this.myPosition = newPosition
           }
           console.log('blue5',this.BluetableDatas)
