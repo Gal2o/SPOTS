@@ -8,7 +8,7 @@ public class UserInfo {
 	private char skill;
 	private String position_uid;
 	private char ckMail;
-	private double rate;
+
 
 
 	private int win;
