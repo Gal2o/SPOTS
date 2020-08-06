@@ -61,12 +61,21 @@ public class MatchController {
 
 	@PostMapping(value = "/FreeMatchAll")
 	public List<FMatchInfo> FListAll(
-			@RequestParam String doe,
-			@RequestParam String si,
-			@RequestParam String dong,
-			@RequestParam String word) {
+			@RequestParam String doe, @RequestParam String si,
+			@RequestParam String dong, @RequestParam String word) {
 		
-		System.out.println(doe + " " + si + " " + dong + " " + word);
+		if(doe.equals("null")) doe = null;
+		else doe = doe.substring(0,2);
+		
+		if(si.equals("null")) si = null;
+		else si = si.substring(0,4);
+		
+		if(dong.equals("null"))
+			dong = null;
+		
+		if(word.equals("null"))
+			word = null;
+		
 		System.out.println(FreeMatch.FListAll(doe, si, dong, word));
 		return FreeMatch.FListAll(doe, si, dong, word);
 	}
