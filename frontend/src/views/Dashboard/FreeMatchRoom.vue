@@ -447,10 +447,15 @@ export default {
     SearchMyPosition() {
       console.log('dd', this)
       var entry_uid = 0;
-      if (this.myTeam === "RED") {
-        entry_uid = this.RoomData.home_matching_entry_uid;
-      } else {
-        entry_uid = this.RoomData.away_matching_entry_uid;
+      for(var i=0; i < this.RedtableDatas.length; i++) {
+        if (this.RedtableDatas[i].name == this.isMine) {
+          entry_uid = this.RoomData.home_matching_entry_uid;
+        }
+      }
+      for(var j=0; j < this.BluetableDatas.length; j++) {
+        if (this.BluetableDatas[j].name == this.isMine) {
+          entry_uid = this.RoomData.away_matching_entry_uid;
+        }
       }
       const entryUid = new FormData();
       entryUid.append("team_entry_uid", entry_uid);
@@ -551,10 +556,15 @@ export default {
     },
     deleteUser() {
       var entry_uid = 0;
-      if (this.myTeam === "RED") {
-        entry_uid = this.RoomData.home_matching_entry_uid;
-      } else {
-        entry_uid = this.RoomData.away_matching_entry_uid;
+      for(var i=0; i < this.RedtableDatas.length; i++) {
+        if (this.RedtableDatas[i].name == this.isMine) {
+          entry_uid = this.RoomData.home_matching_entry_uid;
+        }
+      }
+      for(var j=0; j < this.BluetableDatas.length; j++) {
+        if (this.BluetableDatas[j].name == this.isMine) {
+          entry_uid = this.RoomData.away_matching_entry_uid;
+        }
       }
       const entryUid = new FormData();
       entryUid.append("team_entry_uid", entry_uid);
