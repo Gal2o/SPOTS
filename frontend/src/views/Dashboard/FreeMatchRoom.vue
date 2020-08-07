@@ -764,7 +764,7 @@ export default {
           this.BluetableDatas.push(Bluesub)
           if (res.data.nickname == this.isMine) {
             this.isEnter = true
-            this.myRealTeam = this.RoomData.home_matching_entry_uid
+            this.myRealTeam = this.RoomData.away_matching_entry_uid
             this.myPosition = newPosition
           }
           console.log('blue5',this.BluetableDatas)

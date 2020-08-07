@@ -290,7 +290,7 @@ export default {
         makeData.append("head_uid", this.userInfo.uid);
         if (this.title != "" && this.placecode != 0) {
           axios
-            .post(SERVER_URL + "FRoomCreate", makeData)
+            .post(SERVER_URL + "FRoomCreate/", makeData)
             .then((res) => {
               console.log("chcek", res);
               this.modals = false
