@@ -46,14 +46,32 @@
             <td>
               <base-button
                 slot="title"
-                v-if="row.name != isMine || isStart"
+                v-if="row.name != isMine"
               >{{ row.position }}</base-button>
-              <div class="row d-flex justify-content-center" v-if="row.name == isMine && !isStart">
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine">
                 <base-dropdown>
+                  <base-button slot="title" class="dropdown-toggle">{{ myTeam }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="teamitem in teamList"
+                    :key="teamitem"
+                    @click="TeamChange(teamitem.name)"
+                  >{{ teamitem.name }}</a>
+                </base-dropdown>
+                <base-dropdown v-if="myTeam == 'RED'">
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="positonitem in RedpostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-dropdown v-if="myTeam == 'BLUE'">
+                  <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in BluepostionList"
                     :key="positonitem"
                     @click="PositionChange(positonitem.name)"
                   >{{ positonitem.name }}</a>
@@ -88,9 +106,18 @@
             <td>
               <base-button
                 slot="title"
-                v-if="row.name != isMine || isStart"
+                v-if="row.name != isMine"
               >{{ row.position }}</base-button>
-              <div class="row d-flex justify-content-center" v-if="row.name == isMine && !isStart">
+              <div class="row d-flex justify-content-center" v-if="row.name == isMine">
+                <base-dropdown>
+                  <base-button slot="title" class="dropdown-toggle">{{ myTeam }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="teamitem in teamList"
+                    :key="teamitem"
+                    @click="TeamChange(teamitem.name)"
+                  >{{ teamitem.name }}</a>
+                </base-dropdown>
                 <base-dropdown>
                   <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                   <a
@@ -114,14 +141,14 @@
           <h4>매니저 평가</h4>
         </router-link>
       </base-button>
-      <base-button v-if="!isLogined && !isStart" type="success" @click="modals.loginalert = true">
+      <base-button v-if="!isLogined" type="success" @click="modals.loginalert = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button v-if="isLogined && !isStart && !this.isEnter && !this.isHeader" type="success" @click="modals.entermessage = true">
+      <base-button v-if="isLogined && !this.isEnter" type="success" @click="modals.entermessage = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button v-if="isLogined && !isStart && this.isHeader" type="success">
-        <h4 class="text-white">시작하기</h4>
+      <base-button v-if="isLogined && this.isEnter && !this.isHeader" type="success" @click="modals.outalert = true">
+        <h4 class="text-white">취소하기</h4>
       </base-button>
     </div>
 
@@ -214,7 +241,7 @@
                 포지션을 선택하였으면 결제를 해주세요.
                 <br />결제 금액은
                 <big style="font-size:30px;" class="text-warning">
-                  <b>3000원</b>
+                  <b>{{ RoomData.price }}원</b>
                 </big> 입니다.
               </small>
             </div>
@@ -233,9 +260,31 @@
       <p>포지션을 정말로 바꿀것인지 확인해주십시오.</p>
 
       <template slot="footer">
-          <base-button type="primary" @click="UserEnter">변경하기</base-button>
+          <base-button type="primary" @click="SearchPosition">변경하기</base-button>
           <base-button type="link" class="ml-auto" @click="modals.changeCheck = false">취소
           </base-button>
+      </template>
+    </modal>
+
+    <modal
+      :show.sync="modals.outalert"
+      gradient="danger"
+      modal-classes="modal-danger modal-dialog-centered"
+    >
+      <div class="py-3 text-center">
+        <i class="ni ni-bell-55 ni-3x"></i>
+        <h4 class="heading mt-4">정말 취소하시겠습니까?</h4>
+        <p>취소로 인한 경기참여 관련 문제 발생 시 도움을 드리지 못 할 수도 있습니다.</p>
+      </div>
+
+      <template slot="footer">
+        <base-button type="white" @click="deleteUser">취소하기</base-button>
+        <base-button
+          type="link"
+          text-color="white"
+          class="ml-auto"
+          @click="modals.outalert = false"
+        >닫기</base-button>
       </template>
     </modal>
   </div>
@@ -306,6 +355,7 @@ export default {
         loginalert: false,
         entermessage: false,
         changeCheck: false,
+        outalert: false,
       },
     };
   },
@@ -330,6 +380,7 @@ export default {
       this.myTeam = name;
     },
     SearchPosition() {
+      console.log('first',this)
       var entry_uid = 0;
       if (this.myTeam === "RED") {
         entry_uid = this.RoomData.home_matching_entry_uid;
@@ -380,10 +431,13 @@ export default {
           console.log('change',this.myPosUid)
         })
           .then(() => {
+            console.log(this.isEnter)
             if (this.isEnter) {
-              this.SearchMyPosition
-            } else {              
-              this.CreditGo
+              console.log('go')
+              this.SearchMyPosition()
+            } else {   
+              console.log('out')           
+              this.CreditGo()
             }
           })
         .catch((err) => {
@@ -391,6 +445,7 @@ export default {
         });
     },
     SearchMyPosition() {
+      console.log('dd', this)
       var entry_uid = 0;
       if (this.myTeam === "RED") {
         entry_uid = this.RoomData.home_matching_entry_uid;
@@ -431,17 +486,17 @@ export default {
           } else if (res.data.goalkeeper_uid == Myuid) {
             this.myOriginUid = 13;
           }
-          console.log('change',this.myOriginUid)
+          console.log('!change',this.myOriginUid)
         })
           .then(() => {
-            this.UserChange
+            console.log('go')
+            this.UserChange()
           })
         .catch((err) => {
           console.log(err);
         });
     },
     UserChange() {
-      console.log('entry',this.myPosUid)
       if (this.myPosUid != 0) {
         var myTeam_uid = 0
         if (this.myTeam == "RED") {
@@ -456,9 +511,11 @@ export default {
         ChangeInfo.append("team_entry_uid_after", myTeam_uid);
         ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
         axios
-          .post(SERVER_URL + "/FreeMatchRoom/entry/change", ChangeInfo)
+          .post(SERVER_URL + "FreeMatchRoom/entry/change/", ChangeInfo)
           .then(res => {
-            console.log(res)
+            console.log('good',res)
+            this.modals.changeCheck= false
+            this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
           })
           .catch(err => {
             console.log(err);
@@ -491,6 +548,69 @@ export default {
             console.log(err);
           });
       }
+    },
+    deleteUser() {
+      var entry_uid = 0;
+      if (this.myTeam === "RED") {
+        entry_uid = this.RoomData.home_matching_entry_uid;
+      } else {
+        entry_uid = this.RoomData.away_matching_entry_uid;
+      }
+      const entryUid = new FormData();
+      entryUid.append("team_entry_uid", entry_uid);
+      axios
+        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
+        .then((res) => {
+          console.log(this.myPosition)
+          var Myuid = this.$cookies.get('UserInfo').uid
+          if (res.data.striker1_uid == Myuid) {
+            this.myOriginUid = 1;
+          } else if (res.data.striker2_uid == Myuid) {
+            this.myOriginUid = 2;
+          } else if (res.data.striker3_uid == Myuid) {
+            this.myOriginUid = 3;
+          } else if (res.data.striker4_uid == Myuid) {
+            this.myOriginUid = 4;
+          } else if (res.data.midfielder1_uid == Myuid) {
+            this.myOriginUid = 5;
+          } else if (res.data.midfielder2_uid == Myuid) {
+            this.myOriginUid = 6;
+          } else if (res.data.midfielder3_uid == Myuid) {
+            this.myOriginUid = 7;
+          } else if (res.data.midfielder4_uid == Myuid) {
+            this.myOriginUid = 8;
+          } else if (res.data.defender1_uid == Myuid) {
+            this.myOriginUid = 9;
+          } else if (res.data.defender2_uid == Myuid) {
+            this.myOriginUid = 10;
+          } else if (res.data.defender3_uid == Myuid) {
+            this.myOriginUid = 11;
+          } else if (res.data.defender4_uid == Myuid) {
+            this.myOriginUid = 12;
+          } else if (res.data.goalkeeper_uid == Myuid) {
+            this.myOriginUid = 13;
+          }
+          console.log('!change',this.myOriginUid)
+        })
+          .then(() => {
+              const ChangeInfo = new FormData();
+              ChangeInfo.append("uid", this.$cookies.get("UserInfo").uid);
+              ChangeInfo.append("positionnum_before", this.myOriginUid);
+              ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
+              axios
+                .post(SERVER_URL + "FreeMatchRoom/entry/cancel/", ChangeInfo)
+                .then(res => {
+                  console.log('good',res)
+                  this.modals.outalert = false
+                  this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     RedTeamList() {
       const Team_entry_uid = new FormData();

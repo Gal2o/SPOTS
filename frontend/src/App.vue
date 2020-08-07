@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <notifications></notifications>
-    <router-view @login-submit="Login" />
+    <router-view @login-submit="Login" :key="$route.fullPath"/>
   </div>
 </template>
 

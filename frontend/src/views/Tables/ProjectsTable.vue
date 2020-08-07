@@ -118,6 +118,71 @@
             </template>
           </card>
         </modal>
+
+        <modal
+          :show.sync="isCredit"
+          body-classes="p-0"
+          modal-classes="modal-dialog modal-md"
+        >
+          <card
+            type="secondary"
+            shadow
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+            class="border-0"
+          >
+            <template>
+              <div class="text-muted text-center mb-3">
+                <medium>입장 준비</medium>
+              </div>
+            </template>
+            <template>
+              <div class="text-center text-muted mb-4">
+                <small>팀과 포지션을 선택해주세요.</small>
+              </div>
+              <form role="form">
+                <div class="d-flex justify-content-center">
+                  <base-dropdown class="mr-3">
+                    <base-button slot="title" type="secondary" class="dropdown-toggle">{{ myTeam }}</base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="teamitem in teamList"
+                      :key="teamitem"
+                      @click="TeamChange(teamitem.name)"
+                    >{{ teamitem.name }}</a>
+                  </base-dropdown>
+
+                  <base-dropdown class="mr-3">
+                    <base-button
+                      slot="title"
+                      type="secondary"
+                      class="dropdown-toggle"
+                    >{{ this.myPosition }}</base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="positonitem in postionList"
+                      :key="positonitem"
+                      @click="PositionChange(positonitem.name)"
+                    >{{ positonitem.name }}</a>
+                  </base-dropdown>
+                </div>
+                <div class="text-center text-muted mb-4">
+                  <small>
+                    포지션을 선택하였으면 결제를 해주세요.
+                    <br />결제 금액은
+                    <big style="font-size:30px;" class="text-warning">
+                      <b>{{ placeprice }}원</b>
+                    </big> 입니다.
+                  </small>
+                </div>
+                <div class="text-center">
+                  <base-button type="success" class="my-4 mr-4" @click="CreditGo">결제하기</base-button>
+                  <base-button type="secondary" @click="isCredit = false">닫기</base-button>
+                </div>
+              </form>
+            </template>
+          </card>
+        </modal>
       </div>
       <div>
         <base-pagination :page-count="parseInt(FreetableData.length/5)+1" v-model="pagination"></base-pagination>
@@ -184,11 +249,23 @@ export default {
       stadiumDatas: [],
       title: "",
       placeuid: 0,
-      placeprice: 0,
+      placeprice: 1,
       placecode: 0,
       userInfo: Object,
       pagination: 1,
       FreeTable: [],
+      isCredit: false,
+      myTeam: 'RED',
+      myPosition: "선택해주세요",
+      myPosUid: 0,
+      teamList: [{ name: "RED" }, { name: "BLUE" }],
+      postionList: [
+        { name: "랜덤" },
+        { name: "공격수" },
+        { name: "미드필더" },
+        { name: "수비수" },
+        { name: "골키퍼" },
+      ],
     };
   },
 
@@ -216,10 +293,8 @@ export default {
             .post(SERVER_URL + "FRoomCreate", makeData)
             .then((res) => {
               console.log("chcek", res);
-              this.$router.push({
-                name: "자유 SPOT",
-                params: { uid: res.data[res.data.length - 1].uid },
-              });
+              this.modals = false
+              this.isCredit = true
             })
             .catch((err) => {
               console.log(err);
@@ -250,6 +325,48 @@ export default {
         (this.pagination - 1) * 5 + 5
       );
       console.log(this.FreeTable);
+    },
+    PositionChange(name) {
+      console.log(this.BluepostionList)
+      if (name == "랜덤") {
+        this.myPosition = this.postionList[Math.floor(
+          Math.random() * (this.RedpostionList.length - 1)
+        )].name
+      } else {
+        this.myPosition = name;
+      }
+    },
+    TeamChange(name) {
+      this.myTeam = name;
+    },
+    CreditGo() {
+      console.log('end',this.myPosUid)
+      const roomPrice = String(this.placeprice)
+      if (this.myPosition === "공격수") {
+        this.myPosUid = 1;
+      } else if (this.myPosition === "미드필더") {
+        this.myPosUid = 5;
+      } else if (this.myPosition === "수비수") {
+        this.myPosUid = 9;
+      } else if (this.myPosition === "골키퍼") {
+        this.myPosUid = 13;
+      }
+      var test = 3
+      const EnterInfo = new FormData();
+      EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
+      EnterInfo.append("positionnum", this.myPosUid);
+      EnterInfo.append("team_entry_uid", test);
+      EnterInfo.append('price', roomPrice)
+      EnterInfo.append("room_uid", test)
+      axios
+        .post(SERVER_URL + "kakaoPay/", EnterInfo)
+        .then(res => {
+          console.log(res)
+          window.location.replace(res.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
   },
 };
