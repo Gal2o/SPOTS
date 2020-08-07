@@ -67,7 +67,7 @@
       <div @click="toggleSidebar">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
-          <router-view @logoutSuccess="logoutSuccess"></router-view>
+          <router-view :key="$route.fullPath" @logoutSuccess="logoutSuccess"></router-view>
         </fade-transition>
         <content-footer v-if="!$route.meta.hideFooter"></content-footer>
       </div>
