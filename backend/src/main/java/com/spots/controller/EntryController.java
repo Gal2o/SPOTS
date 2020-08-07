@@ -23,6 +23,9 @@ public class EntryController {
 	@PostMapping(value="/FreeMatchRoom/entry")
 	public int FreeMatchEntry(@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum) {
 		System.out.println("자리배치 시작!!!!!");
+		System.out.println("team_entry_uid = " + team_entry_uid);
+		System.out.println("positionnum = " + positionnum);
+		System.out.println("uid = " + uid);
 		if(positionnum == 1)
 			return Entry.S1(team_entry_uid, uid);
 		else if(positionnum == 2)
@@ -53,9 +56,14 @@ public class EntryController {
 			return 0;
 	}
 	
-	@PostMapping(value="/FreeMatchRoom/entrychange")
+	@PostMapping(value="/FreeMatchRoom/entry/change")
 	public int FreeMatchEntryChange(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before, @RequestParam int positionnum_after, @RequestParam int team_entry_uid_after) {
 		System.out.println("자리변경 시작!!!!!");
+		System.out.println("team_entry_uid_before = " + team_entry_uid_before);
+		System.out.println("team_entry_uid_after = " + team_entry_uid_after);
+		System.out.println("positionnum_before = " + positionnum_before);
+		System.out.println("positionnum_after = " + positionnum_after);
+		System.out.println("uid = " + uid);
 		if(positionnum_after == 1)
 			Entry.S1(team_entry_uid_after, uid);
 		else if(positionnum_after == 2)
@@ -113,9 +121,12 @@ public class EntryController {
 		return 0;
 	}
 	
-	@PostMapping(value="/FreeMatchRoom/entrycancel")
+	@PostMapping(value="/FreeMatchRoom/entry/cancel")
 	public int FreeMatchEntryCancel(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before) {
 		System.out.println("자리취소 시작!!!!!");
+		System.out.println("team_entry_uid_before = " + team_entry_uid_before);
+		System.out.println("positionnum_before = " + positionnum_before);
+		System.out.println("uid = " + uid);
 		if(positionnum_before == 1)
 			Entry.D1(team_entry_uid_before, uid);
 		else if(positionnum_before == 2)
@@ -147,6 +158,8 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entrylist")
 	public EntryInfo entrylist(@RequestParam int team_entry_uid) {
+		System.out.println("리스트출력");
+		System.out.println("team_entry_uid = " + team_entry_uid);
 		return Entry.entrylist(team_entry_uid);
 	}
 	
