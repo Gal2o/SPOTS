@@ -299,7 +299,7 @@ export default {
   components: {},
   data() {
     return {
-      isMine: "",
+      isMine: 0,
       isStart: false,
       isEnter: false,
       isHeader: false,
@@ -805,13 +805,13 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
-      this.isMine = this.$cookies.get("UserInfo").nickname;
+      this.isMine = this.$cookies.get("UserInfo").uid;
     }    
     console.log("0", this);
-    const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.$route.params.uid);
+    const TeamRoomData = new FormData();
+    TeamRoomData.append("uid", this.$route.params.uid);
     axios
-      .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .post(SERVER_URL + "TeamMatchRoom/", TeamRoomData)
       .then((res) => {
         console.log(res);
         if (res.data == "") {
