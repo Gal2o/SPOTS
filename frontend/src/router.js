@@ -56,6 +56,11 @@ export default new Router({
           component: () => import("./views/Dashboard/ManagerPage.vue"),
         },
         {
+          path: "/dashboard/TeamMatch/:uid",
+          name: "팀 SPOT",
+          component: () => import("./views/Dashboard/TeamMatchRoom.vue"),
+        },
+        {
           path: "/teamlist",
           name: "팀 리스트",
           component: () => import("./views/TeamList.vue"),
