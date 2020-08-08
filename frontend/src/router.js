@@ -55,6 +55,11 @@ export default new Router({
           name: "매니저 평가",
           component: () => import("./views/Dashboard/ManagerPage.vue"),
         },
+        {
+          path: "/teamlist",
+          name: "팀 리스트",
+          component: () => import("./views/TeamList.vue"),
+        },
       ],
     },
     {
