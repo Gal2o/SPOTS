@@ -53,7 +53,7 @@
             <span class="status">{{ row.team_rate }}%</span>
           </td>
           <td class="text-right">
-            <base-button v-if="isLogined" type="success" size="s" @click="modals.entermessage = true">
+            <base-button v-if="isLogined" type="success" size="s" @click="showTeam(row)">
               <h2 class="text-white">더보기</h2>
             </base-button>
             <base-button v-if="!isLogined" type="success" size="lg" @click="modals.loginalert = true">
@@ -87,7 +87,7 @@
         </template>
       </modal>
 
-    <modal :show.sync="modals.entermessage" body-classes="p-0" modal-classes="modal-dialog modal-md">
+    <modal :show.sync="modals.teamInfo" body-classes="p-0" modal-classes="modal-dialog modal-md">
       <card
         type="secondary"
         shadow
@@ -101,62 +101,100 @@
           </div>
         </template>
         <template>
-          <table>
+          <table class="m-3">
             <tr>
-              <th>팀명</th>
-              <th></th>
+              <th>팀명 :</th>
+              <th>{{ teamData.team_name }}</th>
             </tr>
             <tr>
-              <th>팀소개</th>
-              <th></th>
+              <th>팀소개 :</th>
+              <th>{{ teamData.team_intro }}</th>
             </tr>
             <tr>
-              <th>인원</th>
-              <th></th>
+              <th>인원 :</th>
+              <th>{{ teamData.player_num }}명</th>
             </tr>
             <tr>
-              <th>팀전적</th>
-              <th></th>
+              <th>팀전적 :</th>
+              <th>{{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
             </tr>
             <tr>
-              <th>승률</th>
-              <th></th>
+              <th>승률 :</th>
+              <th>{{ teamData.team_rate }}</th>
             </tr>
             <tr>
-              <th>팀 멤버</th>
+              <th>팀 멤버 :</th>
             </tr>
           </table>
           <!-- isLogined를 신청상태인지확인 -->
-          <div class="text-center ">
-            <base-button v-if="isLogined" type="success" size="lg" @click="modals.joinTeam = true">
+          <div class="text-center d-flex flex-row justify-content-between">
+            <base-button v-if="isLogined" type="success" size="lg" @click="modalSwitch(1)">
               <h2 class="text-white">가입하기</h2>
             </base-button>
-            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.entermessage = true">
+            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.teamInfo = false">
               <h2 class="text-white">가입취소</h2>
+            </base-button>
+            <base-button type="secondary" size="lg" @click="modals.teamInfo = false">
+              <h2 class="text-dark">닫기</h2>
             </base-button>
           </div>
         </template>
       </card>
     </modal> 
 
-    <modal :show.sync="modals.joinTeam">
-      <div class="py-3 text-center">
-        <h2>팀 가입신청</h2>
-        <br><br><h1>가입신청서</h1>
-        <p>팀명 : </p> <p></p>
-        <p>유저명 : </p> <p></p>
-        <p>가입신청 내용 : </p>
-        <textarea rows="4" style="width:100%; resize:none"></textarea>
-      </div>
-      <div class="text-center ">
-        <base-button size="lg" @click="modals.joinTeam = true">
-          <h2 class="text-white">신청완료</h2>
-        </base-button>
-      </div>
+    <modal :show.sync="modals.joinTeam"
+      body-classes="p-0"
+      modal-classes="modal-dialog-centered modal-sm">
+      <card type="secondary" shadow
+                  header-classes="bg-white pb-5"
+                  body-classes="px-lg-5 py-lg-5"
+                  class="border-0">
+        <template>
+          <div class="btn-wrapper text-center d-flex flex-row justify-content-end mb-3">
+            <base-button type="neutral" @click="modalSwitch(2)">
+                뒤로가기
+            </base-button>
 
-      <template slot="footer">
-
-      </template>
+            <base-button type="neutral" @click="modalSwitch(3)">
+                닫기
+            </base-button>
+          </div>
+          <div class="text-muted text-center mb-3">
+            <h2>팀 가입신청</h2>
+          </div>
+        </template>
+        <template>
+          <div class="text-center text-muted mb-4">
+            <h1>가입신청서</h1>
+          </div>
+          <form role="form">
+            <div class="mb-3">
+              <label>팀명</label>
+              <base-input alternative
+                addon-left-icon="ni ni-paper-diploma">
+              </base-input>
+            </div>
+            <div class="mb-3">
+              <label>유저명</label>
+              <base-input alternative
+                addon-left-icon="ni ni-single-02">
+              </base-input>
+            </div>
+            <div class="mb-3">
+              <label>가입신청 내용</label>              
+              <textarea alternative
+                rows="4" style="width:100%; resize:none"
+                class="rounded">
+              </textarea>
+              <div class="text-center d-flex flex-row justify-content-center">
+                <base-button size="lg" @click="modals.joinTeam = true">
+                  <h2 class="text-white">신청완료</h2>
+                </base-button>
+              </div>
+            </div>
+          </form>
+        </template>
+      </card>
     </modal>
 
 
@@ -196,14 +234,33 @@ export default {
     return {
       FreerankData: [],
       title: "팀 리스트",
-       modals: {
+      teamData: Object,
+      modals: {
         loginalert: false,
-        entermessage: false,
+        teamInfo: false,
         joinTeam: false,
       }
     };
   },
-  methods: {},
+  methods: {
+    showTeam(TeamInfo) {
+      this.teamData = TeamInfo
+      this.modals.teamInfo = true
+    },
+    modalSwitch(switchData) {
+      if (switchData == 1) {
+        this.modals.teamInfo = false
+        this.modals.joinTeam = true
+      } else if (switchData == 2) {
+        this.modals.teamInfo = true
+        this.modals.joinTeam = false
+      } else if (switchData == 3) {
+        this.modals.teamInfo = false
+        this.modals.joinTeam = false
+      }
+      console.log(this)
+    },
+  },
 };
 </script>
 <style></style>
