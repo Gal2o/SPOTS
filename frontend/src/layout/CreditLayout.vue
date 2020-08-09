@@ -36,18 +36,6 @@
                             <span class="nav-link-inner--text">SPOTs</span>
                         </router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/register">
-                            <i class="ni ni-circle-08"></i>
-                            <span class="nav-link-inner--text">회원가입</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/login">
-                            <i class="ni ni-key-25"></i>
-                            <span class="nav-link-inner--text">로그인</span>
-                        </router-link>
-                    </li>
                 </ul>
             </template>
         </base-nav>
@@ -57,9 +45,7 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <h1 class="text-white">환영합니다!</h1>
-                            <p class="text-lead text-white">SPOTs를 이용하기 위해 로그인해주세요. <br>
-                            계정이 없다면 회원가입 후 이용가능합니다.</p>
+                            <h1 class="text-white">감사합니다!</h1>
                         </div>
                     </div>
                 </div>
@@ -74,7 +60,7 @@
         <!-- Page content -->
         <div class="container mt--8 pb-5">
             <slide-y-up-transition mode="out-in" origin="center top">
-                <router-view @login-submit="Login"></router-view>
+                <router-view></router-view>
             </slide-y-up-transition>
         </div>
         <footer class="py-5">
@@ -111,7 +97,7 @@
   import { SlideYUpTransition } from 'vue2-transitions'
 
   export default {
-    name: 'auth-layout',
+    name: 'creadit-layout',
     components: {
       SlideYUpTransition
     },
@@ -121,12 +107,8 @@
             showMenu: false
         }
     },
-    methods: {
-        Login(loginInfo) {
-            console.log(loginInfo, 'okPATH')
-            this.$emit('login-submit', loginInfo)
-        },
-    },
+    methods: {},
+    created() {}
   }
 </script>
 <style>

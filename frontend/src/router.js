@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import DashboardLayout from "@/layout/DashboardLayout";
 import AuthLayout from "@/layout/AuthLayout";
+import CreditLayout from "@/layout/CreditLayout"
 Vue.use(Router);
 
 export default new Router({
@@ -87,10 +88,17 @@ export default new Router({
       ],
     },
     {
-      path: "/success/:room_uid/:uid/:positionnum/:team_entry_uid",
-      name: "CreditComplete",
-      component: () =>
-        import("./views/CreditComplete.vue"),
+      path: "/",
+      redirect: "/credit",
+      component: CreditLayout,
+      children: [
+        {
+          path: "/success/:room_uid/:uid/:positionnum/:team_entry_uid",
+          name: "CreditComplete",
+          component: () =>
+            import("./views/CreditComplete.vue"),
+        },  
+      ],
     },
   ],
 });
