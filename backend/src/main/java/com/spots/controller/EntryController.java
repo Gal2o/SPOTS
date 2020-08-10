@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spots.dto.DataInfo;
 import com.spots.dto.EntryInfo;
 import com.spots.dto.FMatchInfo;
 import com.spots.service.EntryService;
@@ -167,27 +168,6 @@ public class EntryController {
 	public int FreeMatchWin(FMatchInfo dto) {
 		System.out.println("이긴경우");
 		
-//		int huid = dto.getHome_matching_entry_uid();
-//		int auid = dto.getAway_matching_entry_uid();
-//		
-//		EntryInfo hentry = Entry.entrylist(huid);
-//		EntryInfo aentry = Entry.entrylist(auid);
-//		
-//		ArrayList<Integer> uidarr = new ArrayList<Integer>();
-//		uidarr.add(hentry.getStriker1_uid());
-//		uidarr.add(hentry.getStriker2_uid());
-//		uidarr.add(hentry.getStriker3_uid());
-//		uidarr.add(hentry.getStriker4_uid());
-//		uidarr.add(hentry.getMidfielder1_uid());
-//		uidarr.add(hentry.getMidfielder2_uid());
-//		uidarr.add(hentry.getMidfielder3_uid());
-//		uidarr.add(hentry.getMidfielder4_uid());
-//		uidarr.add(hentry.getDefender1_uid());
-//		uidarr.add(hentry.getDefender2_uid());
-//		uidarr.add(hentry.getDefender3_uid());
-//		uidarr.add(hentry.getDefender4_uid());
-//		uidarr.add(hentry.getGoalkeeper_uid());
-//		
 		return Entry.FWin(dto);
 	}
 	
@@ -203,4 +183,13 @@ public class EntryController {
 		return Entry.FDraw(dto);
 	}
 
+	@PostMapping(value="/FreeMatchRoom/updateuser")
+	public int FreeMatchupdate(ArrayList<DataInfo> list)
+	{
+		for(DataInfo d : list)
+			Entry.Upuser(d);
+
+		return 0;
+	}
+	
 }

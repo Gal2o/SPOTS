@@ -4,6 +4,7 @@ package com.spots.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.spots.dto.DataInfo;
 import com.spots.dto.EntryInfo;
 import com.spots.dto.FMatchInfo;
 
@@ -42,7 +43,7 @@ public interface EntryMapper {
 	public int FWin(FMatchInfo dto);
 	public int FLose(FMatchInfo dto);
 	public int FDraw(FMatchInfo dto);
-	
+	public int Upuser(DataInfo d);
 
 
 }

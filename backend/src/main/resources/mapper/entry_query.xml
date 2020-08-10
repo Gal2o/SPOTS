@@ -243,6 +243,14 @@
 		UPDATE user SET draw = draw + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
 	</update>
 	
+	<update id="Upuser">
+		update user
+		set goal = goal + #{goal},
+			assist = assist + #{assist},
+			blacklist = blacklist + #{blacklist},
+			mvp = mvp + #{mvp} 
+		where uid = #{uid}
+	</update>
 </mapper>
 
 
