@@ -22,13 +22,16 @@
       </div>
     </base-header>
 
-    <div class="row d-flex flex-row" :class="type === 'dark' ? 'bg-default' : ''">
-      <div class="table-responsive col m-2">
+    <div class="d-flex flex-row" :class="type === 'dark' ? 'bg-default' : ''">
+      <div class="table-responsive col-12 col-md-6 m-1">
         <div class="text-center p-2 mb-2 bg-danger rounded-top">
           <h2>Red Team</h2>
+          <h4>
+            공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
+          </h4>
         </div>
         <base-table
-          class="table align-items-center table-flush border-solid table-danger rounded-bottom text-center"
+          class="table table-striped align-items-center table-flush border-solid table-danger rounded-bottom text-center"
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
@@ -65,7 +68,7 @@
                   >{{ positonitem.name }}</a>
                 </base-dropdown>
                 <base-dropdown v-if="myTeam == 'BLUE'">
-                  <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="positonitem in BluepostionList"
@@ -77,18 +80,21 @@
               </div>
             </th>
             <td>
-              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
+              <span class="name mb-0 text-sm text-default"><b>{{ row.name }}</b></span>
             </td>
           </template>
         </base-table>
       </div>
 
-      <div class="table-responsive col m-2">
+      <div class="table-responsive col-12 col-md-6 m-1">
         <div class="text-center p-2 mb-2 bg-primary rounded-top">
           <h2 class="text-white">Blue Team</h2>
+          <h4 class="text-white">
+            공: {{ blueCountList.Attacker }} / 미: {{ blueCountList.Midfielder }} / 수: {{ blueCountList.Defender }} / 골: {{ blueCountList.Goalkeeper }}
+          </h4>
         </div>
         <base-table
-          class="table align-items-center table-flush border-solid table-primary rounded-bottom text-center"
+          class="table table-striped align-items-center table-flush border-solid table-primary rounded-bottom text-center"
           :class="type === 'dark' ? 'table-dark' : ''"
           :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
           tbody-classes="list"
@@ -115,8 +121,17 @@
                     @click="TeamChange(teamitem.name)"
                   >{{ teamitem.name }}</a>
                 </base-dropdown>
-                <base-dropdown>
-                  <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
+                <base-dropdown v-if="myTeam == 'RED'">
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in RedpostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-dropdown v-if="myTeam == 'BLUE'">
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
                     v-for="positonitem in BluepostionList"
@@ -128,7 +143,7 @@
               </div>
             </th>
             <td>
-              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
+              <span class="name mb-0 text-sm text-default"><b>{{ row.name }}</b></span>
             </td>
           </template>
         </base-table>
@@ -356,6 +371,18 @@ export default {
         entermessage: false,
         changeCheck: false,
         outalert: false,
+      },
+      redCountList: {
+        Attacker: 0,
+        Midfielder: 0,
+        Defender: 0,
+        Goalkeeper: 0,
+      },
+      blueCountList: {
+        Attacker: 0,
+        Midfielder: 0,
+        Defender: 0,
+        Goalkeeper: 0,
       },
     };
   },
@@ -612,7 +639,6 @@ export default {
                 .then(res => {
                   console.log('good',res)
                   this.modals.outalert = false
-                  this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
                 })
                 .catch(err => {
                   console.log(err);
@@ -672,12 +698,16 @@ export default {
           var newPosition = new String("");
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
+            this.redCountList.Attacker += 1
           } else if (name.indexOf("mid") != -1) {
             newPosition = "미드필더"
+            this.redCountList.Midfielder += 1
           } else if (name.indexOf("defend") != -1) {
             newPosition = "수비수"
+            this.redCountList.Defender += 1
           } else if (name.indexOf("goal") != -1) {
             newPosition = "골키퍼"
+            this.redCountList.Goalkeeper += 1
           }
           var Redsub = new Object
           Redsub.position = newPosition
@@ -761,12 +791,16 @@ export default {
           var newPosition = new String("");
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
+            this.blueCountList.Attacker += 1
           } else if (name.indexOf("mid") != -1) {
             newPosition = "미드필더"
+            this.blueCountList.Midfielder += 1
           } else if (name.indexOf("defend") != -1) {
             newPosition = "수비수"
+            this.blueCountList.Defender += 1
           } else if (name.indexOf("goal") != -1) {
             newPosition = "골키퍼"
+            this.blueCountList.Goalkeeper += 1
           }
           var Bluesub = new Object
           Bluesub.position = newPosition
@@ -845,5 +879,9 @@ div.vertical-line {
   background-color: black;
   height: 100%;
   float: left;
+}
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+  background-color: white;
 }
 </style>
