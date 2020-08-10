@@ -3,6 +3,7 @@ package com.spots.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spots.dto.DataInfo;
 import com.spots.dto.EntryInfo;
 import com.spots.dto.FMatchInfo;
 import com.spots.mapper.EntryMapper;
@@ -162,6 +163,11 @@ public class EntryServiceImpl implements EntryService {
 	@Override
 	public int FDraw(FMatchInfo dto) {
 		return mapper.FDraw(dto);
+	}
+
+	@Override
+	public int Upuser(DataInfo d) {
+		return mapper.Upuser(d);
 	}
 
 }
