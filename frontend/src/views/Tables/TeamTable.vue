@@ -57,9 +57,16 @@
           </td>
 
           <td class="text-right">
-            <router-link :to="{ name: '팀 SPOT', params: { uid: row.uid }}">
+            <router-link
+              :to="{
+                name: '팀 SPOT',
+                params: { uid: row.uid },
+              }"
+              v-if="isLogined"
+            >
               <base-button type="success">입장하기</base-button>
             </router-link>
+            <base-button type="success" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
         </template>
       </base-table>
@@ -69,6 +76,33 @@
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
+     <div class="col-md-4">
+      <modal
+        :show.sync="notEnter"
+        gradient="danger"
+        modal-classes="modal-danger modal-dialog-centered"
+      >
+        <div class="py-3 text-center">
+          <i class="ni ni-bell-55 ni-3x"></i>
+          <h4 class="heading mt-4">로그인을 하셔야 이용할 수 있습니다.</h4>
+          <p>로그인 페이지로 이동하셔서 로그인을 먼저 진행해주세요.</p>
+        </div>
+
+        <template slot="footer">
+          <router-link to="/login">
+            <base-button type="white">로그인하기</base-button>
+          </router-link>
+          <base-button
+            type="link"
+            text-color="white"
+            class="ml-auto"
+            @click="notEnter = false"
+          >닫기</base-button>
+        </template>
+      </modal>
+     </div> 
+    </div>
+    <div>
       <base-pagination total="30"></base-pagination>
     </div>
   </div>
@@ -80,6 +114,9 @@ const SERVER_URL = "http://localhost:8080/";
 export default {
   name: "team-table",
   created() {
+    if (this.$cookies.isKey("UserInfo")) {
+      this.isLogined = true;
+    }
     axios
       .get(SERVER_URL + "TeamMatchAll/")
       .then((res) => {
@@ -98,6 +135,7 @@ export default {
   data() {
     return {
       TeamtableData: [],
+      notEnter: false,
     };
   },
 };
