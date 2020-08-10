@@ -118,7 +118,16 @@
                     @click="TeamChange(teamitem.name)"
                   >{{ teamitem.name }}</a>
                 </base-dropdown>
-                <base-dropdown>
+                <base-dropdown v-if="myTeam == 'RED'">
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in RedpostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-dropdown v-if="myTeam == 'BLUE'">
                   <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                   <a
                     class="dropdown-item"
@@ -359,6 +368,7 @@ export default {
       },
     };
   },
+  computed: {},
   methods: {
     PositionChange(name) {
       console.log(this.BluepostionList)
@@ -377,7 +387,9 @@ export default {
       }
     },
     TeamChange(name) {
+      console.log('name', name)
       this.myTeam = name;
+      console.log('test',this.myTeam)
     },
     SearchPosition() {
       console.log('first',this)
@@ -520,7 +532,7 @@ export default {
           .then(res => {
             console.log('good',res)
             this.modals.changeCheck= false
-            this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
+            this.$router.go(0)
           })
           .catch(err => {
             console.log(err);
