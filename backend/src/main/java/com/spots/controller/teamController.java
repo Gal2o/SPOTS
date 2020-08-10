@@ -45,7 +45,7 @@ public class teamController {
 		return teamInfoService.modifyTeam(dto);
 	}
 	
-	@GetMapping(value="/team/detail")
+	@PostMapping(value="/team/detail")
 	public TeamInfo detailTeam(@RequestParam int uid) {
 		return teamInfoService.detailTeam(uid);
 	}
@@ -60,7 +60,7 @@ public class teamController {
 		return teamInfoService.listTeam();
 	}
 	
-	@GetMapping(value="/team/userList")
+	@PostMapping(value="/team/userList")
 	public List<UserInfo> userList(@RequestParam int uid) {
 		return teamInfoService.userList(uid);
 	}

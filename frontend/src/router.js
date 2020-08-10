@@ -29,6 +29,12 @@ export default new Router({
             import(/* webpackChunkName: "demo" */ "./views/UserProfile.vue"),
         },
         {
+          path: "/Teamprofile",
+          name: "팀 프로필",
+          component: () =>
+            import(/* webpackChunkName: "demo" */ "./views/TeamProfile.vue"),
+        },
+        {
           path: "/maps",
           name: "경기장 정보",
           component: () =>

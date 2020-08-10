@@ -29,19 +29,6 @@
           >
         </base-dropdown>
 
-        <base-dropdown class="mr-3">
-          <base-button slot="title" type="secondary" class="dropdown-toggle">{{
-            this.dongN
-          }}</base-button>
-          <a
-            class="dropdown-item"
-            v-for="dongData in dongDatas"
-            v-bind:key="dongData"
-            @click="choice3(dongData)"
-            >{{ dongData.dong_name }}</a
-          >
-        </base-dropdown>
-
         <form
           class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex"
         >
@@ -54,6 +41,11 @@
             ></base-input>
           </div>
         </form>
+        <router-link :to="{ name: '팀 프로필'}">
+          <base-button v-if="isTeamHead" type="success" size="lg" >
+            <h2 class="text-white">팀 프로필 수정</h2>
+          </base-button>
+        </router-link>
       </div>
     </base-header>
     <div class="container-fluid mt-4">
@@ -82,6 +74,21 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    
+    if(this.$cookies.get("UserInfo").team_uid != null){
+       const data = new FormData();
+        data.append("uid", this.$cookies.get("UserInfo").team_uid);
+      axios
+      .post(SERVER_URL + "/team/detail", data)
+      .then((res) => {
+        if(res.data.captain_uid == this.$cookies.get("UserInfo").uid){ //this.$cookies.get("UserInfo").uid
+          this.isTeamHead = true;
+        }
+      })  
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   },
   components: {
     "trank-table": teamList,
@@ -90,10 +97,10 @@ export default {
     return {
       cityDatas: "",
       stateDatas: "",
-      dongDatas: "",
       cityN: "도",
       stateN: "시",
-      dongN: "동",
+      isTeamHead: false,
+      
     };
   },
   methods: {
@@ -103,11 +110,8 @@ export default {
     },
     choice2(city) {
       this.stateN = city.city_name;
-      this.choicedong(city.city_code);
     },
-    choice3(dong) {
-      this.dongN = dong.dong_name;
-    },
+
 
     choicestate(b) {
       const stateForm = new FormData();
@@ -117,19 +121,6 @@ export default {
         .post(SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    choicedong(c) {
-      const dongForm = new FormData();
-      c = String(c);
-      dongForm.append("city_code", c);
-      axios
-        .post(SERVER_URL + "dongList", dongForm)
-        .then((res) => {
-          this.dongDatas = res.data;
         })
         .catch((err) => {
           console.log(err);
