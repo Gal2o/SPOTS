@@ -3,55 +3,54 @@
 
 <mapper namespace="com.spots.mapper.MatchMapper">
 
-	<!-- selectall  -->
-	<select id="TListMain" resultType="com.spots.dto.TMatchInfo">
-		select * from team_matching
-	</select>
-	
-	<select id="FListMain" resultType="com.spots.dto.FMatchInfo">
-		select * from free_matching
-	</select>
-	
+   <!-- selectall  -->
+   <select id="TListMain" resultType="com.spots.dto.TMatchInfo">
+      select * from team_matching
+   </select>
+   
+   <select id="FListMain" resultType="com.spots.dto.FMatchInfo">
+      select * from free_matching
+   </select>
+   
     <!-- 리스트 필터  -->
     <select id="TListAll" resultType="com.spots.dto.TMatchInfo">
         select * from team_matching
-        where 1=1
+        where 1=1 
         <!-- 0-1 자리  -->
         <if test = 'doe != null'>
-        	and left(dong_code, 2) = left(#{doe},2)
+           and left(dong_code, 2) = #{doe}
         </if>
         <!-- 2-3 자리 -->
         <if test = 'si != null'>
-        	and left(dong_code, 4) = left(#{si}, 4)
+           and left(dong_code, 4) = #{si}
         </if>
         <!-- 5-9 자리 -->
         <if test = 'dong != null'>
-        	and dong_code = #{dong}
+           and dong_code = #{dong}
         </if>
-        
         <if test = 'word != null'>
-        	and title like concat('%', #{word}, '%')
+           and title like concat('%', #{word}, '%')
         </if>
     </select>
     
     <!-- state, city, dong 순서 -->
-    <select id="FListAll" parameterType = "String" resultType="com.spots.dto.FMatchInfo">
+    <select id="FListAll" resultType="com.spots.dto.FMatchInfo">
         select * from free_matching
         where 1=1 
         <!-- 0-1 자리  -->
         <if test = 'doe != null'>
-        	and left(dong_code, 2) = #{doe}
+           and left(dong_code, 2) = #{doe}
         </if>
         <!-- 2-3 자리 -->
         <if test = 'si != null'>
-        	and left(dong_code, 4) = #{si}
+           and left(dong_code, 4) = #{si}
         </if>
         <!-- 5-9 자리 -->
         <if test = 'dong != null'>
-        	and dong_code = #{dong}
+           and dong_code = #{dong}
         </if>
         <if test = 'word != null'>
-        	and title like concat('%', #{word}, '%')
+           and title like concat('%', #{word}, '%')
         </if>
     </select>
     
@@ -75,18 +74,18 @@
     
     <!-- 매칭 방 만들기 -->
     <insert id="TRoomCreate">
-		insert into team_matching
-		( head_uid, home_team_uid, away_team_uid, home_score, away_score, ready_num,
-		  place_uid, price, head_price, 
-		  dong_code, title)
-		values
-		( #{head_uid}, 0, 0, 0, 0, 0, 
-		  #{place_uid}, #{price}, 0,
-		  #{dong_code}, #{title} );
-	</insert>
-	
-	<insert id="FRoomCreate"> 
-		insert into matching_entry (goalkeeper_uid) values(null), (null);
+      insert into team_matching
+      ( head_uid, home_team_uid, away_team_uid, home_score, away_score, ready_num,
+        place_uid, price, head_price, matching_date,
+        dong_code, title)
+      values
+      ( #{head_uid}, 0, 0, 0, 0, 0, 
+        #{place_uid}, #{price}, 0, #{matching_date},
+        #{dong_code}, #{title} );
+   </insert>
+   
+   <insert id="FRoomCreate"> 
+      insert into matching_entry (goalkeeper_uid) values(null), (null);
         
         insert into free_matching
         (head_uid, home_matching_entry_uid, away_matching_entry_uid, home_score, away_score, ready_num, 
