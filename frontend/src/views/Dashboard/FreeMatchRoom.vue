@@ -35,15 +35,12 @@
           :data="RedtableDatas"
         >
           <template slot="columns">
-            <th>유저 명</th>
             <th>포지션</th>
+            <th>유저 명</th>
           </template>
 
           <template slot-scope="{ row }">
             <th scope="row">
-              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
-            </th>
-            <td>
               <base-button
                 slot="title"
                 v-if="row.name != isMine"
@@ -78,6 +75,9 @@
                 </base-dropdown>
                 <base-button type="info" @click="modals.changeCheck = true">변경</base-button>
               </div>
+            </th>
+            <td>
+              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </td>
           </template>
         </base-table>
@@ -95,15 +95,12 @@
           :data="BluetableDatas"
         >
           <template slot="columns">
-            <th>유저 명</th>
             <th>포지션</th>
+            <th>유저 명</th>
           </template>
 
           <template slot-scope="{ row }">
             <th scope="row">
-              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
-            </th>
-            <td>
               <base-button
                 slot="title"
                 v-if="row.name != isMine"
@@ -129,6 +126,9 @@
                 </base-dropdown>
                 <base-button type="info" @click="modals.changeCheck = true">변경</base-button>
               </div>
+            </th>
+            <td>
+              <span class="name mb-0 text-sm text-default">{{ row.name }}</span>
             </td>
           </template>
         </base-table>
