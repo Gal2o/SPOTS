@@ -1,10 +1,19 @@
 <template>
-    <div class="d-flex justify-content-center">
-        <div class="col">
-            <h1 class="text-center">결재가 완료 되었습니다.</h1>
-        </div>
-        <div class="col">
-            <base-button @click="returnPage">확인</base-button>
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <h1 class="text-center">결재가 완료 되었습니다.</h1>
+                    </div>
+                    <div class="text-center text-muted mb-4">
+                        <h3 class="text-center">확인을 누르시면 결제 이전 페이지로 이동합니다.</h3>
+                    </div>
+                    <div class="text-center text-muted mb-4">
+                        <base-button @click="returnPage">확인</base-button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

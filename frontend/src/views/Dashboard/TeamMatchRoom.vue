@@ -118,7 +118,16 @@
                     @click="TeamChange(teamitem.name)"
                   >{{ teamitem.name }}</a>
                 </base-dropdown>
-                <base-dropdown>
+                <base-dropdown v-if="myTeam == 'RED'">
+                  <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
+                  <a
+                    class="dropdown-item"
+                    v-for="positonitem in RedpostionList"
+                    :key="positonitem"
+                    @click="PositionChange(positonitem.name)"
+                  >{{ positonitem.name }}</a>
+                </base-dropdown>
+                <base-dropdown v-if="myTeam == 'BLUE'">
                   <base-button slot="title" class="dropdown-toggle">{{ row.position }}</base-button>
                   <a
                     class="dropdown-item"
@@ -299,7 +308,7 @@ export default {
   components: {},
   data() {
     return {
-      isMine: "",
+      isMine: 0,
       isStart: false,
       isEnter: false,
       isHeader: false,
@@ -359,6 +368,7 @@ export default {
       },
     };
   },
+  computed: {},
   methods: {
     PositionChange(name) {
       console.log(this.BluepostionList)
@@ -377,7 +387,9 @@ export default {
       }
     },
     TeamChange(name) {
+      console.log('name', name)
       this.myTeam = name;
+      console.log('test',this.myTeam)
     },
     SearchPosition() {
       console.log('first',this)
@@ -520,7 +532,7 @@ export default {
           .then(res => {
             console.log('good',res)
             this.modals.changeCheck= false
-            this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
+            this.$router.go(0)
           })
           .catch(err => {
             console.log(err);
@@ -805,13 +817,13 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
-      this.isMine = this.$cookies.get("UserInfo").nickname;
+      this.isMine = this.$cookies.get("UserInfo").uid;
     }    
     console.log("0", this);
-    const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.$route.params.uid);
+    const TeamRoomData = new FormData();
+    TeamRoomData.append("uid", this.$route.params.uid);
     axios
-      .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .post(SERVER_URL + "TeamMatchRoom/", TeamRoomData)
       .then((res) => {
         console.log(res);
         if (res.data == "") {

@@ -57,7 +57,7 @@
           </td>
 
           <td class="text-right">
-            <router-link to="/dashboard/TeamMatch">
+            <router-link :to="{ name: '팀 SPOT', params: { uid: row.uid }}">
               <base-button type="success">입장하기</base-button>
             </router-link>
           </td>

@@ -36,6 +36,13 @@
             path: '/tables',
           }"
         />
+          <sidebar-item
+          :link="{
+            name: '팀 리스트',
+            icon: 'ni ni-badge text-red',
+            path: '/teamlist',
+          }"
+        />
         <sidebar-item
           :link="{
             name: '일정',
