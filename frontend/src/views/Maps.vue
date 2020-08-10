@@ -9,6 +9,7 @@
           class="col-xl-4 col-lg-6 mt-4"
           v-for="stadiumdata in stadiumDatas"
           v-bind:key="stadiumdata"
+          @click="modal1 = true"
         >
           <stats-card
             :title="stadiumdata.address"
@@ -23,6 +24,31 @@
             </template>
           </stats-card>
         </div>
+          <modal :show.sync="modal1" body-classes="p-0" modal-classes="modal-dialog modal-md">
+          <card
+            type="secondary"
+            shadow
+            header-classes="bg-white pb-5"
+            body-classes="px-lg-5 py-lg-5"
+            class="border-0"
+          >
+            <template >
+              <div class="text-muted text-center mb-3">
+                <medium>경기장 세부정보</medium>
+              </div>
+            </template>
+            <template>
+              <div class="text-center text-muted mb-4">
+                <small>세부 사항</small>
+              </div>
+              <form role="form">
+                <div class="text-center">
+                  <base-button class="mt-3" type="secondary" @click="modal1 = false">닫기</base-button>
+                </div>
+              </form>
+            </template>
+          </card>
+        </modal>
       </div>
     </div>
   </div>
@@ -46,6 +72,7 @@ export default {
   data() {
     return {
       stadiumDatas: [],
+      modal1:false,
     };
   },
 };
