@@ -54,9 +54,11 @@
                 name: '자유 SPOT',
                 params: { uid: row.uid },
               }"
+              v-if="isLogined"
             >
               <base-button type="success">입장하기</base-button>
             </router-link>
+            <base-button type="success" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
         </template>
       </base-table>
@@ -183,6 +185,30 @@
             </template>
           </card>
         </modal>
+
+        <modal
+          :show.sync="notEnter"
+          gradient="danger"
+          modal-classes="modal-danger modal-dialog-centered"
+        >
+          <div class="py-3 text-center">
+            <i class="ni ni-bell-55 ni-3x"></i>
+            <h4 class="heading mt-4">로그인을 하셔야 이용할 수 있습니다.</h4>
+            <p>로그인 페이지로 이동하셔서 로그인을 먼저 진행해주세요.</p>
+          </div>
+
+          <template slot="footer">
+            <router-link to="/login">
+              <base-button type="white">로그인하기</base-button>
+            </router-link>
+            <base-button
+              type="link"
+              text-color="white"
+              class="ml-auto"
+              @click="notEnter = false"
+            >닫기</base-button>
+          </template>
+        </modal>
       </div>
       <div>
         <base-pagination :page-count="parseInt(FreetableData.length/5)+1" v-model="pagination"></base-pagination>
@@ -201,6 +227,9 @@ export default {
   name: "projects-table",
   components: { flatPicker },
   created() {
+    if (this.$cookies.isKey("UserInfo")) {
+      this.isLogined = true;
+    }
     axios
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
@@ -242,9 +271,11 @@ export default {
       dates: {
         simple: "2020-08-08",
       },
+      isLogined: false,
       tabletitle: "자유 SPOT",
       FreetableData: [],
       modals: false,
+      notEnter: false,
       stadiumN: "경기장을 골라주세요",
       stadiumDatas: [],
       title: "",
