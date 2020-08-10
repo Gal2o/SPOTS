@@ -806,10 +806,10 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
       this.isMine = this.$cookies.get("UserInfo").nickname;
-    }    
+    }
     console.log("0", this);
     const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.$route.params.uid);
+    FreeRoomData.append("uid", this.$router.params.uid);
     axios
       .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
@@ -832,7 +832,7 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-        alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+        alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다!");
         this.$router.push({ name: "SPOTs" });
       });
   },
