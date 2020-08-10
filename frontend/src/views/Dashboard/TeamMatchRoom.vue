@@ -140,7 +140,7 @@
           type="link"
           text-color="white"
           class="ml-auto"
-          @click="modals.outalert = false"
+          @click="deleteTeam"
         >닫기</base-button>
       </template>
     </modal>
@@ -235,6 +235,23 @@ export default {
       } else if (this.team.Blue.uid == myTeam) {
         this.isEnter = true
       }
+    },
+    deleteTeam() {
+      var myTeam = this.$cookies.get("UserInfo").team_uid
+      var TeamDeleteUid = new FormData();
+      if (this.team.Red.uid == myTeam) {
+        TeamDeleteUid.append("uid", myTeam)
+      } else if (this.team.Blue.uid == myTeam) {
+        TeamDeleteUid.append("uid", myTeam)
+      }
+      TeamDeleteUid.append("uid", TeamDeleteUid);
+      axios.post(SERVER_URL + "team/delete/", TeamDeleteUid)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     CreditGo() {
       console.log('end',this.myPosUid)
