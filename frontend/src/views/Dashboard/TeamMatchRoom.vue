@@ -40,7 +40,9 @@
 
           <template slot-scope="{ row }">
             <th scope="row">
-              <span class="name mb-0 text-lg text-default"><b>{{ row.team_name }}</b></span>
+              <span class="name mb-0 text-xl text-default"><b>{{ row.team_name }}</b></span><br>
+              <span class="name mb-0 text-lg text-default">소개 : {{ row.team_intro }}</span><br>
+              <span class="name mb-0 text-lg text-default">{{ row.team_win }} 승 {{ row.team_draw }} 무 {{ row.team_lose }} 패</span>
             </th>
           </template>
         </base-table>
@@ -63,7 +65,9 @@
 
           <template slot-scope="{ row }">
             <th scope="row">
-              <span class="name mb-0 text-lg text-default"><b>{{ row.team_name }}</b></span>
+              <span class="name mb-0 text-xl text-default"><b>{{ row.team_name }}</b></span><br>
+              <span class="name mb-0 text-lg text-default">소개 : {{ row.team_intro }}</span><br>
+              <span class="name mb-0 text-lg text-default">{{ row.team_win }} 승 {{ row.team_draw }} 무 {{ row.team_lose }} 패</span>
             </th>
           </template>
         </base-table>

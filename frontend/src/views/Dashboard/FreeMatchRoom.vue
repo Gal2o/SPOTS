@@ -24,11 +24,18 @@
 
     <div class="d-flex flex-row" :class="type === 'dark' ? 'bg-default' : ''">
       <div class="table-responsive col-12 col-md-6 m-1">
-        <div class="text-center p-2 mb-2 bg-danger rounded-top">
-          <h2>Red Team</h2>
-          <h4>
-            공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
-          </h4>
+        <div class="text-center p-2 mb-2 bg-danger rounded-top d-flex flex-row">
+          <div class="col-9 align-middle">
+            <h2>Red Team</h2>
+            <h4>
+              공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
+            </h4>
+          </div>
+          <div class="col-3">
+            <base-button style="background-color: #FF7171" class="border-0">
+              <h3>총원<br>{{ redCountList.total }} / 11</h3>
+            </base-button>
+          </div>
         </div>
         <base-table
           class="table table-striped align-items-center table-flush border-solid table-danger rounded-bottom text-center"
@@ -87,11 +94,18 @@
       </div>
 
       <div class="table-responsive col-12 col-md-6 m-1">
-        <div class="text-center p-2 mb-2 bg-primary rounded-top">
-          <h2 class="text-white">Blue Team</h2>
-          <h4 class="text-white">
-            공: {{ blueCountList.Attacker }} / 미: {{ blueCountList.Midfielder }} / 수: {{ blueCountList.Defender }} / 골: {{ blueCountList.Goalkeeper }}
-          </h4>
+        <div class="text-center p-2 mb-2 bg-primary rounded-top d-flex flex-row">
+          <div class="col-9 align-middle">
+            <h2>Blue Team</h2>
+            <h4>
+              공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
+            </h4>
+          </div>
+          <div class="col-3">
+            <base-button style="background-color: #3162C7" class="border-0">
+              <h3 class="text-white">총원<br>{{ blueCountList.total }} / 11</h3>
+            </base-button>
+          </div>
         </div>
         <base-table
           class="table table-striped align-items-center table-flush border-solid table-primary rounded-bottom text-center"
@@ -377,12 +391,14 @@ export default {
         Midfielder: 0,
         Defender: 0,
         Goalkeeper: 0,
+        total: 0,
       },
       blueCountList: {
         Attacker: 0,
         Midfielder: 0,
         Defender: 0,
         Goalkeeper: 0,
+        total: 0,
       },
     };
   },
@@ -699,15 +715,19 @@ export default {
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
             this.redCountList.Attacker += 1
+            this.redCountList.total += 1
           } else if (name.indexOf("mid") != -1) {
             newPosition = "미드필더"
             this.redCountList.Midfielder += 1
+            this.redCountList.total += 1
           } else if (name.indexOf("defend") != -1) {
             newPosition = "수비수"
             this.redCountList.Defender += 1
+            this.redCountList.total += 1
           } else if (name.indexOf("goal") != -1) {
             newPosition = "골키퍼"
             this.redCountList.Goalkeeper += 1
+            this.redCountList.total += 1
           }
           var Redsub = new Object
           Redsub.position = newPosition
@@ -792,15 +812,19 @@ export default {
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
             this.blueCountList.Attacker += 1
+            this.blueCountList.total += 1
           } else if (name.indexOf("mid") != -1) {
             newPosition = "미드필더"
             this.blueCountList.Midfielder += 1
+            this.blueCountList.total += 1
           } else if (name.indexOf("defend") != -1) {
             newPosition = "수비수"
             this.blueCountList.Defender += 1
+            this.blueCountList.total += 1
           } else if (name.indexOf("goal") != -1) {
             newPosition = "골키퍼"
             this.blueCountList.Goalkeeper += 1
+            this.blueCountList.total += 1
           }
           var Bluesub = new Object
           Bluesub.position = newPosition
