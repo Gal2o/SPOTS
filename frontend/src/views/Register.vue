@@ -108,14 +108,14 @@ import axios from 'axios'
                 axios.post('http://localhost:8080/user/signUp/', SignData)
                     .then(res => {
                         if (res.data == "") {
-                            alert('잘 못 작성된 항목이 있습니다. 회원가입을 다시 진행해주세요.')
+                            alert('빈칸없이 적어주세요.')
                         }
                         else {
                             this.$router.push({ name: 'login'})
                         }                        
                     })
                     .catch(err => {
-                        alert('회원가입을 다시 시도해주세요.');
+                        alert('잘못 입력하셨습니다. 입력 확인해주세요');
                         console.log(err);
                     })
             },
