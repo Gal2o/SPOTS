@@ -8,7 +8,8 @@
 		(team_name, team_intro, captain_uid) 
 		VALUES(
 			#{team_name},#{team_intro},#{captain_uid}
-		)
+		);
+		update user set team_uid = LAST_INSERT_ID() where uid = #{captain_uid};
 	</insert>
 	<update id="modifyTeam">
 		update team 
