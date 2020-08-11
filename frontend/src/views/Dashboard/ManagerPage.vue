@@ -197,7 +197,7 @@ export default {
       rgoal:0,
       bgoal:0,
       mvp:"",
-      homewin:0,
+      homewin:1,
       RedtableDatas: [],
       BluetableDatas: [],
       persondata:[],
