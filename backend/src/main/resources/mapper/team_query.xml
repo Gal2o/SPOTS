@@ -25,7 +25,7 @@
 	<delete id="deleteTeam">
 		delete from team where uid = #{uid};
 		update user 
-			set team_uid = null
+			set team_uid = 0
 		where team_uid = #{uid}
 	</delete>
 	<select id="listTeam" resultType="com.spots.dto.TeamInfo">
