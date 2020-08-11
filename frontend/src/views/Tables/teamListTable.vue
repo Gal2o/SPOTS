@@ -118,21 +118,13 @@
               <th>승률 : {{ teamData.team_rate }}%</th>
             </tr>
             <tr>
-              <th>팀 멤버 :
-                <div class="row">
-                  <div class="mx-3"></div>
-                  <div class="mx-1" v-for="playerName in playerList" :key="playerName">{{ playerName }}</div>
-                </div>
-              </th>
+              <th>팀장 : {{ headPlayer }} </th>
             </tr>
           </table>
           <!-- isLogined를 신청상태인지확인 -->
           <div class="text-center d-flex flex-row justify-content-between">
-            <base-button v-if="isLogined" type="success" size="lg" @click="modalSwitch(1)">
+            <base-button v-if="isLogined && !haveTeam" type="success" size="lg" @click="modalSwitch(1)">
               <h2 class="text-white">가입하기</h2>
-            </base-button>
-            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.teamInfo = false">
-              <h2 class="text-white">가입취소</h2>
             </base-button>
             <base-button type="secondary" size="lg" @click="modals.teamInfo = false">
               <h2 class="text-dark">닫기</h2>
@@ -211,6 +203,11 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
+      console.log('pp',this.$cookies.get("UserInfo"))
+      if (this.$cookies.get("UserInfo").team_uid > 0) {
+        console.log('pp',this.$cookies.get("UserInfo").team_uid)
+        this.haveTeam = true
+      }
     }
     axios
       .get(SERVER_URL + "team/list")
@@ -229,6 +226,8 @@ export default {
   },
   data() {
     return {
+      isLogined: false,
+      haveTeam: false,
       FreerankData: [],
       title: "팀 리스트",
       teamData: Object,
@@ -237,7 +236,7 @@ export default {
         teamInfo: false,
         joinTeam: false,
       },
-      playerList: [],
+      headPlayer: "",
       apply: {
         teamname: "",
         teamuid: 0,
@@ -258,7 +257,9 @@ export default {
           console.log('user',res.data);
           var player = res.data;
           for(var i=0; i < player.length; i++) {
-            this.playerList.push(player[i].nickname)
+            if (this.teamData.captain_uid == player[i].uid) {
+              this.headPlayer = player[i].nickname
+            }
           }
           console.log(this.playerList)
         })  
@@ -281,10 +282,7 @@ export default {
     },
     ApplyGo() {
       console.log(this.apply)
-      console.log('team_uid', this.apply.teamuid)
-      console.log('user_uid', this.$cookies.get('UserInfo').uid)
-      console.log('comment', this.apply.comment)
-      const ApplyData = new FormData();
+      var ApplyData = new FormData();
       ApplyData.append('team_uid', this.apply.teamuid)
       ApplyData.append('user_uid', this.$cookies.get('UserInfo').uid)
       ApplyData.append('comment', this.apply.comment)
