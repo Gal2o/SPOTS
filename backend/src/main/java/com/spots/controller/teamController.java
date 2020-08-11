@@ -65,9 +65,26 @@ public class teamController {
 		return teamInfoService.userList(uid);
 	}
 	
-	@GetMapping(value="/team/applyList")
-	public List<ApplyTeamInfo> applyList(@RequestParam int team_uid) {
-		return teamInfoService.applyList(team_uid);
+	@PostMapping(value="/team/applyList")
+	public List<ApplyTeamInfo> applyList(@RequestParam int uid) {
+		return teamInfoService.applyList(uid);
+	}
+	
+	@PostMapping(value="/team/searchTeam")
+	public List<UserInfo> searchTeam(@RequestParam String text) {
+		return teamInfoService.searchTeam(text);
+	}
+	
+	@PostMapping(value="/team/searchState")
+	public List<UserInfo> searchState(@RequestParam String state_code) {
+		state_code = state_code.substring(0,2);
+		return teamInfoService.searchState(state_code);
+	}
+	
+	@PostMapping(value="/team/searchCity")
+	public List<UserInfo> searchCity(@RequestParam String city_code) {
+		city_code = city_code.substring(0,4);
+		return teamInfoService.searchCity(city_code);
 	}
 	
 }
