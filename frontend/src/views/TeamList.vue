@@ -246,6 +246,7 @@ export default {
       var createData = new FormData()
       createData.append('team_name', this.teamData.nickname)
       createData.append('city_code', this.teamData.pickCode)
+      createData.append('captain_uid', this.$cookies.get('UserInfo').uid)
       axios.post(SERVER_URL + "team/regist/", createData)
           .then((res) => {
             console.log(res)
