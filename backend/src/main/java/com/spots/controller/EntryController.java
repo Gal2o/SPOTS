@@ -164,32 +164,34 @@ public class EntryController {
 		return Entry.entrylist(team_entry_uid);
 	}
 	
-	@GetMapping(value="/FreeMatch/win")
+	
+	@PostMapping(value="/FreeMatch/win")
 	public int FreeMatchWin(FMatchInfo dto) {
 		System.out.println("이긴경우");
-		
 		return Entry.FWin(dto);
 	}
 	
-	@GetMapping(value="/FreeMatch/lose")
+	@PostMapping(value="/FreeMatch/lose")
 	public int FreeMatchLose(FMatchInfo dto) {
 		System.out.println("진경우");
 		return Entry.FLose(dto);
 	}
 	
-	@GetMapping(value="/FreeMatch/draw")
+	@PostMapping(value="/FreeMatch/draw")
 	public int FreeMatchDraw(FMatchInfo dto) {
 		System.out.println("비긴경우");
 		return Entry.FDraw(dto);
 	}
-
+	
+		
 	@PostMapping(value="/FreeMatchRoom/updateuser")
-	public int FreeMatchupdate(ArrayList<DataInfo> list)
+	public int FreeMatchupdate(DataInfo dto)
 	{
-		for(DataInfo d : list)
-			Entry.Upuser(d);
+		System.out.println("updateuser 시작");
+		System.out.println(dto);
+		return Entry.Upuser(dto);
 
-		return 0;
 	}
+	
 	
 }
