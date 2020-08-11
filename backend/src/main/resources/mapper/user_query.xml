@@ -42,7 +42,7 @@
 		update user 
 		   set 	 team_uid 	= #{team_uid}			
 		 where uid= #{uid};
-		 delete from team_apply where user_uid = #{uid};
+		 delete from apply_team where user_uid = #{uid};
 	</update>
 	<update id="outTeam">
 		update team set player_num = player_num-1 where team_uid =  #{team_uid};
@@ -52,10 +52,10 @@
 	</update>
 	
 	<insert id="applyTeam">
-		insert into team_apply
+		insert into apply_team
 		(team_uid, user_uid, comment) 
 		VALUES(
-			#{team_uid},#{uid},#{comment}
+			#{team_uid}, #{user_uid}, #{comment}
 		)
 	</insert>
 </mapper>
