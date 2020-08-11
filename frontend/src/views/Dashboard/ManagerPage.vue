@@ -541,7 +541,13 @@ export default {
         MatchData.append('assist', this.RedtableDatas[a].assist)
         MatchData.append('mvp', this.RedtableDatas[a].mvp)
         MatchData.append('blacklist', this.RedtableDatas[a].blacklist)
-        this.persondata.push(MatchData)
+         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
         }
         for (a=0; a<this.BluetableDatas.length; a++) {
         const MatchData = new FormData();  
@@ -550,15 +556,15 @@ export default {
         MatchData.append('assist', this.BluetableDatas[a].assist)
         MatchData.append('mvp', this.BluetableDatas[a].mvp)
         MatchData.append('blacklist', this.BluetableDatas[a].blacklist)
-        this.persondata.push(MatchData)
-        }
-        axios.post(SERVER_URL + "FreeMatchRoom/updateuser", this.persondata)
+         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
           console.log(err);
         })
+        }
+       
     },
   },
   mounted() {},
