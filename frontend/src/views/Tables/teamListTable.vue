@@ -103,27 +103,27 @@
         <template>
           <table class="m-3">
             <tr>
-              <th>팀명 :</th>
-              <th>{{ teamData.team_name }}</th>
+              <th>팀명 : {{ teamData.team_name }}</th>
             </tr>
             <tr>
-              <th>팀소개 :</th>
-              <th>{{ teamData.team_intro }}</th>
+              <th>팀소개 : {{ teamData.team_intro }}</th>
             </tr>
             <tr>
-              <th>인원 :</th>
-              <th>{{ teamData.player_num }}명</th>
+              <th>인원 : {{ teamData.player_num }}명</th>
             </tr>
             <tr>
-              <th>팀전적 :</th>
-              <th>{{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
+              <th>팀전적 : {{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
             </tr>
             <tr>
-              <th>승률 :</th>
-              <th>{{ teamData.team_rate }}</th>
+              <th>승률 : {{ teamData.team_rate }}%</th>
             </tr>
             <tr>
-              <th>팀 멤버 :</th>
+              <th>팀 멤버 :
+                <div class="row">
+                  <div class="mx-3"></div>
+                  <div class="mx-1" v-for="playerName in playerList" :key="playerName">{{ playerName }}</div>
+                </div>
+              </th>
             </tr>
           </table>
           <!-- isLogined를 신청상태인지확인 -->
@@ -239,13 +239,28 @@ export default {
         loginalert: false,
         teamInfo: false,
         joinTeam: false,
-      }
+      },
+      playerList: [],
     };
   },
   methods: {
     showTeam(TeamInfo) {
       this.teamData = TeamInfo
       this.modals.teamInfo = true
+      const team_uid = new FormData();
+      team_uid.append("uid", this.teamData.uid);
+      axios.post(SERVER_URL + "/team/userList", team_uid)
+        .then((res) => {
+          console.log('user',res.data);
+          var player = res.data;
+          for(var i=0; i < player.length; i++) {
+            this.playerList.push(player[i].nickname)
+          }
+          console.log(this.playerList)
+        })  
+        .catch((err) => {
+          console.log(err);
+        });
     },
     modalSwitch(switchData) {
       if (switchData == 1) {
