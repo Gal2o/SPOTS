@@ -170,7 +170,7 @@
               <a class="dropdown-item" v-for="un in rowlist" 
               v-bind:key="un" @click="choicemvp(un, un.name)">{{un.name}}</a></base-dropdown></base-button>
                 <div class="text-center">
-                  <base-button class="mt-3" type="warning" @click="modal2 = false, mvppoint(mvp)" >제출</base-button>
+                  <base-button class="mt-3" type="warning" @click="modal2 = false, mvppoint()" >제출</base-button>
                   <base-button class="mt-3" type="secondary" @click="modal2 = false">닫기</base-button>
                 </div>
               </form>
@@ -179,7 +179,7 @@
           </card>
         </modal>
      <base-button block type="secondary" size="lg" class="col-2">{{this.winteam}} {{this.rgoal}} : {{this.bgoal}}</base-button>    
-    <base-button type="warning" size="lg" class="col-2 mr-4">평가 및 경기 마치기</base-button> 
+    <base-button type="warning" size="lg" class="col-2 mr-4" @click='submit'>평가 및 경기 마치기</base-button> 
   </div>
   </div>
 </template>
@@ -199,6 +199,7 @@ export default {
       mvp:"",
       RedtableDatas: [],
       BluetableDatas: [],
+      persondata:[],
       wbl:"",
       dupoint : [],
       dumvp : [],
@@ -212,6 +213,7 @@ export default {
       teamList: [{ name: "RED" }, { name: "BLUE" }],
       posRedList: [],
       posBlueList: [],
+      pastuid : [],
       posNameList: [
         "defender1_uid",
         "defender2_uid",
@@ -227,7 +229,7 @@ export default {
         "striker3_uid",
         "striker4_uid",
       ],
-      score:[1,2,3,4,5,6,7,8,9,10],
+      score:[0,1,2,3,4,5,6,7,8,9,10],
       modal1:false,
       modal2:false,
      };
@@ -280,21 +282,50 @@ export default {
           this.dupoint.push(this.rowlist.uid);
           this.wbl="";
          }
+       for (var a=0; a<this.RedtableDatas.length; a++) {
+         if (this.RedtableDatas[a].uid == (this.rowlist.uid)) {
+           this.RedtableDatas[a].blacklist += 1;
+         }
+         else if (this.BluetableDatas[a].uid == (this.rowlist.uid)){
+           this.BluetableDatas[a].blacklist += 1;
+         }  
+      }
       }
     },
-    mvppoint(mvp) {
+    mvppoint() {
         if (this.dumvp.includes(this.mvplist.uid)) {
         return alert('이미 투표하셨습니다.')
         }
         else {
-          if (mvp != "") {
-            if (this.mvplist.mvp == null){
-            this.mvplist.mvp = 0;
-            }
-            this.mvplist.mvp += 1;
-            this.dumvp.push(this.mvplist.uid);
-            
+          this.mvplist.mvp = 0;
+          this.mvplist.mvp += 1;
+          if (this.dumvp.length != 0){
+            this.pastuid.push(this.dumvp[0].uid)
+            this.dumvp.pop(0)
           }
+          this.dumvp.push(this.mvplist.uid); 
+        }
+        for (var a=0; a<this.RedtableDatas.length; a++){
+          if (this.pastuid.length != 0){
+            if (this.RedtableDatas[a].uid == this.pastuid.uid) {
+              this.RedtableDatas[a].mvp -= 1
+              this.pastuid.pop(0)
+            }
+          }
+            if (this.RedtableDatas[a].uid == this.mvplist.uid) {
+              this.RedtableDatas[a].mvp += 1
+            }
+        }
+          for (a=0; a<this.BluetableDatas.length; a++){
+          if (this.pastuid.length != 0){
+            if (this.BluetableDatas[a].uid == this.pastuid.uid) {
+              this.BluetableDatas[a].mvp -= 1
+              this.pastuid.pop(0)
+            }
+          }
+            if (this.BluetableDatas[a].uid == this.mvplist.uid) {
+              this.BluetableDatas[a].mvp += 1
+            }
         }
     },
     UserEnter() {
@@ -453,6 +484,34 @@ export default {
       else {
         this.winteam = "무승부"
       }
+    },
+    submit() {
+      
+       for (var a=0; a<this.RedtableDatas.length; a++) {
+        const MatchData = new FormData();
+        MatchData.append('uid', this.RedtableDatas[a].uid)
+        MatchData.append('goal', this.RedtableDatas[a].goal)
+        MatchData.append('assist', this.RedtableDatas[a].assist)
+        MatchData.append('mvp', this.RedtableDatas[a].mvp)
+        MatchData.append('blacklist', this.RedtableDatas[a].blacklist)
+        this.persondata.push(MatchData)
+        }
+        for (a=0; a<this.BluetableDatas.length; a++) {
+        const MatchData = new FormData();  
+        MatchData.append('uid', this.BluetableDatas[a].uid)
+        MatchData.append('goal', this.BluetableDatas[a].goal)
+        MatchData.append('assist', this.BluetableDatas[a].assist)
+        MatchData.append('mvp', this.BluetableDatas[a].mvp)
+        MatchData.append('blacklist', this.BluetableDatas[a].blacklist)
+        this.persondata.push(MatchData)
+        }
+        axios.post(SERVER_URL + "FreeMatchRoom/updateuser", this.persondata)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     },
   },
   mounted() {},
