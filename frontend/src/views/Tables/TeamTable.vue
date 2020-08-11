@@ -22,7 +22,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="TeamtableData"
+        :data="TeamTable"
       >
         <template slot="columns">
           <th>제목</th>
@@ -103,7 +103,7 @@
      </div> 
     </div>
     <div>
-      <base-pagination total="30"></base-pagination>
+      <base-pagination :page-count="parseInt(TeamtableData.length/5)+1" v-model="pagination"></base-pagination>
     </div>
   </div>
 </template>
@@ -121,6 +121,7 @@ export default {
       .get(SERVER_URL + "TeamMatchAll/")
       .then((res) => {
         this.TeamtableData = res.data;
+        this.TeamTable = this.TeamtableData.slice(0,5);
       })
       .catch((err) => {
         console.log(err);
@@ -135,8 +136,28 @@ export default {
   data() {
     return {
       TeamtableData: [],
+      TeamTable: [],
       notEnter: false,
+      pagination: 1,
     };
+  },
+  watch: {
+    sidolist: function () {
+      this.sidoinfo();
+    },
+    pagination: function () {
+      // console.log(this.FreeTable);
+      this.selectpage();
+    },
+  },
+  methods: {
+    selectpage() {
+      this.TeamTable = [],
+      this.TeamTable = this.TeamtableData.slice(
+        (this.pagination - 1) * 5,
+        (this.pagination - 1) * 5 + 5
+      );
+    }
   },
 };
 </script>
