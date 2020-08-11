@@ -29,4 +29,8 @@ public interface TeamMapper {
 
 	public List<UserInfo> searchTeam(String text);
 
+	public List<UserInfo> searchState(String state_code);
+
+	public List<UserInfo> searchCity(String city_code);
+
 }

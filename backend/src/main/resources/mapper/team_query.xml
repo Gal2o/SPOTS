@@ -38,7 +38,15 @@
 	</select>
 	
 	<select id="searchTeam" resultType="com.spots.dto.TeamInfo">
-		select * from team WHERE team_name like concat('%',concat(#{state_code},'%'))
+		select * from team WHERE team_name like concat('%',concat(#{text},'%'))
+	</select>
+	
+	<select id="searchState" resultType="com.spots.dto.TeamInfo">
+		select * from team WHERE city_code like concat(#{state_code},'%'))
+	</select>
+	
+	<select id="searchCity" resultType="com.spots.dto.TeamInfo">
+		select * from team WHERE city_code like concat(#{city_code},'%'))
 	</select>
 </mapper>
 
