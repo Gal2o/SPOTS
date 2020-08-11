@@ -42,7 +42,7 @@
 		update user 
 		   set 	 team_uid 	= #{team_uid}			
 		 where uid= #{uid};
-		 delete from team_apply where user_uid = #{uid};
+		 delete from apply_team where user_uid = #{uid};
 	</update>
 	<update id="outTeam">
 		update team set player_num = player_num-1 where team_uid =  #{team_uid};
