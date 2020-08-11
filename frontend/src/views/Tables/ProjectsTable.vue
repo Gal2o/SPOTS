@@ -38,7 +38,7 @@
           </th>
           <td class="time">{{ row.matching_date }}</td>
           <td>
-            <span class="status">{{ row.dong_name }}</span>
+            <span class="status">{{ row.dong_code }}</span>
           </td>
           <td>{{ row.numberofuser }}</td>
 
@@ -173,7 +173,7 @@
                     포지션을 선택하였으면 결제를 해주세요.
                     <br />결제 금액은
                     <big style="font-size:30px;" class="text-warning">
-                      <b>{{ placeprice }}원</b>
+                      <b>{{ roomprice }}원</b>
                     </big> 입니다.
                   </small>
                 </div>
@@ -234,6 +234,7 @@ export default {
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
+        console.log(this.FreetableData)
         this.FreeTable = this.FreetableData.slice(0, 5);
       })
       .catch((err) => {
@@ -281,6 +282,9 @@ export default {
       title: "",
       placeuid: 0,
       placeprice: 1,
+      homeuid:0,
+      roomprice:1,
+      roomuid:0,
       placecode: 0,
       userInfo: Object,
       pagination: 1,
@@ -304,7 +308,7 @@ export default {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
       this.placeuid = stadium.place_uid;
-      this.placeprice = stadium.placeprice;
+      this.placeprice = 8000;
       this.placecode = stadium.code;
     },
     getSpot() {
@@ -316,8 +320,8 @@ export default {
         makeData.append("title", this.title);
         makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
-        makeData.append("place_price", this.placeprice);
-        makeData.append("place_code", this.placecode);
+        makeData.append("price", this.placeprice);
+        makeData.append("dong_code", this.placecode);
         makeData.append("head_uid", this.userInfo.uid);
         if (this.title != "" && this.placecode != 0) {
           axios
@@ -326,6 +330,9 @@ export default {
               console.log("chcek", res);
               this.modals = false
               this.isCredit = true
+              this.homeuid= res.data[res.data.length-1].home_matching_entry_uid
+              this.roomprice = res.data[res.data.length-1].price
+              this.roomuid = res.data[res.data.length-1].uid
             })
             .catch((err) => {
               console.log(err);
@@ -372,7 +379,6 @@ export default {
     },
     CreditGo() {
       console.log('end',this.myPosUid)
-      const roomPrice = String(this.placeprice)
       if (this.myPosition === "공격수") {
         this.myPosUid = 1;
       } else if (this.myPosition === "미드필더") {
@@ -382,13 +388,18 @@ export default {
       } else if (this.myPosition === "골키퍼") {
         this.myPosUid = 13;
       }
-      var test = 3
       const EnterInfo = new FormData();
+      const rprice = String(this.roomprice)
       EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
       EnterInfo.append("positionnum", this.myPosUid);
-      EnterInfo.append("team_entry_uid", test);
-      EnterInfo.append('price', roomPrice)
-      EnterInfo.append("room_uid", test)
+      EnterInfo.append("team_entry_uid", this.homeuid);
+      EnterInfo.append('price', rprice)
+      EnterInfo.append("room_uid", this.roomuid)
+      console.log("uid", this.$cookies.get("UserInfo").uid)
+      console.log("positionnum", this.myPosUid)
+      console.log("team_entry_uid", this.homeuid)
+      console.log('price', rprice)
+      console.log("room_uid", this.roomuid)
       axios
         .post(SERVER_URL + "kakaoPay/", EnterInfo)
         .then(res => {

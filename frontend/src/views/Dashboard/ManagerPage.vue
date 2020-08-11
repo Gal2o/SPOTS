@@ -197,6 +197,7 @@ export default {
       rgoal:0,
       bgoal:0,
       mvp:"",
+      homewin:0,
       RedtableDatas: [],
       BluetableDatas: [],
       persondata:[],
@@ -477,16 +478,62 @@ export default {
     wincheck(r,b) {
       if (r > b) {
         this.winteam = "레드팀 승리"
+        this.homewin = 3;
       }
       else if (r < b) {
         this.winteam = "블루팀 승리"
+        this.homewin = 0;
       }
       else {
         this.winteam = "무승부"
+        this.homewin = 1;
       }
     },
     submit() {
-      
+      const FreeRoomData = new FormData();
+      FreeRoomData.append("uid", this.$route.params.uid);
+      axios
+      .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .then((res) => {
+       const MatchRoomData = new FormData();
+       MatchRoomData.append("uid", res.data.uid);
+       MatchRoomData.append("head_uid", res.data.head_uid);
+       MatchRoomData.append("home_matching_entry_uid", res.data.home_matching_entry_uid);
+       MatchRoomData.append("away_matching_entry_uid", res.data.away_matching_entry_uid); 
+       MatchRoomData.append("create_date", res.data.create_date);
+       MatchRoomData.append("matching_date", res.data.matching_date);
+       MatchRoomData.append("home_score", res.data.home_score);
+       MatchRoomData.append("away_score", res.data.away_score);
+       MatchRoomData.append("ready_num", res.data.ready_num);
+       MatchRoomData.append("place_uid", res.data.place_uid);
+       MatchRoomData.append("price", res.data.price);
+       MatchRoomData.append("head_price", res.data.head_price);
+       MatchRoomData.append("dong_code", res.data.dong_code);
+       MatchRoomData.append("title", res.data.title);
+       MatchRoomData.append("mvp", res.data.mvp);
+
+        if (this.homewin == 3){
+          axios.post(SERVER_URL + "FreeMatch/win", MatchRoomData)
+          .then((re1)=>{
+            console.log(re1)
+          })
+        }
+        else if (this.homewin == 1){
+          axios.post(SERVER_URL + "FreeMatch/draw", MatchRoomData)
+          .then((re1)=>{
+            console.log(re1)
+          })
+        }
+        else {
+          axios.post(SERVER_URL + "FreeMatch/lose", MatchRoomData)
+          .then((re1)=>{
+            console.log(re1)
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
        for (var a=0; a<this.RedtableDatas.length; a++) {
         const MatchData = new FormData();
         MatchData.append('uid', this.RedtableDatas[a].uid)
