@@ -4,11 +4,18 @@ public class TeamInfo {
 	private int uid;
 	private String team_name;
 	private String team_intro;
+	private String city_code;
 	private double team_rate;
 	private int team_win;
 	private int team_lose;
 	private int player_num;
 	
+	public String getCity_code() {
+		return city_code;
+	}
+	public void setCity_code(String city_code) {
+		this.city_code = city_code;
+	}
 	public int getPlayer_num() {
 		return player_num;
 	}
