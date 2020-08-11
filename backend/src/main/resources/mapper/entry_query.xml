@@ -168,79 +168,79 @@
 	</select>
 	
 	<update id="FWin">
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
 
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
     </update>
     
     <update id="FLose">
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
-        UPDATE user SET lose = lose + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid});
 
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
-        UPDATE user SET win = win + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid});
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{away_matching_entry_uid})
     </update>
     
     <update id="FDraw">
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
-        UPDATE user SET draw = draw + 1 WHERE uid = (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT striker1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT striker2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT striker3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT striker4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT midfielder1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT midfielder2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT midfielder3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT midfielder4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT defender1_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT defender2_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT defender3_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT defender4_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid});
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE uid in (SELECT goalkeeper_uid FROM matching_entry WHERE uid = #{home_matching_entry_uid} or uid = #{away_matching_entry_uid})
     </update>
 	
 	<update id="Upuser">
