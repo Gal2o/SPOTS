@@ -47,7 +47,7 @@
 	<update id="outTeam">
 		update team set player_num = player_num-1 where team_uid =  #{team_uid};
 		update user 
-		   set 	 team_uid 	= null		
+		   set 	 team_uid 	= 0		
 		 where uid= #{uid}
 	</update>
 	
