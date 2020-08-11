@@ -27,4 +27,6 @@ public interface TeamMapper {
 
 	public List<UserInfo> userList(int uid);
 
+	public List<UserInfo> searchTeam(String text);
+
 }

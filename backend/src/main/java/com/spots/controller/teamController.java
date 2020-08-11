@@ -70,5 +70,10 @@ public class teamController {
 		return teamInfoService.applyList(team_uid);
 	}
 	
+	@PostMapping(value="/team/searchTeam")
+	public List<UserInfo> searchTeam(@RequestParam String text) {
+		return teamInfoService.searchTeam(text);
+	}
+	
 }
 

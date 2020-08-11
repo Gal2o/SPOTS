@@ -21,5 +21,7 @@ public interface TeamInfoService {
 	public List<ApplyTeamInfo> applyList(int team_uid);
 
 	public List<UserInfo> userList(int uid);
+
+	public List<UserInfo> searchTeam(String text);
 	
 }
