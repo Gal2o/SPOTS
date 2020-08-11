@@ -156,7 +156,7 @@
                 </div>
                 <div class="text-center text-muted mb-4">
                   <small>
-                    팀을 선택하였으면 결제를 해주세요.
+                    진영을 선택하였으면 결제를 해주세요.
                     <br />결제 금액은
                     <big style="font-size:30px;" class="text-warning">
                       <b>{{ roomprice }}원</b>
@@ -254,7 +254,7 @@ export default {
   data() {
     return {
       dates: {
-        simple: "2020-08-08",
+        simple: "2020-08-15",
       },
       isLogined: false,
       tabletitle: "자유 SPOT",
@@ -292,7 +292,7 @@ export default {
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
       this.placeuid = stadium.place_uid;
-      this.placeprice = 8000;
+      this.placeprice = 50000;
       this.placecode = stadium.code;
     },
     getSpot() {
@@ -347,16 +347,6 @@ export default {
         (this.pagination - 1) * 5 + 5
       );
       console.log(this.TeamTable);
-    },
-    PositionChange(name) {
-      console.log(this.BluepostionList)
-      if (name == "랜덤") {
-        this.myPosition = this.postionList[Math.floor(
-          Math.random() * (this.RedpostionList.length - 1)
-        )].name
-      } else {
-        this.myPosition = name;
-      }
     },
     TeamChange(name) {
       this.myTeam = name;
