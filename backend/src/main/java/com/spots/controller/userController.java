@@ -57,17 +57,17 @@ public class userController {
 		return userInfoService.detail2(uid);
 	}
 	
-	@GetMapping(value="/user/joinTeam")
+	@PostMapping(value="/user/joinTeam")
 	public int joinTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.joinTeam(uid, team_uid);
 	}
 	
-	@GetMapping(value="/user/outTeam")
+	@PostMapping(value="/user/outTeam")
 	public int outTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.outTeam(uid, team_uid);
 	}
 
-	@GetMapping(value="/user/applyTeam")
+	@PostMapping(value="/user/applyTeam")
 	public int applyTeam(ApplyTeamInfo dto) {
 		return userInfoService.applyTeam(dto);
 	}

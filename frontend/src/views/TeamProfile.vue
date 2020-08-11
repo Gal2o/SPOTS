@@ -162,13 +162,111 @@
                     </base-input>
                   </div>
                 </div>
-                <a href="#!" class="btn btn-info center">팀정보 수정</a>
+                <a href="#!" class="btn btn-info">팀정보 수정</a>
+                <base-button type="success" size="lg" @click="modals.applyList = true">
+                  <h2 class="text-white">가입신청서 확인</h2>
+                </base-button>
               </form>
             </template>
           </card>
         </div>
       </div>
     </div>
+    <modal :show.sync="modals.applyList"
+      body-classes="p-0"
+      modal-classes="modal-dialog-centered modal-lg">
+      <card type="secondary" shadow
+                  header-classes="bg-white pb-5"
+                  body-classes="px-lg-5 py-lg-5"
+                  class="border-0">
+        <template>
+          <div class="btn-wrapper text-center d-flex flex-row justify-content-end mb-3">
+            <base-button type="neutral" @click="modalSwitch(2)">
+                뒤로가기
+            </base-button>
+            <base-button type="neutral" @click="modalSwitch(3)">
+                닫기
+            </base-button>
+          </div>
+          <div class="text-center text-muted mb-4">
+              <h1>가입신청서 리스트</h1>
+            </div>
+        </template>
+        <div class="table-responsive">
+          <base-table
+            class="table align-items-center table-flush"
+            :class="type === 'dark' ? 'table-dark' : ''"
+            :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
+            tbody-classes="list"
+            :data="FreerankData"
+          >
+            <template slot="columns">
+              <th>이름</th>
+              <th>경기수</th>
+              <th>승률</th>
+              <th>골</th>
+              <th>도움</th>
+              <th></th>
+            </template>
+            <template slot-scope="{ row }">
+              <th scope="row">
+                <div class="media align-items-center">
+                  <div class="media-body">
+                    <span class="name mb-0 text-sm" @onclick:> {{ row.nickname }}</span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                <span class="status">{{ row.win + row.lose + row.draw}}</span>
+              </td>
+              <td>
+                <span class="status">{{ row.rate }}%</span>
+              </td>
+              <td>
+                <span class="status">{{ row.goal }}</span>
+              </td>
+              <td>
+                <span class="status">{{ row.assist }}</span>
+              </td>              
+              <td class="text-right">
+                <base-button type="success" size="s" @click="showTeam(row)">
+                  <h2 class="text-white">더보기</h2>
+                </base-button>
+              </td>
+            </template>
+          </base-table>
+        </div>
+        <!-- <template>
+          <div class="text-center text-muted mb-4">
+            <h1>가입신청서 리스트</h1>
+          </div>
+          
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="description">이름</span>
+                  <span class="heading">{{ applyPlayer.nickname }}</span>
+                </div>
+                <div>
+                  <span class="description">게임수</span>
+                  <span class="heading">{{ applyPlayer.win + applyPlayer.lose + applyPlayer.draw }}</span>
+                </div>
+                <div>
+                  <span class="description">승률</span>
+                  <span class="heading">{{ player.rate }}</span>
+                </div>
+                <div>
+                  <base-button type="success" size="s" @click="modalSwitch(1)">
+                    <h2 class="text-white">더보기</h2>
+                  </base-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template> -->
+      </card>
+    </modal>
   </div>
 </template>
 <script>
@@ -190,6 +288,12 @@ export default {
         player_num: "",
       },
       player: Object,
+      apply: Object,
+      applyPlayer: Object,
+      modals: {
+        applyList: false,
+        applyDetail: false,
+      }
     };
   },
   created() {
@@ -212,7 +316,35 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-  }
+    axios
+      .post(SERVER_URL + "/team/applyList", data)
+      .then((res) => {
+        console.log(res.data);
+        this.apply = res.data;
+      })  
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+    showTeam(TeamInfo) {
+      this.teamData = TeamInfo
+      this.modals.teamInfo = true
+    },
+    modalSwitch(switchData) {
+      if (switchData == 1) {
+        this.modals.applyList = false
+        this.modals.applyDetail = true
+      } else if (switchData == 2) {
+        this.modals.applyList = true
+        this.modals.applyDetail = false
+      } else if (switchData == 3) {
+        this.modals.applyList = false
+        this.modals.applyDetail = false
+      }
+      console.log(this)
+    },
+  },
 };
 </script>
 <style></style>
