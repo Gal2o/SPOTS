@@ -65,9 +65,9 @@ public class teamController {
 		return teamInfoService.userList(uid);
 	}
 	
-	@GetMapping(value="/team/applyList")
-	public List<ApplyTeamInfo> applyList(@RequestParam int team_uid) {
-		return teamInfoService.applyList(team_uid);
+	@PostMapping(value="/team/applyList")
+	public List<ApplyTeamInfo> applyList(@RequestParam int uid) {
+		return teamInfoService.applyList(uid);
 	}
 	
 	@PostMapping(value="/team/searchTeam")
