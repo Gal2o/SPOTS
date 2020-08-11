@@ -394,8 +394,8 @@ export default {
         .then(res => {
           var Redsub = new Object
           Redsub.uid = res.data.uid
-          Redsub.goal = res.data.goal
-          Redsub.assist = res.data.assist
+          Redsub.goal = 0
+          Redsub.assist = 0
           Redsub.mvp = res.data.mvp
           Redsub.blacklist = res.data.blacklist
           Redsub.name = res.data.nickname
@@ -454,8 +454,8 @@ export default {
         .then(res => {
           var Bluesub = new Object
           Bluesub.uid = res.data.uid
-          Bluesub.goal = res.data.goal
-          Bluesub.assist = res.data.assist
+          Bluesub.goal = 0
+          Bluesub.assist = 0
           Bluesub.mvp = res.data.mvp
           Bluesub.blacklist = res.data.blacklist
           Bluesub.name = res.data.nickname
@@ -496,38 +496,47 @@ export default {
       .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
        const MatchRoomData = new FormData();
-       MatchRoomData.append("uid", res.data.uid);
-       MatchRoomData.append("head_uid", res.data.head_uid);
-       MatchRoomData.append("home_matching_entry_uid", res.data.home_matching_entry_uid);
-       MatchRoomData.append("away_matching_entry_uid", res.data.away_matching_entry_uid); 
-       MatchRoomData.append("create_date", res.data.create_date);
-       MatchRoomData.append("matching_date", res.data.matching_date);
-       MatchRoomData.append("home_score", res.data.home_score);
-       MatchRoomData.append("away_score", res.data.away_score);
-       MatchRoomData.append("ready_num", res.data.ready_num);
-       MatchRoomData.append("place_uid", res.data.place_uid);
-       MatchRoomData.append("price", res.data.price);
-       MatchRoomData.append("head_price", res.data.head_price);
-       MatchRoomData.append("dong_code", res.data.dong_code);
-       MatchRoomData.append("title", res.data.title);
-       MatchRoomData.append("mvp", res.data.mvp);
+       MatchRoomData.append("uid", res.data[0].uid);
+       MatchRoomData.append("head_uid", res.data[0].head_uid);
+       MatchRoomData.append("home_matching_entry_uid", res.data[0].home_matching_entry_uid);
+       MatchRoomData.append("away_matching_entry_uid", res.data[0].away_matching_entry_uid); 
+       MatchRoomData.append("create_date", res.data[0].create_date);
+       MatchRoomData.append("matching_date", res.data[0].matching_date);
+       MatchRoomData.append("home_score", res.data[0].home_score);
+       MatchRoomData.append("away_score", res.data[0].away_score);
+       MatchRoomData.append("ready_num", res.data[0].ready_num);
+       MatchRoomData.append("place_uid", res.data[0].place_uid);
+       MatchRoomData.append("price", res.data[0].price);
+       MatchRoomData.append("head_price", res.data[0].head_price);
+       MatchRoomData.append("dong_code", res.data[0].dong_code);
+       MatchRoomData.append("title", res.data[0].title);
+       MatchRoomData.append("mvp", res.data[0].mvp);
 
         if (this.homewin == 3){
           axios.post(SERVER_URL + "FreeMatch/win", MatchRoomData)
           .then((re1)=>{
-            console.log(re1)
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
           })
         }
         else if (this.homewin == 1){
           axios.post(SERVER_URL + "FreeMatch/draw", MatchRoomData)
           .then((re1)=>{
-            console.log(re1)
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
           })
         }
         else {
           axios.post(SERVER_URL + "FreeMatch/lose", MatchRoomData)
           .then((re1)=>{
-            console.log(re1)
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
           })
         }
       })
@@ -542,12 +551,6 @@ export default {
         MatchData.append('mvp', this.RedtableDatas[a].mvp)
         MatchData.append('blacklist', this.RedtableDatas[a].blacklist)
          axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
         }
         for (a=0; a<this.BluetableDatas.length; a++) {
         const MatchData = new FormData();  
@@ -557,12 +560,6 @@ export default {
         MatchData.append('mvp', this.BluetableDatas[a].mvp)
         MatchData.append('blacklist', this.BluetableDatas[a].blacklist)
          axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
         }
        
     },
