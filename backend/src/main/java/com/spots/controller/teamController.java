@@ -75,5 +75,17 @@ public class teamController {
 		return teamInfoService.searchTeam(text);
 	}
 	
+	@PostMapping(value="/team/searchState")
+	public List<UserInfo> searchState(@RequestParam String state_code) {
+		state_code = state_code.substring(0,2);
+		return teamInfoService.searchState(state_code);
+	}
+	
+	@PostMapping(value="/team/searchCity")
+	public List<UserInfo> searchCity(@RequestParam String city_code) {
+		city_code = city_code.substring(0,4);
+		return teamInfoService.searchCity(city_code);
+	}
+	
 }
 

@@ -55,6 +55,16 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	public List<UserInfo> searchTeam(String text) {
 		return mapper.searchTeam(text);
 	}
+
+	@Override
+	public List<UserInfo> searchState(String state_code) {
+		return mapper.searchState(state_code);
+	}
+
+	@Override
+	public List<UserInfo> searchCity(String city_code) {
+		return mapper.searchCity(city_code);
+	}
 	
 
 	 
