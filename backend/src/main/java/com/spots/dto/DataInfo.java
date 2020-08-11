@@ -1,6 +1,11 @@
 package com.spots.dto;
 
 public class DataInfo {
+	@Override
+	public String toString() {
+		return "DataInfo [uid=" + uid + ", goal=" + goal + ", assist=" + assist + ", blacklist=" + blacklist + ", mvp="
+				+ mvp + "]";
+	}
 	private int uid;
 	private int goal;
 	private int assist;
