@@ -50,6 +50,11 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	public List<UserInfo> userList(int uid) {
 		return mapper.userList(uid);
 	}
+
+	@Override
+	public List<UserInfo> searchTeam(String text) {
+		return mapper.searchTeam(text);
+	}
 	
 
 	 
