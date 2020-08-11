@@ -171,24 +171,21 @@
             <div class="mb-3">
               <label>팀명</label>
               <base-input alternative
-                addon-left-icon="ni ni-paper-diploma">
-              </base-input>
-            </div>
-            <div class="mb-3">
-              <label>유저명</label>
-              <base-input alternative
-                addon-left-icon="ni ni-single-02">
+                addon-left-icon="ni ni-paper-diploma"
+                v-model="apply.teamname"
+                readonly>
               </base-input>
             </div>
             <div class="mb-3">
               <label>가입신청 내용</label>              
               <textarea alternative
                 rows="4" style="width:100%; resize:none"
+                v-model="apply.comment"
                 class="rounded">
               </textarea>
               <div class="text-center d-flex flex-row justify-content-center">
-                <base-button size="lg" @click="modals.joinTeam = true">
-                  <h2 class="text-white">신청완료</h2>
+                <base-button size="lg" @click="ApplyGo">
+                  <h2 class="text-white">신청하기</h2>
                 </base-button>
               </div>
             </div>
@@ -241,11 +238,18 @@ export default {
         joinTeam: false,
       },
       playerList: [],
+      apply: {
+        teamname: "",
+        teamuid: 0,
+        comment: "",
+      },
     };
   },
   methods: {
     showTeam(TeamInfo) {
       this.teamData = TeamInfo
+      this.apply.teamname = this.teamData.team_name
+      this.apply.teamuid = this.teamData.uid
       this.modals.teamInfo = true
       const team_uid = new FormData();
       team_uid.append("uid", this.teamData.uid);
@@ -275,6 +279,24 @@ export default {
       }
       console.log(this)
     },
+    ApplyGo() {
+      console.log(this.apply)
+      console.log('team_uid', this.apply.teamuid)
+      console.log('user_uid', this.$cookies.get('UserInfo').uid)
+      console.log('comment', this.apply.comment)
+      const ApplyData = new FormData();
+      ApplyData.append('team_uid', this.apply.teamuid)
+      ApplyData.append('user_uid', this.$cookies.get('UserInfo').uid)
+      ApplyData.append('comment', this.apply.comment)
+      axios.post(SERVER_URL + "user/applyTeam/", ApplyData)
+        .then(res => {
+          console.log(res)
+          this.modals.joinTeam = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
 };
 </script>
