@@ -240,7 +240,7 @@ export default {
     choiceC(city) {
       this.teamData.cityPick = city.city_name
       this.teamData.pickCode = city.city_code
-      console.log(city)
+      console.log('C',city)
     },
     createTeam() {
       var createData = new FormData()
@@ -249,9 +249,21 @@ export default {
       createData.append('captain_uid', this.$cookies.get('UserInfo').uid)
       axios.post(SERVER_URL + "team/regist/", createData)
           .then((res) => {
-            console.log(res)
+            console.log('last',res)
             this.modals.create = false
-            this.$router.push({ name: "팀 프로필" })
+            var userform = new FormData()
+            userform.append('uid', this.$cookies.get('UserInfo').uid)
+            axios.post(SERVER_URL + "user/detail2/", userform)
+              .then((res) => {
+                console.log(res.data)
+                this.$cookies.remove('UserInfo')
+                this.$cookies.set('UserInfo', res.data)
+                console.log(this.$cookies.get('UserInfo'))
+                this.$router.push({ name: "팀 프로필" })
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
