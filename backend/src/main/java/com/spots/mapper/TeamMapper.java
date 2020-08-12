@@ -21,7 +21,7 @@ public interface TeamMapper {
 
 	public int deleteTeam(int uid);
 
-	public List<TeamInfo> listTeam();
+	public List<TeamInfo> listTeam(String where);
 
 	public List<ApplyTeamInfo> applyList(int team_uid);
 

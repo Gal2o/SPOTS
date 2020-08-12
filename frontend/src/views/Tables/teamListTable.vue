@@ -209,15 +209,7 @@ export default {
         this.haveTeam = true
       }
     }
-    axios
-      .get(SERVER_URL + "team/list")
-      .then((res) => {
-        this.FreerankData = res.data;
-        console.log(this.FreerankData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.TeamList("")
   },
   props: {
     type: {

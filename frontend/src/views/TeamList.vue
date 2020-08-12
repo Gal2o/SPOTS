@@ -149,8 +149,6 @@ export default {
         this.cityDatas = res.data;
         this.teamData.stateDatas = res.data;
         this.teamData.stateDatas.unshift({
-          city_code: null,
-          city_name: null,
           dong_code: null,
           dong_name: null,
           state_code: "0000000000",
@@ -202,6 +200,7 @@ export default {
     },
     choice2(city) {
       this.stateN = city.city_name;
+      this.TeamList("where city_code like '"+city.city_code.substring(0,4)+"%'");
     },
 
 
@@ -209,6 +208,11 @@ export default {
       const stateForm = new FormData();
       b = String(b);
       stateForm.append("state_code", b);
+      if (b == "0000000000") {
+        this.TeamList("");
+      }else{
+        this.TeamList("where city_code like '"+b.substring(0,2)+"%'");
+      }
       axios
         .post(SERVER_URL + "cityList", stateForm)
         .then((res) => {
@@ -268,7 +272,20 @@ export default {
           .catch((err) => {
             console.log(err);
           });
-    }
+    },
+    TeamList(where) {
+      var WhereData = new FormData();
+      where = String(where)
+      WhereData.append('where', where)
+      axios.post(SERVER_URL + "team/list/", WhereData)
+        .then(res => {
+          console.log(res)
+          this.FreerankData = res.data;
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
   mounted() {},
 };
