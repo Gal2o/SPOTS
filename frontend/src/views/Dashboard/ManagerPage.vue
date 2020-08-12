@@ -543,6 +543,16 @@ export default {
       .catch((err) => {
         console.log(err);
       })
+      
+      const MVPdata = new FormData();
+      MVPdata.append("uid", this.$route.params.uid);
+      MVPdata.append('mvp',1);
+      axios.post(SERVER_URL + 'matchEnd/', MVPdata)
+      .then(res => {
+        console.log(res)
+      })
+
+
        for (var a=0; a<this.RedtableDatas.length; a++) {
         const MatchData = new FormData();
         MatchData.append('uid', this.RedtableDatas[a].uid)

@@ -28,7 +28,7 @@
           <th></th>
         </template>
 
-        <template slot-scope="{ row }">
+        <template slot-scope="{ row }" v-if="FreeTable.mvp != 1">
           <th scope="row">
             <div class="media align-items-center">
               <div class="media-body">
