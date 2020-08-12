@@ -170,7 +170,7 @@
                     <label><b>팀 소개</b></label>
                       <textarea
                         rows="4"
-                        class="form-control form-control-alternative"
+                        class="form-control form-control-alternative text-default"
                         placeholder="A few words about you ..."
                         v-model="model.team_intro"
                       >
@@ -179,11 +179,14 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-around mt-3">
-                  <base-button type="info" size="lg">
+                  <base-button type="info" size="lg" @click="ModifyTeam" v-if="isHeader">
                     <h3 class="text-white mb-0">팀정보 수정</h3>
                   </base-button>
-                  <base-button type="success" size="lg" @click="modals.applyList = true">
+                  <base-button type="success" size="lg" @click="modals.applyList = true" v-if="isHeader">
                     <h3 class="text-white mb-0">가입신청서 확인</h3>
+                  </base-button>
+                  <base-button type="danger" size="lg" @click="OutTeam" v-if="!isHeader">
+                    <h3 class="text-white mb-0">탈퇴</h3>
                   </base-button>
                 </div>
               </form>
@@ -212,19 +215,18 @@
         <div class="table-responsive">
           <base-table
             class="table align-items-center table-flush"
-            :class="type === 'dark' ? 'table-dark' : ''"
-            :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
             tbody-classes="list"
-            :data="FreerankData"
+            :data="applyPlayer"
           >
             <template slot="columns">
               <th>이름</th>
               <th>경기수</th>
               <th>승률</th>
-              <th>골</th>
-              <th>도움</th>
+              <th>골 / 도움</th>
+              <th>한마디</th>
               <th></th>
             </template>
+
             <template slot-scope="{ row }">
               <th scope="row">
                 <div class="media align-items-center">
@@ -240,49 +242,33 @@
                 <span class="status">{{ row.rate }}%</span>
               </td>
               <td>
-                <span class="status">{{ row.goal }}</span>
-              </td>
+                <span class="status">{{ row.goal }} / {{ row.assist }}</span>
+              </td> 
               <td>
-                <span class="status">{{ row.assist }}</span>
+                <span class="status">{{ row.comment }}</span>
               </td>              
               <td class="text-right">
-                <base-button type="success" size="s" @click="showTeam(row)">
-                  <h2 class="text-white">더보기</h2>
+                <base-button type="primary" size="sm">
+                  <h2 class="text-white">승인</h2>
+                </base-button>
+                <base-button type="danger" size="sm">
+                  <h2 class="text-white">취소</h2>
                 </base-button>
               </td>
             </template>
           </base-table>
         </div>
-        <!-- <template>
-          <div class="text-center text-muted mb-4">
-            <h1>가입신청서 리스트</h1>
-          </div>
-          
-          <div class="row">
-            <div class="col">
-              <div class="card-profile-stats d-flex justify-content-center">
-                <div>
-                  <span class="description">이름</span>
-                  <span class="heading">{{ applyPlayer.nickname }}</span>
-                </div>
-                <div>
-                  <span class="description">게임수</span>
-                  <span class="heading">{{ applyPlayer.win + applyPlayer.lose + applyPlayer.draw }}</span>
-                </div>
-                <div>
-                  <span class="description">승률</span>
-                  <span class="heading">{{ player.rate }}</span>
-                </div>
-                <div>
-                  <base-button type="success" size="s" @click="modalSwitch(1)">
-                    <h2 class="text-white">더보기</h2>
-                  </base-button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template> -->
       </card>
+    </modal>
+
+    <modal :show.sync="modals.modifysucess">
+      <h2 slot="header" class="modal-title text-center">변경 성공</h2>
+
+      <p>입력하신 정보가 성공적으로 변경되었습니다.</p>
+
+      <template slot="footer">
+        <base-button type="link" class="mx-auto" @click="modalSwitch(4)">닫기</base-button>
+      </template>
     </modal>
   </div>
 </template>
@@ -293,6 +279,7 @@ export default {
   name: "user-profile",
   data() {
     return {
+      isHeader: false,
       model: {
         team_name: "",
         team_intro: "",
@@ -305,11 +292,12 @@ export default {
         player_num: "",
       },
       player: Object,
-      apply: Object,
-      applyPlayer: Object,
+      apply: [],
+      applyPlayer: [],
       modals: {
         applyList: false,
         applyDetail: false,
+        modifysucess: false,
       },
       teamData: {
         stateDatas: [],
@@ -327,6 +315,10 @@ export default {
       .post(SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
+        if (res.data.captain_uid == this.cookies.get('UserInfo').uid) {
+          this.isHeader = true
+        }
+        console.log('this.model', this.model)
       })  
       .catch((err) => {
         console.log(err);
@@ -344,7 +336,22 @@ export default {
       .post(SERVER_URL + "team/applyList/", data)
       .then((res) => {
         console.log('apply',res.data);
-        this.apply = res.data;
+        let applySub = res.data;
+        for(var i=0; i < applySub.length; i++) {
+          var j = i
+          var userForm = new FormData()
+          userForm.append('uid', applySub[i].user_uid)
+          axios.post(SERVER_URL + 'user/detail2/', userForm)
+            .then(res => {
+              var applyData = res.data
+              applyData.comment = applySub[j].comment
+              console.log('applyData', applyData);
+              this.applyPlayer.push(applyData)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
       })  
       .catch((err) => {
         console.log(err);
@@ -383,6 +390,9 @@ export default {
       } else if (switchData == 3) {
         this.modals.applyList = false
         this.modals.applyDetail = false
+      } else if (switchData == 4) {
+        this.modals.modifysucess = false
+          .then(window.location.reload())
       }
       console.log(this)
     },
@@ -435,6 +445,28 @@ export default {
       this.teamData.pickCode = city.city_code
       console.log('C',city)
     },
+    ModifyTeam() {
+      var modifyForm = new FormData()
+      modifyForm.append('captain_uid', this.model.captain_uid)
+      modifyForm.append('city_code', this.model.city_code)
+      modifyForm.append('player_num', this.model.player_num)
+      modifyForm.append('team_draw', this.model.team_draw)
+      modifyForm.append('team_intro', this.model.team_intro)
+      modifyForm.append('team_lose', this.model.team_lose)
+      modifyForm.append('team_name', this.model.team_name)
+      modifyForm.append('team_rate', this.model.team_rate)
+      modifyForm.append('team_win', this.model.team_win)
+      modifyForm.append('uid', this.model.uid)
+      axios.post(SERVER_URL + 'team/modify/', modifyForm)
+        .then(() => {
+          console.log('sucess')
+          this.modals.modifysucess = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    OutTeam() {},
   },
 };
 </script>
