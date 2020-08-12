@@ -212,19 +212,18 @@
         <div class="table-responsive">
           <base-table
             class="table align-items-center table-flush"
-            :class="type === 'dark' ? 'table-dark' : ''"
-            :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
             tbody-classes="list"
-            :data="FreerankData"
+            :data="applyPlayer"
           >
             <template slot="columns">
               <th>이름</th>
               <th>경기수</th>
               <th>승률</th>
-              <th>골</th>
-              <th>도움</th>
+              <th>골 / 도움</th>
+              <th>한마디</th>
               <th></th>
             </template>
+
             <template slot-scope="{ row }">
               <th scope="row">
                 <div class="media align-items-center">
@@ -240,48 +239,22 @@
                 <span class="status">{{ row.rate }}%</span>
               </td>
               <td>
-                <span class="status">{{ row.goal }}</span>
-              </td>
+                <span class="status">{{ row.goal }} / {{ row.assist }}</span>
+              </td> 
               <td>
-                <span class="status">{{ row.assist }}</span>
+                <span class="status">{{ row.comment }}</span>
               </td>              
               <td class="text-right">
-                <base-button type="success" size="s" @click="showTeam(row)">
-                  <h2 class="text-white">더보기</h2>
+                <base-button type="primary" size="sm" @click="showTeam(row)">
+                  <h2 class="text-white">승인</h2>
+                </base-button>
+                <base-button type="danger" size="sm" @click="showTeam(row)">
+                  <h2 class="text-white">취소</h2>
                 </base-button>
               </td>
             </template>
           </base-table>
         </div>
-        <!-- <template>
-          <div class="text-center text-muted mb-4">
-            <h1>가입신청서 리스트</h1>
-          </div>
-          
-          <div class="row">
-            <div class="col">
-              <div class="card-profile-stats d-flex justify-content-center">
-                <div>
-                  <span class="description">이름</span>
-                  <span class="heading">{{ applyPlayer.nickname }}</span>
-                </div>
-                <div>
-                  <span class="description">게임수</span>
-                  <span class="heading">{{ applyPlayer.win + applyPlayer.lose + applyPlayer.draw }}</span>
-                </div>
-                <div>
-                  <span class="description">승률</span>
-                  <span class="heading">{{ player.rate }}</span>
-                </div>
-                <div>
-                  <base-button type="success" size="s" @click="modalSwitch(1)">
-                    <h2 class="text-white">더보기</h2>
-                  </base-button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template> -->
       </card>
     </modal>
   </div>
@@ -305,8 +278,8 @@ export default {
         player_num: "",
       },
       player: Object,
-      apply: Object,
-      applyPlayer: Object,
+      apply: [],
+      applyPlayer: [],
       modals: {
         applyList: false,
         applyDetail: false,
@@ -344,7 +317,22 @@ export default {
       .post(SERVER_URL + "team/applyList/", data)
       .then((res) => {
         console.log('apply',res.data);
-        this.apply = res.data;
+        let applySub = res.data;
+        for(var i=0; i < applySub.length; i++) {
+          var j = i
+          var userForm = new FormData()
+          userForm.append('uid', applySub[i].user_uid)
+          axios.post(SERVER_URL + 'user/detail2/', userForm)
+            .then(res => {
+              var applyData = res.data
+              applyData.comment = applySub[j].comment
+              console.log('applyData', applyData);
+              this.applyPlayer.push(applyData)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
       })  
       .catch((err) => {
         console.log(err);
