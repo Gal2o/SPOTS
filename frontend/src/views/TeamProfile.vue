@@ -170,7 +170,7 @@
                     <label><b>팀 소개</b></label>
                       <textarea
                         rows="4"
-                        class="form-control form-control-alternative"
+                        class="form-control form-control-alternative text-default"
                         placeholder="A few words about you ..."
                         v-model="model.team_intro"
                       >
@@ -179,7 +179,7 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-around mt-3">
-                  <base-button type="info" size="lg">
+                  <base-button type="info" size="lg" @click="ModifyTeam">
                     <h3 class="text-white mb-0">팀정보 수정</h3>
                   </base-button>
                   <base-button type="success" size="lg" @click="modals.applyList = true">
@@ -245,10 +245,10 @@
                 <span class="status">{{ row.comment }}</span>
               </td>              
               <td class="text-right">
-                <base-button type="primary" size="sm" @click="showTeam(row)">
+                <base-button type="primary" size="sm">
                   <h2 class="text-white">승인</h2>
                 </base-button>
-                <base-button type="danger" size="sm" @click="showTeam(row)">
+                <base-button type="danger" size="sm">
                   <h2 class="text-white">취소</h2>
                 </base-button>
               </td>
@@ -256,6 +256,16 @@
           </base-table>
         </div>
       </card>
+    </modal>
+
+    <modal :show.sync="modals.modifysucess">
+      <h2 slot="header" class="modal-title text-center">변경 성공</h2>
+
+      <p>입력하신 정보가 성공적으로 변경되었습니다.</p>
+
+      <template slot="footer">
+        <base-button type="link" class="mx-auto" @click="modalSwitch(4)">닫기</base-button>
+      </template>
     </modal>
   </div>
 </template>
@@ -283,6 +293,7 @@ export default {
       modals: {
         applyList: false,
         applyDetail: false,
+        modifysucess: false,
       },
       teamData: {
         stateDatas: [],
@@ -300,6 +311,7 @@ export default {
       .post(SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
+        console.log('this.model', this.model)
       })  
       .catch((err) => {
         console.log(err);
@@ -371,6 +383,9 @@ export default {
       } else if (switchData == 3) {
         this.modals.applyList = false
         this.modals.applyDetail = false
+      } else if (switchData == 4) {
+        this.modals.modifysucess = false
+          .then(window.location.reload())
       }
       console.log(this)
     },
@@ -423,6 +438,27 @@ export default {
       this.teamData.pickCode = city.city_code
       console.log('C',city)
     },
+    ModifyTeam() {
+      var modifyForm = new FormData()
+      modifyForm.append('captain_uid', this.model.captain_uid)
+      modifyForm.append('city_code', this.model.city_code)
+      modifyForm.append('player_num', this.model.player_num)
+      modifyForm.append('team_draw', this.model.team_draw)
+      modifyForm.append('team_intro', this.model.team_intro)
+      modifyForm.append('team_lose', this.model.team_lose)
+      modifyForm.append('team_name', this.model.team_name)
+      modifyForm.append('team_rate', this.model.team_rate)
+      modifyForm.append('team_win', this.model.team_win)
+      modifyForm.append('uid', this.model.uid)
+      axios.post(SERVER_URL + 'team/modify/', modifyForm)
+        .then(() => {
+          console.log('sucess')
+          this.modals.modifysucess = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
 };
 </script>
