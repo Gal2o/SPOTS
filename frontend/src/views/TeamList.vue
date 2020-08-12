@@ -190,7 +190,7 @@ export default {
         statePick: "",
         cityPick: "시(도)를 선택해 주세요.",
         pickCode: "",
-      },
+      },   
     };
   },
   methods: {

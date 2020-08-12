@@ -37,7 +37,7 @@
                                 <span class="text-muted">아이디를 기억합니다.</span>
                             </base-checkbox>
                             <div class="text-center">
-                                <base-button type="primary" class="my-4" @click="emitLoginSubmit">로그인하기</base-button>
+                                <base-button type="primary" class="my-4" @click="emitLoginSubmit" @Enterkeyup="emitLoginSubmit">로그인하기</base-button>
                             </div>
                         </form>
                     </div>

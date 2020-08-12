@@ -286,20 +286,7 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    TeamList(where) {
-      var WhereData = new FormData();
-      where = String(where)
-      WhereData.append('where', where)
-      axios.post(SERVER_URL + "team/list/", WhereData)
-        .then(res => {
-          console.log(res)
-          this.FreerankData = res.data;
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
+    }
   },
 };
 </script>

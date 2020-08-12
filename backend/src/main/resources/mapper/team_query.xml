@@ -9,14 +9,14 @@
 		VALUES(
 			#{team_name},#{team_intro},#{captain_uid},#{city_code},
 		);
-		update user set team_uid = LAST_INSERT_ID() where uid = #{captain_uid};
+		update user set team_uid = LAST_INSERT_ID() where uid = #{captain_uid};	
 	</insert>
 	<update id="modifyTeam">
 		update team 
 		   set 	 team_name 	= #{team_name}
 				,team_intro	= #{team_intro}			
-				,captain_uid	= #{captain_uid}
-				,city_code = #{captain_uid}			
+				,captain_uid = #{captain_uid}
+				,city_code = #{city_code}				
 		 where uid= #{uid}
 	</update>
 	<select id="detailTeam" resultType="com.spots.dto.TeamInfo">

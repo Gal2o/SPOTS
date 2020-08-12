@@ -10,11 +10,8 @@
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-12 col-md-10">
-            <h1 class="display-2 text-white">{{ model.team_name }}의 프로필</h1>
-            <p class="text-white mt-0 mb-5">
-              팀의 프로필 페이지입니다.
-              <br />팀의 정보 확인 및 수정이 가능합니다.
-            </p>
+            <h1 class="display-2 text-white">팀 {{ model.team_name }}</h1>
+            <p class="text-white mt-0 mb-5">팀의 정보 확인 및 수정이 가능합니다.</p>
           </div>
         </div>
       </div>
@@ -65,28 +62,33 @@
             <div class="card-body pt-0 pt-md-4">
               <div class="text-center">
                 <h3>선수 리스트</h3>
-                <div class="row">
-                  <div class="col">
-                    <div class="card-profile-stats d-flex justify-content-center">
-                      <div>
-                        <span class="description">이름</span>
-                        <span class="heading">{{ player.nickname }}</span>
-                      </div>
-                      <div>
-                        <span class="description">승</span>
-                        <span class="heading">{{ player.win }}</span>
-                      </div>
-                      <div>
-                        <span class="description">무</span>
-                        <span class="heading">{{ player.draw }}</span>
-                      </div>
-                      <div>
-                        <span class="description">패</span>
-                        <span class="heading">{{ player.lose }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <base-table
+                  class="table align-items-center table-flush table-borderless"
+                  tbody-classes="list"
+                  :data="player"
+                >
+                  <template slot="columns">
+                    <th>이름</th>
+                    <th>승리</th>
+                    <th>무승부</th>
+                    <th>패배</th>
+                  </template>
+
+                  <template slot-scope="{ row }">
+                    <th>
+                      <span class="status">{{ row.nickname }}</span>
+                    </th>
+                    <td>
+                      <span class="status">{{ row.win }}</span>
+                    </td>
+                    <td>
+                      <span class="status">{{ row.draw }}</span>
+                    </td>
+                    <td>
+                      <span class="status">{{ row.lose }}</span>
+                    </td>
+                  </template>
+                </base-table>
               </div>
             </div>
           </div>
@@ -105,67 +107,85 @@
               <form @submit.prevent>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-lg-6">
-                      <base-input
-                        alternative
-                        label="팀명"
-                        input-classes="form-control-alternative"
-                        v-model="model.team_name"
-                        readonly
-                      />
+                    <div class="col-lg-6 my-1">
+                      <label><b>팀명</b></label>
+                      <div class="bg-white border rounded px-1">
+                        <h3 class="align-middle m-2">{{ model.team_name }}</h3>
+                      </div>
                     </div>
-                    <div class="col-lg-6">
-                      <base-input
-                        alternative
-                        label="승률"
-                        placeholder="이메일을 입력해주세요"
-                        input-classes="form-control-alternative"
-                        v-model="model.team_rate"
-                        readonly
-                      />
+                    <div class="col-lg-6 my-1">
+                      <label><b>승률</b></label>
+                      <div class="bg-white border rounded px-1">
+                        <h3 class="align-middle m-2">{{ model.team_rate }}%</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-lg-4">
-                      <base-input
-                        alternative
-                        label="시"
-                        placeholder="시"
-                        input-classes="form-control-alternative"
-                        v-model="model.city"
-                      />
+                    <div class="col-lg-6 my-1">
+                      <label><b>시(도)</b></label>
+                      <div>
+                        <base-dropdown class="mr-3">
+                          <base-button slot="title" type="white" class="dropdown-toggle">
+                            {{ teamData.statePick }}
+                          </base-button>
+                          <a
+                            class="dropdown-item"
+                            v-for="sData in teamData.stateDatas"
+                            v-bind:key="sData"
+                            @click="choiceS(sData)"
+                            >{{ sData.state_name }}</a
+                          >
+                        </base-dropdown>
+                      </div>
                     </div>
-                    <div class="col-lg-4">
-                      <base-input
-                        alternative
-                        label="구"
-                        placeholder="구"
-                        input-classes="form-control-alternative"
-                        v-model="model.country"
-                      />
+                    <div class="col-lg-6 my-1">
+                      <label><b>구(시)</b></label>
+                      <div>
+                        <base-dropdown class="mr-3">
+                          <base-button slot="title" type="white" class="dropdown-toggle">
+                            {{ teamData.cityPick }}
+                          </base-button>
+                          <a
+                            class="dropdown-item"
+                            v-for="cData in teamData.cityDatas"
+                            v-bind:key="cData"
+                            @click="choiceC(cData)"
+                            >{{ cData.city_name }}</a
+                          >
+                        </base-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-12 my-1">
+                      <label><b>주소</b></label>
+                      <div class="bg-white border rounded px-1">
+                        <h3 class="align-middle m-2">{{ teamData.statePick }} {{ teamData.cityPick }}</h3>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="pl-lg-4">
-                  <div class="form-group">
-                    <base-input alternative label="팀 소개">
+                  <div class="form-group my-1">
+                    <label><b>팀 소개</b></label>
                       <textarea
                         rows="4"
                         class="form-control form-control-alternative"
                         placeholder="A few words about you ..."
                         v-model="model.team_intro"
                       >
-간략히 팀을 소개해 주세요
+                        간략히 팀을 소개해 주세요
                       </textarea>
-                    </base-input>
                   </div>
                 </div>
-                <a href="#!" class="btn btn-info">팀정보 수정</a>
-                <base-button type="success" size="lg" @click="modals.applyList = true">
-                  <h2 class="text-white">가입신청서 확인</h2>
-                </base-button>
+                <div class="d-flex justify-content-around mt-3">
+                  <base-button type="info" size="lg">
+                    <h3 class="text-white mb-0">팀정보 수정</h3>
+                  </base-button>
+                  <base-button type="success" size="lg" @click="modals.applyList = true">
+                    <h3 class="text-white mb-0">가입신청서 확인</h3>
+                  </base-button>
+                </div>
               </form>
             </template>
           </card>
@@ -181,9 +201,6 @@
                   class="border-0">
         <template>
           <div class="btn-wrapper text-center d-flex flex-row justify-content-end mb-3">
-            <base-button type="neutral" @click="modalSwitch(2)">
-                뒤로가기
-            </base-button>
             <base-button type="neutral" @click="modalSwitch(3)">
                 닫기
             </base-button>
@@ -293,7 +310,14 @@ export default {
       modals: {
         applyList: false,
         applyDetail: false,
-      }
+      },
+      teamData: {
+        stateDatas: [],
+        cityDatas: [],
+        statePick: "",
+        cityPick: "",
+        pickCode: "",
+      },
     };
   },
   created() {
@@ -317,11 +341,29 @@ export default {
         console.log(err);
       });
     axios
-      .post(SERVER_URL + "/team/applyList", data)
+      .post(SERVER_URL + "team/applyList/", data)
       .then((res) => {
-        console.log(res.data);
+        console.log('apply',res.data);
         this.apply = res.data;
       })  
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(SERVER_URL + "stateList")
+      .then((res) => {
+        this.cityDatas = res.data;
+        this.teamData.stateDatas = res.data;
+        this.teamData.stateDatas.unshift({
+          city_code: null,
+          city_name: null,
+          dong_code: null,
+          dong_name: null,
+          state_code: "0000000000",
+          state_name: "전체",
+        });
+        this.pickData()
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -343,6 +385,55 @@ export default {
         this.modals.applyDetail = false
       }
       console.log(this)
+    },
+    pickData() {      
+      var dummyState = this.model.city_code.slice(0, 2) + "00000000"
+      console.log('dummy', dummyState)
+      for(var i=0; i < this.teamData.stateDatas.length; i++) {
+        if (this.teamData.stateDatas[i].state_code == dummyState) {
+          this.teamData.statePick = this.teamData.stateDatas[i].state_name
+        }
+      }
+      console.log('o', this.teamData)
+      var Cityform = new FormData()
+      Cityform.append("state_code", dummyState);
+      axios.post(SERVER_URL + "cityList", Cityform)
+        .then((res) => {
+          this.teamData.cityDatas = res.data;
+          console.log('city', this.teamData.cityDatas)
+          for(var i=0; i < this.teamData.stateDatas.length; i++) {
+            if (this.teamData.cityDatas[i].city_code == this.model.city_code) {
+              this.teamData.cityPick = this.teamData.cityDatas[i].city_name
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    choiceS(state) {
+      console.log('state',state.state_name)
+      this.teamData.statePick = state.state_name
+      if (state.state_code == "0000000000") {
+        this.teamData.cityPick = "시(도)를 선택해 주세요.";
+        this.teamData.cityDatas = [];
+      } else {
+        var Cityform = new FormData()
+        Cityform.append("state_code", state.state_code);
+        axios.post(SERVER_URL + "cityList", Cityform)
+          .then((res) => {
+            this.teamData.cityDatas = res.data;
+            console.log('city', this.teamData.cityDatas)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+    choiceC(city) {
+      this.teamData.cityPick = city.city_name
+      this.teamData.pickCode = city.city_code
+      console.log('C',city)
     },
   },
 };

@@ -170,7 +170,7 @@
               <a class="dropdown-item" v-for="un in rowlist" 
               v-bind:key="un" @click="choicemvp(un, un.name)">{{un.name}}</a></base-dropdown></base-button>
                 <div class="text-center">
-                  <base-button class="mt-3" type="warning" @click="modal2 = false, mvppoint(mvp)" >제출</base-button>
+                  <base-button class="mt-3" type="warning" @click="modal2 = false, mvppoint()" >제출</base-button>
                   <base-button class="mt-3" type="secondary" @click="modal2 = false">닫기</base-button>
                 </div>
               </form>
@@ -179,7 +179,7 @@
           </card>
         </modal>
      <base-button block type="secondary" size="lg" class="col-2">{{this.winteam}} {{this.rgoal}} : {{this.bgoal}}</base-button>    
-    <base-button type="warning" size="lg" class="col-2 mr-4">평가 및 경기 마치기</base-button> 
+    <base-button type="warning" size="lg" class="col-2 mr-4" @click='submit'>평가 및 경기 마치기</base-button> 
   </div>
   </div>
 </template>
@@ -197,8 +197,10 @@ export default {
       rgoal:0,
       bgoal:0,
       mvp:"",
+      homewin:1,
       RedtableDatas: [],
       BluetableDatas: [],
+      persondata:[],
       wbl:"",
       dupoint : [],
       dumvp : [],
@@ -212,6 +214,7 @@ export default {
       teamList: [{ name: "RED" }, { name: "BLUE" }],
       posRedList: [],
       posBlueList: [],
+      pastuid : [],
       posNameList: [
         "defender1_uid",
         "defender2_uid",
@@ -227,7 +230,7 @@ export default {
         "striker3_uid",
         "striker4_uid",
       ],
-      score:[1,2,3,4,5,6,7,8,9,10],
+      score:[0,1,2,3,4,5,6,7,8,9,10],
       modal1:false,
       modal2:false,
      };
@@ -280,21 +283,50 @@ export default {
           this.dupoint.push(this.rowlist.uid);
           this.wbl="";
          }
+       for (var a=0; a<this.RedtableDatas.length; a++) {
+         if (this.RedtableDatas[a].uid == (this.rowlist.uid)) {
+           this.RedtableDatas[a].blacklist += 1;
+         }
+         else if (this.BluetableDatas[a].uid == (this.rowlist.uid)){
+           this.BluetableDatas[a].blacklist += 1;
+         }  
+      }
       }
     },
-    mvppoint(mvp) {
+    mvppoint() {
         if (this.dumvp.includes(this.mvplist.uid)) {
         return alert('이미 투표하셨습니다.')
         }
         else {
-          if (mvp != "") {
-            if (this.mvplist.mvp == null){
-            this.mvplist.mvp = 0;
-            }
-            this.mvplist.mvp += 1;
-            this.dumvp.push(this.mvplist.uid);
-            
+          this.mvplist.mvp = 0;
+          this.mvplist.mvp += 1;
+          if (this.dumvp.length != 0){
+            this.pastuid.push(this.dumvp[0].uid)
+            this.dumvp.pop(0)
           }
+          this.dumvp.push(this.mvplist.uid); 
+        }
+        for (var a=0; a<this.RedtableDatas.length; a++){
+          if (this.pastuid.length != 0){
+            if (this.RedtableDatas[a].uid == this.pastuid.uid) {
+              this.RedtableDatas[a].mvp -= 1
+              this.pastuid.pop(0)
+            }
+          }
+            if (this.RedtableDatas[a].uid == this.mvplist.uid) {
+              this.RedtableDatas[a].mvp += 1
+            }
+        }
+          for (a=0; a<this.BluetableDatas.length; a++){
+          if (this.pastuid.length != 0){
+            if (this.BluetableDatas[a].uid == this.pastuid.uid) {
+              this.BluetableDatas[a].mvp -= 1
+              this.pastuid.pop(0)
+            }
+          }
+            if (this.BluetableDatas[a].uid == this.mvplist.uid) {
+              this.BluetableDatas[a].mvp += 1
+            }
         }
     },
     UserEnter() {
@@ -362,8 +394,8 @@ export default {
         .then(res => {
           var Redsub = new Object
           Redsub.uid = res.data.uid
-          Redsub.goal = res.data.goal
-          Redsub.assist = res.data.assist
+          Redsub.goal = 0
+          Redsub.assist = 0
           Redsub.mvp = res.data.mvp
           Redsub.blacklist = res.data.blacklist
           Redsub.name = res.data.nickname
@@ -422,8 +454,8 @@ export default {
         .then(res => {
           var Bluesub = new Object
           Bluesub.uid = res.data.uid
-          Bluesub.goal = res.data.goal
-          Bluesub.assist = res.data.assist
+          Bluesub.goal = 0
+          Bluesub.assist = 0
           Bluesub.mvp = res.data.mvp
           Bluesub.blacklist = res.data.blacklist
           Bluesub.name = res.data.nickname
@@ -446,13 +478,90 @@ export default {
     wincheck(r,b) {
       if (r > b) {
         this.winteam = "레드팀 승리"
+        this.homewin = 3;
       }
       else if (r < b) {
         this.winteam = "블루팀 승리"
+        this.homewin = 0;
       }
       else {
         this.winteam = "무승부"
+        this.homewin = 1;
       }
+    },
+    submit() {
+      const FreeRoomData = new FormData();
+      FreeRoomData.append("uid", this.$route.params.uid);
+      axios
+      .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .then((res) => {
+       const MatchRoomData = new FormData();
+       MatchRoomData.append("uid", res.data[0].uid);
+       MatchRoomData.append("head_uid", res.data[0].head_uid);
+       MatchRoomData.append("home_matching_entry_uid", res.data[0].home_matching_entry_uid);
+       MatchRoomData.append("away_matching_entry_uid", res.data[0].away_matching_entry_uid); 
+       MatchRoomData.append("create_date", res.data[0].create_date);
+       MatchRoomData.append("matching_date", res.data[0].matching_date);
+       MatchRoomData.append("home_score", res.data[0].home_score);
+       MatchRoomData.append("away_score", res.data[0].away_score);
+       MatchRoomData.append("ready_num", res.data[0].ready_num);
+       MatchRoomData.append("place_uid", res.data[0].place_uid);
+       MatchRoomData.append("price", res.data[0].price);
+       MatchRoomData.append("head_price", res.data[0].head_price);
+       MatchRoomData.append("dong_code", res.data[0].dong_code);
+       MatchRoomData.append("title", res.data[0].title);
+       MatchRoomData.append("mvp", res.data[0].mvp);
+
+        if (this.homewin == 3){
+          axios.post(SERVER_URL + "FreeMatch/win", MatchRoomData)
+          .then((re1)=>{
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+        else if (this.homewin == 1){
+          axios.post(SERVER_URL + "FreeMatch/draw", MatchRoomData)
+          .then((re1)=>{
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+        else {
+          axios.post(SERVER_URL + "FreeMatch/lose", MatchRoomData)
+          .then((re1)=>{
+            console.log('re1', re1)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+       for (var a=0; a<this.RedtableDatas.length; a++) {
+        const MatchData = new FormData();
+        MatchData.append('uid', this.RedtableDatas[a].uid)
+        MatchData.append('goal', this.RedtableDatas[a].goal)
+        MatchData.append('assist', this.RedtableDatas[a].assist)
+        MatchData.append('mvp', this.RedtableDatas[a].mvp)
+        MatchData.append('blacklist', this.RedtableDatas[a].blacklist)
+         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
+        }
+        for (a=0; a<this.BluetableDatas.length; a++) {
+        const MatchData = new FormData();  
+        MatchData.append('uid', this.BluetableDatas[a].uid)
+        MatchData.append('goal', this.BluetableDatas[a].goal)
+        MatchData.append('assist', this.BluetableDatas[a].assist)
+        MatchData.append('mvp', this.BluetableDatas[a].mvp)
+        MatchData.append('blacklist', this.BluetableDatas[a].blacklist)
+         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
+        }
+       
     },
   },
   mounted() {},
