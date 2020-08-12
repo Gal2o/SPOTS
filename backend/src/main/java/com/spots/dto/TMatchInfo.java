@@ -19,7 +19,18 @@ public class TMatchInfo {
 	private int head_price;
 	private String dong_code;
 	private String title;
+	private int mvp;
 	
+	
+	
+	public int getMvp() {
+		return mvp;
+	}
+
+	public void setMvp(int mvp) {
+		this.mvp = mvp;
+	}
+
 	public TMatchInfo() {}
 	
 	public TMatchInfo(int uid, int head_uid, int home_team_uid, int away_team_uid, int home_matching_entry_uid, int away_matching_entry_uid, String create_date,

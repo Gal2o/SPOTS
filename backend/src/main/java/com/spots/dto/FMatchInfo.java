@@ -17,6 +17,17 @@ public class FMatchInfo {
 	private int head_price;
 	private String dong_code;
 	private String title;
+	private int mvp;
+	
+	
+	
+	public int getMvp() {
+		return mvp;
+	}
+
+	public void setMvp(int mvp) {
+		this.mvp = mvp;
+	}
 	
 	public FMatchInfo() {}
 	
