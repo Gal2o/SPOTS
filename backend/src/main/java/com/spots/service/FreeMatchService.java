@@ -17,4 +17,6 @@ public interface FreeMatchService {
 	public void FRoomUpdate(FMatchInfo info);
 
 	public List<FMatchInfo> FRoomCheck(int head_uid);
+
+	public int matchEnd(int uid, int mvp);
 }

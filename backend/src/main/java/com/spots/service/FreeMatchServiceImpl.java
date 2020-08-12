@@ -45,6 +45,11 @@ public class FreeMatchServiceImpl implements FreeMatchService {
 		return mapper.FRoomCheck(head_uid);
 	}
 
+	@Override
+	public int matchEnd(int uid, int mvp) {
+		return mapper.matchEnd(uid, mvp);
+	}
+
 
 	
 	
