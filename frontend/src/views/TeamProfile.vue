@@ -185,7 +185,7 @@
                   <base-button type="success" size="lg" @click="modals.applyList = true" v-if="isHeader">
                     <h3 class="text-white mb-0">가입신청서 확인</h3>
                   </base-button>
-                  <base-button type="danger" size="lg" @click="OutTeam" v-if="!isHeader">
+                  <base-button type="danger" size="lg" @click="modals.teamout = true" v-if="!isHeader">
                     <h3 class="text-white mb-0">탈퇴</h3>
                   </base-button>
                 </div>
@@ -270,6 +270,31 @@
         <base-button type="link" class="mx-auto" @click="modalSwitch(4)">닫기</base-button>
       </template>
     </modal>
+
+    <modal
+        :show.sync="modals.teamout"
+        gradient="danger"
+        modal-classes="modal-danger modal-dialog-centered"
+      >
+      <div class="py-3 text-center">
+        <i class="ni ni-bell-55 ni-3x"></i>
+        <h4 class="heading mt-4">정말 팀을 탈퇴하시겠습니까?</h4>
+        <p>팀을 탈퇴하시면 팀리스트 페이지로 이동합니다.<br>
+        탈퇴하지 않는다면 아니오를 눌러 주세요.</p>
+      </div>
+
+      <template slot="footer">
+        <router-link to="/login">
+          <base-button type="white" @click="OutTeam">탈퇴하기</base-button>
+        </router-link>
+        <base-button
+          type="link"
+          text-color="white"
+          class="ml-auto"
+          @click="modals.teamout = false"
+        >아니오</base-button>
+      </template>
+    </modal>
   </div>
 </template>
 <script>
@@ -298,6 +323,7 @@ export default {
         applyList: false,
         applyDetail: false,
         modifysucess: false,
+        teamout: false,
       },
       teamData: {
         stateDatas: [],
@@ -315,7 +341,8 @@ export default {
       .post(SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
-        if (res.data.captain_uid == this.cookies.get('UserInfo').uid) {
+        console.log('check' ,res.data.captain_uid, this.$cookies.get('UserInfo').uid)
+        if (res.data.captain_uid == this.$cookies.get('UserInfo').uid) {
           this.isHeader = true
         }
         console.log('this.model', this.model)
@@ -466,7 +493,20 @@ export default {
           console.log(err)
         })
     },
-    OutTeam() {},
+    OutTeam() {
+      console.log('uid', this.$cookies.get('UserInfo').uid)
+      console.log('team_uid', this.model.uid)
+      var OutForm = new FormData()
+      OutForm.append('uid', this.$cookies.get('UserInfo').uid)
+      OutForm.append('team_uid', this.model.uid)
+      axios.post(SERVER_URL + 'user/outTeam', OutForm)
+        .then(() => {
+          console.log('outsuccess')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
 };
 </script>
