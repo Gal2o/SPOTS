@@ -178,8 +178,10 @@
             </template>
           </card>
         </modal>
-     <base-button block type="secondary" size="lg" class="col-2">{{this.winteam}} {{this.rgoal}} : {{this.bgoal}}</base-button>    
+     <base-button block type="secondary" size="lg" class="col-2">{{this.winteam}} {{this.rgoal}} : {{this.bgoal}}</base-button>
+     <router-link to="/dashboard">  
     <base-button type="warning" size="lg" class="col-2 mr-4" @click='submit'>평가 및 경기 마치기</base-button> 
+    </router-link>
   </div>
   </div>
 </template>

@@ -28,7 +28,7 @@
           <th></th>
         </template>
 
-        <template slot-scope="{ row }" v-if="FreeTable.mvp != 1">
+        <template slot-scope="{ row }" >
           <th scope="row">
             <div class="media align-items-center">
               <div class="media-body">
@@ -234,7 +234,12 @@ export default {
       .get(SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
-        console.log(this.FreetableData)
+        console.log('free3',this.FreetableData)
+        for (var a=0; a<this.FreetableData.length; a++){
+          if (this.FreetableData[a].mvp == 1 ){
+            this.FreetableData.splice(a,1)    
+          }
+        }
         this.FreeTable = this.FreetableData.slice(0, 5);
       })
       .catch((err) => {
