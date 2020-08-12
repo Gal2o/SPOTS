@@ -43,5 +43,7 @@ public interface MatchMapper {
 
 	List<FMatchInfo> FRoomCheck(@Param("head_uid") int head_uid);
 
+	int matchEnd(int uid, int mvp);
+
 
 }

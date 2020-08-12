@@ -141,4 +141,10 @@ public class MatchController {
 
       return FreeMatch.FListRoom(info.getUid());
    }
+   
+   @PostMapping(value = "/matchEnd")
+   public int matchEnd(@RequestParam int uid, @RequestParam int mvp) {
+
+      return FreeMatch.matchEnd(uid, mvp);
+   }
 }

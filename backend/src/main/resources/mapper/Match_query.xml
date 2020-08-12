@@ -105,4 +105,9 @@
     <update id="FRoomModify">
     
     </update>
+    
+    <update id="matchEnd">
+    	update free_matching set mvp = #{mvp} where uid= #{uid}
+    </update>
+    
 </mapper>
