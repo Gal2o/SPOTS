@@ -179,11 +179,14 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-around mt-3">
-                  <base-button type="info" size="lg" @click="ModifyTeam">
+                  <base-button type="info" size="lg" @click="ModifyTeam" v-if="isHeader">
                     <h3 class="text-white mb-0">팀정보 수정</h3>
                   </base-button>
-                  <base-button type="success" size="lg" @click="modals.applyList = true">
+                  <base-button type="success" size="lg" @click="modals.applyList = true" v-if="isHeader">
                     <h3 class="text-white mb-0">가입신청서 확인</h3>
+                  </base-button>
+                  <base-button type="danger" size="lg" @click="OutTeam" v-if="!isHeader">
+                    <h3 class="text-white mb-0">탈퇴</h3>
                   </base-button>
                 </div>
               </form>
@@ -276,6 +279,7 @@ export default {
   name: "user-profile",
   data() {
     return {
+      isHeader: false,
       model: {
         team_name: "",
         team_intro: "",
@@ -311,6 +315,9 @@ export default {
       .post(SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
+        if (res.data.captain_uid == this.cookies.get('UserInfo').uid) {
+          this.isHeader = true
+        }
         console.log('this.model', this.model)
       })  
       .catch((err) => {
@@ -458,7 +465,8 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    }
+    },
+    OutTeam() {},
   },
 };
 </script>
