@@ -29,7 +29,7 @@
 		where team_uid = #{uid}
 	</delete>
 	<select id="listTeam" resultType="com.spots.dto.TeamInfo">
-		select * from team
+		select * from team ${where}
 	</select>
 	<select id="userList" resultType="com.spots.dto.UserInfo">
 		select * from user where team_uid = #{uid}
@@ -37,18 +37,6 @@
 	
 	<select id="applyList" resultType="com.spots.dto.ApplyTeamInfo">
 		select * from apply_team where team_uid = #{team_uid}
-	</select>
-	
-	<select id="searchTeam" resultType="com.spots.dto.TeamInfo">
-		select * from team WHERE team_name like concat('%',concat(#{text},'%'))
-	</select>
-	
-	<select id="searchState" resultType="com.spots.dto.TeamInfo">
-		select * from team WHERE city_code like concat(#{state_code},'%'))
-	</select>
-	
-	<select id="searchCity" resultType="com.spots.dto.TeamInfo">
-		select * from team WHERE city_code like concat(#{city_code},'%'))
 	</select>
 </mapper>
 

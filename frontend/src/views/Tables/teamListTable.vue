@@ -103,36 +103,28 @@
         <template>
           <table class="m-3">
             <tr>
-              <th>팀명 :</th>
-              <th>{{ teamData.team_name }}</th>
+              <th>팀명 : {{ teamData.team_name }}</th>
             </tr>
             <tr>
-              <th>팀소개 :</th>
-              <th>{{ teamData.team_intro }}</th>
+              <th>팀소개 : {{ teamData.team_intro }}</th>
             </tr>
             <tr>
-              <th>인원 :</th>
-              <th>{{ teamData.player_num }}명</th>
+              <th>인원 : {{ teamData.player_num }}명</th>
             </tr>
             <tr>
-              <th>팀전적 :</th>
-              <th>{{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
+              <th>팀전적 : {{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
             </tr>
             <tr>
-              <th>승률 :</th>
-              <th>{{ teamData.team_rate }}</th>
+              <th>승률 : {{ teamData.team_rate }}%</th>
             </tr>
             <tr>
-              <th>팀 멤버 :</th>
+              <th>팀장 : {{ headPlayer }} </th>
             </tr>
           </table>
           <!-- isLogined를 신청상태인지확인 -->
           <div class="text-center d-flex flex-row justify-content-between">
-            <base-button v-if="isLogined" type="success" size="lg" @click="modalSwitch(1)">
+            <base-button v-if="isLogined && !haveTeam" type="success" size="lg" @click="modalSwitch(1)">
               <h2 class="text-white">가입하기</h2>
-            </base-button>
-            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.teamInfo = false">
-              <h2 class="text-white">가입취소</h2>
             </base-button>
             <base-button type="secondary" size="lg" @click="modals.teamInfo = false">
               <h2 class="text-dark">닫기</h2>
@@ -171,24 +163,21 @@
             <div class="mb-3">
               <label>팀명</label>
               <base-input alternative
-                addon-left-icon="ni ni-paper-diploma">
-              </base-input>
-            </div>
-            <div class="mb-3">
-              <label>유저명</label>
-              <base-input alternative
-                addon-left-icon="ni ni-single-02">
+                addon-left-icon="ni ni-paper-diploma"
+                v-model="apply.teamname"
+                readonly>
               </base-input>
             </div>
             <div class="mb-3">
               <label>가입신청 내용</label>              
               <textarea alternative
                 rows="4" style="width:100%; resize:none"
+                v-model="apply.comment"
                 class="rounded">
               </textarea>
               <div class="text-center d-flex flex-row justify-content-center">
-                <base-button size="lg" @click="modals.joinTeam = true">
-                  <h2 class="text-white">신청완료</h2>
+                <base-button size="lg" @click="ApplyGo">
+                  <h2 class="text-white">신청하기</h2>
                 </base-button>
               </div>
             </div>
@@ -214,16 +203,13 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
+      console.log('pp',this.$cookies.get("UserInfo"))
+      if (this.$cookies.get("UserInfo").team_uid > 0) {
+        console.log('pp',this.$cookies.get("UserInfo").team_uid)
+        this.haveTeam = true
+      }
     }
-    axios
-      .get(SERVER_URL + "team/list")
-      .then((res) => {
-        this.FreerankData = res.data;
-        console.log(this.FreerankData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.TeamList("")
   },
   props: {
     type: {
@@ -232,6 +218,8 @@ export default {
   },
   data() {
     return {
+      isLogined: false,
+      haveTeam: false,
       FreerankData: [],
       title: "팀 리스트",
       teamData: Object,
@@ -239,13 +227,37 @@ export default {
         loginalert: false,
         teamInfo: false,
         joinTeam: false,
-      }
+      },
+      headPlayer: "",
+      apply: {
+        teamname: "",
+        teamuid: 0,
+        comment: "",
+      },
     };
   },
   methods: {
     showTeam(TeamInfo) {
       this.teamData = TeamInfo
+      this.apply.teamname = this.teamData.team_name
+      this.apply.teamuid = this.teamData.uid
       this.modals.teamInfo = true
+      const team_uid = new FormData();
+      team_uid.append("uid", this.teamData.uid);
+      axios.post(SERVER_URL + "/team/userList", team_uid)
+        .then((res) => {
+          console.log('user',res.data);
+          var player = res.data;
+          for(var i=0; i < player.length; i++) {
+            if (this.teamData.captain_uid == player[i].uid) {
+              this.headPlayer = player[i].nickname
+            }
+          }
+          console.log(this.playerList)
+        })  
+        .catch((err) => {
+          console.log(err);
+        });
     },
     modalSwitch(switchData) {
       if (switchData == 1) {
@@ -259,6 +271,34 @@ export default {
         this.modals.joinTeam = false
       }
       console.log(this)
+    },
+    ApplyGo() {
+      console.log(this.apply)
+      var ApplyData = new FormData();
+      ApplyData.append('team_uid', this.apply.teamuid)
+      ApplyData.append('user_uid', this.$cookies.get('UserInfo').uid)
+      ApplyData.append('comment', this.apply.comment)
+      axios.post(SERVER_URL + "user/applyTeam/", ApplyData)
+        .then(res => {
+          console.log(res)
+          this.modals.joinTeam = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    TeamList(where) {
+      var WhereData = new FormData();
+      where = String(where)
+      WhereData.append('where', where)
+      axios.post(SERVER_URL + "team/list/", WhereData)
+        .then(res => {
+          console.log(res)
+          this.FreerankData = res.data;
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
   },
 };

@@ -37,8 +37,8 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	}
 
 	@Override
-	public List<TeamInfo> listTeam() {
-		return mapper.listTeam();
+	public List<TeamInfo> listTeam(String where) {
+		return mapper.listTeam(where);
 	}
 
 	@Override
@@ -49,21 +49,6 @@ public class TeamInfoServiceImpl implements TeamInfoService {
 	@Override
 	public List<UserInfo> userList(int uid) {
 		return mapper.userList(uid);
-	}
-
-	@Override
-	public List<UserInfo> searchTeam(String text) {
-		return mapper.searchTeam(text);
-	}
-
-	@Override
-	public List<UserInfo> searchState(String state_code) {
-		return mapper.searchState(state_code);
-	}
-
-	@Override
-	public List<UserInfo> searchCity(String city_code) {
-		return mapper.searchCity(city_code);
 	}
 	
 
