@@ -23,7 +23,7 @@
           </div>
           <div v-if="isLogined" class="media align-items-center" slot="title">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
+              <img alt="Image placeholder" :src="imgurl" />
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm font-weight-bold">{{ userInfo.nickname }}</span>
@@ -77,6 +77,7 @@ export default {
       searchQuery: "",
       isLogined: false,
       userInfo: Object,
+      imgurl: "",
     };
   },
   methods: {
@@ -106,6 +107,8 @@ export default {
         this.userInfo = this.$cookies.get('UserInfo')
         console.log(this.userInfo)
     }
+    var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
+    this.imgurl = 'img/userLogo/'+ logonum +'.png'
   }
 };
 </script>

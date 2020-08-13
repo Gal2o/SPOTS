@@ -402,7 +402,8 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    this.imgurl = 'img/teamLogo/club_logo ('+ this.$cookies.get("UserInfo").team_uid +').jpg'
+    var logonum = ((this.$cookies.get("UserInfo").team_uid-52)%40)+1
+    this.imgurl = 'img/teamLogo/club_logo ('+ logonum +').jpg'
   },
   methods: {
     showTeam(TeamInfo) {
