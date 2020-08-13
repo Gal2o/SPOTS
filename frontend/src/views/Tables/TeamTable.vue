@@ -206,8 +206,7 @@
 import axios from "axios";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-
-const SERVER_URL = "http://localhost:8080/";
+const SERVER_URL = "http://localhost:8080/spots";
 
 export default {
   name: "projects-table",
@@ -304,6 +303,7 @@ export default {
         makeData.append("title", this.title);
         makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
+        makeData.append("home_team_uid", this.userInfo.team_uid);
         makeData.append("price", this.placeprice);
         makeData.append("dong_code", this.placecode);
         makeData.append("head_uid", this.userInfo.uid);
