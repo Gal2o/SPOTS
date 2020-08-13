@@ -249,7 +249,7 @@
               </td>              
               <td class="text-right">
                 <base-button type="primary" size="sm">
-                  <h2 class="text-white">승인</h2>
+                  <h2 class="text-white" @click="JoinTeam(row.uid)">승인</h2>
                 </base-button>
                 <base-button type="danger" size="sm">
                   <h2 class="text-white">취소</h2>
@@ -502,6 +502,19 @@ export default {
       axios.post(SERVER_URL + 'user/outTeam', OutForm)
         .then(() => {
           console.log('outsuccess')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    JoinTeam(wantUser) {
+      console.log(wantUser)
+      var JoinForm = new FormData()
+      JoinForm.append('uid', wantUser)
+      JoinForm.append('team_uid', this.model.uid)
+      axios.post(SERVER_URL + 'user/joinTeam', JoinForm)
+        .then(() => {
+          console.log('join!')
         })
         .catch(err => {
           console.log(err)

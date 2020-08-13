@@ -15,7 +15,7 @@
 
     <div class="table-responsive">
       <base-table
-        class="table align-items-center table-flush"
+        class="table table-striped align-items-center table-flush"
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
