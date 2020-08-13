@@ -298,7 +298,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 export default {
   name: "user-profile",
@@ -338,7 +337,7 @@ export default {
   created() {
     const data = new FormData();
     data.append("uid", this.$cookies.get("UserInfo").team_uid);
-    axios
+    this.$axios
       .post(SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
@@ -351,7 +350,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios
+    this.$axios
       .post(SERVER_URL + "/team/userList", data)
       .then((res) => {
         console.log(res.data);
@@ -360,7 +359,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios
+    this.$axios
       .post(SERVER_URL + "team/applyList/", data)
       .then((res) => {
         console.log('apply',res.data);
@@ -369,7 +368,7 @@ export default {
           var j = i
           var userForm = new FormData()
           userForm.append('uid', applySub[i].user_uid)
-          axios.post(SERVER_URL + 'user/detail2/', userForm)
+          this.$axios.post(SERVER_URL + 'user/detail2/', userForm)
             .then(res => {
               var applyData = res.data
               applyData.comment = applySub[j].comment
@@ -384,7 +383,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios
+    this.$axios
       .get(SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
@@ -437,7 +436,7 @@ export default {
       console.log('o', this.teamData)
       var Cityform = new FormData()
       Cityform.append("state_code", dummyState);
-      axios.post(SERVER_URL + "cityList", Cityform)
+      this.$axios.post(SERVER_URL + "cityList", Cityform)
         .then((res) => {
           this.teamData.cityDatas = res.data;
           console.log('city', this.teamData.cityDatas)
@@ -460,7 +459,7 @@ export default {
       } else {
         var Cityform = new FormData()
         Cityform.append("state_code", state.state_code);
-        axios.post(SERVER_URL + "cityList", Cityform)
+        this.$axios.post(SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
             console.log('city', this.teamData.cityDatas)
@@ -487,7 +486,7 @@ export default {
       modifyForm.append('team_rate', this.model.team_rate)
       modifyForm.append('team_win', this.model.team_win)
       modifyForm.append('uid', this.model.uid)
-      axios.post(SERVER_URL + 'team/modify/', modifyForm)
+      this.$axios.post(SERVER_URL + 'team/modify/', modifyForm)
         .then(() => {
           console.log('sucess')
           this.modals.modifysucess = true
@@ -502,7 +501,7 @@ export default {
       var OutForm = new FormData()
       OutForm.append('uid', this.$cookies.get('UserInfo').uid)
       OutForm.append('team_uid', this.model.uid)
-      axios.post(SERVER_URL + 'user/outTeam', OutForm)
+      this.$axios.post(SERVER_URL + 'user/outTeam', OutForm)
         .then(() => {
           console.log('outsuccess')
           this.$router.push({ name: '팀 리스트' })
@@ -516,7 +515,7 @@ export default {
       var JoinForm = new FormData()
       JoinForm.append('uid', wantUser)
       JoinForm.append('team_uid', this.model.uid)
-      axios.post(SERVER_URL + 'user/joinTeam', JoinForm)
+      this.$axios.post(SERVER_URL + 'user/joinTeam', JoinForm)
         .then(() => {
           console.log('join!')
           this.modals.applyList = false
@@ -529,7 +528,7 @@ export default {
       var rejectForm = new FormData()
       rejectForm.append('uid', wantUser)
       rejectForm.append('team_uid', this.model.uid)
-      axios.post(SERVER_URL + 'user/rejectTeam', rejectForm)
+      this.$axios.post(SERVER_URL + 'user/rejectTeam', rejectForm)
         .then(() => {
           console.log('reject..')
           this.modals.applyList = false

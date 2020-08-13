@@ -194,7 +194,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
@@ -244,7 +243,7 @@ export default {
       this.modals.teamInfo = true
       const team_uid = new FormData();
       team_uid.append("uid", this.teamData.uid);
-      axios.post(SERVER_URL + "/team/userList", team_uid)
+      this.$axios.post(SERVER_URL + "/team/userList", team_uid)
         .then((res) => {
           console.log('user',res.data);
           var player = res.data;
@@ -278,7 +277,7 @@ export default {
       ApplyData.append('team_uid', this.apply.teamuid)
       ApplyData.append('user_uid', this.$cookies.get('UserInfo').uid)
       ApplyData.append('comment', this.apply.comment)
-      axios.post(SERVER_URL + "user/applyTeam/", ApplyData)
+      this.$axios.post(SERVER_URL + "user/applyTeam/", ApplyData)
         .then(res => {
           console.log(res)
           this.modals.joinTeam = false

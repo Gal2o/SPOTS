@@ -186,7 +186,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
@@ -338,7 +337,7 @@ export default {
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
         EnterInfo.append("positionnum", this.myPosUid);
         EnterInfo.append("team_entry_uid", this.myTeam);
-        axios
+        this.$axios
           .post(SERVER_URL + "FreeMatchRoom/entrylist/", EnterInfo)
           .then((res) => {
             console.log(res);
@@ -354,7 +353,7 @@ export default {
         "team_entry_uid",
         this.RoomData.home_matching_entry_uid
       );
-      axios
+      this.$axios
         .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
           console.log("red2", res.data);
@@ -391,7 +390,7 @@ export default {
     RedTeamUser(uid) {
       const usid = new FormData()
       usid.append('uid', uid)
-      axios.post(SERVER_URL + 'user/detail2/', usid)
+      this.$axios.post(SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           var Redsub = new Object
           Redsub.uid = res.data.uid
@@ -413,7 +412,7 @@ export default {
         "team_entry_uid",
         this.RoomData.away_matching_entry_uid
       );
-      axios
+      this.$axios
         .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
           console.log("blue2", res.data);
@@ -451,7 +450,7 @@ export default {
       console.log('blue3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
-      axios.post(SERVER_URL + 'user/detail2/', usid)
+      this.$axios.post(SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           var Bluesub = new Object
           Bluesub.uid = res.data.uid
@@ -493,7 +492,7 @@ export default {
     submit() {
       const FreeRoomData = new FormData();
       FreeRoomData.append("uid", this.$route.params.uid);
-      axios
+      this.$axios
       .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
        const MatchRoomData = new FormData();
@@ -514,7 +513,7 @@ export default {
        MatchRoomData.append("mvp", res.data[0].mvp);
 
         if (this.homewin == 3){
-          axios.post(SERVER_URL + "FreeMatch/win", MatchRoomData)
+          this.$axios.post(SERVER_URL + "FreeMatch/win", MatchRoomData)
           .then((re1)=>{
             console.log('re1', re1)
           })
@@ -523,7 +522,7 @@ export default {
           })
         }
         else if (this.homewin == 1){
-          axios.post(SERVER_URL + "FreeMatch/draw", MatchRoomData)
+          this.$axios.post(SERVER_URL + "FreeMatch/draw", MatchRoomData)
           .then((re1)=>{
             console.log('re1', re1)
           })
@@ -532,7 +531,7 @@ export default {
           })
         }
         else {
-          axios.post(SERVER_URL + "FreeMatch/lose", MatchRoomData)
+          this.$axios.post(SERVER_URL + "FreeMatch/lose", MatchRoomData)
           .then((re1)=>{
             console.log('re1', re1)
           })
@@ -548,7 +547,7 @@ export default {
       const MVPdata = new FormData();
       MVPdata.append("uid", this.$route.params.uid);
       MVPdata.append('mvp',1);
-      axios.post(SERVER_URL + 'matchEnd/', MVPdata)
+      this.$axios.post(SERVER_URL + 'matchEnd/', MVPdata)
       .then(res => {
         console.log(res)
       })
@@ -561,7 +560,7 @@ export default {
         MatchData.append('assist', this.RedtableDatas[a].assist)
         MatchData.append('mvp', this.RedtableDatas[a].mvp)
         MatchData.append('blacklist', this.RedtableDatas[a].blacklist)
-         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
+         this.$axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
         }
         for (a=0; a<this.BluetableDatas.length; a++) {
         const MatchData = new FormData();  
@@ -570,7 +569,7 @@ export default {
         MatchData.append('assist', this.BluetableDatas[a].assist)
         MatchData.append('mvp', this.BluetableDatas[a].mvp)
         MatchData.append('blacklist', this.BluetableDatas[a].blacklist)
-         axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
+         this.$axios.post(SERVER_URL + "FreeMatchRoom/updateuser", MatchData)
         }
        
     },
@@ -584,7 +583,7 @@ export default {
     console.log("0", this);
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.$route.params.uid);
-    axios
+    this.$axios
       .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
         console.log(res);

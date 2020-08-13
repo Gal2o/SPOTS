@@ -7,8 +7,6 @@
 
 
 <script>
-import axios from "axios";
-
 const SERVER_URL = "http://localhost:8080/spots/";
 export default {
   name: "login",
@@ -28,7 +26,7 @@ export default {
       loginData.append("email", loginInfo.email);
       loginData.append("password", loginInfo.password);
       console.log(loginData);
-      axios
+      this.$axios
         .post(SERVER_URL + "login/", loginData)
         .then((res) => {
           console.log(res);

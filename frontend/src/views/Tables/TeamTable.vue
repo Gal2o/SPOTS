@@ -203,7 +203,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 const SERVER_URL = "http://localhost:8080/spots/";
@@ -215,7 +214,7 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
     }
-    axios
+    this.$axios
       .get(SERVER_URL + "TeamMatchAll/")
       .then((res) => {
         this.TeamtableData = res.data;
@@ -225,7 +224,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    axios
+    this.$axios
       .get(SERVER_URL + "place/list")
       .then((rest) => {
         console.log(rest.data);
@@ -308,7 +307,7 @@ export default {
         makeData.append("dong_code", this.placecode);
         makeData.append("head_uid", this.userInfo.uid);
         if (this.title != "" && this.placecode != 0) {
-          axios
+          this.$axios
             .post(SERVER_URL + "TRoomCreate/", makeData)
             .then((res) => {
               console.log("chcek", res);
@@ -336,7 +335,7 @@ export default {
       sidoData.append("si", this.sidolist[1]);
       sidoData.append("dong", this.sidolist[2]);
       sidoData.append("word", this.sidolist[3]);
-      axios.post(SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
+      this.$axios.post(SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
         this.TeamtableData = res.data;
       });
     },
@@ -374,7 +373,7 @@ export default {
       console.log("team_entry_uid", this.homeuid)
       console.log('price', rprice)
       console.log("room_uid", this.roomuid)
-      axios
+      this.$axios
         .post(SERVER_URL + "kakaoPay/", EnterInfo)
         .then(res => {
           console.log(res)

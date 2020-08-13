@@ -57,12 +57,11 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   created() {
-    axios
+    this.$axios
       .get(SERVER_URL + "place/list")
       .then((rest) => {
         console.log(rest.data);

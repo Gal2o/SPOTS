@@ -77,42 +77,40 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
-
-    export default {
-        name: 'register',
-        data() {
-            return {
-                model: {
-                    name: '',
-                    email: '',
-                    password: '',
-                    passwordcheck: '',
-                }
+export default {
+    name: 'register',
+    data() {
+        return {
+            model: {
+                name: '',
+                email: '',
+                password: '',
+                passwordcheck: '',
             }
+        }
+    },
+    methods: {
+        Signup() {
+            const SignData = new FormData();
+            SignData.append('nickname', this.model.name);
+            SignData.append('email', this.model.email);
+            SignData.append('password', this.model.password);
+            this.$axios.post('http://localhost:8080/user/signUp/', SignData)
+                .then(res => {
+                    if (res.data == "") {
+                        alert('빈칸없이 적어주세요.')
+                    }
+                    else {
+                        this.$router.push({ name: 'login'})
+                    }                        
+                })
+                .catch(err => {
+                    alert('잘못 입력하셨습니다. 입력 확인해주세요');
+                    console.log(err);
+                })
         },
-        methods: {
-            Signup() {
-                const SignData = new FormData();
-                SignData.append('nickname', this.model.name);
-                SignData.append('email', this.model.email);
-                SignData.append('password', this.model.password);
-                axios.post('http://localhost:8080/user/signUp/', SignData)
-                    .then(res => {
-                        if (res.data == "") {
-                            alert('빈칸없이 적어주세요.')
-                        }
-                        else {
-                            this.$router.push({ name: 'login'})
-                        }                        
-                    })
-                    .catch(err => {
-                        alert('잘못 입력하셨습니다. 입력 확인해주세요');
-                        console.log(err);
-                    })
-            },
-        },
-    }
+    },
+}
 </script>
 <style>
 </style>
