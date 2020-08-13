@@ -260,7 +260,7 @@ export default {
       if (this.myPosUid != 0) {
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
-        EnterInfo.append("positionnum", this.myPosUid);
+        EnterInfo.append("positionnum", -1);
         EnterInfo.append("team_entry_uid", 0);
         EnterInfo.append('price', roomPrice)
         EnterInfo.append("room_uid", this.RoomData.uid)
