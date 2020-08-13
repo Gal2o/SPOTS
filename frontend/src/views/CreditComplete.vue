@@ -49,6 +49,19 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+        } else {
+            if (this.$route.params.positionnum == -1) {
+                const joinInfo = new FormData();
+                joinInfo.append("uid", this.$route.params.uid);
+                joinInfo.append("room_uid", this.$route.params.room_uid);
+                this.$axios.post(this.$SERVER_URL + "TRoomJoin/", joinInfo)
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
         }
     },
 };
