@@ -170,4 +170,21 @@ public class EntryServiceImpl implements EntryService {
 		return mapper.Upuser(d);
 	}
 
+	@Override
+	public int TWin(int h_uid, int a_uid) {
+		return mapper.TWin(h_uid, a_uid);
+	}
+
+	@Override
+	public int TLose(int h_uid, int a_uid) {
+		return mapper.TLose(h_uid, a_uid);
+
+	}
+
+	@Override
+	public int TDraw(int h_uid, int a_uid) {
+		return mapper.TDraw(h_uid, a_uid);
+
+	}
+
 }

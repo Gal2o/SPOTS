@@ -251,6 +251,28 @@
 			mvp = mvp + #{mvp} 
 		where uid = #{uid}
 	</update>
+	
+	<update id="TWin">
+		update team set team_win = team_win + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{h_uid};
+		update team set team_lose = team_lose + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{a_uid};
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{h_uid};
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{a_uid};
+    </update>
+    
+    <update id="TLose">
+		update team set team_lose = team_lose + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{h_uid};
+		update team set team_win = team_win + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{a_uid};
+        UPDATE user SET lose = lose + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{h_uid};
+        UPDATE user SET win = win + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{a_uid};
+    </update>
+    
+    <update id="TDraw">
+    	update team set team_draw = team_draw + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{h_uid};
+    	update team set team_draw = team_draw + 1, team_rate = team_win / (team_win + team_lose + team_draw) * 100 where uid = #{a_uid};
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{h_uid};
+        UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{a_uid};
+    </update>
+	
 </mapper>
 
 

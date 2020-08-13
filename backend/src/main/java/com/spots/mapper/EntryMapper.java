@@ -45,5 +45,8 @@ public interface EntryMapper {
 	public int FDraw(FMatchInfo dto);
 	public int Upuser(DataInfo d);
 
+	public int TWin(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
+	public int TLose(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
+	public int TDraw(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
 
 }
