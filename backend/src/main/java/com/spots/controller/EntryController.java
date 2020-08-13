@@ -14,7 +14,7 @@ import com.spots.dto.EntryInfo;
 import com.spots.dto.FMatchInfo;
 import com.spots.service.EntryService;
 
-@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@CrossOrigin(origins = {"*"})
 @RestController
 public class EntryController {
 
