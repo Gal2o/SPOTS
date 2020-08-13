@@ -251,8 +251,8 @@
                 <base-button type="primary" size="sm">
                   <h2 class="text-white" @click="JoinTeam(row.uid)">승인</h2>
                 </base-button>
-                <base-button type="danger" size="sm">
-                  <h2 class="text-white">취소</h2>
+                <base-button type="danger" size="sm" @click="rejectApply(row.uid)">
+                  <h2 class="text-white">거절</h2>
                 </base-button>
               </td>
             </template>
@@ -504,6 +504,7 @@ export default {
       axios.post(SERVER_URL + 'user/outTeam', OutForm)
         .then(() => {
           console.log('outsuccess')
+          this.$router.push({ name: '팀 리스트' })
         })
         .catch(err => {
           console.log(err)
@@ -517,6 +518,20 @@ export default {
       axios.post(SERVER_URL + 'user/joinTeam', JoinForm)
         .then(() => {
           console.log('join!')
+          this.modals.applyList = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    rejectApply(wantUser) {
+      var rejectForm = new FormData()
+      rejectForm.append('uid', wantUser)
+      rejectForm.append('team_uid', this.model.uid)
+      axios.post(SERVER_URL + 'user/rejectTeam', rejectForm)
+        .then(() => {
+          console.log('reject..')
+          this.modals.applyList = false
         })
         .catch(err => {
           console.log(err)
