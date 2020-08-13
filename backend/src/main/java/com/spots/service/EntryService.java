@@ -39,4 +39,8 @@ public interface EntryService {
 	public int FDraw(FMatchInfo dto);
 	public int Upuser(DataInfo d);
 	
+	public int TWin(int h_uid, int a_uid);
+	public int TLose(int h_uid, int a_uid);
+	public int TDraw(int h_uid, int a_uid);
+	
 }

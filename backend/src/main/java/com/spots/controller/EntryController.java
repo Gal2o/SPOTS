@@ -190,7 +190,24 @@ public class EntryController {
 		System.out.println("updateuser 시작");
 		System.out.println(dto);
 		return Entry.Upuser(dto);
-
+	}
+	
+	@PostMapping(value="/TeamMatch/win")
+	public int TeamMatchWin(@RequestParam int h_uid, @RequestParam int a_uid) {
+		System.out.println("이긴경우");
+		return Entry.TWin(h_uid, a_uid);
+	}
+	
+	@PostMapping(value="/TeamMatch/lose")
+	public int TeamMatchLose(@RequestParam int h_uid, @RequestParam int a_uid) {
+		System.out.println("진경우");
+		return Entry.TLose(h_uid, a_uid);
+	}
+	
+	@PostMapping(value="/TeamMatch/draw")
+	public int TeamMatchDraw(@RequestParam int h_uid, @RequestParam int a_uid) {
+		System.out.println("비긴경우");
+		return Entry.TDraw(h_uid, a_uid);
 	}
 	
 	
