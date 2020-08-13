@@ -65,9 +65,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-const SERVER_URL = 'http://localhost:8080/'
+const SERVER_URL = 'http://localhost:8080/spots/'
 
 export default {
   data() {
@@ -91,7 +89,7 @@ export default {
       this.showMenu = !this.showMenu;
     },
     Logout() {
-      axios.post(SERVER_URL + 'logout/', null)
+      this.$axios.post(SERVER_URL + 'logout/', null)
         .then(() => {
           this.$cookies.remove('UserInfo')
           this.isLoggedIn = false

@@ -151,7 +151,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
@@ -180,10 +179,10 @@ export default {
   computed: {},
   methods: {
     RedTeamData() {
-      console.log('red0',this.RoomData.home_matching_entry_uid)
+      console.log('red0',this.RoomData.home_team_uid)
       var RedData = new FormData();
-      RedData.append('uid', this.RoomData.home_matching_entry_uid)
-      axios.post(SERVER_URL + "team/detail/", RedData)
+      RedData.append('uid', this.RoomData.home_team_uid)
+      this.$axios.post(SERVER_URL + "team/detail/", RedData)
       .then((res) => {
         console.log('red1', res)
         this.team.Red.push(res.data)
@@ -193,10 +192,10 @@ export default {
       });
     },
     BlueTeamData() {
-      console.log('blue0',this.RoomData.away_matching_entry_uid)
+      console.log('blue0',this.RoomData.away_team_uid)
       var BlueData = new FormData();
-      BlueData.append('uid', this.RoomData.away_matching_entry_uid)
-      axios.post(SERVER_URL + "team/detail/", BlueData)
+      BlueData.append('uid', this.RoomData.away_team_uid)
+      this.$axios.post(SERVER_URL + "team/detail/", BlueData)
       .then((res) => {
         console.log('blue1', res)
         this.team.Blue.push(res.data)
@@ -207,8 +206,8 @@ export default {
       });
     },
     FullRoomCheck() {
-      var Home_uid = this.RoomData.home_matching_entry_uid
-      var Away_uid = this.RoomData.away_matching_entry_uid
+      var Home_uid = this.RoomData.home_team_uid
+      var Away_uid = this.RoomData.away_team_uid
       if (Home_uid > 0 && Away_uid > 0) {
         this.isRoomFull = true
       }
@@ -216,7 +215,7 @@ export default {
     },
     TeamHeadCheck() {
       var TeamList = []
-      axios.get(SERVER_URL + "TeamMatchAll/")
+      this.$axios.get(SERVER_URL + "TeamMatchAll/")
         .then((res) => {
           TeamList = res.data;
           for(var i=0; i < TeamList.length; i++) {
@@ -248,7 +247,7 @@ export default {
         TeamDeleteUid.append("uid", myTeam)
       }
       TeamDeleteUid.append("uid", TeamDeleteUid);
-      axios.post(SERVER_URL + "team/delete/", TeamDeleteUid)
+      this.$axios.post(SERVER_URL + "team/delete/", TeamDeleteUid)
         .then((res) => {
           console.log(res)
         })
@@ -266,7 +265,7 @@ export default {
         EnterInfo.append("team_entry_uid", 0);
         EnterInfo.append('price', roomPrice)
         EnterInfo.append("room_uid", this.RoomData.uid)
-        axios
+        this.$axios
           .post(SERVER_URL + "kakaoPay/", EnterInfo)
           .then(res => {
             console.log('pay123', res)
@@ -287,7 +286,7 @@ export default {
     console.log("0", this);
     const TeamRoomData = new FormData();
     TeamRoomData.append("uid", this.$route.params.uid);
-    axios
+    this.$axios
       .post(SERVER_URL + "TeamMatchRoom/", TeamRoomData)
       .then((res) => {
         console.log('check', res);

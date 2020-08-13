@@ -71,13 +71,12 @@
 <script>
 import ProjectsTable from "./Tables/ProjectsTable";
 import TeamTable from "./Tables/TeamTable";
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "dashboard",
   created() {
-    axios
+    this.$axios
       .get(SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
@@ -125,7 +124,7 @@ export default {
       const stateForm = new FormData();
       b = String(b);
       stateForm.append("state_code", b);
-      axios
+      this.$axios
         .post(SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
@@ -138,7 +137,7 @@ export default {
       const dongForm = new FormData();
       c = String(c);
       dongForm.append("city_code", c);
-      axios
+      this.$axios
         .post(SERVER_URL + "dongList", dongForm)
         .then((res) => {
           this.dongDatas = res.data;

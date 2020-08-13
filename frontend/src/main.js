@@ -21,8 +21,11 @@ import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 import VueCookie from 'vue-cookies'
+import axios from 'axios'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$axios = axios;
 
 Vue.use(ArgonDashboard)
 Vue.use(VueCookie)

@@ -58,14 +58,13 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "trank-table",
   components: {},
   created() {
-    axios
+    this.$axios
       .get(SERVER_URL + "rank/")
       .then((res) => {
         this.FreerankData = res.data;
