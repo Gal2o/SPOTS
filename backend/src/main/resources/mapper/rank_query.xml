@@ -5,19 +5,19 @@
 		update team 
 		   set 	 team_win = team_win + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100			
-		 where uid= #{home_team_uid}
+		 where uid= #{home_team_uid};
 		 
 		 update user
-		 set win = win + 1
-		 where team_uid = #{home_team_uid}
+		 set win = win + 1, rate = win / (win + lose + draw) * 100
+		 where team_uid = #{home_team_uid};
 		 
 		 update team 
 		   set 	 team_lose = team_win + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
-		 where uid= #{away_team_uid}
+		 where uid= #{away_team_uid};
 		 
 		 update user
-		 set lose = lose + 1
+		 set lose = lose + 1, rate = win / (win + lose + draw) * 100
 		 where team_uid = #{home_team_uid}
 	</update>
 	
@@ -25,19 +25,19 @@
 		 update team 
 		   set 	 team_lose = team_lose + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
-		 where uid= #{home_team_uid}
+		 where uid= #{home_team_uid};
 		 
 		 update user
-		 set lose = lose + 1
-		 where team_uid = #{home_team_uid}
+		 set lose = lose + 1, rate = win / (win + lose + draw) * 100
+		 where team_uid = #{home_team_uid};
 		 
 		 update team 
 		   set 	 team_win = team_win + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
-		 where uid= #{away_team_uid}
+		 where uid= #{away_team_uid};
 		 
 		 update user
-		 set win = win + 1
+		 set win = win + 1, rate = win / (win + lose + draw) * 100
 		 where team_uid = #{away_team_uid}
 	</update>
 	
@@ -45,19 +45,19 @@
 		update team 
 		   set 	 team_draw = team_draw + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100
-		 where uid= #{home_team_uid}
+		 where uid= #{home_team_uid};
 		 
 		 update user
-		 set draw = draw + 1
-		 where team_uid = #{home_team_uid}
+		 set draw = draw + 1, rate = win / (win + lose + draw) * 100
+		 where team_uid = #{home_team_uid};
 		 
 		 update team 
 		   set 	 team_draw = team_draw + 1
 				,team_rate = team_win / (team_win + team_lose + team_draw) * 100				
-		 where uid= #{away_team_uid}
+		 where uid= #{away_team_uid};
 		 
 		 update user
-		 set draw = draw + 1
+		 set draw = draw + 1, rate = win / (win + lose + draw) * 100
 		 where team_uid = #{away_team_uid}
 	</update>
 	
