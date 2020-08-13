@@ -79,7 +79,7 @@
         place_uid, price, head_price, matching_date,
         dong_code, title)
       values
-      ( #{head_uid}, 0, 0, 0, 0, 0, 
+      ( #{head_uid}, #{home_team_uid}, 0, 0, 0, 0, 
         #{place_uid}, #{price}, 0, #{matching_date},
         #{dong_code}, #{title} );
    </insert>
