@@ -29,7 +29,7 @@ import com.spots.dto.KakaoPayReadyVO;
 import com.spots.dto.UserInfo;
 import com.spots.service.UserInfoService;
 
-@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@CrossOrigin(origins = {"*"})
 @RestController
 public class KakaoPayController {
 	

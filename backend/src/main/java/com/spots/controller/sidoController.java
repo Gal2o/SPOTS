@@ -16,7 +16,7 @@ import com.spots.dto.SidoInfo;
 import com.spots.service.SidoInfoService;
 
 
-@CrossOrigin(origins = {"http://192.168.0.30:3000", "http://localhost:3000"})
+@CrossOrigin(origins = {"*"})
 @RestController
 public class sidoController {
 	@Autowired
