@@ -17,9 +17,17 @@ public class UserInfo {
 	private int goal;
 	private int assist;
 	private int rate;
+	private String admin;
 	
 	
 	
+	
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
 	public UserInfo(String email, String password, String nickname) {
 		super();
 		this.email = email;
