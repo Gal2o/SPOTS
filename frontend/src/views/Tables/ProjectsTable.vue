@@ -220,8 +220,7 @@
 import axios from "axios";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-
-const SERVER_URL = "http://localhost:8080/";
+const SERVER_URL = "http://localhost:8080/spots";
 
 export default {
   name: "projects-table",

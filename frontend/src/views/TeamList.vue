@@ -141,7 +141,7 @@
 <script>
 import teamList from "./Tables/teamListTable";
 import axios from "axios";
-const SERVER_URL = "http://localhost:8080/";
+const SERVER_URL = "http://localhost:8080/spots";
 
 export default {
   name: "dashboard",

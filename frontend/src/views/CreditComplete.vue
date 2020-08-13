@@ -21,7 +21,7 @@
 <script>
 import axios from "axios";
 
-const SERVER_URL = "http://localhost:8080/";
+const SERVER_URL = "http://localhost:8080/spots";
 
 export default {
     methods: {
@@ -30,11 +30,17 @@ export default {
             if (bepage == 0) {
                 this.$router.push({ name: 'SPOTs' })
             } else {
-                this.$router.push({ name: '자유 SPOT', params: { uid: this.$route.params.room_uid }})
+                if (this.$route.params.team_entry_uid != 0){
+                    this.$router.push({ name: '자유 SPOT', params: { uid: this.$route.params.room_uid }})
+                }
+                else {
+                    this.$router.push({ name: '팀 SPOT', params: { uid: this.$route.params.room_uid }})
+                }
             }            
         }
     },
     created() {
+        if (this.$route.params.team_entry_uid != 0){
         console.log(this)
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$route.params.uid);
@@ -47,6 +53,7 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+        }
     },
 };
 </script>
