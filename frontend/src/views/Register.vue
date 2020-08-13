@@ -35,12 +35,6 @@
                                     v-model="model.email">
                         </base-input>
 
-                        <base-input class="input-group-alternative mb-3"
-                                    placeholder="생년월일6자리 ex)850101"
-                                    addon-left-icon="ni ni-calendar-grid-58"
-                                    v-model="model.birthday">
-                        </base-input>
-
                         <base-input class="input-group-alternative"
                                     placeholder="비밀번호"
                                     type="password"
@@ -92,7 +86,6 @@ import axios from 'axios'
                 model: {
                     name: '',
                     email: '',
-                    birthday: '',
                     password: '',
                     passwordcheck: '',
                 }
@@ -104,7 +97,6 @@ import axios from 'axios'
                 SignData.append('nickname', this.model.name);
                 SignData.append('email', this.model.email);
                 SignData.append('password', this.model.password);
-                SignData.append('birthday', this.model.birthday);
                 axios.post('http://localhost:8080/user/signUp/', SignData)
                     .then(res => {
                         if (res.data == "") {
