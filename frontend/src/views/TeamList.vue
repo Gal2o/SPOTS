@@ -40,7 +40,8 @@
                 alternative
                 addon-right-icon="fas fa-search"
                 v-model="searchWord"
-                @keydown.enter="TeamList('Search')"
+                @keydown.enter="searchTeam"
+                @click="searchTeam"
               ></base-input>
             </div>
           </form>
@@ -292,11 +293,7 @@ export default {
     },
     TeamList(where) {
       var WhereData = new FormData();
-      if (where == 'Search') {
-        WhereData.append('where', this.searchWord)
-      } else {
-        WhereData.append('where', where)
-      }
+      WhereData.append('where', where)
       axios.post(SERVER_URL + "team/list/", WhereData)
         .then(res => {
           console.log(res)
@@ -305,6 +302,16 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    searchTeam() {
+      var subList = []
+      for(var i=0; i < this.FreerankData.length; i++) {
+        if (this.FreerankData[i].team_name.indexOf(this.searchWord) != -1) {
+          subList.push(this.FreerankData[i])
+        }
+      }
+      this.FreerankData = subList
+      this.searchWord = ""
     },
   },
   mounted() {},
