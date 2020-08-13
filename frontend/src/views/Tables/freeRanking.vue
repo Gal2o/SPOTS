@@ -22,31 +22,34 @@
         :data="FreerankData"
       >
         <template slot="columns">
-          <th>팀 이름</th>
+          <th>이름</th>
           <th>승리</th>
           <th>무승부</th>
           <th>패배</th>
-          <th>승률</th>
-          <th></th>
+          <th>득점</th>
+          <th>도움</th>
         </template>
 
         <template slot-scope="{ row }">
           <th scope="row">
             <div class="media align-items-center">
               <div class="media-body">
-                <span class="name mb-0 text-sm"> {{ row.team_name }}</span>
+                <span class="name mb-0 text-sm"> {{ row.nickname }}</span>
               </div>
             </div>
           </th>
           <td>
-            <span class="status">{{ row.team_win }}</span>
+            <span class="status">{{ row.win }}</span>
           </td>
           <td>
-            <span class="status">{{ row.team_draw }}</span>
+            <span class="status">{{ row.draw }}</span>
           </td>
-          <td>{{ row.team_lose }}</td>
+          <td>{{ row.lose }}</td>
           <td>
-            <span class="status">{{ row.team_rate }}%</span>
+            <span class="status">{{ row.goal }}</span>
+          </td>
+           <td>
+            <span class="status">{{ row.assist }}</span>
           </td>
         </template>
       </base-table>
@@ -62,14 +65,14 @@ import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
-  name: "trank-table",
+  name: "frank-table",
   components: {},
   created() {
     axios
-      .get(SERVER_URL + "rank/")
+      .get(SERVER_URL + "rank/free")
       .then((res) => {
         this.FreerankData = res.data;
-        console.log(this.FreerankData);
+        console.log('res123',this.FreerankData);
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +86,7 @@ export default {
   data() {
     return {
       FreerankData: [],
-      title: "팀 랭킹",
+      title: "개인 랭킹",
     };
   },
   methods: {},
