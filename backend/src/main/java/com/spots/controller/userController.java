@@ -66,6 +66,11 @@ public class userController {
 	public int outTeam(@RequestParam int uid, @RequestParam int team_uid) {
 		return userInfoService.outTeam(uid, team_uid);
 	}
+	
+	@PostMapping(value="/user/rejectTeam")
+	public int rejectTeam(@RequestParam int uid, @RequestParam int team_uid) {
+		return userInfoService.rejectTeam(uid, team_uid);
+	}
 
 	@PostMapping(value="/user/applyTeam")
 	public int applyTeam(ApplyTeamInfo dto) {

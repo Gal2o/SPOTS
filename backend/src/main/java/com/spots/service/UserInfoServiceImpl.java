@@ -56,5 +56,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public UserInfo detail2(int uid) {
 		return mapper.detail2(uid); 
 	}
+
+	@Override
+	public int rejectTeam(int uid, int team_uid) {
+		return mapper.rejectTeam(uid, team_uid);
+	}
 	 
 }

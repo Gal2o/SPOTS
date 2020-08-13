@@ -38,18 +38,22 @@
 		select * from ssafy_member where id= #{id}
 	</select>
 	<update id="joinTeam">
-		update team set player_num = player_num+1 where team_uid =  #{team_uid};
+		update team set player_num = player_num+1 where uid =  #{team_uid};
 		update user 
 		   set 	 team_uid 	= #{team_uid}			
 		 where uid= #{uid};
 		 delete from apply_team where user_uid = #{uid};
 	</update>
 	<update id="outTeam">
-		update team set player_num = player_num-1 where team_uid =  #{team_uid};
+		update team set player_num = player_num-1 where uid =  #{team_uid};
 		update user 
 		   set 	 team_uid 	= 0		
 		 where uid= #{uid}
 	</update>
+	
+	<delete id="rejectTeam">
+		delete from apply_team where team_uid = #{team_uid} and user_uid = #{uid};
+	</delete>
 	
 	<insert id="applyTeam">
 		insert into apply_team

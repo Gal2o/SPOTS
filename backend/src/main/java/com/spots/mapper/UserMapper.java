@@ -49,14 +49,16 @@ public interface UserMapper {
 	
 	public UserInfo detail(String email);
 
-	public int joinTeam(int uid, int team_uid);
+	public int joinTeam(@Param("uid") int uid, @Param("team_uid") int team_uid);
 
-	public int outTeam(int uid, int team_uid);
+	public int outTeam(@Param("uid") int uid, @Param("team_uid") int team_uid);
 
 
 	public int applyTeam(ApplyTeamInfo dto);
 
 	public UserInfo detail2(int uid);
+
+	public int rejectTeam(@Param("uid") int uid, @Param("team_uid") int team_uid);
 
 
 
