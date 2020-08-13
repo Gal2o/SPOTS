@@ -25,11 +25,12 @@ CREATE TABLE IF NOT EXISTS `apply_team` (
   `comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='팀 신청';
 
--- 테이블 데이터 spots.apply_team:~1 rows (대략적) 내보내기
+-- 테이블 데이터 spots.apply_team:~3 rows (대략적) 내보내기
 DELETE FROM `apply_team`;
 /*!40000 ALTER TABLE `apply_team` DISABLE KEYS */;
 INSERT INTO `apply_team` (`team_uid`, `user_uid`, `comment`) VALUES
-	(61, 1, '가입신청');
+	(61, 1, '가입신청'),
+	(53, 102, 'asdasd');
 /*!40000 ALTER TABLE `apply_team` ENABLE KEYS */;
 
 -- 테이블 spots.city_code 구조 내보내기
@@ -272,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `dong_code` (
   PRIMARY KEY (`dong_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='동코드';
 
--- 테이블 데이터 spots.dong_code:~3,547 rows (대략적) 내보내기
+-- 테이블 데이터 spots.dong_code:~3,209 rows (대략적) 내보내기
 DELETE FROM `dong_code`;
 /*!40000 ALTER TABLE `dong_code` DISABLE KEYS */;
 INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
@@ -3850,7 +3851,7 @@ CREATE TABLE IF NOT EXISTS `free_matching` (
 DELETE FROM `free_matching`;
 /*!40000 ALTER TABLE `free_matching` DISABLE KEYS */;
 INSERT INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`) VALUES
-	(1, 1, 1, 2, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1153010100', '안양천체육생태공원에서 축구하실분 구해요', NULL),
+	(1, 1, 1, 2, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1153010100', '안양천체육생태공원에서 축구하실분 구해요', 1),
 	(2, 1, 3, 4, '2018-01-01 13:30:50', '2020-01-02 00:00:00', 1, 1, 1, 1, 1, 1, '1153010100', '고척근린공원에서 6시에 축구할사람 구합니다', NULL),
 	(3, 1, 5, 6, '2018-01-01 13:30:50', '2020-01-03 00:00:00', 1, 1, 1, 1, 1, 1, '1153010600', '28일 고척스카이돔 축구팟 구합니다', NULL),
 	(4, 1, 7, 8, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1165010800\r\n', '즐겁게 같이 볼차실 분 구합니다', NULL),
@@ -3886,26 +3887,26 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
--- 테이블 데이터 spots.matching_entry:~16 rows (대략적) 내보내기
+-- 테이블 데이터 spots.matching_entry:~14 rows (대략적) 내보내기
 DELETE FROM `matching_entry`;
 /*!40000 ALTER TABLE `matching_entry` DISABLE KEYS */;
 INSERT INTO `matching_entry` (`uid`, `striker1_uid`, `striker2_uid`, `striker3_uid`, `striker4_uid`, `midfielder1_uid`, `midfielder2_uid`, `midfielder3_uid`, `midfielder4_uid`, `defender1_uid`, `defender2_uid`, `defender3_uid`, `defender4_uid`, `goalkeeper_uid`) VALUES
-	(1, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234),
-	(2, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247),
-	(3, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260),
-	(4, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273),
-	(5, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286),
-	(6, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299),
-	(7, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312),
-	(8, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325),
-	(9, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338),
-	(10, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351),
-	(11, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364),
-	(12, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377),
-	(13, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390),
+	(1, 222, NULL, 224, 225, 226, 227, NULL, 229, 230, 231, 232, 233, 234),
+	(2, 235, 236, 237, 238, 239, 240, 241, NULL, 243, 244, 245, NULL, 247),
+	(3, 248, 249, NULL, NULL, 252, 253, 254, 255, 256, 257, 258, 259, 260),
+	(4, 261, 262, 263, 264, 265, 266, NULL, 268, 269, NULL, 271, 272, 273),
+	(5, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, NULL, NULL, 286),
+	(6, 287, 288, 289, 290, 291, 292, NULL, NULL, 295, 296, 297, 298, 299),
+	(7, 300, 301, 302, NULL, 304, 305, 306, NULL, 308, 309, 310, 311, 312),
+	(8, 313, 314, 315, NULL, 317, 318, 319, 320, 321, 322, 323, NULL, 325),
+	(9, 326, 327, 328, 329, 330, 331, NULL, NULL, 334, 335, 336, 337, 338),
+	(10, 339, 340, 341, 342, 343, 344, 345, NULL, 347, 348, 349, NULL, 351),
+	(11, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, NULL, NULL, 364),
+	(12, 365, 366, NULL, NULL, 369, 370, 371, 372, 373, 374, 375, 376, 377),
+	(13, 378, 379, 380, NULL, 382, 383, 384, NULL, 386, 387, 388, 389, 390),
 	(14, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403),
 	(15, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416),
-	(16, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429);
+	(16, 417, 418, 419, 420, 421, 422, 423, NULL, 425, 426, 427, NULL, 429);
 /*!40000 ALTER TABLE `matching_entry` ENABLE KEYS */;
 
 -- 테이블 spots.place 구조 내보내기
@@ -3923,7 +3924,7 @@ CREATE TABLE IF NOT EXISTS `place` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
 
--- 테이블 데이터 spots.place:~23 rows (대략적) 내보내기
+-- 테이블 데이터 spots.place:~22 rows (대략적) 내보내기
 DELETE FROM `place`;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
 INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `close`, `lng`, `lat`) VALUES
@@ -4118,12 +4119,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `blacklist` int(11) NOT NULL DEFAULT 0,
   `goal` int(11) NOT NULL DEFAULT 0,
   `assist` int(11) NOT NULL DEFAULT 0,
-  `rate` double DEFAULT NULL,
+  `rate` double NOT NULL DEFAULT 0,
   PRIMARY KEY (`uid`) USING BTREE,
   UNIQUE KEY `email` (`email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=436 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
--- 테이블 데이터 spots.user:~220 rows (대략적) 내보내기
+-- 테이블 데이터 spots.user:~221 rows (대략적) 내보내기
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`uid`, `email`, `password`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`, `city_code`, `comment`, `mvp`, `blacklist`, `goal`, `assist`, `rate`) VALUES
@@ -4135,32 +4136,32 @@ INSERT INTO `user` (`uid`, `email`, `password`, `win`, `lose`, `draw`, `warning`
 	(219, 'tmp1@ssafy.com', '1', 3, 9, 2, 0, 52, '이광연', NULL, NULL, 0, 0, 0, 0, 21.4285714),
 	(220, 'tmp2@ssafy.com', '1', 4, 2, 7, 1, 52, '김영빈', NULL, NULL, 0, 0, 0, 0, 30.7692307),
 	(221, 'tmp3@ssafy.com', '1', 1, 3, 8, 0, 52, '신세계', NULL, NULL, 0, 0, 0, 0, 8.3333333),
-	(222, 'tmp4@ssafy.com', '1', 1, 10, 3, 0, 52, '이호인', NULL, NULL, 0, 0, 0, 0, 7.6923076),
-	(223, 'tmp5@ssafy.com', '1', 3, 9, 7, 0, 52, '조지훈', NULL, NULL, 0, 0, 0, 0, 16.6666666),
-	(224, 'tmp6@ssafy.com', '1', 2, 2, 8, 0, 52, '정석화', NULL, NULL, 0, 0, 0, 0, 18.1818181),
-	(225, 'tmp7@ssafy.com', '1', 1, 1, 8, 0, 52, '이재권', NULL, NULL, 0, 0, 0, 0, 11.1111111),
-	(226, 'tmp8@ssafy.com', '1', 1, 9, 6, 0, 52, '김지현', NULL, NULL, 0, 0, 0, 0, 6.6666666),
-	(227, 'tmp9@ssafy.com', '1', 0, 1, 6, 0, 52, '고무열', NULL, NULL, 0, 0, 0, 0, 0),
-	(228, 'tmp10@ssafy.com', '1', 8, 8, 1, 0, 52, '김승대', NULL, NULL, 0, 0, 0, 0, 50),
-	(229, 'tmp11@ssafy.com', '1', 10, 6, 8, 0, 52, '정민우', NULL, NULL, 0, 0, 0, 0, 43.4782608),
-	(230, 'tmp12@ssafy.com', '1', 4, 6, 6, 0, 53, '한국영 ', NULL, NULL, 0, 0, 8, 4, 26.6666666),
-	(231, 'tmp13@ssafy.com', '1', 1, 8, 5, 0, 53, '정지용', NULL, NULL, 0, 0, 0, 0, 7.6923076),
-	(232, 'tmp14@ssafy.com', '1', 4, 3, 8, 0, 53, '지의수', NULL, NULL, 0, 0, 0, 0, 28.5714285),
-	(233, 'tmp15@ssafy.com', '1', 4, 9, 7, 0, 53, '신광훈', NULL, NULL, 0, 0, 0, 0, 21.0526315),
-	(234, 'tmp16@ssafy.com', '1', 1, 7, 8, 0, 53, '조재완', NULL, NULL, 0, 0, 0, 0, 6.6666666),
-	(235, 'tmp17@ssafy.com', '1', 4, 3, 2, 0, 53, '채광훈', NULL, NULL, 0, 0, 0, 0, 37.5),
-	(236, 'tmp18@ssafy.com', '1', 3, 0, 3, 0, 53, '조윤성', NULL, NULL, 0, 0, 0, 0, 40),
-	(237, 'tmp19@ssafy.com', '1', 10, 0, 0, 0, 53, '서민우', NULL, NULL, 0, 0, 0, 0, 100),
-	(238, 'tmp20@ssafy.com', '1', 3, 2, 3, 0, 53, '이범수', NULL, NULL, 0, 0, 0, 0, 28.5714285),
-	(239, 'tmp21@ssafy.com', '1', 2, 7, 3, 0, 53, '임채민 ', NULL, NULL, 0, 0, 0, 0, 9.090909),
-	(240, 'tmp22@ssafy.com', '1', 1, 8, 7, 0, 53, '김수혁', NULL, NULL, 0, 0, 0, 0, 0),
-	(241, 'tmp23@ssafy.com', '1', 9, 1, 8, 0, 54, '김수범', NULL, NULL, 0, 0, 0, 0, 47.0588235),
-	(242, 'tmp24@ssafy.com', '1', 2, 2, 6, 0, 54, '이현식', NULL, NULL, 0, 0, 0, 0, 11.1111111),
-	(243, 'tmp25@ssafy.com', '1', 9, 6, 6, 0, 54, '가솔현', NULL, NULL, 0, 0, 0, 0, 40),
-	(244, 'tmp26@ssafy.com', '1', 9, 2, 3, 0, 54, '이병욱', NULL, NULL, 0, 0, 0, 0, 61.5384615),
-	(245, 'tmp27@ssafy.com', '1', 7, 5, 6, 0, 54, '이연규', NULL, NULL, 0, 0, 0, 0, 35.2941176),
-	(246, 'tmp28@ssafy.com', '1', 8, 6, 0, 0, 54, '이영재', NULL, NULL, 0, 0, 0, 0, 53.8461538),
-	(247, 'tmp29@ssafy.com', '1', 9, 8, 3, 0, 54, '신재욱', NULL, NULL, 0, 0, 0, 0, 42.1052631),
+	(222, 'tmp4@ssafy.com', '1', 1, 10, 7, 0, 52, '이호인', NULL, NULL, 0, 0, 0, 0, 5.5555555),
+	(223, 'tmp5@ssafy.com', '1', 3, 9, 11, 0, 52, '조지훈', NULL, NULL, 0, 0, 0, 0, 13.0434782),
+	(224, 'tmp6@ssafy.com', '1', 2, 2, 12, 0, 52, '정석화', NULL, NULL, 0, 0, 0, 0, 12.5),
+	(225, 'tmp7@ssafy.com', '1', 1, 1, 12, 0, 52, '이재권', NULL, NULL, 0, 0, 0, 0, 7.1428571),
+	(226, 'tmp8@ssafy.com', '1', 1, 9, 10, 0, 52, '김지현', NULL, NULL, 0, 0, 0, 0, 5),
+	(227, 'tmp9@ssafy.com', '1', 0, 1, 10, 0, 52, '고무열', NULL, NULL, 0, 0, 0, 0, 0),
+	(228, 'tmp10@ssafy.com', '1', 8, 8, 5, 0, 52, '김승대', NULL, NULL, 0, 0, 0, 0, 38.095238),
+	(229, 'tmp11@ssafy.com', '1', 10, 6, 12, 0, 52, '정민우', NULL, NULL, 0, 0, 0, 0, 35.7142857),
+	(230, 'tmp12@ssafy.com', '1', 4, 6, 10, 0, 53, '한국영 ', NULL, NULL, 0, 0, 8, 4, 20),
+	(231, 'tmp13@ssafy.com', '1', 1, 8, 9, 0, 53, '정지용', NULL, NULL, 0, 0, 0, 0, 5.5555555),
+	(232, 'tmp14@ssafy.com', '1', 4, 3, 12, 0, 53, '지의수', NULL, NULL, 0, 0, 0, 0, 21.0526315),
+	(233, 'tmp15@ssafy.com', '1', 4, 9, 11, 0, 53, '신광훈', NULL, NULL, 0, 0, 0, 0, 16.6666666),
+	(234, 'tmp16@ssafy.com', '1', 1, 7, 12, 0, 53, '조재완', NULL, NULL, 0, 0, 0, 0, 5),
+	(235, 'tmp17@ssafy.com', '1', 4, 3, 6, 0, 53, '채광훈', NULL, NULL, 0, 0, 0, 0, 30.7692307),
+	(236, 'tmp18@ssafy.com', '1', 3, 0, 7, 0, 53, '조윤성', NULL, NULL, 0, 0, 0, 0, 30),
+	(237, 'tmp19@ssafy.com', '1', 10, 0, 4, 0, 53, '서민우', NULL, NULL, 0, 0, 0, 0, 71.4285714),
+	(238, 'tmp20@ssafy.com', '1', 3, 2, 7, 0, 53, '이범수', NULL, NULL, 0, 0, 0, 0, 25),
+	(239, 'tmp21@ssafy.com', '1', 2, 7, 7, 0, 53, '임채민 ', NULL, NULL, 0, 0, 0, 0, 12.5),
+	(240, 'tmp22@ssafy.com', '1', 1, 8, 11, 0, 53, '김수혁', NULL, NULL, 0, 0, 0, 0, 5),
+	(241, 'tmp23@ssafy.com', '1', 9, 1, 12, 0, 54, '김수범', NULL, NULL, 0, 0, 0, 0, 40.9090909),
+	(242, 'tmp24@ssafy.com', '1', 2, 2, 10, 0, 54, '이현식', NULL, NULL, 0, 0, 0, 0, 14.2857142),
+	(243, 'tmp25@ssafy.com', '1', 9, 6, 10, 0, 54, '가솔현', NULL, NULL, 0, 0, 0, 0, 36),
+	(244, 'tmp26@ssafy.com', '1', 9, 2, 7, 0, 54, '이병욱', NULL, NULL, 0, 0, 0, 0, 50),
+	(245, 'tmp27@ssafy.com', '1', 7, 5, 10, 0, 54, '이연규', NULL, NULL, 0, 0, 0, 0, 31.8181818),
+	(246, 'tmp28@ssafy.com', '1', 8, 6, 4, 0, 54, '이영재', NULL, NULL, 0, 0, 0, 0, 44.4444444),
+	(247, 'tmp29@ssafy.com', '1', 9, 8, 7, 0, 54, '신재욱', NULL, NULL, 0, 0, 0, 0, 37.5),
 	(248, 'tmp30@ssafy.com', '1', 10, 2, 6, 0, 54, '홍원진', NULL, NULL, 0, 0, 0, 0, 55.5555555),
 	(249, 'tmp31@ssafy.com', '1', 3, 4, 9, 0, 54, '나카자토', NULL, NULL, 0, 0, 0, 0, 18.75),
 	(250, 'tmp32@ssafy.com', '1', 5, 5, 9, 0, 54, '이강한', NULL, NULL, 0, 0, 0, 0, 26.3157894),

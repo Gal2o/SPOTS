@@ -22,4 +22,6 @@ public interface UserInfoService {
 	public int applyTeam(ApplyTeamInfo dto);
 
 	public UserInfo detail2(int uid);
+
+	public int rejectTeam(int uid, int team_uid);
 }
