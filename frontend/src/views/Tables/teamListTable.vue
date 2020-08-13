@@ -209,18 +209,18 @@ export default {
         this.haveTeam = true
       }
     }
-    this.TeamList("")
+    console.log('first',this)
   },
   props: {
     type: {
       type: String,
     },
+    FreerankData: [],
   },
   data() {
     return {
       isLogined: false,
       haveTeam: false,
-      FreerankData: [],
       title: "팀 리스트",
       teamData: Object,
       modals: {

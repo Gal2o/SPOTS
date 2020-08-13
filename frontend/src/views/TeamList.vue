@@ -39,6 +39,8 @@
                 class="input-group-alternative"
                 alternative
                 addon-right-icon="fas fa-search"
+                v-model="searchWord"
+                @keydown.enter="TeamList('Search')"
               ></base-input>
             </div>
           </form>
@@ -58,7 +60,7 @@
     <div class="container-fluid mt-4">
       <div class="row">
         <div class="col">
-          <trank-table title="Light Table"></trank-table>
+          <trank-table title="Light Table" :FreerankData="FreerankData"></trank-table>
         </div>
       </div>
     </div>
@@ -168,6 +170,16 @@ export default {
         this.haveTeam = true
       }
     }
+    var nowhere = new FormData()
+    nowhere.append('where', "")
+    axios.post(SERVER_URL + "team/list", nowhere)
+      .then((res) => {
+        this.FreerankData = res.data;
+        console.log('nowhere',this.FreerankData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   components: {
     "trank-table": teamList,
@@ -179,7 +191,8 @@ export default {
       cityN: "도",
       stateN: "시",
       isLogined: false,
-      haveTeam: false,   
+      haveTeam: false,
+      searchWord: "",   
       modals: {
         create: false,
       },
@@ -193,9 +206,13 @@ export default {
       },   
     };
   },
+  props: {
+      FreerankData: [],
+  },
   methods: {
     choice1(state) {
       this.cityN = state.state_name;
+      this.stateN = "시"
       this.choicestate(state.state_code);
     },
     choice2(city) {
@@ -275,8 +292,11 @@ export default {
     },
     TeamList(where) {
       var WhereData = new FormData();
-      where = String(where)
-      WhereData.append('where', where)
+      if (where == 'Search') {
+        WhereData.append('where', this.searchWord)
+      } else {
+        WhereData.append('where', where)
+      }
       axios.post(SERVER_URL + "team/list/", WhereData)
         .then(res => {
           console.log(res)
