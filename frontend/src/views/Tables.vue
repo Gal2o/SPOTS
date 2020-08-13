@@ -1,4 +1,4 @@
-<template>
+<template class="text-center">
   <div>
     <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
       <!-- Card stats -->
@@ -77,10 +77,27 @@
         </div>
       </div>
     </base-header>
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-4 ">
+      <div class="row">
+      <div class="col-6 text-center" >
+      <base-button @click="freespot = true">개인 랭킹</base-button>
+      </div>
+      <div class="col-6 text-center" style="border-left: thick solid;">
+      <base-button @click="freespot = false">팀 랭킹</base-button>
+      </div>
+      </div>
+      </div>
+    <div class="container-fluid mt-4" v-if="freespot == false">
       <div class="row">
         <div class="col">
           <trank-table title="Light Table"></trank-table>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-4" v-if="freespot == true">
+      <div class="row">
+        <div class="col">
+          <frank-table title="Light Table"></frank-table>
         </div>
       </div>
     </div>
@@ -89,6 +106,7 @@
 
 <script>
 import teamRanking from "./Tables/teamRanking";
+import freeRanking from "./Tables/freeRanking";
 import axios from "axios";
 const SERVER_URL = "http://localhost:8080/spots/";
 
@@ -107,10 +125,12 @@ export default {
   },
   components: {
     "trank-table": teamRanking,
+    "frank-table": freeRanking,
   },
   data() {
     return {
       FreerankData: [],
+      freespot : true,
     };
   },
   methods: {},
