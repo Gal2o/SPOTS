@@ -72,7 +72,7 @@
 import ProjectsTable from "./Tables/ProjectsTable";
 import TeamTable from "./Tables/TeamTable";
 import axios from "axios";
-const SERVER_URL = "http://localhost:8080/spots";
+const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "dashboard",
