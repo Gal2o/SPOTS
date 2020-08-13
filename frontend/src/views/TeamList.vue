@@ -140,13 +140,12 @@
 
 <script>
 import teamList from "./Tables/teamListTable";
-const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "dashboard",
   created() {
     this.$axios
-      .get(SERVER_URL + "stateList")
+      .get(this.$SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
         this.teamData.stateDatas = res.data;
@@ -172,7 +171,7 @@ export default {
     }
     var nowhere = new FormData()
     nowhere.append('where', "")
-    this.$axios.post(SERVER_URL + "team/list", nowhere)
+    this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
       .then((res) => {
         this.FreerankData = res.data;
         console.log('nowhere',this.FreerankData);
@@ -231,7 +230,7 @@ export default {
         this.TeamList("where city_code like '"+b.substring(0,2)+"%'");
       }
       this.$axios
-        .post(SERVER_URL + "cityList", stateForm)
+        .post(this.$SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
         })
@@ -248,7 +247,7 @@ export default {
       } else {
         var Cityform = new FormData()
         Cityform.append("state_code", state.state_code);
-        this.$axios.post(SERVER_URL + "cityList", Cityform)
+        this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
             console.log('city', this.teamData.cityDatas)
@@ -268,13 +267,13 @@ export default {
       createData.append('team_name', this.teamData.nickname)
       createData.append('city_code', this.teamData.pickCode)
       createData.append('captain_uid', this.$cookies.get('UserInfo').uid)
-      this.$axios.post(SERVER_URL + "team/regist/", createData)
+      this.$axios.post(this.$SERVER_URL + "team/regist/", createData)
           .then((res) => {
             console.log('last',res)
             this.modals.create = false
             var userform = new FormData()
             userform.append('uid', this.$cookies.get('UserInfo').uid)
-            this.$axios.post(SERVER_URL + "user/detail2/", userform)
+            this.$axios.post(this.$SERVER_URL + "user/detail2/", userform)
               .then((res) => {
                 console.log(res.data)
                 this.$cookies.remove('UserInfo')
@@ -293,7 +292,7 @@ export default {
     TeamList(where) {
       var WhereData = new FormData();
       WhereData.append('where', where)
-      this.$axios.post(SERVER_URL + "team/list/", WhereData)
+      this.$axios.post(this.$SERVER_URL + "team/list/", WhereData)
         .then(res => {
           console.log(res)
           this.FreerankData = res.data;

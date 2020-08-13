@@ -7,7 +7,6 @@
 
 
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
 export default {
   name: "login",
   data() {
@@ -27,7 +26,7 @@ export default {
       loginData.append("password", loginInfo.password);
       console.log(loginData);
       this.$axios
-        .post(SERVER_URL + "login/", loginData)
+        .post(this.$SERVER_URL + "login/", loginData)
         .then((res) => {
           console.log(res);
           if (res.data == "") {

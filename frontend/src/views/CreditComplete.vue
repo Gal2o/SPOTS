@@ -19,8 +19,6 @@
 </template>
 
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
-
 export default {
     methods: {
         returnPage() {
@@ -44,7 +42,7 @@ export default {
         EnterInfo.append("uid", this.$route.params.uid);
         EnterInfo.append("positionnum", this.$route.params.positionnum);
         EnterInfo.append("team_entry_uid", this.$route.params.team_entry_uid);
-        this.$axios.post(SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
+        this.$axios.post(this.$SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
             .then((res) => {
                 console.log(res);
             })

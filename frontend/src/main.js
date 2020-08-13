@@ -26,6 +26,8 @@ import axios from 'axios'
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios;
+const SERVER_URL = "http://localhost:8080/spots/";
+Vue.prototype.$SERVER_URL = SERVER_URL;
 
 Vue.use(ArgonDashboard)
 Vue.use(VueCookie)

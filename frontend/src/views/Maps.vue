@@ -57,12 +57,10 @@
   </div>
 </template>
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
-
 export default {
   created() {
     this.$axios
-      .get(SERVER_URL + "place/list")
+      .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
         console.log(rest.data);
         this.stadiumDatas = rest.data;

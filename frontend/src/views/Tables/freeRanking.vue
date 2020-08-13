@@ -61,14 +61,12 @@
   </div>
 </template>
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
-
 export default {
   name: "frank-table",
   components: {},
   created() {
     this.$axios
-      .get(SERVER_URL + "rank/free")
+      .get(this.$SERVER_URL + "rank/free")
       .then((res) => {
         this.FreerankData = res.data;
         console.log('res123',this.FreerankData);

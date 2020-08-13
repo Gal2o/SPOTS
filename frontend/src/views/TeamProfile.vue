@@ -298,7 +298,6 @@
   </div>
 </template>
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
 export default {
   name: "user-profile",
   data() {
@@ -338,7 +337,7 @@ export default {
     const data = new FormData();
     data.append("uid", this.$cookies.get("UserInfo").team_uid);
     this.$axios
-      .post(SERVER_URL + "/team/detail", data)
+      .post(this.$SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
         console.log('check' ,res.data.captain_uid, this.$cookies.get('UserInfo').uid)
@@ -351,7 +350,7 @@ export default {
         console.log(err);
       });
     this.$axios
-      .post(SERVER_URL + "/team/userList", data)
+      .post(this.$SERVER_URL + "/team/userList", data)
       .then((res) => {
         console.log(res.data);
         this.player = res.data;
@@ -360,7 +359,7 @@ export default {
         console.log(err);
       });
     this.$axios
-      .post(SERVER_URL + "team/applyList/", data)
+      .post(this.$SERVER_URL + "team/applyList/", data)
       .then((res) => {
         console.log('apply',res.data);
         let applySub = res.data;
@@ -368,7 +367,7 @@ export default {
           var j = i
           var userForm = new FormData()
           userForm.append('uid', applySub[i].user_uid)
-          this.$axios.post(SERVER_URL + 'user/detail2/', userForm)
+          this.$axios.post(this.$SERVER_URL + 'user/detail2/', userForm)
             .then(res => {
               var applyData = res.data
               applyData.comment = applySub[j].comment
@@ -384,7 +383,7 @@ export default {
         console.log(err);
       });
     this.$axios
-      .get(SERVER_URL + "stateList")
+      .get(this.$SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
         this.teamData.stateDatas = res.data;
@@ -436,7 +435,7 @@ export default {
       console.log('o', this.teamData)
       var Cityform = new FormData()
       Cityform.append("state_code", dummyState);
-      this.$axios.post(SERVER_URL + "cityList", Cityform)
+      this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
         .then((res) => {
           this.teamData.cityDatas = res.data;
           console.log('city', this.teamData.cityDatas)
@@ -459,7 +458,7 @@ export default {
       } else {
         var Cityform = new FormData()
         Cityform.append("state_code", state.state_code);
-        this.$axios.post(SERVER_URL + "cityList", Cityform)
+        this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
             console.log('city', this.teamData.cityDatas)
@@ -486,7 +485,7 @@ export default {
       modifyForm.append('team_rate', this.model.team_rate)
       modifyForm.append('team_win', this.model.team_win)
       modifyForm.append('uid', this.model.uid)
-      this.$axios.post(SERVER_URL + 'team/modify/', modifyForm)
+      this.$axios.post(this.$SERVER_URL + 'team/modify/', modifyForm)
         .then(() => {
           console.log('sucess')
           this.modals.modifysucess = true
@@ -501,7 +500,7 @@ export default {
       var OutForm = new FormData()
       OutForm.append('uid', this.$cookies.get('UserInfo').uid)
       OutForm.append('team_uid', this.model.uid)
-      this.$axios.post(SERVER_URL + 'user/outTeam', OutForm)
+      this.$axios.post(this.$SERVER_URL + 'user/outTeam', OutForm)
         .then(() => {
           console.log('outsuccess')
           this.$router.push({ name: '팀 리스트' })
@@ -515,7 +514,7 @@ export default {
       var JoinForm = new FormData()
       JoinForm.append('uid', wantUser)
       JoinForm.append('team_uid', this.model.uid)
-      this.$axios.post(SERVER_URL + 'user/joinTeam', JoinForm)
+      this.$axios.post(this.$SERVER_URL + 'user/joinTeam', JoinForm)
         .then(() => {
           console.log('join!')
           this.modals.applyList = false
@@ -528,7 +527,7 @@ export default {
       var rejectForm = new FormData()
       rejectForm.append('uid', wantUser)
       rejectForm.append('team_uid', this.model.uid)
-      this.$axios.post(SERVER_URL + 'user/rejectTeam', rejectForm)
+      this.$axios.post(this.$SERVER_URL + 'user/rejectTeam', rejectForm)
         .then(() => {
           console.log('reject..')
           this.modals.applyList = false

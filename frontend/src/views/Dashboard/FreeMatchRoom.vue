@@ -319,8 +319,6 @@
   </div>
 </template>
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
-
 export default {
   name: "freematchroom",
   components: {},
@@ -431,7 +429,7 @@ export default {
       const entryUid = new FormData();
       entryUid.append("team_entry_uid", entry_uid);
       this.$axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
+        .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
           console.log(this.myPosition)
           if (this.myPosition === "공격수") {
@@ -501,7 +499,7 @@ export default {
       const entryUid = new FormData();
       entryUid.append("team_entry_uid", entry_uid);
       this.$axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
+        .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
           console.log(this.myPosition)
           var Myuid = this.$cookies.get('UserInfo').uid
@@ -557,7 +555,7 @@ export default {
         ChangeInfo.append("team_entry_uid_after", myTeam_uid);
         ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
         this.$axios
-          .post(SERVER_URL + "FreeMatchRoom/entry/change/", ChangeInfo)
+          .post(this.$SERVER_URL + "FreeMatchRoom/entry/change/", ChangeInfo)
           .then(res => {
             console.log('good',res)
             this.modals.changeCheck= false
@@ -585,7 +583,7 @@ export default {
         EnterInfo.append('price', roomPrice)
         EnterInfo.append("room_uid", this.RoomData.uid)
         this.$axios
-          .post(SERVER_URL + "kakaoPay/", EnterInfo)
+          .post(this.$SERVER_URL + "kakaoPay/", EnterInfo)
           .then(res => {
             console.log(res)
             window.location.replace(res.data)
@@ -610,7 +608,7 @@ export default {
       const entryUid = new FormData();
       entryUid.append("team_entry_uid", entry_uid);
       this.$axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
+        .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
           console.log(this.myPosition)
           var Myuid = this.$cookies.get('UserInfo').uid
@@ -649,7 +647,7 @@ export default {
               ChangeInfo.append("positionnum_before", this.myOriginUid);
               ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
               this.$axios
-                .post(SERVER_URL + "FreeMatchRoom/entry/cancel/", ChangeInfo)
+                .post(this.$SERVER_URL + "FreeMatchRoom/entry/cancel/", ChangeInfo)
                 .then(res => {
                   console.log('good',res)
                   this.modals.outalert = false
@@ -669,7 +667,7 @@ export default {
         this.RoomData.home_matching_entry_uid
       );
       this.$axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
+        .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
           console.log("red2", res.data);
           this.posRedList.push(res.data.defender1_uid);
@@ -706,7 +704,7 @@ export default {
       console.log('res3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
-      this.$axios.post(SERVER_URL + 'user/detail2/', usid)
+      this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           console.log('red4', res)
           var newPosition = new String("");
@@ -766,7 +764,7 @@ export default {
         this.RoomData.away_matching_entry_uid
       );
       this.$axios
-        .post(SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
+        .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
           console.log("blue2", res.data);
           this.posBlueList.push(res.data.defender1_uid);
@@ -803,7 +801,7 @@ export default {
       console.log('blue3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
-      this.$axios.post(SERVER_URL + 'user/detail2/', usid)
+      this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           console.log('blue4', res)
           var newPosition = new String("");
@@ -868,7 +866,7 @@ export default {
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.$route.params.uid);
     this.$axios
-      .post(SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+      .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
         console.log(res);
         if (res.data == "") {
