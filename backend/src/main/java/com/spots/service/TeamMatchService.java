@@ -18,5 +18,7 @@ public interface TeamMatchService {
 
 	public List<TMatchInfo> TRoomCheck(int head_uid);
 
+	public int TRoomJoin(int uid, int room_uid);
+
 	
 }

@@ -45,5 +45,7 @@ public interface MatchMapper {
 
 	int matchEnd(@Param("uid") int uid, @Param("mvp")int mvp);
 
+	int TRoomJoin(@Param("uid")int uid, @Param("room_uid") int room_uid);
+
 
 }
