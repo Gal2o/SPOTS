@@ -65,8 +65,6 @@
 </template>
 
 <script>
-const SERVER_URL = 'http://localhost:8080/spots/'
-
 export default {
   data() {
     return {
@@ -89,7 +87,7 @@ export default {
       this.showMenu = !this.showMenu;
     },
     Logout() {
-      this.$axios.post(SERVER_URL + 'logout/', null)
+      this.$axios.post(this.$SERVER_URL + 'logout/', null)
         .then(() => {
           this.$cookies.remove('UserInfo')
           this.isLoggedIn = false

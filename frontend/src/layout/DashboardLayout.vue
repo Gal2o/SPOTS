@@ -44,13 +44,6 @@
           }"
         />
         <sidebar-item
-          :link="{
-            name: '일정',
-            icon: 'ni ni-calendar-grid-58 text-blue',
-            path: '/date',
-          }"
-        />
-        <sidebar-item
           v-if="!isLogined"
           :link="{
             name: '로그인',

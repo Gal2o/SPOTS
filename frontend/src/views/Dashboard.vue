@@ -71,13 +71,12 @@
 <script>
 import ProjectsTable from "./Tables/ProjectsTable";
 import TeamTable from "./Tables/TeamTable";
-const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "dashboard",
   created() {
     this.$axios
-      .get(SERVER_URL + "stateList")
+      .get(this.$SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
       })
@@ -125,7 +124,7 @@ export default {
       b = String(b);
       stateForm.append("state_code", b);
       this.$axios
-        .post(SERVER_URL + "cityList", stateForm)
+        .post(this.$SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
         })
@@ -138,7 +137,7 @@ export default {
       c = String(c);
       dongForm.append("city_code", c);
       this.$axios
-        .post(SERVER_URL + "dongList", dongForm)
+        .post(this.$SERVER_URL + "dongList", dongForm)
         .then((res) => {
           this.dongDatas = res.data;
         })

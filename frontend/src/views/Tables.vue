@@ -107,13 +107,12 @@
 <script>
 import teamRanking from "./Tables/teamRanking";
 import freeRanking from "./Tables/freeRanking";
-const SERVER_URL = "http://localhost:8080/spots/";
 
 export default {
   name: "tables",
   created() {
     this.$axios
-      .get(SERVER_URL + "rank/")
+      .get(this.$SERVER_URL + "rank/")
       .then((res) => {
         this.FreerankData = res.data;
         console.log(this.FreerankData);

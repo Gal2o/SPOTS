@@ -83,7 +83,7 @@
       <base-button v-if="!isRoomFull && isHeader" type="success" @click="modals.entermessage = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button type="success" v-if="isHeader && isEnter" @click="modals.outalert = true">
+      <base-button type="success" v-if="isHeader && isEnter && !isCaptain" @click="modals.outalert = true">
         <h4 class="text-white">취소하기</h4>
       </base-button>
     </div>
@@ -119,7 +119,7 @@
               </small>
             </div>
             <div class="text-center">
-              <base-button type="success" class="my-4 mr-4">결제하기</base-button>
+              <base-button type="success" class="my-4 mr-4" @click="CreditGo">결제하기</base-button>
               <base-button type="secondary" @click="modals.entermessage = false">닫기</base-button>
             </div>
           </form>
@@ -151,8 +151,6 @@
   </div>
 </template>
 <script>
-const SERVER_URL = "http://localhost:8080/spots/";
-
 export default {
   name: "freematchroom",
   components: {},
@@ -162,6 +160,7 @@ export default {
       isStart: false,
       isEnter: false,
       isHeader: false,
+      isCaptain: false,
       isLogined: false,
       isRoomFull: false,
       RoomData: Object,
@@ -182,7 +181,7 @@ export default {
       console.log('red0',this.RoomData.home_team_uid)
       var RedData = new FormData();
       RedData.append('uid', this.RoomData.home_team_uid)
-      this.$axios.post(SERVER_URL + "team/detail/", RedData)
+      this.$axios.post(this.$SERVER_URL + "team/detail/", RedData)
       .then((res) => {
         console.log('red1', res)
         this.team.Red.push(res.data)
@@ -195,7 +194,7 @@ export default {
       console.log('blue0',this.RoomData.away_team_uid)
       var BlueData = new FormData();
       BlueData.append('uid', this.RoomData.away_team_uid)
-      this.$axios.post(SERVER_URL + "team/detail/", BlueData)
+      this.$axios.post(this.$SERVER_URL + "team/detail/", BlueData)
       .then((res) => {
         console.log('blue1', res)
         this.team.Blue.push(res.data)
@@ -215,7 +214,7 @@ export default {
     },
     TeamHeadCheck() {
       var TeamList = []
-      this.$axios.get(SERVER_URL + "TeamMatchAll/")
+      this.$axios.get(this.$SERVER_URL + "TeamMatchAll/")
         .then((res) => {
           TeamList = res.data;
           for(var i=0; i < TeamList.length; i++) {
@@ -247,7 +246,7 @@ export default {
         TeamDeleteUid.append("uid", myTeam)
       }
       TeamDeleteUid.append("uid", TeamDeleteUid);
-      this.$axios.post(SERVER_URL + "team/delete/", TeamDeleteUid)
+      this.$axios.post(this.$SERVER_URL + "team/delete/", TeamDeleteUid)
         .then((res) => {
           console.log(res)
         })
@@ -266,7 +265,7 @@ export default {
         EnterInfo.append('price', roomPrice)
         EnterInfo.append("room_uid", this.RoomData.uid)
         this.$axios
-          .post(SERVER_URL + "kakaoPay/", EnterInfo)
+          .post(this.$SERVER_URL + "kakaoPay/", EnterInfo)
           .then(res => {
             console.log('pay123', res)
             window.location.replace(res.data)
@@ -287,7 +286,7 @@ export default {
     const TeamRoomData = new FormData();
     TeamRoomData.append("uid", this.$route.params.uid);
     this.$axios
-      .post(SERVER_URL + "TeamMatchRoom/", TeamRoomData)
+      .post(this.$SERVER_URL + "TeamMatchRoom/", TeamRoomData)
       .then((res) => {
         console.log('check', res);
         if (res.data == "") {
@@ -298,6 +297,7 @@ export default {
           var kuid = this.$cookies.get("UserInfo").uid
           if (res.data[0].head_uid == kuid) {
             this.isHeader = true
+            this.isCaptain = true
           }
           console.log("1", this.RoomData);
           this.RedTeamData()
