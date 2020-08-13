@@ -25,7 +25,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="img/theme/team-4-800x800.jpg" class="rounded-circle" />
+                    <img :src=imgurl class="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -316,6 +316,7 @@ export default {
         city_code: "",
         player_num: "",
       },
+      imgurl: "",
       player: Object,
       apply: [],
       applyPlayer: [],
@@ -401,6 +402,7 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    this.imgurl = 'img/teamLogo/club_logo ('+ this.$cookies.get("UserInfo").team_uid +').jpg'
   },
   methods: {
     showTeam(TeamInfo) {
