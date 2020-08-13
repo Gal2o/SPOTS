@@ -10,7 +10,7 @@
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-12 col-md-10">
-            <h1 class="display-2 text-white">{{ username }}의 프로필</h1>
+            <h1 class="display-2 text-white">{{ model.username }}의 프로필</h1>
             <p class="text-white mt-0 mb-5">
               유저님의 프로필 페이지입니다.
               <br />본인의 정보 확인 및 수정이 가능합니다.
@@ -28,7 +28,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="img/theme/team-4-800x800.jpg" class="rounded-circle" />
+                    <img :src="imgurl" class="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -169,12 +169,15 @@ export default {
         zipCode: "",
         about: "",
       },
+      imgurl: "",
     };
   },
   created() {
     const userInfo = this.$cookies.get("UserInfo")
     this.model.username = userInfo.nickname
     this.model.email = userInfo.email
+    var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
+    this.imgurl = 'img/userLogo/'+ logonum +'.png'
   }
 };
 </script>
