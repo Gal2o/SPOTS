@@ -147,4 +147,9 @@ public class MatchController {
 
       return FreeMatch.matchEnd(uid, mvp);
    }
+   
+   @PostMapping(value = "/TRoomJoin")
+   public int TRoomJoin(@RequestParam int uid, @RequestParam int room_uid) {
+      return TeamMatch.TRoomJoin(uid, room_uid);
+   }
 }

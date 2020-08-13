@@ -44,5 +44,10 @@ public class TeamMatchServiceImpl implements TeamMatchService{
 		return mapper.TRoomCheck(head_uid);
 	}
 
+	@Override
+	public int TRoomJoin(int uid, int room_uid) {
+		return mapper.TRoomJoin(uid, room_uid);
+	}
+
 
 }
