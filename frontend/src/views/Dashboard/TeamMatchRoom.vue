@@ -6,7 +6,7 @@
           <card title="Room information" class="mb-4 mb-xl-0">
             <h2 class="mb-0">{{ RoomData.title }}</h2>
           </card>
-          <h3 class="mb-0">담당 매니저 : </h3>
+          <h3 class="mb-0">담당 매니저 : {{ Manager.nickname }}</h3>
         </div>
 
         <div>
@@ -75,7 +75,7 @@
     </div>
 
     <div class="d-flex flex-row-reverse justify-content-between mr-5">
-      <base-button class="ml-3" type="secondary" v-if="isManager">
+      <base-button class="ml-3" type="secondary" v-if="Manager.uid == $cookies.get('UserInfo').uid">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4 class="mb-0">매니저 평가</h4>
         </router-link>
@@ -139,12 +139,12 @@
       </div>
 
       <template slot="footer">
-        <base-button type="white">취소하기</base-button>
+        <base-button type="white" @click="OutTeam">취소하기</base-button>
         <base-button
           type="link"
           text-color="white"
           class="ml-auto"
-          @click="OutTeam"
+          @click="modals.outalert = false"
         >닫기</base-button>
       </template>
     </modal>
@@ -163,7 +163,7 @@ export default {
       isCaptain: false,
       isLogined: false,
       isRoomFull: false,
-      idManager: false,
+      Manager: Object,
       RoomData: Object,
       team: {
         Red: [],
@@ -186,6 +186,9 @@ export default {
       .then((res) => {
         console.log('red1', res)
         this.team.Red.push(res.data)
+        if (this.team.Red[0].uid == this.$cookies.get("UserInfo").team_uid) {
+          this.isEnter = true
+        }
       })
       .catch((err) => {
         console.log('red', err);
@@ -200,6 +203,9 @@ export default {
         console.log('blue1', res)
         this.team.Blue.push(res.data)
         console.log('blue2',this.team.Blue)
+        if (this.team.Blue[0].uid == this.$cookies.get("UserInfo").team_uid) {
+          this.isEnter = true
+        }
       })
       .catch((err) => {
         console.log('blue', err);
@@ -231,21 +237,16 @@ export default {
           console.log(err);
         });
     },
-    EnterCheck() {
-      var myTeam = this.$cookies.get("UserInfo").team_uid
-      if (this.team.Red.uid == myTeam) {
-        this.isEnter = true
-      } else if (this.team.Blue.uid == myTeam) {
-        this.isEnter = true
-      }
-    },
     OutTeam() {
+      console.log('out')
+      console.log("team_matching_uid", this.RoomData.uid)
+      console.log("away_team_uid", this.$cookies.get("UserInfo").team_uid)
       var TeamOutUid = new FormData();
-      TeamOutUid.append("team_matcing_uid", this.RoomData.uid)
+      TeamOutUid.append("team_matching_uid", this.RoomData.uid)
       TeamOutUid.append("away_team_uid", this.$cookies.get("UserInfo").team_uid)
       this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/cancel/", TeamOutUid)
         .then((res) => {
-          console.log(res)
+          console.log('clear',res)
         })
         .catch((err) => {
           console.log(err);
@@ -278,15 +279,11 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
       this.isMine = this.$cookies.get("UserInfo").uid;
-      if (this.$cookies.get("UserInfo").admin == "Y") {
-        this.isManager = true
-      }
     }    
     console.log("0", this);
     const TeamRoomData = new FormData();
     TeamRoomData.append("uid", this.$route.params.uid);
-    this.$axios
-      .post(this.$SERVER_URL + "TeamMatchRoom/", TeamRoomData)
+    this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/", TeamRoomData)
       .then((res) => {
         console.log('check', res);
         if (res.data == "") {
@@ -294,6 +291,15 @@ export default {
           this.$router.push({ name: "SPOTs" });
         } else {
           this.RoomData = res.data[0];
+          var managerform = new FormData()
+          managerform.append('uid', res.data[0].manager_uid)
+          this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
+            .then(res => {
+              this.Manager = res.data
+            })
+            .catch(err => {
+              console.log(err)
+            })
           var kuid = this.$cookies.get("UserInfo").uid
           if (res.data[0].head_uid == kuid) {
             this.isHeader = true
@@ -304,14 +310,10 @@ export default {
           this.BlueTeamData()
           this.FullRoomCheck()
           this.TeamHeadCheck()
-          this.EnterCheck()
-          console.log('checkt',this)
         }
       })
       .catch((err) => {
-        console.log(err);
-        alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
-        this.$router.push({ name: "SPOTs" });
+        console.log('김',err);
       });
   },
 };
