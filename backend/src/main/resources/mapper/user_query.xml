@@ -24,18 +24,15 @@
 		   set 	 email 	= #{email}
 				,password	= #{password}			
 				,nickname	= #{nickname}			
-				,birthday	= #{birthday}			
 				,skill	= #{skill}			
 				,position_uid	= #{position_uid}			
 				,nickname	= #{nickname}			
 				,city_code	= #{city_code}			
-				,state_code	= #{state_code}			
-				,dong_code	= #{dong_code}			
 				,comment	= #{comment}			
 		 where uid= #{uid}
 	</update>
 	<select id="findPwdByEmail" resultType="com.spots.dto.UserInfo">
-		select * from ssafy_member where id= #{id}
+		select * from user where email= #{email}
 	</select>
 	<update id="joinTeam">
 		update team set player_num = player_num+1 where uid =  #{team_uid};
