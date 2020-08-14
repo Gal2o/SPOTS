@@ -75,7 +75,7 @@
     </div>
 
     <div class="d-flex flex-row justify-content-between mr-5">
-      <base-button class="ml-3" type="secondary">
+      <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4>매니저 평가</h4>
         </router-link>
@@ -163,6 +163,7 @@ export default {
       isCaptain: false,
       isLogined: false,
       isRoomFull: false,
+      idManager: false,
       RoomData: Object,
       team: {
         Red: [],
@@ -281,6 +282,9 @@ export default {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
       this.isMine = this.$cookies.get("UserInfo").uid;
+      if (this.$cookies.get("UserInfo").admin == "Y") {
+        this.isManager = true
+      }
     }    
     console.log("0", this);
     const TeamRoomData = new FormData();
