@@ -95,7 +95,7 @@ export default {
             SignData.append('nickname', this.model.name);
             SignData.append('email', this.model.email);
             SignData.append('password', this.model.password);
-            this.$axios.post('http://localhost:8080/user/signUp/', SignData)
+            this.$axios.post(this.$SERVER_URL+'user/signUp/', SignData)
                 .then(res => {
                     if (res.data == "") {
                         alert('빈칸없이 적어주세요.')
