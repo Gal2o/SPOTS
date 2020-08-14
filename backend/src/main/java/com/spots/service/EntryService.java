@@ -42,6 +42,6 @@ public interface EntryService {
 	public int TWin(int h_uid, int a_uid);
 	public int TLose(int h_uid, int a_uid);
 	public int TDraw(int h_uid, int a_uid);
-	public int TD(int team_matcing_uid, int away_team_uid);
+	public int TD(int team_matching_uid, int away_team_uid);
 	
 }

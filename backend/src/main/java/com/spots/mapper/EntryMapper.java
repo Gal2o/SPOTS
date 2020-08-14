@@ -48,5 +48,5 @@ public interface EntryMapper {
 	public int TWin(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
 	public int TLose(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
 	public int TDraw(@Param("h_uid") int h_uid, @Param("a_uid") int a_uid);
-	public int TD(@Param("team_matcing_uid") int team_matcing_uid, @Param("away_team_uid") int away_team_uid);
+	public int TD(@Param("team_matching_uid") int team_matching_uid, @Param("away_team_uid") int away_team_uid);
 }
