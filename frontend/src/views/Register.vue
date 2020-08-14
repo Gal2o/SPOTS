@@ -95,6 +95,7 @@ export default {
             SignData.append('nickname', this.model.name);
             SignData.append('email', this.model.email);
             SignData.append('password', this.model.password);
+            if (this.model.password == this.model.passwordcheck){
             this.$axios.post(this.$SERVER_URL+'user/signUp/', SignData)
                 .then(res => {
                     if (res.data == "") {
@@ -108,6 +109,12 @@ export default {
                     alert('잘못 입력하셨습니다. 입력 확인해주세요');
                     console.log(err);
                 })
+            }
+            else {
+                alert('비밀번호가 동일하지 않습니다. 다시 적어주세요')
+                this.model.password = "",
+                this.model.passwordcheck = ""
+            }
         },
     },
 }
