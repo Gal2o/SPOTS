@@ -13,12 +13,10 @@
 
 
 -- spots 데이터베이스 구조 내보내기
-DROP DATABASE IF EXISTS `spots`;
 CREATE DATABASE IF NOT EXISTS `spots` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `spots`;
 
 -- 테이블 spots.apply_team 구조 내보내기
-DROP TABLE IF EXISTS `apply_team`;
 CREATE TABLE IF NOT EXISTS `apply_team` (
   `team_uid` int(11) DEFAULT NULL,
   `user_uid` int(11) DEFAULT NULL,
@@ -34,7 +32,6 @@ INSERT INTO `apply_team` (`team_uid`, `user_uid`, `comment`) VALUES
 /*!40000 ALTER TABLE `apply_team` ENABLE KEYS */;
 
 -- 테이블 spots.city_code 구조 내보내기
-DROP TABLE IF EXISTS `city_code`;
 CREATE TABLE IF NOT EXISTS `city_code` (
   `city_code` varchar(50) NOT NULL,
   `city_name` varchar(50) NOT NULL,
@@ -266,7 +263,6 @@ INSERT INTO `city_code` (`city_code`, `city_name`) VALUES
 /*!40000 ALTER TABLE `city_code` ENABLE KEYS */;
 
 -- 테이블 spots.dong_code 구조 내보내기
-DROP TABLE IF EXISTS `dong_code`;
 CREATE TABLE IF NOT EXISTS `dong_code` (
   `dong_code` varchar(50) NOT NULL,
   `dong_name` varchar(50) NOT NULL,
@@ -3827,7 +3823,6 @@ INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 /*!40000 ALTER TABLE `dong_code` ENABLE KEYS */;
 
 -- 테이블 spots.free_matching 구조 내보내기
-DROP TABLE IF EXISTS `free_matching`;
 CREATE TABLE IF NOT EXISTS `free_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -3845,30 +3840,29 @@ CREATE TABLE IF NOT EXISTS `free_matching` (
   `title` varchar(50) NOT NULL,
   `mvp` int(11) DEFAULT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='자유 매칭';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='자유 매칭';
 
 -- 테이블 데이터 spots.free_matching:~14 rows (대략적) 내보내기
 DELETE FROM `free_matching`;
 /*!40000 ALTER TABLE `free_matching` DISABLE KEYS */;
 INSERT INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`) VALUES
-	(1, 1, 1, 2, '2018-01-01 13:30:50', '2020-01-01 00:00:00', 1, 1, 1, 1, 1, 1, '1153010100', '안양천체육생태공원에서 축구하실분 구해요', 1),
-	(2, 1, 3, 4, '2018-01-01 13:30:50', '2020-01-02 00:00:00', 1, 1, 1, 1, 1, 1, '1153010100', '고척근린공원에서 6시에 축구할사람 구합니다', NULL),
-	(3, 1, 5, 6, '2018-01-01 13:30:50', '2020-01-03 00:00:00', 1, 1, 1, 1, 1, 1, '1153010600', '28일 고척스카이돔 축구팟 구합니다', NULL),
-	(4, 1, 7, 8, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1165010800\r\n', '즐겁게 같이 볼차실 분 구합니다', NULL),
-	(5, 1, 9, 10, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1171011400', '천마공원에서 같이 축구하고 식사할 인원 구합니다', NULL),
-	(6, 1, 11, 12, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1159010900', '보라매공원에서 한경기 같이해요', NULL),
-	(7, 1, 13, 14, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1174010200\r\n', '축구원 모집합니다', NULL),
-	(8, 1, 15, 16, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1162010200\r\n', '축구 한게임 같이해요', NULL),
-	(9, 1, 1, 2, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1171011100\r\n', '여기여기 모여라!', NULL),
-	(10, 1, 3, 4, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1168011000\r\n', '같이 경기할 인원 구합니다', NULL),
-	(11, 1, 5, 6, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1168011400', '탄천 축구할 인원 구해요~', NULL),
-	(12, 1, 7, 8, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1156013300\r\n', '대림 인조잔디에서 한판하실분', NULL),
-	(13, 1, 9, 10, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1154510200\r\n', '간단하게 한경기 뛸 인원 구합니다', NULL),
-	(14, 1, 11, 12, NULL, NULL, 0, 0, 0, 1, 3000, 3400, '1174010900\r\n', '광나루축구장에서 축구하실분~', NULL);
+	(1, 1, 1, 2, '2020-08-10 13:30:50', '2020-08-20 09:00:00', 1, 1, 1, 1, 8000, 8000, '1153010100', '안양천체육생태공원에서 축구하실분 구해요', NULL),
+	(2, 1, 3, 4, '2020-08-10 13:30:50', '2020-08-20 19:00:00', 1, 1, 1, 3, 8000, 8000, '1153010100', '고척근린공원에서 6시에 축구할사람 구합니다', NULL),
+	(3, 1, 5, 6, '2020-08-10 13:30:50', '2020-08-21 09:00:00', 1, 1, 1, 4, 8000, 8000, '1153010600', '28일 고척스카이돔 축구팟 구합니다', NULL),
+	(4, 1, 7, 8, '2020-08-11 13:30:50', '2020-08-21 19:00:00', 0, 0, 0, 5, 8000, 8000, '1165010800\r\n', '즐겁게 같이 볼차실 분 구합니다', NULL),
+	(5, 1, 9, 10, '2020-08-11 13:30:50', '2020-08-22 09:00:00', 0, 0, 0, 6, 8000, 8000, '1171011400', '천마공원에서 같이 축구하고 식사할 인원 구합니다', NULL),
+	(6, 1, 11, 12, '2020-08-11 13:30:50', '2020-08-22 19:00:00', 0, 0, 0, 21, 8000, 8000, '1159010900', '보라매공원에서 한경기 같이해요', NULL),
+	(7, 1, 13, 14, '2020-08-12 13:30:50', '2020-08-23 09:00:00', 0, 0, 0, 7, 8000, 8000, '1174010200\r\n', '축구원 모집합니다', NULL),
+	(8, 1, 15, 16, '2020-08-12 13:30:50', '2020-08-23 19:00:00', 0, 0, 0, 8, 8000, 8000, '1162010200\r\n', '축구 한게임 같이해요', NULL),
+	(9, 1, 1, 2, '2020-08-12 13:30:50', '2020-08-24 09:00:00', 0, 0, 0, 9, 8000, 8000, '1171011100\r\n', '여기여기 모여라!', NULL),
+	(10, 1, 3, 4, '2020-08-13 13:30:50', '2020-08-24 19:00:00', 0, 0, 0, 10, 8000, 8000, '1168011000\r\n', '같이 경기할 인원 구합니다', NULL),
+	(11, 1, 5, 6, '2020-08-13 13:30:50', '2020-08-25 09:00:00', 0, 0, 0, 20, 8000, 8000, '1168011400', '탄천 축구할 인원 구해요~', NULL),
+	(12, 1, 7, 8, '2020-08-14 13:30:50', '2020-08-25 19:00:00', 0, 0, 0, 15, 8000, 8000, '1156013300\r\n', '대림 인조잔디에서 한판하실분', NULL),
+	(13, 1, 9, 10, '2020-08-14 13:30:50', '2020-08-26 09:00:00', 0, 0, 0, 12, 8000, 8000, '1154510200\r\n', '간단하게 한경기 뛸 인원 구합니다', NULL),
+	(14, 1, 11, 12, '2020-08-15 13:30:50', '2020-08-27 19:00:00', 0, 0, 0, 11, 8000, 8000, '1174010900\r\n', '광나루축구장에서 축구하실분~', NULL);
 /*!40000 ALTER TABLE `free_matching` ENABLE KEYS */;
 
 -- 테이블 spots.matching_entry 구조 내보내기
-DROP TABLE IF EXISTS `matching_entry`;
 CREATE TABLE IF NOT EXISTS `matching_entry` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `striker1_uid` int(5) DEFAULT NULL,
@@ -3885,7 +3879,7 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
   `defender4_uid` int(5) DEFAULT NULL,
   `goalkeeper_uid` int(5) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
 -- 테이블 데이터 spots.matching_entry:~14 rows (대략적) 내보내기
 DELETE FROM `matching_entry`;
@@ -3906,11 +3900,12 @@ INSERT INTO `matching_entry` (`uid`, `striker1_uid`, `striker2_uid`, `striker3_u
 	(13, 378, 379, 380, NULL, 382, 383, 384, NULL, 386, 387, 388, 389, 390),
 	(14, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403),
 	(15, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416),
-	(16, 417, 418, 419, 420, 421, 422, 423, NULL, 425, 426, 427, NULL, 429);
+	(16, 417, 418, 419, 420, 421, 422, 423, NULL, 425, 426, 427, NULL, 429),
+	(17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `matching_entry` ENABLE KEYS */;
 
 -- 테이블 spots.place 구조 내보내기
-DROP TABLE IF EXISTS `place`;
 CREATE TABLE IF NOT EXISTS `place` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `place_name` varchar(50) NOT NULL,
@@ -3954,7 +3949,6 @@ INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `c
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 
 -- 테이블 spots.state_code 구조 내보내기
-DROP TABLE IF EXISTS `state_code`;
 CREATE TABLE IF NOT EXISTS `state_code` (
   `state_code` varchar(50) NOT NULL,
   `state_name` varchar(50) NOT NULL,
@@ -3985,7 +3979,6 @@ INSERT INTO `state_code` (`state_code`, `state_name`) VALUES
 /*!40000 ALTER TABLE `state_code` ENABLE KEYS */;
 
 -- 테이블 spots.team 구조 내보내기
-DROP TABLE IF EXISTS `team`;
 CREATE TABLE IF NOT EXISTS `team` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `team_name` varchar(50) NOT NULL,
@@ -4059,7 +4052,6 @@ INSERT INTO `team` (`uid`, `team_name`, `team_intro`, `team_rate`, `team_win`, `
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
 -- 테이블 spots.team_matching 구조 내보내기
-DROP TABLE IF EXISTS `team_matching`;
 CREATE TABLE IF NOT EXISTS `team_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -4085,24 +4077,23 @@ CREATE TABLE IF NOT EXISTS `team_matching` (
 DELETE FROM `team_matching`;
 /*!40000 ALTER TABLE `team_matching` DISABLE KEYS */;
 INSERT INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`) VALUES
-	(1, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-04 00:00:00', 1, 1, 1, 1, 1, 1, '1111010500', '한판할사람444', NULL),
-	(2, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-05 00:00:00', 1, 1, 1, 1, 1, 1, '1111010600', '한판할사람555', NULL),
-	(3, 1, 0, 0, 1, 1, '2018-01-01 13:30:50', '2020-01-06 00:00:00', 1, 1, 1, 1, 1, 1, '1111010700', '한판할사람666', NULL),
-	(4, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3400, NULL, '같이 경기하실 팀 구해요', NULL),
-	(5, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3401, NULL, '초보만~!!!@@@@@@@@@@@@@', NULL),
-	(6, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3402, NULL, '고수만~!!@@@@@@@@@@@@2', NULL),
-	(7, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3403, NULL, '시간되시는 분~!!', NULL),
-	(8, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3404, NULL, '축구 한게임 같이해요', NULL),
-	(9, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3405, NULL, '여기여기 모여라', NULL),
-	(10, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3406, NULL, '같이 경기할 팀 구합니다', NULL),
-	(11, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3407, NULL, '매너겜ㄱㄱ', NULL),
-	(12, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3408, NULL, '동네축구단입니다', NULL),
-	(13, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3409, NULL, '한판같이해요', NULL),
-	(14, 1, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 3000, 3410, NULL, 'ㄱㄱ ', NULL);
+	(1, 1, 0, 0, 52, 53, '2020-08-11 19:30:50', '2020-08-20 10:00:00', 0, 0, 2, 1, 7000, 7000, '1153010100\r\n', '8/20에 한경기 뛸 팀 구합니다', NULL),
+	(2, 1, 0, 0, 54, 55, '2020-08-12 10:30:50', '2020-08-20 19:00:00', 0, 0, 2, 15, 7000, 7000, '1156013300\r\n', '8월20일 매너게임 할 팀만 들어오새요', NULL),
+	(3, 1, 0, 0, 56, 57, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 3, 7000, 7000, '1153010600\r\n', '8/23 9시 아침에 경기할 팀 구해요', NULL),
+	(4, 1, 0, 0, 58, 59, '2020-08-12 13:30:50', '2020-08-26 09:00:00', 0, 0, 2, 4, 7000, 7000, '1153010600\r\n', '26일에 고척스카이돔에서 한팔 할 팀 구해요', NULL),
+	(5, 1, 0, 0, 60, 61, '2020-08-13 12:30:50', '2020-08-26 18:00:00', 0, 0, 2, 5, 7000, 7000, '1153010600\r\n', '26일에 잘하는 팀과 대전하고싶습니다', NULL),
+	(6, 1, 0, 0, 62, 63, '2020-08-14 09:30:50', '2020-08-21 09:00:00', 0, 0, 2, 6, 7000, 7000, '1171011400\r\n', '8/21 같이 볼차실 팀 구합니다', NULL),
+	(7, 1, 0, 0, 64, 65, '2020-08-14 13:30:50', '2020-08-21 18:00:00', 0, 0, 2, 7, 7000, 7000, '1171011100\r\n', '21일 저녁에 축구할 팀 구해요', NULL),
+	(8, 1, 0, 0, 66, 67, '2020-08-11 19:30:50', '2020-08-22 09:00:00', 0, 0, 2, 8, 7000, 7000, '1171011100\r\n', '22일 매너좋은 팀 구합니다', NULL),
+	(9, 1, 0, 0, 68, 69, '2020-08-12 10:30:50', '2020-08-22 18:00:00', 0, 0, 2, 9, 7000, 7000, '1162010200\r\n', '22일 저녁에 가볍게 한경기 할 팀 구해요', NULL),
+	(10, 1, 0, 0, 70, 71, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 10, 7000, 7000, '1174010700\r\n', '23일 광나루한강공원에서 한판할 팀 구합니다', NULL),
+	(11, 1, 0, 0, 72, 73, '2020-08-12 13:30:50', '2020-08-23 18:00:00', 0, 0, 2, 11, 7000, 7000, '1174010900\r\n', '23일 저녁에 공찰 팀 구해요', NULL),
+	(12, 1, 0, 0, 74, 75, '2020-08-13 12:30:50', '2020-08-24 10:00:00', 0, 0, 2, 12, 7000, 7000, '1174010200\r\n', '24일 경기할 팀 구합니다', NULL),
+	(13, 1, 0, 0, 76, 77, '2020-08-14 09:30:50', '2020-08-24 18:00:00', 0, 0, 2, 13, 7000, 7000, '1156013100\r\n', '24일 초보팀 들어와주세요', NULL),
+	(14, 1, 0, 0, 78, 79, '2020-08-14 13:30:50', '2020-08-27 10:00:00', 0, 0, 2, 14, 7000, 7000, '1156012300\r\n', '27일 축구할 팀 구합니다', NULL);
 /*!40000 ALTER TABLE `team_matching` ENABLE KEYS */;
 
 -- 테이블 spots.user 구조 내보내기
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
@@ -4123,7 +4114,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `admin` varchar(50) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`uid`) USING BTREE,
   UNIQUE KEY `email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=436 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
+) ENGINE=InnoDB AUTO_INCREMENT=438 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
 -- 테이블 데이터 spots.user:~221 rows (대략적) 내보내기
 DELETE FROM `user`;
