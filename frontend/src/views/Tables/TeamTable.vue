@@ -32,7 +32,15 @@
           <th scope="row">
             <div class="media align-items-center">
               <div class="media-body">
+                  <router-link
+              :to="{
+                name: '팀 SPOT',
+                params: { uid: row.uid },
+              }"
+              v-if="isLogined"
+            >
                 <span class="name mb-0 text-sm">{{ row.title }}</span>
+                </router-link>
               </div>
             </div>
           </th>

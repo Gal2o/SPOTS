@@ -33,31 +33,45 @@
                 </div>
               </div>
             </div>
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0"></div>
             <div class="card-body pt-0 pt-md-4">
               <div class="row">
                 <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5 pb-0">
                     <div>
-                      <span class="heading">22</span>
-                      <span class="description">친구</span>
+                      <span class="heading">{{ model.win }}</span>
+                      <span class="description">승</span>
                     </div>
                     <div>
-                      <span class="heading">10</span>
-                      <span class="description">자유 SPOT</span>
+                      <span class="heading">{{ model.draw }}</span>
+                      <span class="description">무</span>
                     </div>
+                     <div>
+                      <span class="heading">{{ model.lose }}</span>
+                      <span class="description">패</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center pt-0 mt-0">
                     <div>
-                      <span class="heading">89</span>
-                      <span class="description">팀 SPOT</span>
+                      <span class="heading">{{ model.goal }}</span>
+                      <span class="description">득점</span>
+                    </div>
+                     <div>
+                      <span class="heading">{{ model.assist }}</span>
+                      <span class="description">도움</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="text-center">
-                <h3>이름 : {{ model.username }}</h3>
+                <h3>이름 : {{ name }}</h3>
                 <div>
                   <i class="ni education_hat mr-2"></i>
-                  이메일 : {{ model.email }}
+                  이메일 : {{ email }}
                 </div>
               </div>
             </div>
@@ -74,7 +88,7 @@
               </div>
             </div>
             <template>
-              <form @submit.prevent>
+              <form >
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
@@ -99,18 +113,6 @@
                 </div>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-md-12">
-                      <base-input
-                        alternative
-                        label="상세 주소"
-                        placeholder="상세 주소를 입력해주세요"
-                        input-classes="form-control-alternative"
-                        v-model="model.address"
-                        readonly
-                      />
-                    </div>
-                  </div>
-                  <div class="row">
                     <div class="col-lg-4">
                       <base-input
                         alternative
@@ -130,6 +132,26 @@
                       />
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <base-input
+                        alternative
+                        label="비밀번호"
+                        placeholder="비밀번호"
+                        input-classes="form-control-alternative"
+                        v-model="model.password"
+                      />
+                    </div>
+                    <div class="col-lg-4">
+                      <base-input
+                        alternative
+                        label="구"
+                        placeholder="구"
+                        input-classes="form-control-alternative"
+                        v-model="model.country"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div class="pl-lg-4">
                   <div class="form-group">
@@ -137,14 +159,16 @@
                       <textarea
                         rows="4"
                         class="form-control form-control-alternative"
-                        placeholder="A few words about you ..."
+                        placeholder="간략히 자기를 소개해 주세요"
+                        v-model = "model.content"
                       >
-간략히 자기를 소개해 주세요
                       </textarea>
                     </base-input>
                   </div>
                 </div>
-                <a href="#!" class="btn btn-info center">내정보 수정</a>
+                <div class="text-center">
+                <base-button class="btn ">내정보 수정</base-button>
+                </div>
               </form>
             </template>
           </card>
@@ -168,16 +192,31 @@ export default {
         country: "",
         zipCode: "",
         about: "",
+        goal: "",
+        assist: "",
+        win : "",
+        draw: "",
+        lose : "",
+        comment: "",
       },
+      name : "",
+      email: "",
       imgurl: "",
     };
   },
   created() {
     const userInfo = this.$cookies.get("UserInfo")
-    this.model.username = userInfo.nickname
-    this.model.email = userInfo.email
+    console.log('userinfo',userInfo)
+    this.name = userInfo.nickname
+    this.email = userInfo.email
     var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
     this.imgurl = 'img/userLogo/'+ logonum +'.png'
+    this.model.win = userInfo.win
+    this.model.draw = userInfo.draw
+    this.model.lose = userInfo.lose
+    this.model.goal = userInfo.goal
+    this.model.assist = userInfo.assist
+    this.model.content = userInfo.content
   }
 };
 </script>
