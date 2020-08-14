@@ -188,8 +188,8 @@ public class EntryServiceImpl implements EntryService {
 	}
 
 	@Override
-	public int TD(int team_matcing_uid, int away_team_uid) {
-		return mapper.TD(team_matcing_uid, away_team_uid);
+	public int TD(int team_matching_uid, int away_team_uid) {
+		return mapper.TD(team_matching_uid, away_team_uid);
 	}
 
 }

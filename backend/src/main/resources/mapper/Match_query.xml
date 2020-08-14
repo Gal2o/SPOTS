@@ -81,7 +81,7 @@
       values
       ( #{head_uid}, #{home_team_uid}, 0, 0, 0, 0, 
         #{place_uid}, #{price}, 0, #{matching_date},
-        #{dong_code}, #{title}, abs(random()) % 6 + 1);
+        #{dong_code}, #{title}, FLOOR(1 + (RAND() * 5)));
    </insert>
    
    <insert id="FRoomCreate"> 
@@ -94,7 +94,7 @@
         values
         (#{head_uid}, LAST_INSERT_ID(), LAST_INSERT_ID() + 1, 0, 0, 0,
         #{place_uid}, #{price}, 0, #{matching_date},
-        #{dong_code}, #{title}, abs(random()) % 6 + 1)
+        #{dong_code}, #{title}, FLOOR(1 + (RAND() * 5)))
     </insert>
     
     <!-- 방 정보 수정 -->
