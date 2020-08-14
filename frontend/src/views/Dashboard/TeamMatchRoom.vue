@@ -4,9 +4,9 @@
       <div class="row d-flex flex-row justify-content-between">
         <div class="col-7">
           <card title="Room information" class="mb-4 mb-xl-0">
-            <h2>{{ RoomData.title }}</h2>
+            <h2 class="mb-0">{{ RoomData.title }}</h2>
           </card>
-          <h3>담당 매니저 : </h3>
+          <h3 class="mb-0">담당 매니저 : </h3>
         </div>
 
         <div>
@@ -14,7 +14,7 @@
             <base-button class="mb-4 mb-xl-0 p-4" type="danger">
               <div class="row">
                 <i class="ni ni-bold-left ni-2x"></i>
-                <h2 class="text-white">방 나가기</h2>
+                <h2 class="text-white mb-0">방 나가기</h2>
               </div>
             </base-button>
           </router-link>
@@ -74,17 +74,17 @@
       </div>
     </div>
 
-    <div class="d-flex flex-row justify-content-between mr-5">
+    <div class="d-flex flex-row-reverse justify-content-between mr-5">
       <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
-          <h4>매니저 평가</h4>
+          <h4 class="mb-0">매니저 평가</h4>
         </router-link>
       </base-button>
       <base-button v-if="!isRoomFull && isHeader" type="success" @click="modals.entermessage = true">
-        <h4 class="text-white">입장하기</h4>
+        <h4 class="text-white mb-0">입장하기</h4>
       </base-button>
       <base-button type="success" v-if="isHeader && isEnter && !isCaptain" @click="modals.outalert = true">
-        <h4 class="text-white">취소하기</h4>
+        <h4 class="text-white mb-0">취소하기</h4>
       </base-button>
     </div>
 
@@ -144,7 +144,7 @@
           type="link"
           text-color="white"
           class="ml-auto"
-          @click="deleteTeam"
+          @click="OutTeam"
         >닫기</base-button>
       </template>
     </modal>
@@ -152,7 +152,7 @@
 </template>
 <script>
 export default {
-  name: "freematchroom",
+  name: "teammatchroom",
   components: {},
   data() {
     return {
@@ -215,13 +215,14 @@ export default {
     },
     TeamHeadCheck() {
       var TeamList = []
-      this.$axios.get(this.$SERVER_URL + "TeamMatchAll/")
+      var nowhere = new FormData()
+      nowhere.append('where', "")
+      this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
         .then((res) => {
           TeamList = res.data;
           for(var i=0; i < TeamList.length; i++) {
-            if (this.team.Red.captain_uid == this.$cookies.get("UserInfo").uid) {
-              this.isHeader = true
-            } else if (this.team.Blue.captain_uid == this.$cookies.get("UserInfo").uid) {
+            console.log(i, TeamList)
+            if (TeamList[i].captain_uid == this.$cookies.get("UserInfo").uid) {
               this.isHeader = true
             }
           }
@@ -238,16 +239,11 @@ export default {
         this.isEnter = true
       }
     },
-    deleteTeam() {
-      var myTeam = this.$cookies.get("UserInfo").team_uid
-      var TeamDeleteUid = new FormData();
-      if (this.team.Red.uid == myTeam) {
-        TeamDeleteUid.append("uid", myTeam)
-      } else if (this.team.Blue.uid == myTeam) {
-        TeamDeleteUid.append("uid", myTeam)
-      }
-      TeamDeleteUid.append("uid", TeamDeleteUid);
-      this.$axios.post(this.$SERVER_URL + "team/delete/", TeamDeleteUid)
+    OutTeam() {
+      var TeamOutUid = new FormData();
+      TeamOutUid.append("team_matcing_uid", this.RoomData.uid)
+      TeamOutUid.append("away_team_uid", this.$cookies.get("UserInfo").team_uid)
+      this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/cancel/", TeamOutUid)
         .then((res) => {
           console.log(res)
         })
@@ -260,7 +256,7 @@ export default {
       const roomPrice = String(this.RoomData.price)
       if (this.myPosUid != 0) {
         const EnterInfo = new FormData();
-        EnterInfo.append("uid", this.$cookies.get("UserInfo").uid);
+        EnterInfo.append("uid", this.$cookies.get("UserInfo").team_uid);
         EnterInfo.append("positionnum", -1);
         EnterInfo.append("team_entry_uid", 0);
         EnterInfo.append('price', roomPrice)
@@ -309,6 +305,7 @@ export default {
           this.FullRoomCheck()
           this.TeamHeadCheck()
           this.EnterCheck()
+          console.log('checkt',this)
         }
       })
       .catch((err) => {
