@@ -14,18 +14,15 @@
 	</select>
 	<insert id="signUp">
 		insert into user
-		(email, password, birthday, skill, position_uid, nickname) 
+		(email, password, nickname) 
 		VALUES(
-			#{email},#{password},#{birthday},#{skill},#{position_uid},#{nickname}
+			#{email},#{password},#{nickname}
 		)
 	</insert>
 	<update id="modify">
 		update user 
-		   set 	 email 	= #{email}
-				,password	= #{password}			
-				,nickname	= #{nickname}			
-				,skill	= #{skill}			
-				,position_uid	= #{position_uid}			
+		   set 	password	= #{password}			
+				,nickname	= #{nickname}				
 				,nickname	= #{nickname}			
 				,city_code	= #{city_code}			
 				,comment	= #{comment}			
