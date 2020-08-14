@@ -273,6 +273,13 @@
         UPDATE user SET draw = draw + 1, rate = win / (win + lose + draw) * 100 WHERE team_uid = #{a_uid};
     </update>
 	
+	<update id="TD">
+		update team_matching
+		   set	away_team_uid = null 			
+		 where uid= #{team_matching_uid}
+	</update>
+	
+	
 </mapper>
 
 
