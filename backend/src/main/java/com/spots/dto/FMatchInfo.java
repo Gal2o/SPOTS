@@ -18,9 +18,18 @@ public class FMatchInfo {
 	private String dong_code;
 	private String title;
 	private int mvp;
+	private int manager_uid;
 	
 	
 	
+	public int getManager_uid() {
+		return manager_uid;
+	}
+
+	public void setManager_uid(int manager_uid) {
+		this.manager_uid = manager_uid;
+	}
+
 	public int getMvp() {
 		return mvp;
 	}
