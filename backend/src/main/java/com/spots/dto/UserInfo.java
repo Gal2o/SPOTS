@@ -22,20 +22,9 @@ public class UserInfo {
 	
 	
 	
-	public String getAdmin() {
-		return admin;
-	}
-	public void setAdmin(String admin) {
-		this.admin = admin;
-	}
-	public UserInfo(String email, String password, String nickname) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.nickname = nickname;
-	}
 	public UserInfo(int uid, String email, String password, int win, int lose, int draw, int warning, int team_uid,
-			String nickname, String city_code, String comment, int mvp, int blacklist, int goal, int assist, int rate) {
+			String nickname, String city_code, String comment, int mvp, int blacklist, int goal, int assist, int rate,
+			String admin) {
 		super();
 		this.uid = uid;
 		this.email = email;
@@ -53,7 +42,21 @@ public class UserInfo {
 		this.goal = goal;
 		this.assist = assist;
 		this.rate = rate;
+		this.admin = admin;
 	}
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
+	public UserInfo(String email, String password, String nickname) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
 	public int getUid() {
 		return uid;
 	}
