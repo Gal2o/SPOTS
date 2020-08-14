@@ -210,5 +210,12 @@ public class EntryController {
 		return Entry.TDraw(h_uid, a_uid);
 	}
 	
+	@PostMapping(value="/TeamMatchRoom/cancel")
+	public int FreeMatchEntryCancel(@RequestParam int team_matcing_uid, @RequestParam int away_team_uid) {
+		System.out.println("팀매칭자리취소 시작!!!!!");
+		
+		return Entry.TD(team_matcing_uid, away_team_uid);
+	}
+	
 	
 }
