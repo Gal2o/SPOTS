@@ -112,32 +112,47 @@
                   </div>
                 </div>
                 <div class="pl-lg-4">
+                  <base-input 
+                    alternative
+                    label="주소">
                   <div class="row">
-                    <div class="col-lg-4">
-                      <base-input
-                        alternative
-                        label="시"
-                        placeholder="시"
-                        input-classes="form-control-alternative"
-                        v-model="model.city"
-                      />
-                    </div>
-                    <div class="col-lg-4">
-                      <base-input
-                        alternative
-                        label="구"
-                        placeholder="구"
-                        input-classes="form-control-alternative"
-                        v-model="model.country"
-                      />
-                    </div>
+                    
+                    <base-dropdown class="mx-3">
+                    <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      시(도) : {{
+                      this.cityN
+                      }}
+                    </base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="cityData in cityDatas"
+                      v-bind:key="cityData"
+                      @click="choice1(cityData)"
+                    >{{ cityData.state_name }}</a>
+                  </base-dropdown>
+
+                  <base-dropdown class="mx-4">
+                    <base-button slot="title" type="secondary" class="dropdown-toggle">
+                      구(시) : {{
+                      this.stateN
+                      }}
+                    </base-button>
+                    <a
+                      class="dropdown-item"
+                      v-for="stateData in stateDatas"
+                      v-bind:key="stateData"
+                      @click="choice2(stateData)"
+                    >{{ stateData.city_name }}</a>
+                  </base-dropdown>    
                   </div>
+                 </base-input>
                   <div class="row">
                     <div class="col-lg-4">
                       <base-input
                         alternative
                         label="비밀번호"
                         placeholder="비밀번호"
+                        type="password"
                         input-classes="form-control-alternative"
                         v-model="model.password"
                       />
@@ -145,10 +160,11 @@
                     <div class="col-lg-4">
                       <base-input
                         alternative
-                        label="구"
-                        placeholder="구"
+                        label="비밀번호 확인"
+                        type="password"
+                        placeholder="비밀번호 확인"
                         input-classes="form-control-alternative"
-                        v-model="model.country"
+                        v-model="model.passwordcheck"
                       />
                     </div>
                   </div>
@@ -167,7 +183,9 @@
                   </div>
                 </div>
                 <div class="text-center">
-                <base-button class="btn ">내정보 수정</base-button>
+                <router-link to="/dashboard">
+                <base-button class="btn" @click="submitinfo">내정보 수정</base-button>
+                </router-link>
                 </div>
               </form>
             </template>
@@ -178,6 +196,8 @@
   </div>
 </template>
 <script>
+
+
 export default {
   name: "user-profile",
   data() {
@@ -198,16 +218,34 @@ export default {
         draw: "",
         lose : "",
         comment: "",
+        password: "",
+        passwordcheck: "",
       },
       name : "",
       email: "",
       imgurl: "",
+       cityDatas: null,
+      stateDatas: null,
+      cityN: null,
+      stateN: null,
+       citycode: null,
+      statecode: null,
     };
   },
   created() {
+    this.$axios
+      .get(this.$SERVER_URL + "stateList")
+      .then((res) => {
+        this.cityDatas = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const userInfo = this.$cookies.get("UserInfo")
     console.log('userinfo',userInfo)
     this.name = userInfo.nickname
+    this.model.username = userInfo.nickname
+    this.model.email = userInfo.email
     this.email = userInfo.email
     var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
     this.imgurl = 'img/userLogo/'+ logonum +'.png'
@@ -217,6 +255,50 @@ export default {
     this.model.goal = userInfo.goal
     this.model.assist = userInfo.assist
     this.model.content = userInfo.content
+  },
+  methods : {
+    choice1(state) {
+      this.cityN = state.state_name;
+      this.citycode = state.state_code;
+      this.choicestate(state.state_code);
+    },
+    choice2(city) {
+      this.stateN = city.city_name;
+      this.statecode = city.city_code;
+    },
+    choicestate(b) {
+      const stateForm = new FormData();
+      b = String(b);
+      stateForm.append("state_code", b);
+      this.$axios
+        .post(this.$SERVER_URL + "cityList", stateForm)
+        .then((res) => {
+          this.stateDatas = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    submitinfo() {
+      const infoForm = new FormData();
+      infoForm.append("nickname",this.model.username)
+      infoForm.append("email",this.model.email)
+      infoForm.append('city_code', this.citycode)
+      infoForm.append('comment', this.model.comment)
+      if (this.model.password == this.model.passwordcheck){
+        infoForm.append("password", this.model.password)
+      }else {
+        alert("비밀번호가 다릅니다. 다시 적어주세요")
+      }
+       this.$axios
+        .post(this.$SERVER_URL + "user/modify", infoForm)
+        .then(res=>{
+          console.log('123',res)
+        })
+        .catch(err =>{
+          console.log(err)
+        })
+    },
   }
 };
 </script>
