@@ -37,12 +37,12 @@ public class userController {
 		return userInfoService.signUp(dto);
 	}
 	
-	@GetMapping(value="/user/findPwdByEmail")
+	@PostMapping(value="/user/findPwdByEmail")
 	public UserInfo findPwdByEmail(@PathVariable String email) {
 		return userInfoService.findPwdByEmail(email);
 	}
 	
-	@GetMapping(value="/user/modify")
+	@PostMapping(value="/user/modify")
 	public int modify(UserInfo dto) {
 		return userInfoService.modify(dto);
 	}
