@@ -182,6 +182,52 @@ export default {
   },
   computed: {},
   methods: {
+    createFunction() {
+      if (this.$cookies.isKey("UserInfo")) {
+        this.isLogined = true;
+        this.isMine = this.$cookies.get("UserInfo").uid;
+      }    
+      console.log("0", this);
+      const TeamRoomData = new FormData();
+      TeamRoomData.append("uid", this.$route.params.uid);
+      this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/", TeamRoomData)
+        .then((res) => {
+          console.log('check', res);
+          if (res.data == "") {
+            alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+            this.$router.push({ name: "SPOTs" });
+          } else {
+            this.RoomData = res.data[0];
+            var managerform = new FormData()
+            managerform.append('uid', res.data[0].manager_uid)
+            this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
+              .then(res => {
+                this.Manager = res.data
+                if (res.data.uid == this.$cookies.get('UserInfo').uid) {
+                  this.isManager = true
+                }
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            var kuid = this.$cookies.get("UserInfo").uid
+            if (res.data[0].head_uid == kuid) {
+              this.isHeader = true
+              this.isCaptain = true
+            }
+            this.team.Red = []
+            this.team.Blue = []
+            console.log("1", this.RoomData);
+            this.RedTeamData()
+            this.BlueTeamData()
+            this.FullRoomCheck()
+            this.TeamHeadCheck()
+          }
+        })
+        .catch((err) => {
+          console.log('김',err);
+        });
+    },
     RedTeamData() {
       console.log('red0',this.RoomData.home_team_uid)
       var RedData = new FormData();
@@ -252,7 +298,7 @@ export default {
         .then((res) => {
           console.log('clear',res)
           this.modals.outalert = false
-          this.$router.push({ name: "팀 SPOT", params: { uid: this.RoomData.uid } });
+          this.createFunction()
         })
         .catch((err) => {
           console.log(err);
@@ -282,48 +328,7 @@ export default {
   },
   mounted() {},
   created() {
-    if (this.$cookies.isKey("UserInfo")) {
-      this.isLogined = true;
-      this.isMine = this.$cookies.get("UserInfo").uid;
-    }    
-    console.log("0", this);
-    const TeamRoomData = new FormData();
-    TeamRoomData.append("uid", this.$route.params.uid);
-    this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/", TeamRoomData)
-      .then((res) => {
-        console.log('check', res);
-        if (res.data == "") {
-          alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
-          this.$router.push({ name: "SPOTs" });
-        } else {
-          this.RoomData = res.data[0];
-          var managerform = new FormData()
-          managerform.append('uid', res.data[0].manager_uid)
-          this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
-            .then(res => {
-              this.Manager = res.data
-              if (res.data.uid == this.$cookies.get('UserInfo').uid) {
-                this.isManager = true
-              }
-            })
-            .catch(err => {
-              console.log(err)
-            })
-          var kuid = this.$cookies.get("UserInfo").uid
-          if (res.data[0].head_uid == kuid) {
-            this.isHeader = true
-            this.isCaptain = true
-          }
-          console.log("1", this.RoomData);
-          this.RedTeamData()
-          this.BlueTeamData()
-          this.FullRoomCheck()
-          this.TeamHeadCheck()
-        }
-      })
-      .catch((err) => {
-        console.log('김',err);
-      });
+    this.createFunction()    
   },
 };
 </script>
