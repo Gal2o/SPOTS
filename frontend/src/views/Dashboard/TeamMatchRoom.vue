@@ -75,7 +75,7 @@
     </div>
 
     <div class="d-flex flex-row-reverse justify-content-between mr-5">
-      <base-button class="ml-3" type="secondary" v-if="Manager.uid == $cookies.get('UserInfo').uid">
+      <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4 class="mb-0">매니저 평가</h4>
         </router-link>
@@ -166,6 +166,7 @@ export default {
       isCaptain: false,
       isLogined: false,
       isRoomFull: false,
+      isManager: false,
       Manager: Object,
       RoomData: Object,
       team: {
@@ -301,6 +302,9 @@ export default {
           this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
             .then(res => {
               this.Manager = res.data
+              if (res.data.uid == this.$cookies.get('UserInfo').uid) {
+                this.isManager = true
+              }
             })
             .catch(err => {
               console.log(err)
