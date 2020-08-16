@@ -247,6 +247,8 @@ export default {
       this.$axios.post(this.$SERVER_URL + "TeamMatchRoom/cancel/", TeamOutUid)
         .then((res) => {
           console.log('clear',res)
+          this.modals.outalert = false
+          this.$router.push({ name: "팀 SPOT", params: { uid: this.RoomData.uid } });
         })
         .catch((err) => {
           console.log(err);
