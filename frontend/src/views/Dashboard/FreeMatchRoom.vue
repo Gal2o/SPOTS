@@ -164,7 +164,7 @@
       </div>
     </div>
 
-    <div class="d-flex flex-row justify-content-between mr-5">
+    <div class="d-flex flex-row-reverse justify-content-between mr-5">
       <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4>매니저 평가</h4>
@@ -342,27 +342,8 @@ export default {
       myPosition: "선택해주세요",
       myPosUid: 0,
       myOriginUid: 0,
-      RedpostionList: [
-        { name: "랜덤" },
-        { name: "공격수" },
-        { name: "미드필더" },
-        { name: "수비수" },
-        { name: "골키퍼" },
-      ],
-      BluepostionList: [
-        { name: "랜덤" },
-        { name: "공격수" },
-        { name: "미드필더" },
-        { name: "수비수" },
-        { name: "골키퍼" },
-      ],
-      postionList: [
-        { name: "랜덤" },
-        { name: "공격수" },
-        { name: "미드필더" },
-        { name: "수비수" },
-        { name: "골키퍼" },
-      ],
+      RedpostionList: [],
+      BluepostionList: [],
       teamList: [{ name: "RED" }, { name: "BLUE" }],
       posRedList: [],
       posBlueList: [],
@@ -404,6 +385,51 @@ export default {
     };
   },
   methods: {
+    createFunction() {
+      var FreeRoomData = new FormData();
+      FreeRoomData.append("uid", this.$route.params.uid);
+      this.$axios
+        .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
+        .then((res) => {
+          if (res.data == "") {
+            alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+            this.$router.push({ name: "SPOTs" });
+          } else {
+            this.RoomData = res.data[0];
+            var managerform = new FormData()
+            managerform.append('uid', res.data[0].manager_uid)
+            this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
+              .then(res => {
+                this.Manager = res.data
+                if (res.data.uid == this.$cookies.get('UserInfo').uid) {
+                  this.isManager = true
+                }
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            var kuid = this.$cookies.get("UserInfo").uid
+            if (res.data[0].head_uid == kuid) {
+              this.isHeader = true
+            }
+            console.log("1", this.RoomData);
+            this.RedtableDatas = [];
+            this.RedTeamList();
+            this.BluetableDatas = [];
+            this.BlueTeamList();
+
+            if (this.$cookies.isKey("UserInfo")) {
+              this.isLogined = true;
+              this.isMine = this.$cookies.get("UserInfo").nickname;
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+          this.$router.push({ name: "SPOTs" });
+        });
+    },
     PositionChange(name) {
       console.log(this.BluepostionList)
       if (name == "랜덤") {
@@ -564,7 +590,7 @@ export default {
           .then(res => {
             console.log('good',res)
             this.modals.changeCheck= false
-            this.$router.push({ name: '자유 SPOT', params: { uid: this.RoomData.uid }})
+            this.createFunction()
           })
           .catch(err => {
             console.log(err);
@@ -671,6 +697,7 @@ export default {
         "team_entry_uid",
         this.RoomData.home_matching_entry_uid
       );
+      this.posRedList = []
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
@@ -709,6 +736,13 @@ export default {
       console.log('res3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
+      this.redCountList = {
+        Attacker: 0,
+        Midfielder: 0,
+        Defender: 0,
+        Goalkeeper: 0,
+        total: 0,
+      }
       this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           console.log('red4', res)
@@ -768,6 +802,7 @@ export default {
         "team_entry_uid",
         this.RoomData.away_matching_entry_uid
       );
+      this.posBlueList = []
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
@@ -806,6 +841,13 @@ export default {
       console.log('blue3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
+      this.blueCountList = {
+        Attacker: 0,
+        Midfielder: 0,
+        Defender: 0,
+        Goalkeeper: 0,
+        total: 0,
+      }
       this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
           console.log('blue4', res)
@@ -862,49 +904,7 @@ export default {
   },
   mounted() {},
   created() {
-    const FreeRoomData = new FormData();
-    FreeRoomData.append("uid", this.$route.params.uid);
-    this.$axios
-      .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
-      .then((res) => {
-        if (res.data == "") {
-          alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
-          this.$router.push({ name: "SPOTs" });
-        } else {
-          this.RoomData = res.data[0];
-          var managerform = new FormData()
-          managerform.append('uid', res.data[0].manager_uid)
-          this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
-            .then(res => {
-              this.Manager = res.data
-              if (res.data.uid == this.$cookies.get('UserInfo').uid) {
-                this.isManager = true
-              }
-            })
-            .catch(err => {
-              console.log(err)
-            })
-          var kuid = this.$cookies.get("UserInfo").uid
-          if (res.data[0].head_uid == kuid) {
-            this.isHeader = true
-          }
-          console.log("1", this.RoomData);
-          this.RedtableDatas = [];
-          this.RedTeamList();
-          this.BluetableDatas = [];
-          this.BlueTeamList();
-
-          if (this.$cookies.isKey("UserInfo")) {
-            this.isLogined = true;
-            this.isMine = this.$cookies.get("UserInfo").nickname;
-           }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
-        this.$router.push({ name: "SPOTs" });
-      });
+    this.createFunction()
   },
 };
 </script>
