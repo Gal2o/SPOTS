@@ -6,7 +6,7 @@
           <card title="Room information" class="mb-4 mb-xl-0">
             <h2>{{ RoomData.title }}</h2>
           </card>
-          <h3>담당 매니저 : {{this.managername}}</h3>
+          <h3>담당 매니저 : {{ Manager.nickname }}</h3>
         </div>
 
         <div>
@@ -332,13 +332,12 @@ export default {
       isEnter: false,
       isHeader: false,
       isManager: false,
+      Manager: Object,
       RoomData: Object,
       RedtableDatas: [],
       BluetableDatas: [],
       isLogined: false,
       myTeam: "RED",
-      manageruid:0,
-      managername:"",
       myRealTeam: 0,
       myPosition: "선택해주세요",
       myPosUid: 0,
@@ -868,12 +867,23 @@ export default {
     this.$axios
       .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
-        this.manageruid = res.data[0].manager_uid;
         if (res.data == "") {
           alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
           this.$router.push({ name: "SPOTs" });
         } else {
           this.RoomData = res.data[0];
+          var managerform = new FormData()
+          managerform.append('uid', res.data[0].manager_uid)
+          this.$axios.post(this.$SERVER_URL + "user/detail2/", managerform)
+            .then(res => {
+              this.Manager = res.data
+              if (res.data.uid == this.$cookies.get('UserInfo').uid) {
+                this.isManager = true
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
           var kuid = this.$cookies.get("UserInfo").uid
           if (res.data[0].head_uid == kuid) {
             this.isHeader = true
@@ -887,10 +897,7 @@ export default {
           if (this.$cookies.isKey("UserInfo")) {
             this.isLogined = true;
             this.isMine = this.$cookies.get("UserInfo").nickname;
-          if (this.$cookies.get("UserInfo").uid == this.manageruid) {
-            this.isManager = true
            }
-          }  
         }
       })
       .catch((err) => {
@@ -898,14 +905,6 @@ export default {
         alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
         this.$router.push({ name: "SPOTs" });
       });
-      
-      // const userData = new FormData();
-      // userData.append('uid',this.manageruid);
-      // this.$axios.post(this.$SERVER_URL + "user/detail2", userData)
-      // .then(res =>{
-      //   console.log('check123', res)
-      // })
-
   },
 };
 </script>
