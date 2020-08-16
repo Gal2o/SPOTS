@@ -98,21 +98,13 @@
                         placeholder="이름을 입력해주세요"
                         input-classes="form-control-alternative"
                         v-model="model.username"
-                      />
-                    </div>
-                    <div class="col-lg-6">
-                      <base-input
-                        alternative
-                        label="이메일"
-                        placeholder="이메일을 입력해주세요"
-                        input-classes="form-control-alternative"
-                        v-model="model.email"
+                       :disabled="validated ? disabled : ''"
                       />
                     </div>
                   </div>
                 </div>
                 <div class="pl-lg-4">
-                  <base-input 
+                  <!-- <base-input 
                     alternative
                     label="주소">
                   <div class="row">
@@ -145,7 +137,7 @@
                     >{{ stateData.city_name }}</a>
                   </base-dropdown>    
                   </div>
-                 </base-input>
+                 </base-input> -->
                   <div class="row">
                     <div class="col-lg-4">
                       <base-input
@@ -224,6 +216,7 @@ export default {
       name : "",
       email: "",
       imgurl: "",
+      validated:false,
        cityDatas: null,
       stateDatas: null,
       cityN: null,

@@ -16,7 +16,7 @@
                 <i class="fa fa-arrow-up">순위 업! 1등</i>
               </span>
               <span class="text-nowrap"
-                >승률 {{ this.FreerankData[0].team_rate }}%</span
+                >승률 {{ this.maxrate }}%</span
               >
             </template>
           </stats-card>
@@ -34,7 +34,7 @@
                 <i class="fa fa-arrow-down"></i> 분발하세요!
               </span>
               <span class="text-nowrap"
-                >승률 {{ this.FreerankData[19].team_rate }}%</span
+                >승률 {{ this.minrate }}%</span
               >
             </template>
           </stats-card>
@@ -52,7 +52,7 @@
                 <i class="fa fa-arrow-up"></i> 대단해요!
               </span>
               <span class="text-nowrap"
-                >승리 수 {{ this.FreerankData[1].team_win }}</span
+                >승리 수 {{ this.maxwin }}</span
               >
             </template>
           </stats-card>
@@ -70,7 +70,7 @@
                 <i class="fa fa-arrow-down"></i> 화이팅!
               </span>
               <span class="text-nowrap"
-                >승률 {{ this.FreerankData[8].team_lose }}</span
+                >패배수 {{ this.maxlose }}</span
               >
             </template>
           </stats-card>
@@ -115,7 +115,20 @@ export default {
       .get(this.$SERVER_URL + "rank/")
       .then((res) => {
         this.FreerankData = res.data;
-        console.log(this.FreerankData);
+        for (var a=0; a<this.FreerankData.length; a++){
+          if ( this.maxwin < this.FreerankData[a].team_win ){
+            this.maxwin = this.FreerankData[a].team_win
+          }
+          if ( this.maxrate < this.FreerankData[a].team_rate ){
+            this.maxrate = this.FreerankData[a].team_rate
+          }
+          if ( this.maxlose < this.FreerankData[a].team_lose) {
+            this.maxlose = this.FreerankData[a].team_lose
+          }
+          if ( this.minrate > this.FreerankData[a].team_rate ){
+            this.minrate = this.FreerankData[a].team_rate
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -129,6 +142,10 @@ export default {
     return {
       FreerankData: [],
       freespot : true,
+      minrate : 100,
+      maxwin : 0,
+      maxlose : 0,
+      maxrate : 0,
     };
   },
   methods: {},

@@ -132,8 +132,8 @@
                           </base-button>
                           <a
                             class="dropdown-item"
-                            v-for="sData in teamData.stateDatas"
-                            v-bind:key="sData"
+                            v-for="(sData,i) in teamData.stateDatas"
+                            v-bind:key="i"
                             @click="choiceS(sData)"
                             >{{ sData.state_name }}</a
                           >
@@ -149,8 +149,8 @@
                           </base-button>
                           <a
                             class="dropdown-item"
-                            v-for="cData in teamData.cityDatas"
-                            v-bind:key="cData"
+                            v-for="(cData,i) in teamData.cityDatas"
+                            v-bind:key="i"
                             @click="choiceC(cData)"
                             >{{ cData.city_name }}</a
                           >
@@ -315,7 +315,7 @@ export default {
         player_num: "",
       },
       imgurl: "",
-      player: Object,
+      player: [],
       apply: [],
       applyPlayer: [],
       modals: {

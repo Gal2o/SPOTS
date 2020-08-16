@@ -212,7 +212,7 @@ export default {
     type: {
       type: String,
     },
-    FreerankData: [],
+    FreerankData: {type:Array}
   },
   data() {
     return {

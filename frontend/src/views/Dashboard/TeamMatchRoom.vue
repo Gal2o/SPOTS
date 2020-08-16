@@ -102,12 +102,12 @@
       >
         <template>
           <div class="text-muted text-center mb-3">
-            <medium>입장 준비</medium>
+            <h4>입장 준비</h4>
           </div>
         </template>
         <template>
           <div class="text-center text-muted mb-4">
-            <small>입장하시겠습니까?</small>
+            <h6>입장하시겠습니까?</h6>
           </div>
           <form role="form">
             <div class="text-center text-muted mb-4">
@@ -154,6 +154,9 @@
 export default {
   name: "teammatchroom",
   components: {},
+  props: {
+    type : {type:String}
+  },
   data() {
     return {
       isMine: 0,
