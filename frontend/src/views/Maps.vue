@@ -7,8 +7,8 @@
       <div class="row">
         <div
           class="col-xl-4 col-lg-6 mt-4"
-          v-for="stadiumdata in stadiumDatas"
-          v-bind:key="stadiumdata"
+          v-for="(stadiumdata,i) in stadiumDatas"
+          v-bind:key="i"
           @click="modal1 = true"
         >
           <stats-card
@@ -37,12 +37,12 @@
           >
             <template >
               <div class="text-muted text-center mb-3">
-                <medium>경기장 세부정보</medium>
+                <h4>경기장 세부정보</h4>
               </div>
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>세부 사항</small>
+                <h6>세부 사항</h6>
               </div>
               <form role="form">
                 <div class="text-center">

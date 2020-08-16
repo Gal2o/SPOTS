@@ -10,8 +10,8 @@
             }}</base-button>
             <a
               class="dropdown-item"
-              v-for="cityData in cityDatas"
-              v-bind:key="cityData"
+              v-for="(cityData, i) in cityDatas"
+              v-bind:key="i"
               @click="choice1(cityData)"
               >{{ cityData.state_name }}</a
             >
@@ -23,8 +23,8 @@
             }}</base-button>
             <a
               class="dropdown-item"
-              v-for="stateData in stateDatas"
-              v-bind:key="stateData"
+              v-for="(stateData, i) in stateDatas"
+              v-bind:key="i"
               @click="choice2(stateData)"
               >{{ stateData.city_name }}</a
             >
@@ -97,8 +97,8 @@
                 </base-button>
                 <a
                   class="dropdown-item"
-                  v-for="sData in teamData.stateDatas"
-                  v-bind:key="sData"
+                  v-for="(sData,i) in teamData.stateDatas"
+                  v-bind:key="i"
                   @click="choiceS(sData)"
                   >{{ sData.state_name }}</a
                 >
@@ -111,8 +111,8 @@
                 </base-button>
                 <a
                   class="dropdown-item"
-                  v-for="cData in teamData.cityDatas"
-                  v-bind:key="cData"
+                  v-for="(cData,i) in teamData.cityDatas"
+                  v-bind:key="i"
                   @click="choiceC(cData)"
                   >{{ cData.city_name }}</a
                 >
@@ -203,10 +203,8 @@ export default {
         cityPick: "시(도)를 선택해 주세요.",
         pickCode: "",
       },   
+      FreerankData:[],
     };
-  },
-  props: {
-      FreerankData: [],
   },
   methods: {
     choice1(state) {

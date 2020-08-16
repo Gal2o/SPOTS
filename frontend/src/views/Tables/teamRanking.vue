@@ -19,7 +19,7 @@
         :class="type === 'dark' ? 'table-dark' : ''"
         :thead-classes="type === 'dark' ? 'thead-dark' : 'thead-light'"
         tbody-classes="list"
-        :data="FreerankData"
+        :data="TeamrankData"
       >
         <template slot="columns">
           <th>팀 이름</th>
@@ -65,8 +65,7 @@ export default {
     this.$axios
       .get(this.$SERVER_URL + "rank/")
       .then((res) => {
-        this.FreerankData = res.data;
-        console.log(this.FreerankData);
+        this.TeamrankData = res.data;
       })
       .catch((err) => {
         console.log(err);
@@ -79,7 +78,7 @@ export default {
   },
   data() {
     return {
-      FreerankData: [],
+      TeamrankData: [],
       title: "팀 랭킹",
     };
   },

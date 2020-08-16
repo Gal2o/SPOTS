@@ -5,9 +5,6 @@
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ tabletitle }}</h3>
         </div>
-        <div class="col text-right">
-          <base-button type="primary" size="sm">더보기</base-button>
-        </div>
       </div>
     </div>
 
@@ -37,7 +34,6 @@
                 name: '팀 SPOT',
                 params: { uid: row.uid },
               }"
-              v-if="isLogined"
             >
                 <span class="name mb-0 text-sm">{{ row.title }}</span>
                 </router-link>
@@ -88,12 +84,12 @@
           >
             <template>
               <div class="text-muted text-center mb-3">
-                <medium>팀 SPOT 만들기</medium>
+                <h4>팀 SPOT 만들기</h4>
               </div>
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>정보를 입력해주세요</small>
+                <h6>정보를 입력해주세요</h6>
               </div>
               <form role="form">
                 <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
@@ -115,13 +111,13 @@
                   >{{ this.stadiumN }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="stadiumData in stadiumDatas"
-                    v-bind:key="stadiumData"
+                    v-for="(stadiumData,i) in stadiumDatas"
+                    v-bind:key="i"
                     @click="choice1(stadiumData)"
                   >{{ stadiumData.place_name }}({{ stadiumData.address }})</a>
                 </base-dropdown>
                 <div class="text-center">
-                  <base-button type="success" @click="getSpot" class="my-4 mr-4">팀 대결하기</base-button>
+                  <base-button type="success" @click="getTSpot" class="my-4 mr-4">팀 대결하기</base-button>
                   <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
@@ -143,12 +139,12 @@
           >
             <template>
               <div class="text-muted text-center mb-3">
-                <medium>입장 준비</medium>
+                <h4>입장 준비</h4>
               </div>
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>진영을 선택해주세요.</small>
+                <h6>진영을 선택해주세요.</h6>
               </div>
               <form role="form">
                 <div class="d-flex justify-content-center">
@@ -156,8 +152,8 @@
                     <base-button slot="title" type="secondary" class="dropdown-toggle">{{ myTeam }}</base-button>
                     <a
                       class="dropdown-item"
-                      v-for="teamitem in teamList"
-                      :key="teamitem"
+                      v-for="(teamitem,i) in teamList"
+                      :key="i"
                       @click="TeamChange(teamitem.name)"
                     >{{ teamitem.name }}</a>
                   </base-dropdown>
@@ -249,12 +245,12 @@ export default {
       this.selectpage();
     },
   },
-  props: {
+ props: {
     type: {
       type: String,
     },
-    sidolist: [],
-  },
+    sidolist: {type: Array}
+    },
 
   data() {
     return {
@@ -262,7 +258,7 @@ export default {
         simple: "2020-08-15",
       },
       isLogined: false,
-      tabletitle: "자유 SPOT",
+      tabletitle: "팀 SPOT",
       TeamtableData: [],
       modals: false,
       notEnter: false,
@@ -282,6 +278,7 @@ export default {
       myTeam: 'RED',
       myPosition: "선택해주세요",
       myPosUid: 0,
+      manageruid: Math.floor(Math.random()*5+1),
       teamList: [{ name: "RED" }, { name: "BLUE" }],
       postionList: [
         { name: "랜덤" },
@@ -300,13 +297,14 @@ export default {
       this.placeprice = 50000;
       this.placecode = stadium.code;
     },
-    getSpot() {
+    getTSpot() {
       if (this.$cookies.isKey("UserInfo")) {
         this.userInfo = this.$cookies.get("UserInfo");
         console.log("uid", this.userInfo.uid);
         console.log("date",typeof(this.dates.simple));
         const makeData = new FormData();
         makeData.append("title", this.title);
+        makeData.append('manager_uid',this.manageruid);
         makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
         makeData.append("home_team_uid", this.userInfo.team_uid);
@@ -342,9 +340,13 @@ export default {
       sidoData.append("si", this.sidolist[1]);
       sidoData.append("dong", this.sidolist[2]);
       sidoData.append("word", this.sidolist[3]);
+      console.log('team123',sidoData)
       this.$axios.post(this.$SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
         this.TeamtableData = res.data;
-      });
+        console.log('team12345', res.data)
+      }).catch(err=>{
+        console.log('err123',err)
+      })
     },
     selectpage() {
       this.TeamTable = [];

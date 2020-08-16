@@ -2,6 +2,7 @@
   <div>
     <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
       <!-- Card stats -->
+      <h2>Spot 검색</h2>
       <div class="row">
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
@@ -11,8 +12,8 @@
           </base-button>
           <a
             class="dropdown-item"
-            v-for="cityData in cityDatas"
-            v-bind:key="cityData"
+            v-for="(cityData, i) in cityDatas"
+            v-bind:key="i"
             @click="choice1(cityData)"
           >{{ cityData.state_name }}</a>
         </base-dropdown>
@@ -25,8 +26,8 @@
           </base-button>
           <a
             class="dropdown-item"
-            v-for="stateData in stateDatas"
-            v-bind:key="stateData"
+            v-for="(stateData,i) in stateDatas"
+            v-bind:key="i"
             @click="choice2(stateData)"
           >{{ stateData.city_name }}</a>
         </base-dropdown>
@@ -39,8 +40,8 @@
           </base-button>
           <a
             class="dropdown-item"
-            v-for="dongData in dongDatas"
-            v-bind:key="dongData"
+            v-for="(dongData,i) in dongDatas"
+            v-bind:key="i"
             @click="choice3(dongData)"
           >{{ dongData.dong_name }}</a>
         </base-dropdown>
@@ -61,7 +62,7 @@
       </div>
       <div class="row mt-5">
         <div class="col">
-          <team-table type="dark" title="팀 SPOT"></team-table>
+          <team-table :sidolist="sidolist" type="dark" title="팀 SPOT"></team-table>
         </div>
       </div>
     </div>

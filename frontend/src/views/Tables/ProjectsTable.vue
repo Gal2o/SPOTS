@@ -5,9 +5,6 @@
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white' : ''">{{ tabletitle }}</h3>
         </div>
-        <div class="col text-right">
-          <base-button type="primary" size="sm">더보기</base-button>
-        </div>
       </div>
     </div>
 
@@ -37,7 +34,6 @@
                 name: '자유 SPOT',
                 params: { uid: row.uid },
               }"
-              v-if="isLogined"
             >
                 <span class="name mb-0 text-sm" >{{ row.title }}</span>
                 </router-link>
@@ -88,12 +84,12 @@
           >
             <template>
               <div class="text-muted text-center mb-3">
-                <medium>자유 SPOT 만들기</medium>
+                <h4>자유 SPOT 만들기</h4>
               </div>
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>정보를 입력해주세요</small>
+                <h6>정보를 입력해주세요</h6>
               </div>
               <form role="form">
                 <base-input alternative class="mb-3" v-model="title" placeholder="제목을 적어주세요"></base-input>
@@ -115,8 +111,8 @@
                   >{{ this.stadiumN }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="stadiumData in stadiumDatas"
-                    v-bind:key="stadiumData"
+                    v-for="(stadiumData,i) in stadiumDatas"
+                    v-bind:key="i"
                     @click="choice1(stadiumData)"
                   >{{ stadiumData.place_name }}({{ stadiumData.address }})</a>
                 </base-dropdown>
@@ -143,12 +139,12 @@
           >
             <template>
               <div class="text-muted text-center mb-3">
-                <medium>입장 준비</medium>
+                <h4>입장 준비</h4>
               </div>
             </template>
             <template>
               <div class="text-center text-muted mb-4">
-                <small>팀과 포지션을 선택해주세요.</small>
+                <h6>팀과 포지션을 선택해주세요.</h6>
               </div>
               <form role="form">
                 <div class="d-flex justify-content-center">
@@ -156,8 +152,8 @@
                     <base-button slot="title" type="secondary" class="dropdown-toggle">{{ myTeam }}</base-button>
                     <a
                       class="dropdown-item"
-                      v-for="teamitem in teamList"
-                      :key="teamitem"
+                      v-for="(teamitem,i) in teamList"
+                      :key="i"
                       @click="TeamChange(teamitem.name)"
                     >{{ teamitem.name }}</a>
                   </base-dropdown>
@@ -170,8 +166,8 @@
                     >{{ this.myPosition }}</base-button>
                     <a
                       class="dropdown-item"
-                      v-for="positonitem in postionList"
-                      :key="positonitem"
+                      v-for="(positonitem,i) in postionList"
+                      :key="i"
                       @click="PositionChange(positonitem.name)"
                     >{{ positonitem.name }}</a>
                   </base-dropdown>
@@ -230,7 +226,9 @@ import "flatpickr/dist/flatpickr.css";
 
 export default {
   name: "projects-table",
-  components: { flatPicker },
+  components: { 
+    flatPicker
+     },
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
@@ -274,13 +272,12 @@ export default {
     type: {
       type: String,
     },
-    sidolist: [],
-  },
-
+    sidolist: {type: Array}
+    },
   data() {
     return {
       dates: {
-        simple: "2020-08-08",
+        simple: "2020-08-22",
       },
       isLogined: false,
       tabletitle: "자유 SPOT",
@@ -300,6 +297,7 @@ export default {
       pagination: 1,
       FreeTable: [],
       isCredit: false,
+      manageruid: Math.floor(Math.random()*5+1),
       myTeam: 'RED',
       myPosition: "선택해주세요",
       myPosUid: 0,
@@ -328,6 +326,7 @@ export default {
         console.log("date",typeof(this.dates.simple));
         const makeData = new FormData();
         makeData.append("title", this.title);
+        makeData.append('manager_uid',this.manageruid);
         makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
         makeData.append("price", this.placeprice);
@@ -364,6 +363,7 @@ export default {
       sidoData.append("word", this.sidolist[3]);
       this.$axios.post(this.$SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
+        console.log('free12345', res.data)
       });
     },
     selectpage() {

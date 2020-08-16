@@ -6,7 +6,7 @@
           <card title="Room information" class="mb-4 mb-xl-0">
             <h2>{{ RoomData.title }}</h2>
           </card>
-          <h3>담당 매니저 : </h3>
+          <h3>담당 매니저 : {{this.managername}}</h3>
         </div>
 
         <div>
@@ -60,8 +60,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myTeam }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="teamitem in teamList"
-                    :key="teamitem"
+                    v-for="(teamitem,i) in teamList"
+                    :key="i"
                     @click="TeamChange(teamitem.name)"
                   >{{ teamitem.name }}</a>
                 </base-dropdown>
@@ -69,8 +69,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="positonitem in RedpostionList"
-                    :key="positonitem"
+                    v-for="(positonitem,i) in RedpostionList"
+                    :key="i"
                     @click="PositionChange(positonitem.name)"
                   >{{ positonitem.name }}</a>
                 </base-dropdown>
@@ -78,8 +78,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="positonitem in BluepostionList"
-                    :key="positonitem"
+                    v-for="(positonitem,i) in BluepostionList"
+                    :key="i"
                     @click="PositionChange(positonitem.name)"
                   >{{ positonitem.name }}</a>
                 </base-dropdown>
@@ -130,8 +130,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myTeam }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="teamitem in teamList"
-                    :key="teamitem"
+                    v-for="(teamitem,i) in teamList"
+                    :key="i"
                     @click="TeamChange(teamitem.name)"
                   >{{ teamitem.name }}</a>
                 </base-dropdown>
@@ -139,8 +139,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="positonitem in RedpostionList"
-                    :key="positonitem"
+                    v-for="(positonitem,i) in RedpostionList"
+                    :key="i"
                     @click="PositionChange(positonitem.name)"
                   >{{ positonitem.name }}</a>
                 </base-dropdown>
@@ -148,8 +148,8 @@
                   <base-button slot="title" class="dropdown-toggle">{{ myPosition }}</base-button>
                   <a
                     class="dropdown-item"
-                    v-for="positonitem in BluepostionList"
-                    :key="positonitem"
+                    v-for="(positonitem,i) in BluepostionList"
+                    :key="i"
                     @click="PositionChange(positonitem.name)"
                   >{{ positonitem.name }}</a>
                 </base-dropdown>
@@ -219,12 +219,12 @@
       >
         <template>
           <div class="text-muted text-center mb-3">
-            <medium>입장 준비</medium>
+            <h4>입장 준비</h4>
           </div>
         </template>
         <template>
           <div class="text-center text-muted mb-4">
-            <small>팀과 포지션을 선택해주세요.</small>
+            <h6>팀과 포지션을 선택해주세요.</h6>
           </div>
           <form role="form">
             <div class="d-flex justify-content-center">
@@ -232,8 +232,8 @@
                 <base-button slot="title" type="secondary" class="dropdown-toggle">{{ this.myTeam }}</base-button>
                 <a
                   class="dropdown-item"
-                  v-for="teamitem in teamList"
-                  :key="teamitem"
+                  v-for="(teamitem,i) in teamList"
+                  :key="i"
                   @click="TeamChange(teamitem.name)"
                 >{{ teamitem.name }}</a>
               </base-dropdown>
@@ -246,8 +246,8 @@
                 >{{ this.myPosition }}</base-button>
                 <a
                   class="dropdown-item"
-                  v-for="positonitem in RedpostionList"
-                  :key="positonitem"
+                  v-for="(positonitem,i) in RedpostionList"
+                  :key="i"
                   @click="PositionChange(positonitem.name)"
                 >{{ positonitem.name }}</a>
               </base-dropdown>
@@ -259,8 +259,8 @@
                 >{{ this.myPosition }}</base-button>
                 <a
                   class="dropdown-item"
-                  v-for="positonitem in BluepostionList"
-                  :key="positonitem"
+                  v-for="(positonitem,i) in BluepostionList"
+                  :key="i"
                   @click="PositionChange(positonitem.name)"
                 >{{ positonitem.name }}</a>
               </base-dropdown>
@@ -322,6 +322,9 @@
 export default {
   name: "freematchroom",
   components: {},
+  props: {
+    type : {type:String}
+  },
   data() {
     return {
       isMine: "",
@@ -334,6 +337,8 @@ export default {
       BluetableDatas: [],
       isLogined: false,
       myTeam: "RED",
+      manageruid:0,
+      managername:"",
       myRealTeam: 0,
       myPosition: "선택해주세요",
       myPosUid: 0,
@@ -858,21 +863,12 @@ export default {
   },
   mounted() {},
   created() {
-    console.log("params", this.$route.params.uid);
-    if (this.$cookies.isKey("UserInfo")) {
-      this.isLogined = true;
-      this.isMine = this.$cookies.get("UserInfo").nickname;
-      if (this.$cookies.get("UserInfo").admin == "Y") {
-        this.isManager = true
-      }
-    }    
-    console.log("0", this);
     const FreeRoomData = new FormData();
     FreeRoomData.append("uid", this.$route.params.uid);
     this.$axios
       .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
       .then((res) => {
-        console.log(res);
+        this.manageruid = res.data[0].manager_uid;
         if (res.data == "") {
           alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
           this.$router.push({ name: "SPOTs" });
@@ -887,6 +883,14 @@ export default {
           this.RedTeamList();
           this.BluetableDatas = [];
           this.BlueTeamList();
+
+          if (this.$cookies.isKey("UserInfo")) {
+            this.isLogined = true;
+            this.isMine = this.$cookies.get("UserInfo").nickname;
+          if (this.$cookies.get("UserInfo").uid == this.manageruid) {
+            this.isManager = true
+           }
+          }  
         }
       })
       .catch((err) => {
@@ -894,6 +898,14 @@ export default {
         alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
         this.$router.push({ name: "SPOTs" });
       });
+      
+      // const userData = new FormData();
+      // userData.append('uid',this.manageruid);
+      // this.$axios.post(this.$SERVER_URL + "user/detail2", userData)
+      // .then(res =>{
+      //   console.log('check123', res)
+      // })
+
   },
 };
 </script>
