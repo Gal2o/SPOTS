@@ -682,6 +682,7 @@ export default {
                 .then(res => {
                   console.log('good',res)
                   this.modals.outalert = false
+                  this.createFunction()
                 })
                 .catch(err => {
                   console.log(err);
