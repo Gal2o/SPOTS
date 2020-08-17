@@ -65,11 +65,11 @@ export default {
   name: "frank-table",
   components: {},
   created() {
+
     this.$axios
       .get(this.$SERVER_URL + "rank/free")
       .then((res) => {
         this.FreerankData = res.data;
-        console.log('res123',this.FreerankData);
       })
       .catch((err) => {
         console.log(err);

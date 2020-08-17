@@ -39,17 +39,9 @@
                 <i class="ni ni-single-02"></i>
                 <span>프로필</span>
               </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>설정</span>
-              </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>내 일정 기록</span>
-              </router-link>
-              <router-link to="/profile" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>지원</span>
+              <router-link to="/Teamprofile" class="dropdown-item">
+                <i class="ni ni-badge text"></i>
+                <span>내 팀 프로필</span>
               </router-link>
               <div class="dropdown-divider"></div>
               <div @click="Logout" class="dropdown-item">

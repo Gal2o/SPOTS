@@ -82,7 +82,7 @@
       <div class="col-6 text-center" >
       <base-button @click="freespot = true">개인 랭킹</base-button>
       </div>
-      <div class="col-6 text-center" style="border-left: thick solid;">
+      <div class="col-6 text-center">
       <base-button @click="freespot = false">팀 랭킹</base-button>
       </div>
       </div>

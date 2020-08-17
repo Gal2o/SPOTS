@@ -55,7 +55,7 @@
       </div>
     </base-header>
     <div class="container-fluid">
-      <div class="row">
+      <div class="row mt-5">
         <div class="col">
           <projects-table :sidolist="sidolist" title="자유 SPOT"></projects-table>
         </div>

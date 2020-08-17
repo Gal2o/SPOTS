@@ -425,7 +425,8 @@ export default {
       console.log(this)
     },
     pickData() {      
-      var dummyState = this.model.city_code.slice(0, 2) + "00000000"
+      console.log('model',this.model.city_code)
+      var dummyState = this.model.city_code.splice(0, 2) + "00000000"
       console.log('dummy', dummyState)
       for(var i=0; i < this.teamData.stateDatas.length; i++) {
         if (this.teamData.stateDatas[i].state_code == dummyState) {
