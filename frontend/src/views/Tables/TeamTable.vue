@@ -201,7 +201,7 @@
         </modal>
       </div>
       <div>
-        <base-pagination :page-count="parseInt(TeamtableData.length/5)+1" v-model="pagination"></base-pagination>
+        <base-pagination :page-count="Math.ceil(TeamtableData.length / 5)" v-model="pagination"></base-pagination>
       </div>
     </div>
   </div>
@@ -343,6 +343,8 @@ export default {
       console.log('team123',sidoData)
       this.$axios.post(this.$SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
         this.TeamtableData = res.data;
+        this.selectpage();
+        this.pagination = 1;
         console.log('team12345', res.data)
       }).catch(err=>{
         console.log('err123',err)

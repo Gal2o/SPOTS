@@ -215,7 +215,7 @@
         </modal>
       </div>
       <div>
-        <base-pagination :page-count="parseInt(FreetableData.length/5)+1" v-model="pagination"></base-pagination>
+        <base-pagination :page-count="Math.ceil(FreetableData.length / 5)" v-model="pagination"></base-pagination>
       </div>
     </div>
   </div>
@@ -363,6 +363,8 @@ export default {
       sidoData.append("word", this.sidolist[3]);
       this.$axios.post(this.$SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
+        this.selectpage();
+        this.pagination = 1;
         console.log('free12345', res.data)
       });
     },
