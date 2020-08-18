@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8 text-center">
+    <base-header class="pb-8 pt-md-8 text-center">
       <!-- Card stats -->
       <h2 class="mb-4 text-white">SP<i class="ni ni-pin-3 text-red"></i>T 검색</h2>
       <div class="row justify-content-center">
@@ -102,6 +102,7 @@ export default {
       statecode: null,
       dongcode: null,
       keyword: null,
+      bgImg:"img/background/goal.jpg"
     };
   },
   methods: {
@@ -167,7 +168,7 @@ export default {
             
 div{
  font-family: 'paybooc-Bold';
- font-size: 30px;
+
 }
 h2{
   margin-bottom:0px;

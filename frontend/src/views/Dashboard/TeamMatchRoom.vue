@@ -1,12 +1,12 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-4 pt-3 pt-md-6">
+    <base-header class="pb-5 pt-md-8 mb-4">
       <div class="row d-flex flex-row justify-content-between">
         <div class="col-7">
           <card title="Room information" class="mb-4 mb-xl-0">
             <h2 class="mb-0">{{ RoomData.title }}</h2>
           </card>
-          <h3 class="mb-0">담당 매니저 : {{ Manager.nickname }}</h3>
+          <h3 class="mb-0 text-white">담당 매니저 : {{ Manager.nickname }}</h3>
         </div>
 
         <div>

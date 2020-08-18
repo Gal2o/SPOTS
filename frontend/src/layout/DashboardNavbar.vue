@@ -17,7 +17,7 @@
           <div v-if="!isLogined" class="media align-items-center" slot="title">
             <router-link to="/login">
               <div class="media-body ml-2 d-none d-lg-block">
-                <h2 class="mb-0 font-weight-bold">로그인</h2>
+                <base-button class="mb-0" type=""><h2 style="color:white;">로그인</h2></base-button>
               </div>
             </router-link>
           </div>

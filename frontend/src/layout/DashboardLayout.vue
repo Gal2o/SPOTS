@@ -7,6 +7,7 @@
     >
       <template slot="links">
         <sidebar-item
+          class="mb-4"
           :link="{
             name: 'SPOTs',
             icon: 'ni ni-tv-2 text-primary',
@@ -15,6 +16,7 @@
         />
 
         <sidebar-item
+        class="mb-4"
           :link="{
             name: '경기장 정보',
             icon: 'ni ni-pin-3 text-orange',
@@ -22,6 +24,7 @@
           }"
         />
         <sidebar-item
+        class="mb-4"
           v-if="isLogined"
           :link="{
             name: '프로필',
@@ -30,6 +33,7 @@
           }"
         />
         <sidebar-item
+        class="mb-4"
           :link="{
             name: '랭킹',
             icon: 'ni ni-bullet-list-67 text-red',
@@ -37,6 +41,7 @@
           }"
         />
           <sidebar-item
+          class="mb-4"
           :link="{
             name: '팀 리스트',
             icon: 'ni ni-badge text-red',
@@ -44,6 +49,7 @@
           }"
         />
         <sidebar-item
+        class="mb-4"
           v-if="!isLogined"
           :link="{
             name: '로그인',
@@ -52,6 +58,7 @@
           }"
         />
         <sidebar-item
+        class="mb-4"
           v-if="!isLogined"
           :link="{
             name: '회원가입',
