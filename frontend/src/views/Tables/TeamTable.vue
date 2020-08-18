@@ -98,7 +98,7 @@
                     slot-scope="{ focus, blur }"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="dates.config"
+                    :config="{ allowInput: true }"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -261,7 +261,7 @@ export default {
           enableTime: true,
           dateFormat: "Y-m-d H:i:00",
         }
-      },
+        },
       isLogined: false,
       tabletitle: "팀 SPOT",
       TeamtableData: [],

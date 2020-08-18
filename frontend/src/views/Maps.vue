@@ -27,31 +27,6 @@
             </template>
           </stats-card>
         </div>
-          <modal :show.sync="modal1" body-classes="p-0" modal-classes="modal-dialog modal-md">
-          <card
-            type="secondary"
-            shadow
-            header-classes="bg-white pb-5"
-            body-classes="px-lg-5 py-lg-5"
-            class="border-0"
-          >
-            <template >
-              <div class="text-muted text-center mb-3">
-                <h4>경기장 세부정보</h4>
-              </div>
-            </template>
-            <template>
-              <div class="text-center text-muted mb-4">
-                <h6>세부 사항</h6>
-              </div>
-              <form role="form">
-                <div class="text-center">
-                  <base-button class="mt-3" type="secondary" @click="modal1 = false">닫기</base-button>
-                </div>
-              </form>
-            </template>
-          </card>
-        </modal>
       </div>
     </div>
   </div>
