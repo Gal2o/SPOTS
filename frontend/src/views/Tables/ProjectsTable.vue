@@ -76,6 +76,7 @@
 
         <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
+          
             type="secondary"
             shadow
             header-classes="bg-white pb-5"
@@ -264,7 +265,7 @@ export default {
       this.sidoinfo();
     },
     pagination: function () {
-      // console.log(this.FreeTable);
+
       this.selectpage();
     },
   },
