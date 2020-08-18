@@ -19,6 +19,14 @@
                                     addon-left-icon="ni ni-email-83"
                                     v-model="model.email">
                         </base-input>
+                        <base-button type="primary" class="my-4" @click="sendEmail()">인증번호 발송</base-button>
+
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="인증번호"
+                                    addon-left-icon="ni ni-email-83"
+                                    v-model="checkMailNum">
+                        </base-input>
+                        <base-button type="primary" class="my-4" @click="checkNum()">인증번호 확인</base-button>
 
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="비밀번호"
@@ -58,7 +66,9 @@ export default {
                 email: '',
                 password: '',
                 passwordcheck: '',
-            }
+            },
+            mailNum: '',
+            checkMailNum:'',
         }
     },
     methods: {
@@ -86,6 +96,23 @@ export default {
                 alert('비밀번호가 동일하지 않습니다. 다시 적어주세요')
                 this.model.password = "",
                 this.model.passwordcheck = ""
+            }
+        },
+        sendEmail(){
+            const data = new FormData();
+            data.append('email', this.model.email);
+            this.$axios.post(this.$SERVER_URL+'user/email/', data)
+                .then(res => {
+                   this.mailNum = res.data
+                })
+                .catch(err => {
+                    alert('잘못 입력하셨습니다. 입력 확인해주세요');
+                    console.log(err);
+                })
+        },
+        checkNum(){
+            if(this.mailNum == this.checkMailNum){
+                alert("인증되었습니다");
             }
         },
     },
