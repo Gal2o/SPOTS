@@ -168,7 +168,7 @@
                         rows="4"
                         class="form-control form-control-alternative"
                         placeholder="간략히 자기를 소개해 주세요"
-                        v-model = "model.content"
+                        v-model="model.comment"
                       >
                       </textarea>
                     </base-input>
@@ -226,28 +226,28 @@ export default {
     };
   },
   created() {
+    const data = new FormData();
+    data.append("uid", this.$cookies.get("UserInfo").uid);
     this.$axios
-      .get(this.$SERVER_URL + "stateList")
+      .post(this.$SERVER_URL + "user/detail2", data)
       .then((res) => {
-        this.cityDatas = res.data;
+        this.model.username = res.data.nickname
+        this.model.email = res.data.email
+        this.email = res.data.email
+        var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
+        this.imgurl = 'img/userLogo/'+ logonum +'.png'
+        this.model.win = res.data.win
+        this.model.draw = res.data.draw
+        this.model.lose = res.data.lose
+        this.model.goal = res.data.goal
+        this.model.assist = res.data.assist
+        this.model.comment = res.data.comment
+        this.name = res.data.nickname
       })
       .catch((err) => {
         console.log(err);
       });
-    const userInfo = this.$cookies.get("UserInfo")
-    console.log('userinfo',userInfo)
-    this.name = userInfo.nickname
-    this.model.username = userInfo.nickname
-    this.model.email = userInfo.email
-    this.email = userInfo.email
-    var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
-    this.imgurl = 'img/userLogo/'+ logonum +'.png'
-    this.model.win = userInfo.win
-    this.model.draw = userInfo.draw
-    this.model.lose = userInfo.lose
-    this.model.goal = userInfo.goal
-    this.model.assist = userInfo.assist
-    this.model.content = userInfo.content
+    
   },
   methods : {
     choice1(state) {
@@ -274,9 +274,9 @@ export default {
     },
     submitinfo() {
       const infoForm = new FormData();
+      
       infoForm.append("nickname",this.model.username)
-      infoForm.append("email",this.model.email)
-      infoForm.append('city_code', this.citycode)
+      infoForm.append("uid",this.$cookies.get("UserInfo").uid)
       infoForm.append('comment', this.model.comment)
       if (this.model.password == this.model.passwordcheck){
         infoForm.append("password", this.model.password)
