@@ -175,7 +175,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                <router-link to="/dashboard">
+                <router-link to="/profile">
                 <base-button class="btn" @click="submitinfo">내정보 수정</base-button>
                 </router-link>
                 </div>
@@ -273,24 +273,26 @@ export default {
         });
     },
     submitinfo() {
-      const infoForm = new FormData();
-      
-      infoForm.append("nickname",this.model.username)
-      infoForm.append("uid",this.$cookies.get("UserInfo").uid)
-      infoForm.append('comment', this.model.comment)
-      if (this.model.password == this.model.passwordcheck){
+      if (this.model.password == this.model.passwordcheck && this.model.password!=""){
         infoForm.append("password", this.model.password)
+        infoForm.append("nickname",this.model.username)
+        infoForm.append("uid",this.$cookies.get("UserInfo").uid)
+        infoForm.append('comment', this.model.comment)
+        
+        this.$axios
+          .post(this.$SERVER_URL + "user/modify", infoForm)
+          .then(res=>{
+            console.log('123',res)
+          })
+          .catch(err =>{
+            console.log(err)
+          })
       }else {
         alert("비밀번호가 다릅니다. 다시 적어주세요")
       }
-       this.$axios
-        .post(this.$SERVER_URL + "user/modify", infoForm)
-        .then(res=>{
-          console.log('123',res)
-        })
-        .catch(err =>{
-          console.log(err)
-        })
+      const infoForm = new FormData();
+      
+      
     },
   }
 };
