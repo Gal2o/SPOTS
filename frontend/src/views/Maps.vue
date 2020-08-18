@@ -1,9 +1,14 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+    <base-header class="pb-8 pt-md-8 mb-4 text-center">
+     <h2 class="mb-4 text-white"></h2>
+      <div class="row justify-content-center">
+          <div class="form-group mb-0">
+          </div>
+      </div>
     </base-header>
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid">
       <div class="row">
         <div
           class="col-xl-4 col-lg-6 mt-4"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8 text-center">
+     <base-header class="pb-8 pt-md-8 mb-4 text-center">
       <!-- Card stats -->
       <h2 class="mb-4 text-white">팀 검색</h2>
       <div class="d-flex flex-row justify-content-center">

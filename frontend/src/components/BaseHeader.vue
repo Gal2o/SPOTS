@@ -1,6 +1,8 @@
 <template>
-  <div class="header" :class="{[`bg-${type}`]: type}">
-    <div class="container-fluid">
+  <div class="header" :class="{[`bg-${type}`]: type}" style="background-image:url('img/background/goal.jpg'); 
+    background-repeat:no-repeat;
+    background-size:cover;" >
+    <div class="container-fluid" style="width:1200px; height:110px;">
       <div class="header-body">
         <slot></slot>
       </div>
