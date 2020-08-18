@@ -17,7 +17,7 @@
           <div v-if="!isLogined" class="media align-items-center" slot="title">
             <router-link to="/login">
               <div class="media-body ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">로그인</span>
+                <h2 class="mb-0 font-weight-bold">로그인</h2>
               </div>
             </router-link>
           </div>
@@ -94,8 +94,9 @@ export default {
         this.isLogined = true
         this.userInfo = this.$cookies.get('UserInfo')
         console.log(this.userInfo)
+        var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
     }
-    var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
+    
     this.imgurl = 'img/userLogo/'+ logonum +'.png'
   }
 };

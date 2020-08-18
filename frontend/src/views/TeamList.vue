@@ -1,8 +1,9 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8 text-center">
       <!-- Card stats -->
-      <div class="d-flex flex-row justify-content-between">
+      <h2 class="mb-4 text-white">팀 검색</h2>
+      <div class="d-flex flex-row justify-content-center">
         <div class="d-flex flex-row align-items-center">
           <base-dropdown class="mr-3">
             <base-button slot="title" type="secondary" class="dropdown-toggle">{{
@@ -47,17 +48,18 @@
           </form>
         </div>
         <div>
-          <router-link :to="{ name: '팀 프로필'}">
-            <base-button v-if="haveTeam" type="success" size="lg">
-              <h2 class="text-white">나의 팀 프로필</h2>
+       </div>
+      </div> 
+    </base-header><div class="container-fluid mt-4 mb-0 text-center">
+      <router-link :to="{ name: '팀 프로필'}">
+            <base-button v-if="haveTeam" block type="warning" size="lg">
+              <h2 class="text-white">나의 팀 프로필 보기!</h2>
             </base-button>
           </router-link>
-          <base-button v-if="!haveTeam" type="success" size="lg" @click="modals.create = true">
-            <h2 class="text-white">팀 만들기</h2>
+          <base-button v-if="!haveTeam" block type="info" size="lg" @click="modals.create = true">
+            <h2 class="text-white mb-0">팀 만들기!</h2>
           </base-button>
         </div>
-      </div>
-    </base-header>
     <div class="container-fluid mt-4">
       <div class="row">
         <div class="col">
