@@ -98,7 +98,7 @@
                     slot-scope="{ focus, blur }"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="{ allowInput: true }"
+                    :config="dates.config"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -256,6 +256,11 @@ export default {
     return {
       dates: {
         simple: "2020-08-15",
+        config: {
+          allowInput: true,
+          enableTime: true,
+          dateFormat: "Y-m-d H:i:00",
+        }
       },
       isLogined: false,
       tabletitle: "팀 SPOT",
