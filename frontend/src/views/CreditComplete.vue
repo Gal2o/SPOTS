@@ -37,30 +37,20 @@ export default {
     },
     created() {
         if (this.$route.params.team_entry_uid != 0){
-        console.log(this)
+        
         const EnterInfo = new FormData();
         EnterInfo.append("uid", this.$route.params.uid);
         EnterInfo.append("positionnum", this.$route.params.positionnum);
         EnterInfo.append("team_entry_uid", this.$route.params.team_entry_uid);
         this.$axios.post(this.$SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+           
         } else {
             if (this.$route.params.positionnum == -1) {
                 const joinInfo = new FormData();
                 joinInfo.append("uid", this.$route.params.uid);
                 joinInfo.append("room_uid", this.$route.params.room_uid);
                 this.$axios.post(this.$SERVER_URL + "TRoomJoin/", joinInfo)
-                    .then((res) => {
-                        console.log(res);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                   
             }
         }
     },

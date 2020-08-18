@@ -4,17 +4,16 @@
       <div class="row d-flex flex-row justify-content-between">
         <div class="col-7">
           <card title="Room information" class="mb-4 mb-xl-0">
-            <h2>{{ RoomData.title }}</h2>
+            <h2 class="mb-0">{{ RoomData.title }}</h2>
           </card>
-          <h3 class="text-white">담당 매니저 : {{ Manager.nickname }}</h3>
+          <h3 class="text-white mt-2">담당 매니저 : {{ Manager.nickname }}</h3>
         </div>
 
         <div>
           <router-link to="/dashboard">
-            <base-button class="mb-4 mb-xl-0 p-4" type="danger">
+            <base-button class="mb-xl-0 p-4" outline type="primary">
               <div class="row">
-                <i class="ni ni-bold-left ni-2x"></i>
-                <h2 class="text-white">방 나가기</h2>
+                <h2 class="text-white mb-0">방 나가기</h2>
               </div>
             </base-button>
           </router-link>
@@ -164,16 +163,16 @@
       </div>
     </div>
 
-    <div class="d-flex flex-row-reverse justify-content-between mx-5">
+    <div class="d-flex flex-row-reverse justify-content-between ">
       <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4>매니저 평가</h4>
         </router-link>
       </base-button>
-      <base-button v-if="!isLogined" type="success" @click="modals.loginalert = true">
+      <base-button class = "mx-3" v-if="!isLogined" type="success" @click="modals.loginalert = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button v-if="isLogined && !this.isEnter" type="success" @click="modals.entermessage = true">
+      <base-button class = "mx-3" v-if="isLogined && !this.isEnter" type="success" @click="modals.entermessage = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
       <base-button v-if="isLogined && this.isEnter && !this.isHeader" type="success" @click="modals.outalert = true">
@@ -294,7 +293,12 @@
           </base-button>
       </template>
     </modal>
-
+    <modal :show.sync="modals.problem" gradient="danger" class="text-center">
+        <div class="py-3 text-center mb-0">
+          <h3 class="text-white mb-3">문제가 발생하였습니다. 메인페이지로 돌아갑니다.</h3>
+          <base-button size="sm" type="secondary" @click="modals.problem = false">닫기</base-button>
+        </div>
+      </modal>
     <modal
       :show.sync="modals.outalert"
       gradient="danger"
@@ -368,6 +372,7 @@ export default {
         entermessage: false,
         changeCheck: false,
         outalert: false,
+        problem : false,
       },
       redCountList: {
         Attacker: 0,
@@ -393,7 +398,7 @@ export default {
         .post(this.$SERVER_URL + "FreeMatchRoom/", FreeRoomData)
         .then((res) => {
           if (res.data == "") {
-            alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+            this.modals.problem = true
             this.$router.push({ name: "SPOTs" });
           } else {
             this.RoomData = res.data[0];
@@ -406,14 +411,10 @@ export default {
                   this.isManager = true
                 }
               })
-              .catch(err => {
-                console.log(err)
-              })
             var kuid = this.$cookies.get("UserInfo").uid
             if (res.data[0].head_uid == kuid) {
               this.isHeader = true
             }
-            console.log("1", this.RoomData);
             this.RedtableDatas = [];
             this.RedTeamList();
             this.BluetableDatas = [];
@@ -425,14 +426,12 @@ export default {
             }
           }
         })
-        .catch((err) => {
-          console.log(err);
-          alert("문제가 발생하였습니다. 메인페이지로 돌아갑니다.");
+        .catch(() => {
+          this.modals.problem = true
           this.$router.push({ name: "SPOTs" });
         });
     },
     PositionChange(name) {
-      console.log(this.BluepostionList)
       if (name == "랜덤") {
         if (this.myTeam == "RED") {
           this.myPosition = this.RedpostionList[Math.floor(
@@ -451,7 +450,7 @@ export default {
       this.myTeam = name;
     },
     SearchPosition() {
-      console.log('first',this)
+  
       var entry_uid = 0;
       if (this.myTeam === "RED") {
         entry_uid = this.RoomData.home_matching_entry_uid;
@@ -463,7 +462,7 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
-          console.log(this.myPosition)
+        
           if (this.myPosition === "공격수") {
             if (res.data.striker1_uid == 0) {
               this.myPosUid = 1;
@@ -499,24 +498,17 @@ export default {
               this.myPosUid = 13;
             }
           }
-          console.log('change',this.myPosUid)
+        
         })
           .then(() => {
-            console.log(this.isEnter)
             if (this.isEnter) {
-              console.log('go')
               this.SearchMyPosition()
             } else {   
-              console.log('out')           
               this.CreditGo()
             }
           })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     SearchMyPosition() {
-      console.log('dd', this)
       var entry_uid = 0;
       for(var i=0; i < this.RedtableDatas.length; i++) {
         if (this.RedtableDatas[i].name == this.isMine) {
@@ -533,7 +525,6 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
-          console.log(this.myPosition)
           var Myuid = this.$cookies.get('UserInfo').uid
           if (res.data.striker1_uid == Myuid) {
             this.myOriginUid = 1;
@@ -562,15 +553,10 @@ export default {
           } else if (res.data.goalkeeper_uid == Myuid) {
             this.myOriginUid = 13;
           }
-          console.log('!change',this.myOriginUid)
         })
           .then(() => {
-            console.log('go')
             this.UserChange()
           })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     UserChange() {
       if (this.myPosUid != 0) {
@@ -588,18 +574,13 @@ export default {
         ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
         this.$axios
           .post(this.$SERVER_URL + "FreeMatchRoom/entry/change/", ChangeInfo)
-          .then(res => {
-            console.log('good',res)
+          .then(() => {
             this.modals.changeCheck= false
             this.createFunction()
           })
-          .catch(err => {
-            console.log(err);
-          });
       }
     },
     CreditGo() {
-      console.log('end',this.myPosUid)
       const roomPrice = String(this.RoomData.price)
       if (this.myPosUid != 0) {
         var myTeam_uid = 0
@@ -617,12 +598,8 @@ export default {
         this.$axios
           .post(this.$SERVER_URL + "kakaoPay/", EnterInfo)
           .then(res => {
-            console.log(res)
             window.location.replace(res.data)
           })
-          .catch(err => {
-            console.log(err);
-          });
       }
     },
     deleteUser() {
@@ -642,7 +619,6 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", entryUid)
         .then((res) => {
-          console.log(this.myPosition)
           var Myuid = this.$cookies.get('UserInfo').uid
           if (res.data.striker1_uid == Myuid) {
             this.myOriginUid = 1;
@@ -671,7 +647,6 @@ export default {
           } else if (res.data.goalkeeper_uid == Myuid) {
             this.myOriginUid = 13;
           }
-          console.log('!change',this.myOriginUid)
         })
           .then(() => {
               const ChangeInfo = new FormData();
@@ -680,18 +655,11 @@ export default {
               ChangeInfo.append("team_entry_uid_before", this.myRealTeam)
               this.$axios
                 .post(this.$SERVER_URL + "FreeMatchRoom/entry/cancel/", ChangeInfo)
-                .then(res => {
-                  console.log('good',res)
+                .then(() => {
                   this.modals.outalert = false
                   this.createFunction()
                 })
-                .catch(err => {
-                  console.log(err);
-                });
-            })
-        .catch((err) => {
-          console.log(err);
-        });
+              })
     },
     RedTeamList() {
       const Team_entry_uid = new FormData();
@@ -703,7 +671,6 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
-          console.log("red2", res.data);
           this.posRedList.push(res.data.defender1_uid);
           this.posRedList.push(res.data.defender2_uid);
           this.posRedList.push(res.data.defender3_uid);
@@ -721,8 +688,7 @@ export default {
           var Redsub = new Object
           Redsub.name = "랜덤"
           this.RedpostionList.push(Redsub)
-          for(var i=0; i < this.posRedList.length; i++) { 
-            console.log(i, this.posRedList[i], this.posNameList[i])           
+          for(var i=0; i < this.posRedList.length; i++) {        
             if (this.posRedList[i] != 0) {
               this.RedTeamUser(this.posRedList[i], this.posNameList[i])
             } else {
@@ -730,12 +696,8 @@ export default {
             }
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     RedTeamUser(uid, name) {
-      console.log('res3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
       this.redCountList = {
@@ -747,7 +709,6 @@ export default {
       }
       this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
-          console.log('red4', res)
           var newPosition = new String("");
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
@@ -775,12 +736,8 @@ export default {
             this.myRealTeam = this.RoomData.home_matching_entry_uid
             this.myPosition = newPosition
           }
-          console.log('red5', this.RedtableDatas)
         })
-        .catch(err => {
-              console.log(err)
-        });
-    },
+      },
     RedListChange(position) {
       var newPosition = new String("");
       if (position.indexOf("striker") != -1) {
@@ -808,7 +765,6 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "FreeMatchRoom/entrylist/", Team_entry_uid)
         .then((res) => {
-          console.log("blue2", res.data);
           this.posBlueList.push(res.data.defender1_uid);
           this.posBlueList.push(res.data.defender2_uid);
           this.posBlueList.push(res.data.defender3_uid);
@@ -827,7 +783,6 @@ export default {
           Bluesub.name = "랜덤"
           this.BluepostionList.push(Bluesub)
           for(var i=0; i < this.posBlueList.length; i++) { 
-            console.log('blue!',i, this.posBlueList[i], this.posNameList[i])
             if (this.posBlueList[i] != 0) {
               this.BlueTeamUser(this.posBlueList[i], this.posNameList[i])
             } else {
@@ -835,12 +790,8 @@ export default {
             }
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     BlueTeamUser(uid, name) {
-      console.log('blue3', uid)
       const usid = new FormData()
       usid.append('uid', uid)
       this.blueCountList = {
@@ -852,7 +803,6 @@ export default {
       }
       this.$axios.post(this.$SERVER_URL + 'user/detail2/', usid)
         .then(res => {
-          console.log('blue4', res)
           var newPosition = new String("");
           if (name.indexOf("striker") != -1) {
             newPosition = "공격수"
@@ -880,12 +830,8 @@ export default {
             this.myRealTeam = this.RoomData.away_matching_entry_uid
             this.myPosition = newPosition
           }
-          console.log('blue5',this.BluetableDatas)
         })
-        .catch(err => {
-              console.log(err)
-        });
-    },
+      },
     BlueListChange(position) {
       var newPosition = new String("");
       if (position.indexOf("striker") != -1) {

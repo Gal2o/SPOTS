@@ -93,7 +93,6 @@ export default {
       if (this.$cookies.isKey('UserInfo')) {
         this.isLogined = true
         this.userInfo = this.$cookies.get('UserInfo')
-        console.log(this.userInfo)
         var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
     }
     

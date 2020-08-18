@@ -178,6 +178,18 @@
                 <router-link to="/profile">
                 <base-button class="btn" @click="submitinfo">내정보 수정</base-button>
                 </router-link>
+                <modal :show.sync="this.al" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">실패! 비밀번호가 다릅니다. 다시 적어주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="al = false">닫기</base-button>
+                   </div>
+                </modal>
+                 <modal :show.sync="this.al2" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">실패! 비밀번호가 비워져있습니다. 넣어주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="al2 = false">닫기</base-button>
+                   </div>
+                </modal>
                 </div>
               </form>
             </template>
@@ -223,6 +235,9 @@ export default {
       stateN: null,
        citycode: null,
       statecode: null,
+      al:false,
+      al2:false,
+      binarray:[],
     };
   },
   created() {
@@ -244,10 +259,7 @@ export default {
         this.model.comment = res.data.comment
         this.name = res.data.nickname
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    
+
   },
   methods : {
     choice1(state) {
@@ -268,12 +280,10 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     submitinfo() {
       if (this.model.password == this.model.passwordcheck && this.model.password!=""){
+        const infoForm = new FormData();
         infoForm.append("password", this.model.password)
         infoForm.append("nickname",this.model.username)
         infoForm.append("uid",this.$cookies.get("UserInfo").uid)
@@ -282,15 +292,16 @@ export default {
         this.$axios
           .post(this.$SERVER_URL + "user/modify", infoForm)
           .then(res=>{
-            console.log('123',res)
+            this.binarray = res.data
+            this.$router.push({ name: "SPOTs"})
           })
-          .catch(err =>{
-            console.log(err)
-          })
-      }else {
-        alert("비밀번호가 다릅니다. 다시 적어주세요")
+      }else if (this.model.password != this.model.passwordcheck) {
+        this.al = true;
       }
-      const infoForm = new FormData();
+      else if(this.model.password ==""){
+          this.al2 = true;
+      }
+      
       
       
     },

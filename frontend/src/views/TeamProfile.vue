@@ -7,6 +7,7 @@
       <!-- Mask -->
       <span class="mask bg-gradient-success opacity-8"></span>
       <!-- Header container -->
+
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-12 col-md-10">
@@ -334,34 +335,31 @@ export default {
     };
   },
   created() {
+    if (this.$cookies.get("UserInfo").team_uid != 1) {
     const data = new FormData();
     data.append("uid", this.$cookies.get("UserInfo").team_uid);
     this.$axios
       .post(this.$SERVER_URL + "/team/detail", data)
       .then((res) => {
         this.model = res.data;
-        console.log('check' ,res.data.captain_uid, this.$cookies.get('UserInfo').uid)
+        if (res.data == undefined){
+          this.model.team_name = "매니저"
+        }
         if (res.data.captain_uid == this.$cookies.get('UserInfo').uid) {
           this.isHeader = true
         }
-        console.log('this.model', this.model)
       })  
-      .catch((err) => {
-        console.log(err);
-      });
+
     this.$axios
       .post(this.$SERVER_URL + "/team/userList", data)
       .then((res) => {
-        console.log(res.data);
         this.player = res.data;
       })  
-      .catch((err) => {
-        console.log(err);
-      });
+     
     this.$axios
       .post(this.$SERVER_URL + "team/applyList/", data)
       .then((res) => {
-        console.log('apply',res.data);
+   
         let applySub = res.data;
         for(var i=0; i < applySub.length; i++) {
           var j = i
@@ -371,17 +369,13 @@ export default {
             .then(res => {
               var applyData = res.data
               applyData.comment = applySub[j].comment
-              console.log('applyData', applyData);
+           
               this.applyPlayer.push(applyData)
             })
-            .catch(err => {
-              console.log(err)
-            })
+         
         }
       })  
-      .catch((err) => {
-        console.log(err);
-      });
+    
     this.$axios
       .get(this.$SERVER_URL + "stateList")
       .then((res) => {
@@ -397,11 +391,14 @@ export default {
         });
         this.pickData()
       })
-      .catch((err) => {
-        console.log(err);
-      });
+   
+    
     var logonum = ((this.$cookies.get("UserInfo").team_uid-52)%40)+1
     this.imgurl = 'img/teamLogo/club_logo ('+ logonum +').jpg'
+    }
+    else {
+      this.model.team_name = "매니저"
+    }
   },
   methods: {
     showTeam(TeamInfo) {
@@ -422,36 +419,35 @@ export default {
         this.modals.modifysucess = false
           .then(window.location.reload())
       }
-      console.log(this)
+
     },
     pickData() {      
-      console.log('model',this.model.city_code)
+      if (this.model != undefined){
       var dummyState = this.model.city_code.splice(0, 2) + "00000000"
-      console.log('dummy', dummyState)
+
       for(var i=0; i < this.teamData.stateDatas.length; i++) {
         if (this.teamData.stateDatas[i].state_code == dummyState) {
           this.teamData.statePick = this.teamData.stateDatas[i].state_name
         }
       }
-      console.log('o', this.teamData)
+
       var Cityform = new FormData()
       Cityform.append("state_code", dummyState);
       this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
         .then((res) => {
           this.teamData.cityDatas = res.data;
-          console.log('city', this.teamData.cityDatas)
+          
           for(var i=0; i < this.teamData.stateDatas.length; i++) {
             if (this.teamData.cityDatas[i].city_code == this.model.city_code) {
               this.teamData.cityPick = this.teamData.cityDatas[i].city_name
             }
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+      
+      }
     },
     choiceS(state) {
-      console.log('state',state.state_name)
+  
       this.teamData.statePick = state.state_name
       if (state.state_code == "0000000000") {
         this.teamData.cityPick = "시(도)를 선택해 주세요.";
@@ -462,17 +458,14 @@ export default {
         this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
-            console.log('city', this.teamData.cityDatas)
+          
           })
-          .catch((err) => {
-            console.log(err);
-          });
+        
       }
     },
     choiceC(city) {
       this.teamData.cityPick = city.city_name
       this.teamData.pickCode = city.city_code
-      console.log('C',city)
     },
     ModifyTeam() {
       var modifyForm = new FormData()
@@ -488,41 +481,34 @@ export default {
       modifyForm.append('uid', this.model.uid)
       this.$axios.post(this.$SERVER_URL + 'team/modify/', modifyForm)
         .then(() => {
-          console.log('sucess')
+  
           this.modals.modifysucess = true
         })
-        .catch(err => {
-          console.log(err)
-        })
+  
     },
     OutTeam() {
-      console.log('uid', this.$cookies.get('UserInfo').uid)
-      console.log('team_uid', this.model.uid)
+   
       var OutForm = new FormData()
       OutForm.append('uid', this.$cookies.get('UserInfo').uid)
       OutForm.append('team_uid', this.model.uid)
       this.$axios.post(this.$SERVER_URL + 'user/outTeam', OutForm)
         .then(() => {
-          console.log('outsuccess')
+       
           this.$router.push({ name: '팀 리스트' })
         })
-        .catch(err => {
-          console.log(err)
-        })
+       
     },
     JoinTeam(wantUser) {
-      console.log(wantUser)
+      
       var JoinForm = new FormData()
       JoinForm.append('uid', wantUser)
       JoinForm.append('team_uid', this.model.uid)
       this.$axios.post(this.$SERVER_URL + 'user/joinTeam', JoinForm)
         .then(() => {
-          console.log('join!')
+ 
           this.modals.applyList = false
         })
-        .catch(err => {
-          console.log(err)
-        })
+        
     },
     rejectApply(wantUser) {
       var rejectForm = new FormData()
@@ -530,12 +516,10 @@ export default {
       rejectForm.append('team_uid', this.model.uid)
       this.$axios.post(this.$SERVER_URL + 'user/rejectTeam', rejectForm)
         .then(() => {
-          console.log('reject..')
+     
           this.modals.applyList = false
         })
-        .catch(err => {
-          console.log(err)
-        })
+     
     },
   },
 };

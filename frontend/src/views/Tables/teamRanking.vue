@@ -66,9 +66,7 @@ export default {
       .then((res) => {
         this.TeamrankData = res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
   },
   props: {
     type: {

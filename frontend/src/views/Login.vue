@@ -52,7 +52,6 @@
         },
         methods: {
             emitLoginSubmit() {
-                console.log(this.model)
                 this.$emit('login-submit', this.model)
             }, 
         },    

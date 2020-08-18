@@ -158,16 +158,14 @@ export default {
           state_name: "전체",
         })
         this.teamData.statePick = this.teamData.stateDatas[0].state_name
-        console.log('o', this.teamData)
+
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
-      console.log('pp',this.$cookies.get("UserInfo"))
+  
       if (this.$cookies.get("UserInfo").team_uid > 0) {
-        console.log('pp',this.$cookies.get("UserInfo").team_uid)
+  
         this.haveTeam = true
       }
     }
@@ -176,11 +174,9 @@ export default {
     this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
       .then((res) => {
         this.FreerankData = res.data;
-        console.log('nowhere',this.FreerankData);
+     
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    
   },
   components: {
     "trank-table": teamList,
@@ -234,12 +230,10 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+       
     },
     choiceS(state) {
-      console.log('state',state.state_name)
+      
       this.teamData.statePick = state.state_name
       if (state.state_code == "0000000000") {
         this.teamData.cityPick = "시(도)를 선택해 주세요.";
@@ -250,17 +244,15 @@ export default {
         this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
-            console.log('city', this.teamData.cityDatas)
+         
           })
-          .catch((err) => {
-            console.log(err);
-          });
+         
       }
     },
     choiceC(city) {
       this.teamData.cityPick = city.city_name
       this.teamData.pickCode = city.city_code
-      console.log('C',city)
+      
     },
     createTeam() {
       var createData = new FormData()
@@ -268,38 +260,32 @@ export default {
       createData.append('city_code', this.teamData.pickCode)
       createData.append('captain_uid', this.$cookies.get('UserInfo').uid)
       this.$axios.post(this.$SERVER_URL + "team/regist/", createData)
-          .then((res) => {
-            console.log('last',res)
+          .then(() => {
+            
             this.modals.create = false
             var userform = new FormData()
             userform.append('uid', this.$cookies.get('UserInfo').uid)
             this.$axios.post(this.$SERVER_URL + "user/detail2/", userform)
               .then((res) => {
-                console.log(res.data)
+             
                 this.$cookies.remove('UserInfo')
                 this.$cookies.set('UserInfo', res.data)
-                console.log(this.$cookies.get('UserInfo'))
+               
                 this.$router.push({ name: "팀 프로필" })
               })
-              .catch((err) => {
-                console.log(err);
-              });
+              
           })
-          .catch((err) => {
-            console.log(err);
-          });
+         
     },
     TeamList(where) {
       var WhereData = new FormData();
       WhereData.append('where', where)
       this.$axios.post(this.$SERVER_URL + "team/list/", WhereData)
         .then(res => {
-          console.log(res)
+      
           this.FreerankData = res.data;
         })
-        .catch(err => {
-          console.log(err)
-        })
+        
     },
     searchTeam() {
       var subList = []

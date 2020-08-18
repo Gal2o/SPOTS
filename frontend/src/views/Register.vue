@@ -48,6 +48,18 @@
                         <div class="text-center">
                             <base-button :disabled="!isCertify" type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
                         </div>
+                        <modal :show.sync="this.modals.equalpassword" gradient="danger" class="text-center">
+                        <div class="py-3 text-center mb-0">
+                            <h3 class="text-white mb-3">비밀번호가 동일하지 않습니다. 다시 적어주세요!</h3>
+                            <base-button size="sm" type="secondary" @click="modals.equalpassword = false">닫기</base-button>
+                        </div>
+                        </modal>
+                        <modal :show.sync="this.modals.empty" gradient="danger" class="text-center">
+                        <div class="py-3 text-center mb-0">
+                            <h3 class="text-white mb-3">빈 칸이 존재합니다. 모두 채워주세요!</h3>
+                            <base-button size="sm" type="secondary" @click="modals.empty = false">닫기</base-button>
+                        </div>
+                        </modal>
                     </form>
                 </div>
             </div>
@@ -119,6 +131,8 @@ export default {
                 certify: false,
                 notcertify: false,
                 senderror: false,
+                equalpassword: false,
+                empty: false,
             },
         }
     },
@@ -130,21 +144,15 @@ export default {
             SignData.append('password', this.model.password);
             if (this.model.password == this.model.passwordcheck){
             this.$axios.post(this.$SERVER_URL+'user/signUp/', SignData)
-                .then(res => {
-                    if (res.data == "") {
-                        alert('빈칸없이 적어주세요.')
-                    }
-                    else {
-                        this.$router.push({ name: 'login'})
-                    }                        
-                })
-                .catch(err => {
-                    alert('잘못 입력하셨습니다. 입력 확인해주세요');
-                    console.log(err);
+                .then(() => {
+                   this.$router.push({ name: 'login'})      
                 })
             }
+            else if (this.model.name == "" || this.model.email == "" || this.model.password =="" || this.model.passwordcheck == ""){
+                this.modals.empty = true
+            }
             else {
-                alert('비밀번호가 동일하지 않습니다. 다시 적어주세요')
+                this.modals.equalpassword = true
                 this.model.password = "",
                 this.model.passwordcheck = ""
             }
@@ -152,15 +160,14 @@ export default {
         sendEmail() {
             var Senddata = new FormData();
             Senddata.append('email', String(this.model.email));
-            console.log('what', this.model.email)
+            
             this.$axios.post(this.$SERVER_URL+'user/email/', Senddata)
                 .then(res => {
                    this.mailNum = res.data
                    this.isSend = true
                 })
-                .catch(err => {
+                .catch(() => {
                     this.modals.senderror = true
-                    console.log(err);
                 })
         },
         checkNum(){

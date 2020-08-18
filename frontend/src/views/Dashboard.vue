@@ -81,9 +81,7 @@ export default {
       .then((res) => {
         this.cityDatas = res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      
   },
   components: {
     ProjectsTable,
@@ -130,9 +128,7 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+       
     },
     choicedong(c) {
       const dongForm = new FormData();
@@ -143,9 +139,7 @@ export default {
         .then((res) => {
           this.dongDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        
     },
     checksido() {
       this.sidolist = [];
@@ -170,6 +164,22 @@ div{
  font-family: 'paybooc-Bold';
 
 }
+h1{
+  margin-bottom:0px;
+}
 h2{
   margin-bottom:0px;
-}</style>
+}
+h3{
+  margin-bottom:0px;
+}
+h4{
+  margin-bottom:0px;
+}
+h5{
+  margin-bottom:0px;
+}
+h6{
+  margin-bottom:0px;
+}
+</style>

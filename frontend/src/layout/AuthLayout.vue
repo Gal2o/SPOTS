@@ -123,7 +123,6 @@
     },
     methods: {
         Login(loginInfo) {
-            console.log(loginInfo, 'okPATH')
             this.$emit('login-submit', loginInfo)
         },
     },

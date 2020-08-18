@@ -2,6 +2,12 @@
   <div id="app">
     <notifications></notifications>
     <router-view @login-submit="Login" :key="$route.fullPath"/>
+    <modal :show.sync="this.loginerror" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">아이디나 비밀번호가 틀렸습니다. 다시 적어주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="loginerror = false">닫기</base-button>
+                   </div>
+                </modal>
   </div>
 </template>
 
@@ -12,25 +18,25 @@ export default {
   data() {
     return {
       isLogined: false,
+      loginerror: false,
     };
   },
   methods: {
     setCookie(UserInfo) {
-      console.log(this);
       this.$cookies.set("UserInfo", UserInfo);
     },
     Login(loginInfo) {
-      console.log(loginInfo, "last");
+     
       const loginData = new FormData();
       loginData.append("email", loginInfo.email);
       loginData.append("password", loginInfo.password);
-      console.log(loginData);
+  
       this.$axios
         .post(this.$SERVER_URL + "login/", loginData)
         .then((res) => {
-          console.log(res);
+         
           if (res.data == "") {
-            alert("잘 못된 정보입니다.");
+            this.loginerror = true;
           } else {
             const Userdata = res.data;
             this.setCookie(Userdata);
@@ -38,10 +44,7 @@ export default {
             this.$router.push({ name: "SPOTs" });
           }
         })
-        .catch((err) => {
-          alert("실패했습니다.");
-          console.log(err);
-        });
+        
     },
     logoutSuccess(logoutData) {
       this.isLogined = logoutData;

@@ -42,12 +42,9 @@ export default {
     this.$axios
       .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
-        console.log(rest.data);
         this.stadiumDatas = rest.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+   
   },
   data() {
     return {
