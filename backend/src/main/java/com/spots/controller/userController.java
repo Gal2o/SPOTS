@@ -1,28 +1,30 @@
 package com.spots.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spots.dto.ApplyTeamInfo;
 import com.spots.dto.UserInfo;
+import com.spots.service.EmailService;
 import com.spots.service.UserInfoService;
 
 
 @CrossOrigin(origins = {"*"})
 @RestController
 public class userController {
+		
 	@Autowired
 	UserInfoService userInfoService;
+	@Autowired
+	EmailService emailService;
+
 	
 	@ExceptionHandler
 	public ModelAndView handler(Exception ex) {
@@ -75,6 +77,11 @@ public class userController {
 	@PostMapping(value="/user/applyTeam")
 	public int applyTeam(ApplyTeamInfo dto) {
 		return userInfoService.applyTeam(dto);
+	}
+	
+	@PostMapping(value="/user/email")
+	public int sendEmail(@RequestParam String email) {
+		return emailService.sendSimpleMessage(email);		
 	}
 	
 }
