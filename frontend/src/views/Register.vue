@@ -8,45 +8,59 @@
                     </div>
                     <form role="form">
 
-                        <base-input class="input-group-alternative mb-3"
+                        <label class="ml-3 text-warning text-sm" v-if="!valid.name">이름은 3글자 이상이어야합니다.</label>
+                        <base-input class="input-group mb-3"
                                     placeholder="이름"
+                                    alternative
                                     addon-left-icon="ni ni-hat-3"
+                                    :valid="valid.name"
                                     v-model="model.name">
                         </base-input>
 
-                        <base-input class="input-group-alternative mb-3"
+                        <label class="ml-3 text-warning text-sm" v-if="!valid.email">이메일 형식과 다릅니다.</label>
+                        <base-input class="input-group mb-3"
+                                    alternative
                                     placeholder="이메일"
                                     addon-left-icon="ni ni-email-83"
+                                    :valid="valid.email"
+                                    :disabled="isCertify"
                                     v-model="model.email">
                         </base-input>
                         <div class="text-center" v-if="!isSend">
-                            <base-button type="primary" class="my-4" @click="sendEmail()">인증번호 발송</base-button>
+                            <base-button type="primary" class="my-4" @click="sendEmail()" :disabled="!valid.email">인증번호 발송</base-button>
                         </div>
 
-                        <base-input class="input-group-alternative mb-3"
+                        <base-input class="input-group mb-3"
                                     placeholder="인증번호"
                                     addon-left-icon="ni ni-email-83"
-                                    v-if="isSend"
+                                    v-if="isSend && !isCertify"
                                     v-model="checkMailNum">
                         </base-input>
                         <div class="text-center" v-if="isSend && !isCertify">
                             <base-button type="primary" class="my-4" @click="checkNum()">인증번호 확인</base-button>
                         </div>
 
-                        <base-input class="input-group-alternative mb-3"
+                        <label class="ml-3 text-warning text-sm" v-if="!valid.password">비밀번호는 8글자 이상이어야 합니다.</label>
+                        <base-input class="input-group mb-3"
                                     placeholder="비밀번호"
+                                    alternative
                                     type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
+                                    :valid="valid.password"
                                     v-model="model.password">
                         </base-input>
-                        <base-input class="input-group-alternative mb-3"
+                        <label class="ml-3 text-warning text-sm" v-if="valid.password && !valid.passwordcheck">패스워드와 일치하지 않습니다.</label>
+                        <base-input class="input-group mb-3"
                                     placeholder="비밀번호 확인"
+                                    alternative
                                     type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
+                                    :valid="valid.passwordcheck"
+                                    v-if="valid.password"
                                     v-model="model.passwordcheck">
                         </base-input>
                         <div class="text-center">
-                            <base-button :disabled="!isCertify" type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
+                            <base-button :disabled="!isCertify && !isPossible" type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
                         </div>
                         <modal :show.sync="this.modals.equalpassword" gradient="danger" class="text-center">
                         <div class="py-3 text-center mb-0">
@@ -127,6 +141,7 @@ export default {
             checkMailNum:'',
             isCertify: false,
             isSend: false,
+            isPossible: false,
             modals: {
                 certify: false,
                 notcertify: false,
@@ -134,7 +149,22 @@ export default {
                 equalpassword: false,
                 empty: false,
             },
+            valid: {
+                name: false,
+                email: false,
+                password: false,
+                passwordcheck: false,
+            },
         }
+    },
+    watch: {
+        model: {
+            deep: true,
+            handler() {                
+                console.log('watch')
+                this.validCheck(this.model) 
+            }
+        } 
     },
     methods: {
         Signup() {
@@ -177,6 +207,33 @@ export default {
             } else {
                 this.modals.notcertify = true
                 this.isSend = false
+            }
+        },
+        validCheck(model) {
+            if (model.name.length >= 3) {
+                this.valid.name = true
+            } else {
+                this.valid.name = false
+            }
+            if (model.email.indexOf("@") != -1 && model.email.lastIndexOf(".com") != -1) {
+                this.valid.email = true
+            } else {
+                this.valid.email = false
+            }
+            if (model.password.length > 7) {
+                this.valid.password = true
+            } else {
+                this.valid.password = false
+            }
+            if (model.passwordcheck == model.password) {
+                this.valid.passwordcheck = true
+            } else {
+                this.valid.passwordcheck = false
+            }
+            if (this.valid.name && this.valid.email && this.valid.password && this.valid.passwordcheck) {
+                this.isSignup = true
+            } else {
+                this.isPossible = false
             }
         },
     },
