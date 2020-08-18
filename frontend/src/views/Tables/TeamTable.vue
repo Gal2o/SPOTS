@@ -72,7 +72,7 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true">팀SPOT 만들기</base-button>
+        <base-button type="secondary" :disabled="!isEnterMatch" @click="modals = true">팀SPOT 만들기</base-button>
 
         <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
@@ -223,6 +223,7 @@ export default {
         this.TeamtableData = res.data;
         console.log(this.TeamtableData)
         this.TeamTable = this.TeamtableData.slice(0, 5);
+        this.EnterMatchCheck()
       })
       .catch((err) => {
         console.log(err);
@@ -261,7 +262,8 @@ export default {
           enableTime: true,
           dateFormat: "Y-m-d H:i:00",
         }
-        },
+      },
+      isEnterMatch: false,
       isLogined: false,
       tabletitle: "팀 SPOT",
       TeamtableData: [],
@@ -296,6 +298,21 @@ export default {
   },
 
   methods: {
+    EnterMatchCheck() {
+      var CheckMatchform = new FormData()
+      CheckMatchform.append('head_uid', this.$cookies.get('UserInfo').uid)
+      this.$axios.post(this.$SERVER_URL + "/TRoomCheck", CheckMatchform)
+        .then(res => {
+          console.log('Matchcheckres',res)
+          if (!res.data) {
+            console.log('real?')
+            this.isEnterMatch = true
+          }
+        })
+        .catch(err => {
+          console.log('Matchcheckerr',err)
+        })
+    },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
       this.placeuid = stadium.place_uid;
