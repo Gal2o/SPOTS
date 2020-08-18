@@ -53,11 +53,11 @@
             <span class="status">{{ row.team_rate }}%</span>
           </td>
           <td class="text-right">
-            <base-button v-if="isLogined" type="success" size="s" @click="showTeam(row)">
-              <h2 class="text-white">더보기</h2>
+            <base-button v-if="isLogined" outline type="secondary" size="s" @click="showTeam(row)">
+              <h2>더보기</h2>
             </base-button>
-            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.loginalert = true">
-              <h2 class="text-white">입장하기</h2>
+            <base-button v-if="!isLogined" outline type="secondary" size="lg" @click="modals.loginalert = true">
+              <h2>입장하기</h2>
             </base-button>
           </td>
         </template>

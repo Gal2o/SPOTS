@@ -35,7 +35,7 @@
                 params: { uid: row.uid },
               }"
             >
-                <span class="name mb-0 text-sm">{{ row.title }}</span>
+                <span class="name mb-0 text-sm" style="color:azure;">{{ row.title }}</span>
                 </router-link>
               </div>
             </div>
@@ -60,9 +60,9 @@
               }"
               v-if="isLogined"
             >
-              <base-button type="success">입장하기</base-button>
+              <base-button outline type="secondary">입장하기</base-button>
             </router-link>
-            <base-button type="success" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
+            <base-button outline type="secondary" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
         </template>
       </base-table>
