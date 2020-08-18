@@ -4,7 +4,7 @@
             <div class="card bg-secondary shadow border-0">                
                 <div class="card-body px-lg-5 py-lg-5">
                     <div class="text-center text-muted mb-4">
-                        <small>회원가입을 위해 정보를 입력</small>
+                        <small>회원가입을 위해 정보를 입력해주세요.</small>
                     </div>
                     <form role="form">
 
@@ -19,14 +19,19 @@
                                     addon-left-icon="ni ni-email-83"
                                     v-model="model.email">
                         </base-input>
-                        <base-button type="primary" class="my-4" @click="sendEmail()">인증번호 발송</base-button>
+                        <div class="text-center" v-if="!isSend">
+                            <base-button type="primary" class="my-4" @click="sendEmail()">인증번호 발송</base-button>
+                        </div>
 
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="인증번호"
                                     addon-left-icon="ni ni-email-83"
+                                    v-if="isSend"
                                     v-model="checkMailNum">
                         </base-input>
-                        <base-button type="primary" class="my-4" @click="checkNum()">인증번호 확인</base-button>
+                        <div class="text-center" v-if="isSend && isCertify">
+                            <base-button type="primary" class="my-4" @click="checkNum()">인증번호 확인</base-button>
+                        </div>
 
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="비밀번호"
@@ -41,7 +46,7 @@
                                     v-model="model.passwordcheck">
                         </base-input>
                         <div class="text-center">
-                            <base-button type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
+                            <base-button :disabled="!isCertify" type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
                         </div>
                     </form>
                 </div>
@@ -69,6 +74,8 @@ export default {
             },
             mailNum: '',
             checkMailNum:'',
+            isCertify: false,
+            isSend: false,
         }
     },
     methods: {
@@ -98,12 +105,14 @@ export default {
                 this.model.passwordcheck = ""
             }
         },
-        sendEmail(){
-            const data = new FormData();
-            data.append('email', this.model.email);
-            this.$axios.post(this.$SERVER_URL+'user/email/', data)
+        sendEmail() {
+            var Senddata = new FormData();
+            Senddata.append('email', String(this.model.email));
+            console.log('what', this.model.email)
+            this.$axios.post(this.$SERVER_URL+'user/email/', Senddata)
                 .then(res => {
                    this.mailNum = res.data
+                   this.isSend = true
                 })
                 .catch(err => {
                     alert('잘못 입력하셨습니다. 입력 확인해주세요');
