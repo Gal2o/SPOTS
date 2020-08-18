@@ -41,8 +41,8 @@
             </div>
           </th>
           <td class="time">{{ row.matching_date }}</td>
-          <td>
-            <span class="status">{{ row.dong_code }}</span>
+          <td >
+            <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
           <td>{{ row.numberofuser }}</td>
 
@@ -247,11 +247,12 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+
     this.$axios
       .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
-        console.log(rest.data);
+        console.log("!!!", rest.data);
         this.stadiumDatas = rest.data;
       })
       .catch((err) => {
@@ -296,6 +297,7 @@ export default {
       userInfo: Object,
       pagination: 1,
       FreeTable: [],
+      dongtoplace: "",
       isCredit: false,
       manageruid: Math.floor(Math.random()*5+1),
       myTeam: 'RED',
@@ -421,6 +423,14 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+
+    getSpotName(uid){
+      for(var a = 0; a < this.stadiumDatas.length; a++){
+        if(this.stadiumDatas[a].uid == uid){
+          return this.stadiumDatas[a].place_name;
+        }
+      }
     },
   },
 };

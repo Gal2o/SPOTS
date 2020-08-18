@@ -6,7 +6,7 @@
       <div class="row">
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
-            시(도) : {{
+            {{
             this.cityN
             }}
           </base-button>
@@ -20,7 +20,7 @@
 
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
-            구(시) : {{
+            {{
             this.stateN
             }}
           </base-button>
@@ -34,7 +34,7 @@
 
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
-            동 : {{
+            {{
             this.dongN
             }}
           </base-button>
@@ -91,12 +91,12 @@ export default {
   },
   data() {
     return {
-      cityDatas: null,
-      stateDatas: null,
-      dongDatas: null,
-      cityN: null,
-      stateN: null,
-      dongN: null,
+      cityDatas: "",
+      stateDatas: "",
+      dongDatas: "",
+      cityN: "시(도)",
+      stateN: "구(시)",
+      dongN: "동",
       sidolist: [],
       citycode: null,
       statecode: null,
