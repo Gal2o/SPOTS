@@ -100,33 +100,58 @@
             <h1>팀 정보</h1>
           </div>
         </template>
-        <template>
-          <table class="m-3">
-            <tr>
-              <th>팀명 : {{ teamData.team_name }}</th>
+        <template >
+          <table class="m-3 text-center">
+            <div class="row">
+            <tr class="col-6">
+              <th>팀명 
+                <base-input
+                        alternative
+                        class="mt-2"
+                        input-classes="form-control-alternative"
+                        v-model="teamData.team_name"
+                       :disabled="validated ? disabled : ''"
+                      /></th>
             </tr>
-            <tr>
-              <th>팀소개 : {{ teamData.team_intro }}</th>
+            <tr class="col-6">
+              <th>팀장 <base-input
+                        alternative
+                        class="mt-2"
+                        input-classes="form-control-alternative"
+                        v-model="headPlayer"
+                       :disabled="validated ? disabled : ''"
+                      /> </th>
             </tr>
+            </div>
             <tr>
-              <th>인원 : {{ teamData.player_num }}명</th>
+              <th>팀소개 <base-input
+                        alternative
+                        class="mt-2"
+                        input-classes="form-control-alternative"
+                        v-model="teamData.team_intro"
+                       :disabled="validated ? disabled : ''"
+                      /></th>
             </tr>
-            <tr>
-              <th>팀전적 : {{ teamData.team_win }}승 {{ teamData.team_draw }}무 {{ teamData.team_lose }}패</th>
+            <div class = "row d-flex justify-content-between">
+            <tr class="col-4">
+              <th>인원 <base-button class="mt-2"> {{teamData.player_num}}명 </base-button> </th>
             </tr>
-            <tr>
-              <th>승률 : {{ teamData.team_rate }}%</th>
+            <tr class="col-4">
+              <th>팀전적 <base-button class="mt-2 btn-tooltip"
+               v-b-tooltip.hover.bottom title="승/무/패"> {{ teamData.team_win }}/{{ teamData.team_draw }}/{{ teamData.team_lose }} </base-button></th>
             </tr>
-            <tr>
-              <th>팀장 : {{ headPlayer }} </th>
+            <tr class="col-4">
+              <th>승률<base-button class="mt-2"> {{teamData.team_rate}}%  </base-button></th>
             </tr>
+            </div>
+            
           </table>
           <!-- isLogined를 신청상태인지확인 -->
-          <div class="text-center d-flex flex-row justify-content-between">
+          <div class="text-center d-flex flex-row justify-content-around">
             <base-button v-if="isLogined && !haveTeam" type="success" size="lg" @click="modalSwitch(1)">
               <h2 class="text-white">가입하기</h2>
             </base-button>
-            <base-button type="secondary" size="lg" @click="modals.teamInfo = false">
+            <base-button type="secondary" size="lg" class="mt-2" @click="modals.teamInfo = false">
               <h2 class="text-dark">닫기</h2>
             </base-button>
           </div>
@@ -226,6 +251,7 @@ export default {
         joinTeam: false,
       },
       headPlayer: "",
+      validated:false,
       apply: {
         teamname: "",
         teamuid: 0,
