@@ -37,13 +37,13 @@ public class MatchController {
    // 메인페이지 GET (Created)
    @GetMapping(value = "/TeamMatchAll")
    public List<TMatchInfo> TListMain() {
-      System.out.println(TeamMatch.TListMain());
+      //System.out.println(TeamMatch.TListMain());
       return TeamMatch.TListMain();
    }
 
    @GetMapping(value = "/FreeMatchAll")
    public List<FMatchInfo> FListMain() {
-      System.out.println(FreeMatch.FListMain());
+      //System.out.println(FreeMatch.FListMain());
       return FreeMatch.FListMain();
    }
 
@@ -85,7 +85,7 @@ public class MatchController {
       if(word.equals("null"))
          word = null;
       
-      System.out.println(FreeMatch.FListAll(doe, si, dong, word));
+      //System.out.println(FreeMatch.FListAll(doe, si, dong, word));
       return FreeMatch.FListAll(doe, si, dong, word);
    }
 
@@ -123,7 +123,7 @@ public class MatchController {
    public List<FMatchInfo> InsertF(FMatchInfo info) {
       FreeMatch.FRoomCreate(info);
 
-      System.out.println(FreeMatch.FListRoom(info.getHead_uid()));
+      //System.out.println(FreeMatch.FListRoom(info.getHead_uid()));
       return FreeMatch.FRoomCheck(info.getHead_uid());
    }
 
