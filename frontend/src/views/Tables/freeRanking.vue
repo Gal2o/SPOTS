@@ -22,6 +22,7 @@
         :data="FreerankData"
       >
         <template slot="columns">
+          <th>순위</th>
           <th>이름</th>
           <th>승리</th>
           <th>무승부</th>
@@ -34,10 +35,17 @@
           <th scope="row">
             <div class="media align-items-center">
               <div class="media-body">
-                <span class="name mb-0 text-sm"> {{ row.nickname }}</span>
+                <span class="name mb-0 text-sm"> {{ row.rank }}</span>
               </div>
             </div>
           </th>
+          <td scope="row">
+            <div class="media align-items-center">
+              <div class="media-body">
+                <span class="name mb-0 text-sm"> {{ row.nickname }}</span>
+              </div>
+            </div>
+          </td>
           <td>
             <span class="status">{{ row.win }}</span>
           </td>
@@ -68,8 +76,12 @@ export default {
 
     this.$axios
       .get(this.$SERVER_URL + "rank/free")
-      .then((res) => {
+      .then((res) => {       
         this.FreerankData = res.data;
+        for(var i=0; i < this.FreerankData.length; i++) {
+          this.FreerankData[i].rank = i+1
+          console.log(this.FreerankData[i])
+        } 
       })
      
   },
