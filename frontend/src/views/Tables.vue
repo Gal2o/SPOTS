@@ -8,7 +8,6 @@
             title="이번주 최대 승률팀"
             type="gradient-red"
             sub-title="성남FC"
-            icon="ni ni-active-40"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
@@ -26,7 +25,6 @@
             title="이번주 최소 승률팀"
             type="gradient-orange"
             sub-title="서울 노원 유나이티드 FC"
-            icon="ni ni-chart-pie-35"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
@@ -44,7 +42,6 @@
             title="이번주 최다 승리팀"
             type="gradient-green"
             sub-title="수원 삼성 블루윙즈"
-            icon="ni ni-money-coins"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
@@ -62,7 +59,6 @@
             title="이번주 최다 패배팀"
             type="gradient-info"
             sub-title="양주시민축구단"
-            icon="ni ni-chart-bar-32"
             class="mb-4 mb-xl-0"
           >
             <template slot="footer">
@@ -86,8 +82,7 @@
             title="이번주 최다 승리자"
             type="gradient-red"
             sub-title="이진형"
-            icon="ni ni-active-40"
-            class="mb-4 mb-xl-0"
+            class="mb-4 mb-xl-0 st"
           >
             <template slot="footer">
               <span class="text-success mr-2">
@@ -104,8 +99,7 @@
             title="이번주 최다 패배자"
             type="gradient-orange"
             sub-title="김선민"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
+            class="mb-4 mb-xl-0 st"
           >
             <template slot="footer">
               <span class="text-danger mr-2">
@@ -122,8 +116,7 @@
             title="이번주 최다 득점자"
             type="gradient-green"
             sub-title="임상협"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
+            class="mb-4 mb-xl-0 st"
           >
             <template slot="footer">
               <span class="text-success mr-2">
@@ -140,8 +133,7 @@
             title="이번주 최다 도움"
             type="gradient-info"
             sub-title="서주환"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
+            class="mb-4 mb-xl-0 st"
           >
             <template slot="footer">
               <span class="text-success mr-2">
@@ -255,4 +247,5 @@ export default {
   mounted() {},
 };
 </script>
-<style></style>
+<style>
+</style>
