@@ -44,11 +44,11 @@
           <td >
             <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
-          <td style="color:black;" >{{ row.numberofuser }}</td>
+          <td style="color:black;" >{{ row.ready_num }}</td>
 
           <td>
             <div class="d-flex align-items-center">
-              <span class="completion mr-2" style="color:black;" >{{ row.wait }}</span>
+              <span class="completion mr-2" style="color:black;" :class="row.wait == '신청종료' ? 'text-danger':''">{{ row.wait }}</span>
             </div>
           </td>
 
@@ -60,7 +60,7 @@
               }"
               v-if="isLogined"
             >
-              <base-button outline type="default">입장하기</base-button>
+              <base-button outline type="default" :disabled="row.wait == '신청종료'">입장하기</base-button>
             </router-link>
             <base-button outline type="default" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
@@ -249,6 +249,13 @@ export default {
       .get(this.$SERVER_URL + "FreeMatchAll/")
       .then((res) => {
         this.FreetableData = res.data;
+        for(var i=0; i < this.FreetableData.length; i++) {
+          if (this.FreetableData[i].ready_num >= 2) {
+            this.FreetableData[i].wait = "신청종료"
+          } else {
+            this.FreetableData[i].wait = "신청가능"
+          }
+        }
         for (var a=0; a<this.FreetableData.length; a++){
           if (this.FreetableData[a].mvp == 1 ){
             this.FreetableData.splice(a,1)    
