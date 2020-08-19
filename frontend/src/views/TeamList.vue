@@ -174,6 +174,9 @@ export default {
     this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
       .then((res) => {
         this.FreerankData = res.data;
+        for (var a=0; a<this.FreerankData.length; a++){
+        this.FreerankData[a].team_rate = Math.ceil(this.FreerankData[a].team_rate)
+      }
      
       })
     
