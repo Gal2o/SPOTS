@@ -44,7 +44,7 @@
           <td>
             <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
-          <td>{{ row.numberofuser }}</td>
+          <td>{{ row.ready_num }}</td>
 
           <td>
             <div class="d-flex align-items-center">
@@ -60,7 +60,7 @@
               }"
               v-if="isLogined"
             >
-              <base-button outline type="secondary">입장하기</base-button>
+              <base-button outline type="secondary" :disabled="row.wait == '신청종료'">입장하기</base-button>
             </router-link>
             <base-button outline type="secondary" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
@@ -233,9 +233,16 @@ export default {
       .get(this.$SERVER_URL + "TeamMatchAll/")
       .then((res) => {
         this.TeamtableData = res.data;
-
+        for(var i=0; i < this.TeamtableData.length; i++) {
+          if (this.TeamtableData[i].ready_num >= 2) {
+            this.TeamtableData[i].wait = "신청종료"
+          } else {
+            this.TeamtableData[i].wait = "신청가능"
+          }
+        }
+        console.log(this.TeamtableData)
         this.TeamTable = this.TeamtableData.slice(0, 5);
-        this.EnterMatchCheck()
+        this.EnterMatchCheck();
       })
       
     this.$axios
