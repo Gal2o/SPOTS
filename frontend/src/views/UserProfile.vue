@@ -82,9 +82,13 @@
           <card shadow type="secondary">
             <div slot="header" class="bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">내 정보</h3>
-                </div>
+                <router-link to="/profile">
+                  <h3 class="mb-0 ml-3">내 정보 </h3>
+                  </router-link>
+                  <p class="mx-2 mb-0">/</p>
+                  <router-link to="/Teamprofile">
+                  <h3 class="mb-0">팀 프로필</h3>
+                  </router-link>
               </div>
             </div>
             <template>
