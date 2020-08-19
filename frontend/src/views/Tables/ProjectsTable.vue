@@ -72,7 +72,7 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true">자유SPOT 만들기</base-button>
+        <base-button type="secondary" :disabled="!isEnterMatch" @click="modals = true">자유SPOT 만들기</base-button>
 
         <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
@@ -99,7 +99,7 @@
                     slot-scope="{ focus, blur }"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="{ allowInput: true }"
+                    :config="dates.config"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -255,6 +255,7 @@ export default {
           }
         }
         this.FreeTable = this.FreetableData.slice(0, 5);
+        this.EnterMatchCheck()
       })
       .catch((err) => {
         console.log(err);
@@ -287,7 +288,13 @@ export default {
     return {
       dates: {
         simple: "2020-08-22",
+        config: {
+          allowInput: true,
+          enableTime: true,
+          dateFormat: "Y-m-d H:i:00",
+        },
       },
+      isEnterMatch: false,
       isLogined: false,
       tabletitle: "자유 SPOT",
       FreetableData: [],
@@ -325,6 +332,16 @@ export default {
   },
 
   methods: {
+    EnterMatchCheck() {
+      var CheckMatchform = new FormData()
+      CheckMatchform.append('head_uid', this.$cookies.get('UserInfo').uid)
+      this.$axios.post(this.$SERVER_URL + "/FRoomCheck", CheckMatchform)
+        .then(res => {       
+          if (res.data.length == 0) {
+            this.isEnterMatch = true
+          }
+        })    
+    },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
       this.placeuid = stadium.place_uid;
