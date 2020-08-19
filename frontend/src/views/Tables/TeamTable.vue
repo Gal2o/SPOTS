@@ -42,7 +42,7 @@
           </th>
           <td class="time">{{ row.matching_date }}</td>
           <td>
-            <span class="status">{{ row.dong_code }}</span>
+            <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
           <td>{{ row.numberofuser }}</td>
 
@@ -410,6 +410,14 @@ export default {
           window.location.replace(res.data)
         })
    
+    },
+
+    getSpotName(uid){
+      for(var a = 0; a < this.stadiumDatas.length; a++){
+        if(this.stadiumDatas[a].uid == uid){
+          return this.stadiumDatas[a].place_name;
+        }
+      }
     },
   },
 };
