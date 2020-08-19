@@ -99,9 +99,15 @@
           <card shadow type="secondary">
             <div slot="header" class="bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">팀 정보</h3>
-                </div>
+
+                  <router-link to="/profile">
+                  <h3 class="mb-0 ml-3">내 정보 </h3>
+                  </router-link>
+                  <p class="mx-2 mb-0">/</p>
+                  <router-link to="/Teamprofile">
+                  <h3 class="mb-0">팀 프로필</h3>
+                  </router-link>
+
               </div>
             </div>
             <template>
@@ -524,4 +530,34 @@ export default {
   },
 };
 </script>
-<style></style>
+<style type="text/css">
+            @font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+            
+div{
+ font-family: 'paybooc-Bold';
+
+}
+h1{
+  margin-bottom:0px;
+}
+h2{
+  margin-bottom:0px;
+}
+h3{
+  margin-bottom:0px;
+}
+h4{
+  margin-bottom:0px;
+}
+h5{
+  margin-bottom:0px;
+}
+h6{
+  margin-bottom:0px;
+}
+</style>
