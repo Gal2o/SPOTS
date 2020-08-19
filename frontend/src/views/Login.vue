@@ -13,7 +13,8 @@
                                         placeholder="이메일"
                                         addon-left-icon="ni ni-email-83"
                                         :valid="valid.email"
-                                        v-model="model.email">
+                                        v-model="model.email"
+                                        @keydown.enter="emitLoginSubmit">
                             </base-input>
 
                             <label class="ml-3 text-warning text-sm" v-if="!valid.password">비밀번호는 8글자 이상이어야 합니다.</label>
@@ -24,7 +25,7 @@
                                         addon-left-icon="ni ni-lock-circle-open"
                                         :valid="valid.password"
                                         v-model="model.password"
-                                        @keyup.enter="emitLoginSubmit">
+                                        @keydown.enter="emitLoginSubmit">
                             </base-input>
                             <div class="text-center">
                                 <base-button :disabled="!isPossible" type="primary" class="my-4" @click="emitLoginSubmit" >로그인하기</base-button>
@@ -72,7 +73,9 @@
         },
         methods: {
             emitLoginSubmit() {
-                this.$emit('login-submit', this.model)
+                if(this.isPossible === true) {
+                    this.$emit('login-submit', this.model)
+                }
             }, 
             validCheck(model) {
                 if (model.email.indexOf("@") != -1 && model.email.lastIndexOf(".com") != -1) {

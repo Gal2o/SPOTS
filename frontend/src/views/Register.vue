@@ -14,7 +14,8 @@
                                     alternative
                                     addon-left-icon="ni ni-hat-3"
                                     :valid="valid.name"
-                                    v-model="model.name">
+                                    v-model="model.name"
+                                    @keydown.enter="signUp">
                         </base-input>
 
                         <label class="ml-3 text-warning text-sm" v-if="!valid.email">이메일 형식과 다릅니다.</label>
@@ -24,7 +25,8 @@
                                     addon-left-icon="ni ni-email-83"
                                     :valid="valid.email"
                                     :disabled="isCertify"
-                                    v-model="model.email">
+                                    v-model="model.email"
+                                    @keydown.enter="signUp">
                         </base-input>
                         <div class="text-center" v-if="!isSend">
                             <base-button type="primary" class="my-4" @click="sendEmail()" :disabled="!valid.email">인증번호 발송</base-button>
@@ -47,7 +49,8 @@
                                     type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
                                     :valid="valid.password"
-                                    v-model="model.password">
+                                    v-model="model.password"
+                                    @keydown.enter="signUp">
                         </base-input>
                         <label class="ml-3 text-warning text-sm" v-if="valid.password && !valid.passwordcheck">패스워드와 일치하지 않습니다.</label>
                         <base-input class="input-group mb-3"
@@ -57,7 +60,8 @@
                                     addon-left-icon="ni ni-lock-circle-open"
                                     :valid="valid.passwordcheck"
                                     v-if="valid.password"
-                                    v-model="model.passwordcheck">
+                                    v-model="model.passwordcheck"
+                                    @keydown.enter="signUp">
                         </base-input>
                         <div class="text-center">
                             <base-button :disabled="!isCertify && !isPossible" type="primary" class="my-4" @click="Signup()">계정 생성</base-button>
@@ -168,24 +172,26 @@ export default {
     },
     methods: {
         Signup() {
-            const SignData = new FormData();
-            SignData.append('nickname', this.model.name);
-            SignData.append('email', this.model.email);
-            SignData.append('password', this.model.password);
-            if (this.model.password == this.model.passwordcheck){
-            this.$axios.post(this.$SERVER_URL+'user/signUp/', SignData)
-                .then(() => {
-                   this.$router.push({ name: 'login'})      
-                })
-            }
-            else if (this.model.name == "" || this.model.email == "" || this.model.password =="" || this.model.passwordcheck == ""){
-                this.modals.empty = true
-            }
-            else {
-                this.modals.equalpassword = true
-                this.model.password = "",
-                this.model.passwordcheck = ""
-            }
+            if (this.isPossible === true) {
+                const SignData = new FormData();
+                SignData.append('nickname', this.model.name);
+                SignData.append('email', this.model.email);
+                SignData.append('password', this.model.password);
+                if (this.model.password == this.model.passwordcheck){
+                    this.$axios.post(this.$SERVER_URL+'user/signUp/', SignData)
+                        .then(() => {
+                        this.$router.push({ name: 'login'})      
+                        })
+                }
+                else if (this.model.name == "" || this.model.email == "" || this.model.password =="" || this.model.passwordcheck == ""){
+                    this.modals.empty = true
+                }
+                else {
+                    this.modals.equalpassword = true
+                    this.model.password = "",
+                    this.model.passwordcheck = ""
+                }
+            }            
         },
         sendEmail() {
             var Senddata = new FormData();
@@ -231,7 +237,7 @@ export default {
                 this.valid.passwordcheck = false
             }
             if (this.valid.name && this.valid.email && this.valid.password && this.valid.passwordcheck) {
-                this.isSignup = true
+                this.isPossible = true
             } else {
                 this.isPossible = false
             }
