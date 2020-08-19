@@ -98,7 +98,7 @@
                     slot-scope="{ focus, blur }"
                     @on-open="focus"
                     @on-close="blur"
-                    :config="{ allowInput: true }"
+                    :config="dates.config"
                     class="form-control datepicker"
                     v-model="dates.simple"
                   ></flat-picker>
@@ -312,14 +312,11 @@ export default {
       var CheckMatchform = new FormData()
       CheckMatchform.append('head_uid', this.$cookies.get('UserInfo').uid)
       this.$axios.post(this.$SERVER_URL + "/TRoomCheck", CheckMatchform)
-        .then(res => {
-       
-          if (!res.data) {
- 
+        .then(res => {       
+          if (res.data.length == 0) { 
             this.isEnterMatch = true
           }
-        })
-       
+        })       
     },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
