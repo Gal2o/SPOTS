@@ -23,8 +23,8 @@
 
     <div class="d-flex flex-row" :class="type === 'dark' ? 'bg-default' : ''">
       <div class="table-responsive col-12 col-md-6 m-1">
-        <div class="text-center p-2 mb-2 bg-danger rounded-top d-flex flex-row">
-          <div class="col-9 align-middle">
+        <div class="text-center p-2 mb-2 bg-danger rounded-top d-flex flex-row align-items-center">
+          <div class="col-9">
             <h2>Red Team</h2>
             <h4>
               공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
@@ -44,8 +44,8 @@
           :data="RedtableDatas"
         >
           <template slot="columns">
-            <th>포지션</th>
-            <th>유저 명</th>
+            <th class="text-lg">포지션</th>
+            <th class="text-lg">유저 명</th>
           </template>
 
           <template slot-scope="{ row }">
@@ -86,15 +86,15 @@
               </div>
             </th>
             <td>
-              <span class="name mb-0 text-sm text-default"><b>{{ row.name }}</b></span>
+              <span class="name mb-0 text-lg text-default"><b>{{ row.name }}</b></span>
             </td>
           </template>
         </base-table>
       </div>
 
       <div class="table-responsive col-12 col-md-6 m-1">
-        <div class="text-center p-2 mb-2 bg-primary rounded-top d-flex flex-row">
-          <div class="col-9 align-middle">
+        <div class="text-center p-2 mb-2 bg-primary rounded-top d-flex flex-row align-items-center">
+          <div class="col-9">
             <h2>Blue Team</h2>
             <h4>
               공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
@@ -114,8 +114,8 @@
           :data="BluetableDatas"
         >
           <template slot="columns">
-            <th>포지션</th>
-            <th>유저 명</th>
+            <th class="text-lg">포지션</th>
+            <th class="text-lg">유저 명</th>
           </template>
 
           <template slot-scope="{ row }">
@@ -156,14 +156,14 @@
               </div>
             </th>
             <td>
-              <span class="name mb-0 text-sm text-default"><b>{{ row.name }}</b></span>
+              <span class="name mb-0 text-lg text-default"><b>{{ row.name }}</b></span>
             </td>
           </template>
         </base-table>
       </div>
     </div>
 
-    <div class="d-flex flex-row-reverse justify-content-between ">
+    <div class="d-flex flex-row justify-content-end ">
       <base-button class="ml-3" type="secondary" v-if="isManager">
         <router-link :to="{ name: '매니저 평가', params: { uid: this.RoomData.uid }}">
           <h4>매니저 평가</h4>
@@ -349,7 +349,7 @@ export default {
       myOriginUid: 0,
       RedpostionList: [],
       BluepostionList: [],
-      teamList: [{ name: "RED" }, { name: "BLUE" }],
+      teamList: [{name: "RED"}, {name: "BLUE"}],
       posRedList: [],
       posBlueList: [],
       posNameList: [
@@ -849,6 +849,9 @@ export default {
         this.BluepostionList.push(Bluesub)
       }
     },
+    ListCheck() {
+      console.log('wow', this)
+    }
   },
   mounted() {},
   created() {
