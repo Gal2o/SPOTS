@@ -48,7 +48,7 @@
 
           <td>
             <div class="d-flex align-items-center">
-              <span class="completion mr-2">{{ row.wait }}</span>
+              <span class="completion mr-2" :class="row.wait == '신청종료' ? 'text-danger':''">{{ row.wait }}</span>
             </div>
           </td>
 
