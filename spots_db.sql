@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- 호스트:                          127.17.0.1
+-- 호스트:                          127.0.0.1
 -- 서버 버전:                        10.5.4-MariaDB-1:10.5.4+maria~focal - mariadb.org binary distribution
 -- 서버 OS:                        debian-linux-gnu
 -- HeidiSQL 버전:                  11.0.0.5919
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `dong_code` (
   PRIMARY KEY (`dong_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='동코드';
 
--- 테이블 데이터 spots.dong_code:~3,209 rows (대략적) 내보내기
+-- 테이블 데이터 spots.dong_code:~3,547 rows (대략적) 내보내기
 DELETE FROM `dong_code`;
 /*!40000 ALTER TABLE `dong_code` DISABLE KEYS */;
 INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
@@ -3848,7 +3848,7 @@ CREATE TABLE IF NOT EXISTS `free_matching` (
   PRIMARY KEY (`uid`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='자유 매칭';
 
--- 테이블 데이터 spots.free_matching:~14 rows (대략적) 내보내기
+-- 테이블 데이터 spots.free_matching:~31 rows (대략적) 내보내기
 DELETE FROM `free_matching`;
 /*!40000 ALTER TABLE `free_matching` DISABLE KEYS */;
 INSERT INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`, `manager_uid`) VALUES
@@ -3905,7 +3905,7 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
--- 테이블 데이터 spots.matching_entry:~14 rows (대략적) 내보내기
+-- 테이블 데이터 spots.matching_entry:~18 rows (대략적) 내보내기
 DELETE FROM `matching_entry`;
 /*!40000 ALTER TABLE `matching_entry` DISABLE KEYS */;
 INSERT INTO `matching_entry` (`uid`, `striker1_uid`, `striker2_uid`, `striker3_uid`, `striker4_uid`, `midfielder1_uid`, `midfielder2_uid`, `midfielder3_uid`, `midfielder4_uid`, `defender1_uid`, `defender2_uid`, `defender3_uid`, `defender4_uid`, `goalkeeper_uid`) VALUES
@@ -3944,7 +3944,7 @@ CREATE TABLE IF NOT EXISTS `place` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
 
--- 테이블 데이터 spots.place:~22 rows (대략적) 내보내기
+-- 테이블 데이터 spots.place:~23 rows (대략적) 내보내기
 DELETE FROM `place`;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
 INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `close`, `lng`, `lat`) VALUES
@@ -4085,8 +4085,6 @@ CREATE TABLE IF NOT EXISTS `team_matching` (
   `head_uid` int(11) NOT NULL COMMENT '방장',
   `home_team_uid` int(11) NOT NULL,
   `away_team_uid` int(11) DEFAULT NULL,
-  `home_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
-  `away_matching_entry_uid` int(5) DEFAULT NULL COMMENT 'matching_entry uid',
   `create_date` varchar(50) DEFAULT NULL COMMENT '만든날',
   `matching_date` varchar(50) DEFAULT NULL COMMENT '매칭날, 시간',
   `home_score` int(2) NOT NULL DEFAULT 0,
@@ -4105,21 +4103,21 @@ CREATE TABLE IF NOT EXISTS `team_matching` (
 -- 테이블 데이터 spots.team_matching:~14 rows (대략적) 내보내기
 DELETE FROM `team_matching`;
 /*!40000 ALTER TABLE `team_matching` DISABLE KEYS */;
-INSERT INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `home_matching_entry_uid`, `away_matching_entry_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`, `manager_uid`) VALUES
-	(1, 1, 0, 0, 52, 53, '2020-08-11 19:30:50', '2020-08-20 10:00:00', 0, 0, 2, 1, 7000, 7000, '1153010100\r\n', '8/20에 한경기 뛸 팀 구합니다', NULL, 1),
-	(2, 1, 0, 0, 54, 55, '2020-08-12 10:30:50', '2020-08-20 19:00:00', 0, 0, 2, 15, 7000, 7000, '1156013300\r\n', '8월20일 매너게임 할 팀만 들어오새요', NULL, 2),
-	(3, 1, 0, 0, 56, 57, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 3, 7000, 7000, '1153010600\r\n', '8/23 9시 아침에 경기할 팀 구해요', NULL, 3),
-	(4, 1, 0, 0, 58, 59, '2020-08-12 13:30:50', '2020-08-26 09:00:00', 0, 0, 2, 4, 7000, 7000, '1153010600\r\n', '26일에 고척스카이돔에서 한팔 할 팀 구해요', NULL, 4),
-	(5, 1, 0, 0, 60, 61, '2020-08-13 12:30:50', '2020-08-26 18:00:00', 0, 0, 2, 5, 7000, 7000, '1153010600\r\n', '26일에 잘하는 팀과 대전하고싶습니다', NULL, 5),
-	(6, 1, 0, 0, 62, 63, '2020-08-14 09:30:50', '2020-08-21 09:00:00', 0, 0, 2, 6, 7000, 7000, '1171011400\r\n', '8/21 같이 볼차실 팀 구합니다', NULL, 1),
-	(7, 1, 0, 0, 64, 65, '2020-08-14 13:30:50', '2020-08-21 18:00:00', 0, 0, 2, 7, 7000, 7000, '1171011100\r\n', '21일 저녁에 축구할 팀 구해요', NULL, 2),
-	(8, 1, 0, 0, 66, 67, '2020-08-11 19:30:50', '2020-08-22 09:00:00', 0, 0, 2, 8, 7000, 7000, '1171011100\r\n', '22일 매너좋은 팀 구합니다', NULL, 3),
-	(9, 1, 0, 0, 68, 69, '2020-08-12 10:30:50', '2020-08-22 18:00:00', 0, 0, 2, 9, 7000, 7000, '1162010200\r\n', '22일 저녁에 가볍게 한경기 할 팀 구해요', NULL, 4),
-	(10, 1, 0, 0, 70, 71, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 10, 7000, 7000, '1174010700\r\n', '23일 광나루한강공원에서 한판할 팀 구합니다', NULL, 5),
-	(11, 1, 0, 0, 72, 73, '2020-08-12 13:30:50', '2020-08-23 18:00:00', 0, 0, 2, 11, 7000, 7000, '1174010900\r\n', '23일 저녁에 공찰 팀 구해요', NULL, 1),
-	(12, 1, 0, 0, 74, 75, '2020-08-13 12:30:50', '2020-08-24 10:00:00', 0, 0, 2, 12, 7000, 7000, '1174010200\r\n', '24일 경기할 팀 구합니다', NULL, 2),
-	(13, 1, 0, 0, 76, 77, '2020-08-14 09:30:50', '2020-08-24 18:00:00', 0, 0, 2, 13, 7000, 7000, '1156013100\r\n', '24일 초보팀 들어와주세요', NULL, 3),
-	(14, 1, 0, 0, 78, 79, '2020-08-14 13:30:50', '2020-08-27 10:00:00', 0, 0, 2, 14, 7000, 7000, '1156012300\r\n', '27일 축구할 팀 구합니다', NULL, 4);
+INSERT INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`, `create_date`, `matching_date`, `home_score`, `away_score`, `ready_num`, `place_uid`, `price`, `head_price`, `dong_code`, `title`, `mvp`, `manager_uid`) VALUES
+	(1, 1, 52, 53, '2020-08-11 19:30:50', '2020-08-20 10:00:00', 0, 0, 2, 1, 7000, 7000, '1153010100\r\n', '8/20에 한경기 뛸 팀 구합니다', NULL, 1),
+	(2, 1, 54, 55, '2020-08-12 10:30:50', '2020-08-20 19:00:00', 0, 0, 2, 15, 7000, 7000, '1156013300\r\n', '8월20일 매너게임 할 팀만 들어오새요', NULL, 2),
+	(3, 1, 56, 57, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 3, 7000, 7000, '1153010600\r\n', '8/23 9시 아침에 경기할 팀 구해요', NULL, 3),
+	(4, 1, 58, 59, '2020-08-12 13:30:50', '2020-08-26 09:00:00', 0, 0, 2, 4, 7000, 7000, '1153010600\r\n', '26일에 고척스카이돔에서 한팔 할 팀 구해요', NULL, 4),
+	(5, 1, 60, 61, '2020-08-13 12:30:50', '2020-08-26 18:00:00', 0, 0, 2, 5, 7000, 7000, '1153010600\r\n', '26일에 잘하는 팀과 대전하고싶습니다', NULL, 5),
+	(6, 1, 62, 63, '2020-08-14 09:30:50', '2020-08-21 09:00:00', 0, 0, 2, 6, 7000, 7000, '1171011400\r\n', '8/21 같이 볼차실 팀 구합니다', NULL, 1),
+	(7, 1, 64, 65, '2020-08-14 13:30:50', '2020-08-21 18:00:00', 0, 0, 2, 7, 7000, 7000, '1171011100\r\n', '21일 저녁에 축구할 팀 구해요', NULL, 2),
+	(8, 1, 66, 67, '2020-08-11 19:30:50', '2020-08-22 09:00:00', 0, 0, 2, 8, 7000, 7000, '1171011100\r\n', '22일 매너좋은 팀 구합니다', NULL, 3),
+	(9, 1, 68, 69, '2020-08-12 10:30:50', '2020-08-22 18:00:00', 0, 0, 2, 9, 7000, 7000, '1162010200\r\n', '22일 저녁에 가볍게 한경기 할 팀 구해요', NULL, 4),
+	(10, 1, 70, 71, '2020-08-12 11:30:50', '2020-08-23 09:00:00', 0, 0, 2, 10, 7000, 7000, '1174010700\r\n', '23일 광나루한강공원에서 한판할 팀 구합니다', NULL, 5),
+	(11, 1, 72, 73, '2020-08-12 13:30:50', '2020-08-23 18:00:00', 0, 0, 2, 11, 7000, 7000, '1174010900\r\n', '23일 저녁에 공찰 팀 구해요', NULL, 1),
+	(12, 1, 74, 75, '2020-08-13 12:30:50', '2020-08-24 10:00:00', 0, 0, 2, 12, 7000, 7000, '1174010200\r\n', '24일 경기할 팀 구합니다', NULL, 2),
+	(13, 1, 76, 77, '2020-08-14 09:30:50', '2020-08-24 18:00:00', 0, 0, 2, 13, 7000, 7000, '1156013100\r\n', '24일 초보팀 들어와주세요', NULL, 3),
+	(14, 1, 78, 79, '2020-08-14 13:30:50', '2020-08-27 10:00:00', 0, 0, 2, 14, 7000, 7000, '1156012300\r\n', '27일 축구할 팀 구합니다', NULL, 4);
 /*!40000 ALTER TABLE `team_matching` ENABLE KEYS */;
 
 -- 테이블 spots.user 구조 내보내기
@@ -4146,7 +4144,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=440 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
--- 테이블 데이터 spots.user:~221 rows (대략적) 내보내기
+-- 테이블 데이터 spots.user:~220 rows (대략적) 내보내기
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`uid`, `email`, `password`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`, `city_code`, `comment`, `mvp`, `blacklist`, `goal`, `assist`, `rate`, `admin`) VALUES
