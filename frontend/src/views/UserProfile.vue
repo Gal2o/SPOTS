@@ -168,16 +168,28 @@
                         rows="4"
                         class="form-control form-control-alternative"
                         placeholder="간략히 자기를 소개해 주세요"
-                        v-model = "model.content"
+                        v-model="model.comment"
                       >
                       </textarea>
                     </base-input>
                   </div>
                 </div>
                 <div class="text-center">
-                <router-link to="/dashboard">
+                <router-link to="/profile">
                 <base-button class="btn" @click="submitinfo">내정보 수정</base-button>
                 </router-link>
+                <modal :show.sync="this.al" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">실패! 비밀번호가 다릅니다. 다시 적어주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="al = false">닫기</base-button>
+                   </div>
+                </modal>
+                 <modal :show.sync="this.al2" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">실패! 비밀번호가 비워져있습니다. 넣어주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="al2 = false">닫기</base-button>
+                   </div>
+                </modal>
                 </div>
               </form>
             </template>
@@ -223,31 +235,31 @@ export default {
       stateN: null,
        citycode: null,
       statecode: null,
+      al:false,
+      al2:false,
+      binarray:[],
     };
   },
   created() {
+    const data = new FormData();
+    data.append("uid", this.$cookies.get("UserInfo").uid);
     this.$axios
-      .get(this.$SERVER_URL + "stateList")
+      .post(this.$SERVER_URL + "user/detail2", data)
       .then((res) => {
-        this.cityDatas = res.data;
+        this.model.username = res.data.nickname
+        this.model.email = res.data.email
+        this.email = res.data.email
+        var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
+        this.imgurl = 'img/userLogo/'+ logonum +'.png'
+        this.model.win = res.data.win
+        this.model.draw = res.data.draw
+        this.model.lose = res.data.lose
+        this.model.goal = res.data.goal
+        this.model.assist = res.data.assist
+        this.model.comment = res.data.comment
+        this.name = res.data.nickname
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    const userInfo = this.$cookies.get("UserInfo")
-    console.log('userinfo',userInfo)
-    this.name = userInfo.nickname
-    this.model.username = userInfo.nickname
-    this.model.email = userInfo.email
-    this.email = userInfo.email
-    var logonum = ((this.$cookies.get("UserInfo").uid)%24)+1
-    this.imgurl = 'img/userLogo/'+ logonum +'.png'
-    this.model.win = userInfo.win
-    this.model.draw = userInfo.draw
-    this.model.lose = userInfo.lose
-    this.model.goal = userInfo.goal
-    this.model.assist = userInfo.assist
-    this.model.content = userInfo.content
+
   },
   methods : {
     choice1(state) {
@@ -268,29 +280,30 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     submitinfo() {
-      const infoForm = new FormData();
-      infoForm.append("nickname",this.model.username)
-      infoForm.append("email",this.model.email)
-      infoForm.append('city_code', this.citycode)
-      infoForm.append('comment', this.model.comment)
-      if (this.model.password == this.model.passwordcheck){
+      if (this.model.password == this.model.passwordcheck && this.model.password!=""){
+        const infoForm = new FormData();
         infoForm.append("password", this.model.password)
-      }else {
-        alert("비밀번호가 다릅니다. 다시 적어주세요")
+        infoForm.append("nickname",this.model.username)
+        infoForm.append("uid",this.$cookies.get("UserInfo").uid)
+        infoForm.append('comment', this.model.comment)
+        
+        this.$axios
+          .post(this.$SERVER_URL + "user/modify", infoForm)
+          .then(res=>{
+            this.binarray = res.data
+            this.$router.push({ name: "SPOTs"})
+          })
+      }else if (this.model.password != this.model.passwordcheck) {
+        this.al = true;
       }
-       this.$axios
-        .post(this.$SERVER_URL + "user/modify", infoForm)
-        .then(res=>{
-          console.log('123',res)
-        })
-        .catch(err =>{
-          console.log(err)
-        })
+      else if(this.model.password ==""){
+          this.al2 = true;
+      }
+      
+      
+      
     },
   }
 };

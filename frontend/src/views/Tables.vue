@@ -1,6 +1,6 @@
 <template class="text-center">
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+    <base-header class="pb-8 pt-md-8 mb-4 text-center" v-if="freespot == false">
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-3 col-lg-6">
@@ -77,6 +77,85 @@
         </div>
       </div>
     </base-header>
+
+    <base-header class="pb-8 pt-md-8 mb-4 text-center" v-if="freespot == true">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <stats-card
+            title="이번주 최다 승리자"
+            type="gradient-red"
+            sub-title="이진형"
+            icon="ni ni-active-40"
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">
+                <i class="fa fa-arrow-up">순위 업! 1등</i>
+              </span>
+              <span class="text-nowrap"
+                >승리 수 {{ this.maxpwin }}</span
+              >
+            </template>
+          </stats-card>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <stats-card
+            title="이번주 최다 패배자"
+            type="gradient-orange"
+            sub-title="김선민"
+            icon="ni ni-chart-pie-35"
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-danger mr-2">
+                <i class="fa fa-arrow-down"></i> 분발하세요!
+              </span>
+              <span class="text-nowrap"
+                >패배 {{ this.maxplose }}</span
+              >
+            </template>
+          </stats-card>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <stats-card
+            title="이번주 최다 득점자"
+            type="gradient-green"
+            sub-title="임상협"
+            icon="ni ni-money-coins"
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">
+                <i class="fa fa-arrow-up"></i> 대단해요!
+              </span>
+              <span class="text-nowrap"
+                >골 {{ this.maxpgoal }}</span
+              >
+            </template>
+          </stats-card>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <stats-card
+            title="이번주 최다 도움"
+            type="gradient-info"
+            sub-title="서주환"
+            icon="ni ni-chart-bar-32"
+            class="mb-4 mb-xl-0"
+          >
+            <template slot="footer">
+              <span class="text-success mr-2">
+                <i class="fa fa-arrow-up"></i> 좋아요!
+              </span>
+              <span class="text-nowrap"
+                >도움 {{ this.maxpassist }}</span
+              >
+            </template>
+          </stats-card>
+        </div>
+      </div>
+    </base-header>
+
     <div class="container-fluid mt-4 ">
       <div class="row">
       <div class="col-6 text-center" >
@@ -112,27 +191,46 @@ export default {
   name: "tables",
   created() {
     this.$axios
-      .get(this.$SERVER_URL + "rank/")
+      .get(this.$SERVER_URL + "rank/free")
       .then((res) => {
         this.FreerankData = res.data;
         for (var a=0; a<this.FreerankData.length; a++){
-          if ( this.maxwin < this.FreerankData[a].team_win ){
-            this.maxwin = this.FreerankData[a].team_win
+          if ( this.maxpwin < this.FreerankData[a].win ){
+            this.maxpwin = this.FreerankData[a].win
           }
-          if ( this.maxrate < this.FreerankData[a].team_rate ){
-            this.maxrate = this.FreerankData[a].team_rate
+          if ( this.maxpgoal < this.FreerankData[a].goal ){
+            this.maxpgoal = this.FreerankData[a].goal
           }
-          if ( this.maxlose < this.FreerankData[a].team_lose) {
-            this.maxlose = this.FreerankData[a].team_lose
+          if ( this.maxplose < this.FreerankData[a].lose) {
+            this.maxplose = this.FreerankData[a].lose
           }
-          if ( this.minrate > this.FreerankData[a].team_rate ){
-            this.minrate = this.FreerankData[a].team_rate
+          if ( this.maxpassist < this.FreerankData[a].assist ){
+            this.maxpassist = this.FreerankData[a].assist
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    
+
+      this.$axios
+      .get(this.$SERVER_URL + "rank/")
+      .then((res) => {
+        this.TeamrankData = res.data;
+        for (var a=0; a<this.TeamrankData.length; a++){
+          if ( this.maxwin < this.this.TeamrankData[a].team_win ){
+            this.maxwin = this.this.TeamrankData[a].team_win
+          }
+          if ( this.maxrate < this.this.TeamrankData[a].team_rate ){
+            this.maxrate = this.this.TeamrankData[a].team_rate
+          }
+          if ( this.maxlose < this.this.TeamrankData[a].team_lose) {
+            this.maxlose = this.this.TeamrankData[a].team_lose
+          }
+          if ( this.minrate > this.this.TeamrankData[a].team_rate ){
+            this.minrate = this.this.TeamrankData[a].team_rate
+          }
+        }
+      })
+    
   },
   components: {
     "trank-table": teamRanking,
@@ -141,11 +239,16 @@ export default {
   data() {
     return {
       FreerankData: [],
+      TeamrankData: [],
       freespot : true,
       minrate : 100,
       maxwin : 0,
       maxlose : 0,
       maxrate : 0,
+      maxpwin : 0,
+      maxplose : 0,
+      maxpgoal : 0,
+      maxpassist : 0,
     };
   },
   methods: {},

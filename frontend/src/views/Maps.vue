@@ -1,9 +1,14 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+    <base-header class="pb-8 pt-md-8 mb-4 text-center">
+     <h2 class="mb-4 text-white"></h2>
+      <div class="row justify-content-center">
+          <div class="form-group mb-0">
+          </div>
+      </div>
     </base-header>
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid">
       <div class="row">
         <div
           class="col-xl-4 col-lg-6 mt-4"
@@ -27,31 +32,6 @@
             </template>
           </stats-card>
         </div>
-          <modal :show.sync="modal1" body-classes="p-0" modal-classes="modal-dialog modal-md">
-          <card
-            type="secondary"
-            shadow
-            header-classes="bg-white pb-5"
-            body-classes="px-lg-5 py-lg-5"
-            class="border-0"
-          >
-            <template >
-              <div class="text-muted text-center mb-3">
-                <h4>경기장 세부정보</h4>
-              </div>
-            </template>
-            <template>
-              <div class="text-center text-muted mb-4">
-                <h6>세부 사항</h6>
-              </div>
-              <form role="form">
-                <div class="text-center">
-                  <base-button class="mt-3" type="secondary" @click="modal1 = false">닫기</base-button>
-                </div>
-              </form>
-            </template>
-          </card>
-        </modal>
       </div>
     </div>
   </div>
@@ -62,12 +42,9 @@ export default {
     this.$axios
       .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
-        console.log(rest.data);
         this.stadiumDatas = rest.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+   
   },
   data() {
     return {

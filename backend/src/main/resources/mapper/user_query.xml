@@ -23,7 +23,6 @@
 		update user 
 		   set 	password	= #{password}			
 				,nickname	= #{nickname}				
-				,city_code	= #{city_code}			
 				,comment	= #{comment}			
 		 where uid= #{uid}
 	</update>

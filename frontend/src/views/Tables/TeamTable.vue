@@ -35,7 +35,7 @@
                 params: { uid: row.uid },
               }"
             >
-                <span class="name mb-0 text-sm">{{ row.title }}</span>
+                <span class="name mb-0 text-sm" style="color:azure;">{{ row.title }}</span>
                 </router-link>
               </div>
             </div>
@@ -60,9 +60,9 @@
               }"
               v-if="isLogined"
             >
-              <base-button type="success">입장하기</base-button>
+              <base-button outline type="secondary">입장하기</base-button>
             </router-link>
-            <base-button type="success" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
+            <base-button outline type="secondary" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
         </template>
       </base-table>
@@ -72,7 +72,7 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" @click="modals = true">팀SPOT 만들기</base-button>
+        <base-button type="secondary" :disabled="!isEnterMatch" @click="modals = true">팀SPOT 만들기</base-button>
 
         <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
@@ -118,6 +118,18 @@
                 </base-dropdown>
                 <div class="text-center">
                   <base-button type="success" @click="getTSpot" class="my-4 mr-4">팀 대결하기</base-button>
+                  <modal :show.sync="this.choice" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">방 이름과 경기장 모두를 선택해 주세요!</h3>
+                     <base-button size="sm" type="secondary" @click="choice = false">닫기</base-button>
+                   </div>
+                </modal>
+                <modal :show.sync="this.needlogin" gradient="danger" class="text-center">
+                   <div class="py-3 text-center mb-0">
+                     <h3 class="text-white mb-3">로그인이 필요합니다! 로그인 해주세요.!</h3>
+                     <base-button size="sm" type="secondary" @click="needlogin = false">닫기</base-button>
+                   </div>
+                </modal>
                   <base-button type="secondary" @click="modals = false">닫기</base-button>
                 </div>
               </form>
@@ -221,21 +233,18 @@ export default {
       .get(this.$SERVER_URL + "TeamMatchAll/")
       .then((res) => {
         this.TeamtableData = res.data;
-        console.log(this.TeamtableData)
+
         this.TeamTable = this.TeamtableData.slice(0, 5);
+        this.EnterMatchCheck()
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      
     this.$axios
       .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
-        console.log(rest.data);
+       
         this.stadiumDatas = rest.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
   },
   watch: {
     sidolist: function () {
@@ -256,7 +265,13 @@ export default {
     return {
       dates: {
         simple: "2020-08-15",
+        config: {
+          allowInput: true,
+          enableTime: true,
+          dateFormat: "Y-m-d H:i:00",
+        }
       },
+      isEnterMatch: false,
       isLogined: false,
       tabletitle: "팀 SPOT",
       TeamtableData: [],
@@ -275,6 +290,8 @@ export default {
       pagination: 1,
       TeamTable: [],
       isCredit: false,
+      choice : false,
+      needlogin : false,
       myTeam: 'RED',
       myPosition: "선택해주세요",
       myPosUid: 0,
@@ -291,6 +308,19 @@ export default {
   },
 
   methods: {
+    EnterMatchCheck() {
+      var CheckMatchform = new FormData()
+      CheckMatchform.append('head_uid', this.$cookies.get('UserInfo').uid)
+      this.$axios.post(this.$SERVER_URL + "/TRoomCheck", CheckMatchform)
+        .then(res => {
+       
+          if (!res.data) {
+ 
+            this.isEnterMatch = true
+          }
+        })
+       
+    },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
       this.placeuid = stadium.place_uid;
@@ -300,8 +330,7 @@ export default {
     getTSpot() {
       if (this.$cookies.isKey("UserInfo")) {
         this.userInfo = this.$cookies.get("UserInfo");
-        console.log("uid", this.userInfo.uid);
-        console.log("date",typeof(this.dates.simple));
+     
         const makeData = new FormData();
         makeData.append("title", this.title);
         makeData.append('manager_uid',this.manageruid);
@@ -315,39 +344,33 @@ export default {
           this.$axios
             .post(this.$SERVER_URL + "TRoomCreate/", makeData)
             .then((res) => {
-              console.log("chcek", res);
               this.modals = false
               this.isCredit = true
               this.homeuid= res.data[res.data.length-1].home_matching_entry_uid
               this.roomprice = res.data[res.data.length-1].price
               this.roomuid = res.data[res.data.length-1].uid
             })
-            .catch((err) => {
-              console.log(err);
-            });
+           
         } else {
-          alert("방 이름과 경기장 모두를 선택해 주세요");
+          this.choice = true;
         }
       } else {
-        alert("로그인이 필요합니다! 로그인 해주세요.");
+        this.needlogin = true;
       }
     },
     sidoinfo() {
       const sidoData = new FormData();
-      // console.log("dfdfdf");
-      // console.log("dfdfd", this.sidolist);
+  
       sidoData.append("doe", this.sidolist[0]);
       sidoData.append("si", this.sidolist[1]);
       sidoData.append("dong", this.sidolist[2]);
       sidoData.append("word", this.sidolist[3]);
-      console.log('team123',sidoData)
+     
       this.$axios.post(this.$SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
         this.TeamtableData = res.data;
         this.selectpage();
         this.pagination = 1;
-        console.log('team12345', res.data)
-      }).catch(err=>{
-        console.log('err123',err)
+       
       })
     },
     selectpage() {
@@ -356,13 +379,13 @@ export default {
         (this.pagination - 1) * 5,
         (this.pagination - 1) * 5 + 5
       );
-      console.log(this.TeamTable);
+   
     },
     TeamChange(name) {
       this.myTeam = name;
     },
     CreditGo() {
-      console.log('end',this.myPosUid)
+     
       if (this.myPosition === "공격수") {
         this.myPosUid = 1;
       } else if (this.myPosition === "미드필더") {
@@ -379,20 +402,14 @@ export default {
       EnterInfo.append("team_entry_uid", this.homeuid);
       EnterInfo.append('price', rprice)
       EnterInfo.append("room_uid", this.roomuid)
-      console.log("uid", this.$cookies.get("UserInfo").uid)
-      console.log("positionnum", this.myPosUid)
-      console.log("team_entry_uid", this.homeuid)
-      console.log('price', rprice)
-      console.log("room_uid", this.roomuid)
+     
       this.$axios
         .post(this.$SERVER_URL + "kakaoPay/", EnterInfo)
         .then(res => {
-          console.log(res)
+         
           window.location.replace(res.data)
         })
-        .catch(err => {
-          console.log(err);
-        });
+   
     },
 
     getSpotName(uid){

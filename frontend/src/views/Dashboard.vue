@@ -1,9 +1,9 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+    <base-header class="pb-8 pt-md-8 text-center">
       <!-- Card stats -->
-      <h2>Spot 검색</h2>
-      <div class="row">
+      <h2 class="mb-4 text-white">SP<i class="ni ni-pin-3 text-red"></i>T 검색</h2>
+      <div class="row justify-content-center">
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
             {{
@@ -48,8 +48,8 @@
 
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex">
           <div class="form-group mb-0">
-            <base-input placeholder="검색" class="input-group-alternative" v-model="keyword"></base-input>
-            <base-button class="ml-3" type="success" icon="ni ni-bold-right" @click="checksido"></base-button>
+            <base-input placeholder="검색"  v-model="keyword"></base-input>
+            <base-button class="ml-3" type="secondary" @click="checksido">검색</base-button>
           </div>
         </form>
       </div>
@@ -81,9 +81,7 @@ export default {
       .then((res) => {
         this.cityDatas = res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      
   },
   components: {
     ProjectsTable,
@@ -102,6 +100,7 @@ export default {
       statecode: null,
       dongcode: null,
       keyword: null,
+      bgImg:"img/background/goal.jpg"
     };
   },
   methods: {
@@ -129,9 +128,7 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+       
     },
     choicedong(c) {
       const dongForm = new FormData();
@@ -142,9 +139,7 @@ export default {
         .then((res) => {
           this.dongDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        
     },
     checksido() {
       this.sidolist = [];
@@ -157,4 +152,34 @@ export default {
   mounted() {},
 };
 </script>
-<style></style>
+<style type="text/css">
+            @font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+            
+div{
+ font-family: 'paybooc-Bold';
+
+}
+h1{
+  margin-bottom:0px;
+}
+h2{
+  margin-bottom:0px;
+}
+h3{
+  margin-bottom:0px;
+}
+h4{
+  margin-bottom:0px;
+}
+h5{
+  margin-bottom:0px;
+}
+h6{
+  margin-bottom:0px;
+}
+</style>

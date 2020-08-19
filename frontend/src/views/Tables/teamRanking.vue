@@ -27,7 +27,6 @@
           <th>무승부</th>
           <th>패배</th>
           <th>승률</th>
-          <th></th>
         </template>
 
         <template slot-scope="{ row }">
@@ -67,9 +66,7 @@ export default {
       .then((res) => {
         this.TeamrankData = res.data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
   },
   props: {
     type: {

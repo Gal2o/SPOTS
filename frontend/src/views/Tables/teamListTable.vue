@@ -53,11 +53,11 @@
             <span class="status">{{ row.team_rate }}%</span>
           </td>
           <td class="text-right">
-            <base-button v-if="isLogined" type="success" size="s" @click="showTeam(row)">
-              <h2 class="text-white">더보기</h2>
+            <base-button v-if="isLogined" outline type="secondary" size="s" @click="showTeam(row)">
+              <h2>더보기</h2>
             </base-button>
-            <base-button v-if="!isLogined" type="success" size="lg" @click="modals.loginalert = true">
-              <h2 class="text-white">입장하기</h2>
+            <base-button v-if="!isLogined" outline type="secondary" size="lg" @click="modals.loginalert = true">
+              <h2>입장하기</h2>
             </base-button>
           </td>
         </template>
@@ -200,13 +200,13 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
-      console.log('pp',this.$cookies.get("UserInfo"))
+     
       if (this.$cookies.get("UserInfo").team_uid > 0) {
-        console.log('pp',this.$cookies.get("UserInfo").team_uid)
+        
         this.haveTeam = true
       }
     }
-    console.log('first',this)
+ 
   },
   props: {
     type: {
@@ -243,18 +243,16 @@ export default {
       team_uid.append("uid", this.teamData.uid);
       this.$axios.post(this.$SERVER_URL + "/team/userList", team_uid)
         .then((res) => {
-          console.log('user',res.data);
+         
           var player = res.data;
           for(var i=0; i < player.length; i++) {
             if (this.teamData.captain_uid == player[i].uid) {
               this.headPlayer = player[i].nickname
             }
           }
-          console.log(this.playerList)
+
         })  
-        .catch((err) => {
-          console.log(err);
-        });
+      
     },
     modalSwitch(switchData) {
       if (switchData == 1) {
@@ -267,22 +265,20 @@ export default {
         this.modals.teamInfo = false
         this.modals.joinTeam = false
       }
-      console.log(this)
+   
     },
     ApplyGo() {
-      console.log(this.apply)
+
       var ApplyData = new FormData();
       ApplyData.append('team_uid', this.apply.teamuid)
       ApplyData.append('user_uid', this.$cookies.get('UserInfo').uid)
       ApplyData.append('comment', this.apply.comment)
       this.$axios.post(this.$SERVER_URL + "user/applyTeam/", ApplyData)
-        .then(res => {
-          console.log(res)
+        .then(() => {
+      
           this.modals.joinTeam = false
         })
-        .catch(err => {
-          console.log(err)
-        })
+        
     }
   },
 };

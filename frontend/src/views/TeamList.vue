@@ -1,8 +1,9 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-4 pt-5 pt-md-8">
+     <base-header class="pb-8 pt-md-8 mb-4 text-center">
       <!-- Card stats -->
-      <div class="d-flex flex-row justify-content-between">
+      <h2 class="mb-4 text-white">팀 검색</h2>
+      <div class="d-flex flex-row justify-content-center">
         <div class="d-flex flex-row align-items-center">
           <base-dropdown class="mr-3">
             <base-button slot="title" type="secondary" class="dropdown-toggle">{{
@@ -47,17 +48,18 @@
           </form>
         </div>
         <div>
-          <router-link :to="{ name: '팀 프로필'}">
-            <base-button v-if="haveTeam" type="success" size="lg">
-              <h2 class="text-white">나의 팀 프로필</h2>
+       </div>
+      </div> 
+    </base-header><div class="container-fluid mt-4 mb-0 text-center">
+      <router-link :to="{ name: '팀 프로필'}">
+            <base-button v-if="haveTeam" block type="warning" size="lg">
+              <h2 class="text-white">나의 팀 프로필 보기!</h2>
             </base-button>
           </router-link>
-          <base-button v-if="!haveTeam" type="success" size="lg" @click="modals.create = true">
-            <h2 class="text-white">팀 만들기</h2>
+          <base-button v-if="!haveTeam" block type="info" size="lg" @click="modals.create = true">
+            <h2 class="text-white mb-0">팀 만들기!</h2>
           </base-button>
         </div>
-      </div>
-    </base-header>
     <div class="container-fluid mt-4">
       <div class="row">
         <div class="col">
@@ -156,16 +158,14 @@ export default {
           state_name: "전체",
         })
         this.teamData.statePick = this.teamData.stateDatas[0].state_name
-        console.log('o', this.teamData)
+
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true
-      console.log('pp',this.$cookies.get("UserInfo"))
+  
       if (this.$cookies.get("UserInfo").team_uid > 0) {
-        console.log('pp',this.$cookies.get("UserInfo").team_uid)
+  
         this.haveTeam = true
       }
     }
@@ -174,11 +174,9 @@ export default {
     this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
       .then((res) => {
         this.FreerankData = res.data;
-        console.log('nowhere',this.FreerankData);
+     
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    
   },
   components: {
     "trank-table": teamList,
@@ -232,12 +230,10 @@ export default {
         .then((res) => {
           this.stateDatas = res.data;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+       
     },
     choiceS(state) {
-      console.log('state',state.state_name)
+      
       this.teamData.statePick = state.state_name
       if (state.state_code == "0000000000") {
         this.teamData.cityPick = "시(도)를 선택해 주세요.";
@@ -248,17 +244,15 @@ export default {
         this.$axios.post(this.$SERVER_URL + "cityList", Cityform)
           .then((res) => {
             this.teamData.cityDatas = res.data;
-            console.log('city', this.teamData.cityDatas)
+         
           })
-          .catch((err) => {
-            console.log(err);
-          });
+         
       }
     },
     choiceC(city) {
       this.teamData.cityPick = city.city_name
       this.teamData.pickCode = city.city_code
-      console.log('C',city)
+      
     },
     createTeam() {
       var createData = new FormData()
@@ -266,38 +260,32 @@ export default {
       createData.append('city_code', this.teamData.pickCode)
       createData.append('captain_uid', this.$cookies.get('UserInfo').uid)
       this.$axios.post(this.$SERVER_URL + "team/regist/", createData)
-          .then((res) => {
-            console.log('last',res)
+          .then(() => {
+            
             this.modals.create = false
             var userform = new FormData()
             userform.append('uid', this.$cookies.get('UserInfo').uid)
             this.$axios.post(this.$SERVER_URL + "user/detail2/", userform)
               .then((res) => {
-                console.log(res.data)
+             
                 this.$cookies.remove('UserInfo')
                 this.$cookies.set('UserInfo', res.data)
-                console.log(this.$cookies.get('UserInfo'))
+               
                 this.$router.push({ name: "팀 프로필" })
               })
-              .catch((err) => {
-                console.log(err);
-              });
+              
           })
-          .catch((err) => {
-            console.log(err);
-          });
+         
     },
     TeamList(where) {
       var WhereData = new FormData();
       WhereData.append('where', where)
       this.$axios.post(this.$SERVER_URL + "team/list/", WhereData)
         .then(res => {
-          console.log(res)
+      
           this.FreerankData = res.data;
         })
-        .catch(err => {
-          console.log(err)
-        })
+        
     },
     searchTeam() {
       var subList = []
