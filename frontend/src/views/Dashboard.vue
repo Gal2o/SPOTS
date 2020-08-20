@@ -80,8 +80,11 @@ export default {
       .get(this.$SERVER_URL + "stateList")
       .then((res) => {
         this.cityDatas = res.data;
-      })
-      
+        this.cityDatas.unshift({
+          state_code: null,
+          state_name: "전체",
+        })
+      })      
   },
   components: {
     ProjectsTable,
@@ -107,11 +110,14 @@ export default {
     choice1(state) {
       this.cityN = state.state_name;
       this.citycode = state.state_code;
+      this.stateN = "구(시)"
+      this.dongN = "동"
       this.choicestate(state.state_code);
     },
     choice2(city) {
       this.stateN = city.city_name;
       this.statecode = city.city_code;
+      this.dongN = "동"
       this.choicedong(city.city_code);
     },
     choice3(dong) {
@@ -123,10 +129,21 @@ export default {
       const stateForm = new FormData();
       b = String(b);
       stateForm.append("state_code", b);
+      if (b == "null") {
+        stateForm.append("or 1=1", b);
+        this.statecode = null;
+        this.dongcode = null;
+      } else {
+        stateForm.append("where state_code like '" + b.substring(0,2) + "%'", b);
+      }
       this.$axios
         .post(this.$SERVER_URL + "cityList", stateForm)
         .then((res) => {
           this.stateDatas = res.data;
+          this.stateDatas.unshift({
+            city_code: null,
+            city_name: "전체",
+          })
         })
        
     },
@@ -134,10 +151,20 @@ export default {
       const dongForm = new FormData();
       c = String(c);
       dongForm.append("city_code", c);
+      if (c == "null") {
+        dongForm.append("or 1=1", c);
+        this.dongcode = null;
+      } else {
+        dongForm.append("where city_code like '" + c.substring(0,4) + "%'", c);
+      }
       this.$axios
         .post(this.$SERVER_URL + "dongList", dongForm)
         .then((res) => {
           this.dongDatas = res.data;
+          this.dongDatas.unshift({
+            dong_code: null,
+            dong_name: "전체",
+          })
         })
         
     },
@@ -146,6 +173,9 @@ export default {
       this.sidolist.push(this.citycode);
       this.sidolist.push(this.statecode);
       this.sidolist.push(this.dongcode);
+      if(this.keyword == "")
+        this.keyword = null;
+
       this.sidolist.push(this.keyword);
     },
   },
