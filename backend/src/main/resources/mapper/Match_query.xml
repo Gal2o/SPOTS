@@ -111,7 +111,7 @@
     </update>
     
     <update id="TRoomJoin">
-    	update team_matching set away_team_uid = #{uid} where uid= #{room_uid}
+    	update team_matching set away_team_uid = #{uid}, ready_num= ready_num+1 where uid= #{room_uid}
     </update>
     
 </mapper>
