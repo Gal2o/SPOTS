@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- 호스트:                          127.0.0.1
+-- 호스트:                          127.17.0.1
 -- 서버 버전:                        10.5.4-MariaDB-1:10.5.4+maria~focal - mariadb.org binary distribution
 -- 서버 OS:                        debian-linux-gnu
 -- HeidiSQL 버전:                  11.0.0.5919
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `dong_code` (
   PRIMARY KEY (`dong_code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='동코드';
 
--- 테이블 데이터 spots.dong_code:~3,547 rows (대략적) 내보내기
+-- 테이블 데이터 spots.dong_code:~3,209 rows (대략적) 내보내기
 DELETE FROM `dong_code`;
 /*!40000 ALTER TABLE `dong_code` DISABLE KEYS */;
 INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
@@ -3905,7 +3905,7 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
--- 테이블 데이터 spots.matching_entry:~18 rows (대략적) 내보내기
+-- 테이블 데이터 spots.matching_entry:~14 rows (대략적) 내보내기
 DELETE FROM `matching_entry`;
 /*!40000 ALTER TABLE `matching_entry` DISABLE KEYS */;
 INSERT INTO `matching_entry` (`uid`, `striker1_uid`, `striker2_uid`, `striker3_uid`, `striker4_uid`, `midfielder1_uid`, `midfielder2_uid`, `midfielder3_uid`, `midfielder4_uid`, `defender1_uid`, `defender2_uid`, `defender3_uid`, `defender4_uid`, `goalkeeper_uid`) VALUES
@@ -3944,12 +3944,12 @@ CREATE TABLE IF NOT EXISTS `place` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COMMENT='구장 정보';
 
--- 테이블 데이터 spots.place:~23 rows (대략적) 내보내기
+-- 테이블 데이터 spots.place:~22 rows (대략적) 내보내기
 DELETE FROM `place`;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
 INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `close`, `lng`, `lat`) VALUES
-	(1, '안양천체육생태공원', 50000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
-	(2, '안양천체육생태공원', 60000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
+	(1, '안양천체육생태공원1', 50000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
+	(2, '안양천체육생태공원2', 60000, '구로구 신도림동', '1153010100', NULL, NULL, '37.5077345', '126.8805914'),
 	(3, '고척근린공원 운동장', 70000, '구로구 고척동 산9-14번지', '1153010600', NULL, NULL, '37.505969', '126.853168'),
 	(4, '고척스카이돔 야외 축구장', 80000, '구로구 고척동 66-47', '1153010600', NULL, NULL, '37.4958302', '126.8674899'),
 	(5, '계남근린공원 인조잔디 축구장', 90000, '구로구 고척동 산6-1', '1153010600', NULL, NULL, '37.5086492', '126.8555162'),
@@ -4144,7 +4144,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=440 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
--- 테이블 데이터 spots.user:~220 rows (대략적) 내보내기
+-- 테이블 데이터 spots.user:~221 rows (대략적) 내보내기
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`uid`, `email`, `password`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`, `city_code`, `comment`, `mvp`, `blacklist`, `goal`, `assist`, `rate`, `admin`) VALUES
