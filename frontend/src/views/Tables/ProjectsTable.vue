@@ -28,15 +28,18 @@
         <template slot-scope="{ row }" >
           <th scope="row">
             <div class="media align-items-center">
-              <div class="media-body">
+              <div v-if="!((row.wait == '신청종료') && !(row.manager_uid == userInfo.uid))" class="media-body">
                 <router-link
-              :to="{
-                name: '자유 SPOT',
-                params: { uid: row.uid },
-              }"
-            >
-                <span class="name mb-0 text-sm" style="color:MidnightBlue;" >{{ row.title }}</span>
+                  :to="{
+                    name: '자유 SPOT',
+                    params: { uid: row.uid },
+                  }"
+                >
+                 <span class="name mb-0 text-sm" style="color:MidnightBlue;" @click="move(row.uid)">{{ row.title }}</span>
                 </router-link>
+              </div>
+              <div v-if="(row.wait == '신청종료') && !(row.manager_uid == userInfo.uid)" class="media-body">
+                <span class="name mb-0 text-sm" style="color:MidnightBlue;" @click="move(row.uid)">{{ row.title }}</span>
               </div>
             </div>
           </th>
@@ -295,7 +298,7 @@ export default {
   data() {
     return {
       dates: {
-        simple: "2020-08-22",
+        simple: "2020-08-22 00:00:00",
         config: {
           allowInput: true,
           enableTime: true,
