@@ -137,8 +137,8 @@
               <th>인원 <base-button class="mt-2"> {{teamData.player_num}}명 </base-button> </th>
             </tr>
             <tr class="col-4">
-              <th>팀전적 <base-button class="mt-2 btn-tooltip"
-               v-b-tooltip.hover.bottom title="승/무/패"> {{ teamData.team_win }}/{{ teamData.team_draw }}/{{ teamData.team_lose }} </base-button></th>
+              <th>팀전적 <base-button class="mt-2"
+               title="승/무/패"> {{ teamData.team_win }}/{{ teamData.team_draw }}/{{ teamData.team_lose }} </base-button></th>
             </tr>
             <tr class="col-4">
               <th>승률<base-button class="mt-2"> {{teamData.team_rate}}%  </base-button></th>
@@ -265,6 +265,7 @@ export default {
       this.apply.teamname = this.teamData.team_name
       this.apply.teamuid = this.teamData.uid
       this.modals.teamInfo = true
+      
       const team_uid = new FormData();
       team_uid.append("uid", this.teamData.uid);
       this.$axios.post(this.$SERVER_URL + "/team/userList", team_uid)
