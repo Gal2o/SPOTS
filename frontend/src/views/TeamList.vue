@@ -32,7 +32,7 @@
           </base-dropdown>
 
           <form
-            class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex"
+            class="navbar-search navbar-search-dark form-inline mr-3 d-flex"
           >
             <div class="form-group mb-0">
               <base-input
