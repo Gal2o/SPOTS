@@ -97,7 +97,7 @@
           <div class="col-9">
             <h2>Blue Team</h2>
             <h4>
-              공: {{ redCountList.Attacker }} / 미: {{ redCountList.Midfielder }} / 수: {{ redCountList.Defender }} / 골: {{ redCountList.Goalkeeper }}
+              공: {{ blueCountList.Attacker }} / 미: {{ blueCountList.Midfielder }} / 수: {{ blueCountList.Defender }} / 골: {{ blueCountList.Goalkeeper }}
             </h4>
           </div>
           <div class="col-3">
@@ -416,8 +416,22 @@ export default {
               this.isHeader = true
             }
             this.RedtableDatas = [];
+            this.redCountList= {
+              Attacker: 0,
+              Midfielder: 0,
+              Defender: 0,
+              Goalkeeper: 0,
+              total: 0,
+            };
             this.RedTeamList();
             this.BluetableDatas = [];
+            this.blueCountList= {
+              Attacker: 0,
+              Midfielder: 0,
+              Defender: 0,
+              Goalkeeper: 0,
+              total: 0,
+            };
             this.BlueTeamList();
 
             if (this.$cookies.isKey("UserInfo")) {
