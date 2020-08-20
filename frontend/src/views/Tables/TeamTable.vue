@@ -60,7 +60,7 @@
               }"
               v-if="isLogined"
             >
-              <base-button outline type="secondary" :disabled="row.wait == '신청종료'">입장하기</base-button>
+              <base-button outline type="secondary" :disabled="(row.wait == '신청종료') && !(row.manager_uid == userInfo.uid)">입장하기</base-button>
             </router-link>
             <base-button outline type="secondary" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
@@ -228,6 +228,7 @@ export default {
   created() {
     if (this.$cookies.isKey("UserInfo")) {
       this.isLogined = true;
+      this.userInfo = this.$cookies.get("UserInfo")
     }
     this.$axios
       .get(this.$SERVER_URL + "TeamMatchAll/")
@@ -332,18 +333,16 @@ export default {
       this.placecode = stadium.code;
     },
     getTSpot() {
-      if (this.$cookies.isKey("UserInfo")) {
-        this.userInfo = this.$cookies.get("UserInfo");
-     
+      if (this.$cookies.isKey("UserInfo")) {     
         const makeData = new FormData();
         makeData.append("title", this.title);
         makeData.append('manager_uid',this.manageruid);
         makeData.append("matching_date", this.dates.simple);
         makeData.append("place_uid", 0);
-        makeData.append("home_team_uid", this.userInfo.team_uid);
+        makeData.append("home_team_uid", this.$cookies.get("UserInfo").team_uid);
         makeData.append("price", this.placeprice);
         makeData.append("dong_code", this.placecode);
-        makeData.append("head_uid", this.userInfo.uid);
+        makeData.append("head_uid", this.$cookies.get("UserInfo").uid);
         if (this.title != "" && this.placecode != 0) {
           this.$axios
             .post(this.$SERVER_URL + "TRoomCreate/", makeData)
