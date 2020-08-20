@@ -47,7 +47,7 @@
           <td >
             <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
-          <td style="color:black;" >{{ row.ready_num }}</td>
+          <td style="color:black;" >{{ row.ready_num + " / 22" }}</td>
 
           <td>
             <div class="d-flex align-items-center">
@@ -275,7 +275,6 @@ export default {
     this.$axios
       .get(this.$SERVER_URL + "place/list")
       .then((rest) => {
-        console.log("!!!", rest.data);
         this.stadiumDatas = rest.data;
       })
      
@@ -355,7 +354,14 @@ export default {
     },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
-      this.placeuid = stadium.place_uid;
+
+      for(var a = 0; a < this.stadiumDatas.length; a++){
+          if(this.stadiumN == this.stadiumDatas[a].place_name){
+              this.placeuid = this.stadiumDatas[a].uid;
+              break;
+          }
+      }
+
       this.placeprice = 8000;
       this.placecode = stadium.code;
     },
@@ -365,7 +371,7 @@ export default {
         makeData.append("title", this.title);
         makeData.append('manager_uid',this.manageruid);
         makeData.append("matching_date", this.dates.simple);
-        makeData.append("place_uid", 0);
+        makeData.append("place_uid", this.placeuid);
         makeData.append("price", this.placeprice);
         makeData.append("dong_code", this.placecode);
         makeData.append("head_uid", this.$cookies.get("UserInfo").uid);
