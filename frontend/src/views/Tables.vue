@@ -208,17 +208,17 @@ export default {
       .then((res) => {
         this.TeamrankData = res.data;
         for (var a=0; a<this.TeamrankData.length; a++){
-          if ( this.maxwin < this.this.TeamrankData[a].team_win ){
-            this.maxwin = this.this.TeamrankData[a].team_win
+          if ( this.maxwin < this.TeamrankData[a].team_win ){
+            this.maxwin = this.TeamrankData[a].team_win
           }
-          if ( this.maxrate < this.this.TeamrankData[a].team_rate ){
-            this.maxrate = this.this.TeamrankData[a].team_rate
+          if ( this.maxrate < this.TeamrankData[a].team_rate ){
+            this.maxrate = (this.TeamrankData[a].team_rate.toFixed(2))
           }
-          if ( this.maxlose < this.this.TeamrankData[a].team_lose) {
-            this.maxlose = this.this.TeamrankData[a].team_lose
+          if ( this.maxlose < this.TeamrankData[a].team_lose) {
+            this.maxlose = this.TeamrankData[a].team_lose
           }
-          if ( this.minrate > this.this.TeamrankData[a].team_rate ){
-            this.minrate = this.this.TeamrankData[a].team_rate
+          if ( this.minrate > this.TeamrankData[a].team_rate ){
+            this.minrate = this.TeamrankData[a].team_rate.toFixed(2)
           }
         }
       })
