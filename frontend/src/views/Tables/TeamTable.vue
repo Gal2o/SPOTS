@@ -47,7 +47,7 @@
           <td>
             <span class="status">{{ getSpotName(row.place_uid) }}</span>
           </td>
-          <td>{{ row.ready_num }}</td>
+          <td>{{ row.ready_num + " / 2" }}</td>
 
           <td>
             <div class="d-flex align-items-center">
@@ -274,7 +274,7 @@ export default {
   data() {
     return {
       dates: {
-        simple: "2020-08-15",
+        simple: "2020-08-22 00:00:00",
         config: {
           allowInput: true,
           enableTime: true,
@@ -330,7 +330,14 @@ export default {
     },
     choice1(stadium) {
       this.stadiumN = stadium.place_name;
-      this.placeuid = stadium.place_uid;
+
+      for(var a = 0; a < this.stadiumDatas.length; a++){
+          if(this.stadiumN == this.stadiumDatas[a].place_name){
+              this.placeuid = this.stadiumDatas[a].uid;
+              break;
+          }
+      }
+
       this.placeprice = 50000;
       this.placecode = stadium.code;
     },
@@ -340,7 +347,7 @@ export default {
         makeData.append("title", this.title);
         makeData.append('manager_uid',this.manageruid);
         makeData.append("matching_date", this.dates.simple);
-        makeData.append("place_uid", 0);
+        makeData.append("place_uid", this.placeuid);
         makeData.append("home_team_uid", this.$cookies.get("UserInfo").team_uid);
         makeData.append("price", this.placeprice);
         makeData.append("dong_code", this.placecode);
