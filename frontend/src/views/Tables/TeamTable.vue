@@ -28,7 +28,7 @@
         <template slot-scope="{ row }">
           <th scope="row">
             <div class="media align-items-center">
-              <div v-if="!((row.wait == '신청종료') && !(row.manager_uid == userInfo.uid))" class="media-body">
+              <div class="media-body">
                 <router-link
                   :to="{
                     name: '팀 SPOT',
@@ -37,9 +37,6 @@
                 >
                  <span class="name mb-0 text-sm" style="color:azure;" @click="move(row.uid)">{{ row.title }}</span>
                 </router-link>
-              </div>
-              <div v-if="(row.wait == '신청종료') && !(row.manager_uid == userInfo.uid)" class="media-body">
-                <span class="name mb-0 text-sm" style="color:azure;" @click="move(row.uid)">{{ row.title }}</span>
               </div>
             </div>
           </th>
@@ -63,7 +60,7 @@
               }"
               v-if="isLogined"
             >
-              <base-button outline type="secondary" :disabled="(row.wait == '신청종료') && !(row.manager_uid == userInfo.uid)">입장하기</base-button>
+              <base-button outline type="secondary">입장하기</base-button>
             </router-link>
             <base-button outline type="secondary" v-if="!isLogined" @click="notEnter = true">입장하기</base-button>
           </td>
