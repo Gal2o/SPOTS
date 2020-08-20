@@ -3,7 +3,7 @@
     <div class="row align-items-center justify-content-lg-between">
       <div class="col-lg-6">
         <div class="copyright text-center text-lg-left text-muted">
-          © {{year}} <a href="https://lab.ssafy.com/s03-webmobile2-sub2/s03p12a408" class="font-weight-bold ml-1" target="_blank">제작 : 일검사회</a>
+          © {{year}} <a href="https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a408" class="font-weight-bold ml-1" target="_blank">제작 : 일검사회</a>
         </div>
       </div>
       <div class="col-lg-6">
@@ -14,7 +14,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="https://lab.ssafy.com/s03-webmobile2-sub2/s03p12a408" class="nav-link" target="_blank">일검사회</a>
+            <a href="https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a408" class="nav-link" target="_blank">일검사회</a>
           </li>
           <li class="nav-item">
             <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">템플릿 라이센스</a>

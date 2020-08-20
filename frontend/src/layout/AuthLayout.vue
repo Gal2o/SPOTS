@@ -82,7 +82,7 @@
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-6">
                         <div class="copyright text-center text-xl-left text-muted">
-                            &copy; {{year}} <a href="https://lab.ssafy.com/s03-webmobile2-sub2/s03p12a408" class="font-weight-bold ml-1"
+                            &copy; {{year}} <a href="https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a408" class="font-weight-bold ml-1"
                                                target="_blank">제작 : 일검사회</a>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <a href="https://lab.ssafy.com/s03-webmobile2-sub2/s03p12a408" class="nav-link" target="_blank">일검사회</a>
+                                <a href="https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a408" class="nav-link" target="_blank">일검사회</a>
                             </li>
                             <li class="nav-item">
                                 <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
