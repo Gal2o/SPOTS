@@ -28,15 +28,18 @@
         <template slot-scope="{ row }">
           <th scope="row">
             <div class="media align-items-center">
-              <div class="media-body">
-                  <router-link
-              :to="{
-                name: '팀 SPOT',
-                params: { uid: row.uid },
-              }"
-            >
-                <span class="name mb-0 text-sm" style="color:azure;">{{ row.title }}</span>
+              <div v-if="!((row.wait == '신청종료') && !(row.manager_uid == userInfo.uid))" class="media-body">
+                <router-link
+                  :to="{
+                    name: '팀 SPOT',
+                    params: { uid: row.uid },
+                  }"
+                >
+                 <span class="name mb-0 text-sm" style="color:azure;" @click="move(row.uid)">{{ row.title }}</span>
                 </router-link>
+              </div>
+              <div v-if="(row.wait == '신청종료') && !(row.manager_uid == userInfo.uid)" class="media-body">
+                <span class="name mb-0 text-sm" style="color:azure;" @click="move(row.uid)">{{ row.title }}</span>
               </div>
             </div>
           </th>
