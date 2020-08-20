@@ -20,7 +20,7 @@
           <th>제목</th>
           <th>날짜</th>
           <th>주소</th>
-          <th>유저 수</th>
+          <th>참여 팀</th>
           <th>대기 상태</th>
           <th></th>
         </template>
