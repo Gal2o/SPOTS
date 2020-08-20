@@ -3,7 +3,7 @@
     <base-header class="pb-8 pt-md-8 text-center">
       <!-- Card stats -->
       <h2 class="mb-4 text-white">SP<i class="ni ni-pin-3 text-red"></i>T 검색</h2>
-      <div class="row justify-content-center">
+      <div class="row d-flex flex-row justify-content-center">
         <base-dropdown class="mr-3">
           <base-button slot="title" type="secondary" class="dropdown-toggle">
             {{
@@ -45,10 +45,10 @@
             @click="choice3(dongData)"
           >{{ dongData.dong_name }}</a>
         </base-dropdown>
-
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex">
+        
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-flex">
           <div class="form-group mb-0">
-            <base-input placeholder="검색"  v-model="keyword"></base-input>
+            <base-input placeholder="검색" v-model="keyword"></base-input>
             <base-button class="ml-3" type="secondary" @click="checksido">검색</base-button>
           </div>
         </form>
@@ -84,8 +84,7 @@ export default {
           state_code: null,
           state_name: "전체",
         })
-      })
-      
+      })      
   },
   components: {
     ProjectsTable,
@@ -130,15 +129,13 @@ export default {
       const stateForm = new FormData();
       b = String(b);
       stateForm.append("state_code", b);
-
-      if(b == "null"){
-          stateForm.append("or 1=1", b);
-          this.statecode = null;
-          this.dongcode = null;
+      if (b == "null") {
+        stateForm.append("or 1=1", b);
+        this.statecode = null;
+        this.dongcode = null;
+      } else {
+        stateForm.append("where state_code like '" + b.substring(0,2) + "%'", b);
       }
-      else
-          stateForm.append("where state_code like '" + b.substring(0,2) + "%'", b);
-
       this.$axios
         .post(this.$SERVER_URL + "cityList", stateForm)
         .then((res) => {
@@ -154,14 +151,12 @@ export default {
       const dongForm = new FormData();
       c = String(c);
       dongForm.append("city_code", c);
-
-      if(c == "null"){
-          dongForm.append("or 1=1", c);
-          this.dongcode = null;
+      if (c == "null") {
+        dongForm.append("or 1=1", c);
+        this.dongcode = null;
+      } else {
+        dongForm.append("where city_code like '" + c.substring(0,4) + "%'", c);
       }
-      else
-          dongForm.append("where city_code like '" + c.substring(0,4) + "%'", c);
-          
       this.$axios
         .post(this.$SERVER_URL + "dongList", dongForm)
         .then((res) => {
@@ -178,7 +173,6 @@ export default {
       this.sidolist.push(this.citycode);
       this.sidolist.push(this.statecode);
       this.sidolist.push(this.dongcode);
-
       if(this.keyword == "")
         this.keyword = null;
 
