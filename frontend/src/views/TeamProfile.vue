@@ -429,7 +429,7 @@ export default {
     },
     pickData() {      
       if (this.model != undefined){
-      var dummyState = this.model.city_code.splice(0, 2) + "00000000"
+      var dummyState = this.model.city_code.slice(0, 2) + "00000000"
 
       for(var i=0; i < this.teamData.stateDatas.length; i++) {
         if (this.teamData.stateDatas[i].state_code == dummyState) {
