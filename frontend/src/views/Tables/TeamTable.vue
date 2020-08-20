@@ -241,7 +241,6 @@ export default {
             this.TeamtableData[i].wait = "신청가능"
           }
         }
-        console.log(this.TeamtableData)
         this.TeamTable = this.TeamtableData.slice(0, 5);
         this.EnterMatchCheck();
       })

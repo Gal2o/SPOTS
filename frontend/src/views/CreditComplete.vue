@@ -43,7 +43,7 @@ export default {
         EnterInfo.append("positionnum", this.$route.params.positionnum);
         EnterInfo.append("team_entry_uid", this.$route.params.team_entry_uid);
         this.$axios.post(this.$SERVER_URL + "FreeMatchRoom/entry/", EnterInfo)
-           
+        
         } else {
             if (this.$route.params.positionnum == -1) {
                 const joinInfo = new FormData();
