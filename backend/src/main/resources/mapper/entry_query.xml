@@ -353,8 +353,8 @@
 	
 	<update id="TD">
 		update team_matching
-		   set	away_team_uid = null 			
-		 where uid= #{team_matching_uid}
+		   set	away_team_uid = null, ready_num = 1 			
+		 where uid= #{team_matching_uid};		
 	</update>
 	
 	
