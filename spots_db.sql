@@ -13,12 +13,10 @@
 
 
 -- spots 데이터베이스 구조 내보내기
-DROP DATABASE IF EXISTS `spots`;
 CREATE DATABASE IF NOT EXISTS `spots` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `spots`;
 
 -- 테이블 spots.apply_team 구조 내보내기
-DROP TABLE IF EXISTS `apply_team`;
 CREATE TABLE IF NOT EXISTS `apply_team` (
   `team_uid` int(11) DEFAULT NULL,
   `user_uid` int(11) DEFAULT NULL,
@@ -34,7 +32,6 @@ INSERT INTO `apply_team` (`team_uid`, `user_uid`, `comment`) VALUES
 /*!40000 ALTER TABLE `apply_team` ENABLE KEYS */;
 
 -- 테이블 spots.city_code 구조 내보내기
-DROP TABLE IF EXISTS `city_code`;
 CREATE TABLE IF NOT EXISTS `city_code` (
   `city_code` varchar(50) NOT NULL,
   `city_name` varchar(50) NOT NULL,
@@ -266,7 +263,6 @@ INSERT INTO `city_code` (`city_code`, `city_name`) VALUES
 /*!40000 ALTER TABLE `city_code` ENABLE KEYS */;
 
 -- 테이블 spots.dong_code 구조 내보내기
-DROP TABLE IF EXISTS `dong_code`;
 CREATE TABLE IF NOT EXISTS `dong_code` (
   `dong_code` varchar(50) NOT NULL,
   `dong_name` varchar(50) NOT NULL,
@@ -3827,7 +3823,6 @@ INSERT INTO `dong_code` (`dong_code`, `dong_name`) VALUES
 /*!40000 ALTER TABLE `dong_code` ENABLE KEYS */;
 
 -- 테이블 spots.free_matching 구조 내보내기
-DROP TABLE IF EXISTS `free_matching`;
 CREATE TABLE IF NOT EXISTS `free_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -3886,7 +3881,6 @@ INSERT INTO `free_matching` (`uid`, `head_uid`, `home_matching_entry_uid`, `away
 /*!40000 ALTER TABLE `free_matching` ENABLE KEYS */;
 
 -- 테이블 spots.matching_entry 구조 내보내기
-DROP TABLE IF EXISTS `matching_entry`;
 CREATE TABLE IF NOT EXISTS `matching_entry` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `striker1_uid` int(5) DEFAULT NULL,
@@ -3903,7 +3897,7 @@ CREATE TABLE IF NOT EXISTS `matching_entry` (
   `defender4_uid` int(5) DEFAULT NULL,
   `goalkeeper_uid` int(5) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COMMENT='매칭포지션';
 
 -- 테이블 데이터 spots.matching_entry:~62 rows (대략적) 내보내기
 DELETE FROM `matching_entry`;
@@ -3974,7 +3968,6 @@ INSERT INTO `matching_entry` (`uid`, `striker1_uid`, `striker2_uid`, `striker3_u
 /*!40000 ALTER TABLE `matching_entry` ENABLE KEYS */;
 
 -- 테이블 spots.place 구조 내보내기
-DROP TABLE IF EXISTS `place`;
 CREATE TABLE IF NOT EXISTS `place` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `place_name` varchar(50) NOT NULL,
@@ -4018,7 +4011,6 @@ INSERT INTO `place` (`uid`, `place_name`, `price`, `address`, `code`, `open`, `c
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 
 -- 테이블 spots.state_code 구조 내보내기
-DROP TABLE IF EXISTS `state_code`;
 CREATE TABLE IF NOT EXISTS `state_code` (
   `state_code` varchar(50) NOT NULL,
   `state_name` varchar(50) NOT NULL,
@@ -4049,7 +4041,6 @@ INSERT INTO `state_code` (`state_code`, `state_name`) VALUES
 /*!40000 ALTER TABLE `state_code` ENABLE KEYS */;
 
 -- 테이블 spots.team 구조 내보내기
-DROP TABLE IF EXISTS `team`;
 CREATE TABLE IF NOT EXISTS `team` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `team_name` varchar(50) NOT NULL,
@@ -4063,9 +4054,9 @@ CREATE TABLE IF NOT EXISTS `team` (
   `player_num` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `team_name` (`team_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COMMENT='팀';
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COMMENT='팀';
 
--- 테이블 데이터 spots.team:~51 rows (대략적) 내보내기
+-- 테이블 데이터 spots.team:~52 rows (대략적) 내보내기
 DELETE FROM `team`;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
 INSERT INTO `team` (`uid`, `team_name`, `team_intro`, `team_rate`, `team_win`, `team_lose`, `team_draw`, `captain_uid`, `city_code`, `player_num`) VALUES
@@ -4123,7 +4114,6 @@ INSERT INTO `team` (`uid`, `team_name`, `team_intro`, `team_rate`, `team_win`, `
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
 -- 테이블 spots.team_matching 구조 내보내기
-DROP TABLE IF EXISTS `team_matching`;
 CREATE TABLE IF NOT EXISTS `team_matching` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `head_uid` int(11) NOT NULL COMMENT '방장',
@@ -4133,7 +4123,7 @@ CREATE TABLE IF NOT EXISTS `team_matching` (
   `matching_date` varchar(50) DEFAULT NULL COMMENT '매칭날, 시간',
   `home_score` int(2) NOT NULL DEFAULT 0,
   `away_score` int(2) NOT NULL DEFAULT 0,
-  `ready_num` int(2) NOT NULL DEFAULT 0 COMMENT '한팀 전체 ready하면++ 2가 되면 매칭 완료',
+  `ready_num` int(2) NOT NULL DEFAULT 1 COMMENT '한팀 전체 ready하면++ 2가 되면 매칭 완료',
   `place_uid` int(11) DEFAULT NULL,
   `price` int(5) NOT NULL COMMENT '인당 가격',
   `head_price` int(5) NOT NULL COMMENT '방장 가격(22로 안나눠떨어지는건 방장이 더내는걸로)',
@@ -4165,7 +4155,6 @@ INSERT INTO `team_matching` (`uid`, `head_uid`, `home_team_uid`, `away_team_uid`
 /*!40000 ALTER TABLE `team_matching` ENABLE KEYS */;
 
 -- 테이블 spots.user 구조 내보내기
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
@@ -4188,7 +4177,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=440 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='사용자';
 
--- 테이블 데이터 spots.user:~220 rows (대략적) 내보내기
+-- 테이블 데이터 spots.user:~221 rows (대략적) 내보내기
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`uid`, `email`, `password`, `win`, `lose`, `draw`, `warning`, `team_uid`, `nickname`, `city_code`, `comment`, `mvp`, `blacklist`, `goal`, `assist`, `rate`, `admin`) VALUES
