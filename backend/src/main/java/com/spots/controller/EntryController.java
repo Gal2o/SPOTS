@@ -27,7 +27,7 @@ public class EntryController {
 		 * System.out.println("자리배치 시작!!!!!"); System.out.println("team_entry_uid = " +
 		 * team_entry_uid); System.out.println("positionnum = " + positionnum);
 		 */
-		System.out.println("uid = " + uid);
+		//System.out.println("uid = " + uid);
 		if(positionnum == 1)
 			return Entry.S1(team_entry_uid, uid);
 		else if(positionnum == 2)
