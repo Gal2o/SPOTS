@@ -75,7 +75,7 @@ public class KakaoPayController {
 
 	    try {
 	    	kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
-	        System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+	        //System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
 	        return kakaoPayReadyVO.getNext_redirect_pc_url();
 
 	    } catch (RestClientException e) {
