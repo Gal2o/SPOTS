@@ -79,7 +79,7 @@
           <h4 class="mb-0">매니저 평가</h4>
         </router-link>
       </base-button>
-      <base-button class = "mx-3" v-if="!isRoomFull && isHeader" type="success" @click="modals.entermessage = true">
+      <base-button class = "mx-3" v-if="!isRoomFull && isHeader && !isCaptain" type="success" @click="modals.entermessage = true">
         <h4 class="text-white mb-0">입장하기</h4>
       </base-button>
       <base-button class = "mx-3" type="success" v-if="isHeader && isEnter && !isCaptain" @click="modals.outalert = true">
