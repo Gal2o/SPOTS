@@ -172,7 +172,7 @@
       <base-button class = "mx-3" v-if="!isLogined" type="success" @click="modals.loginalert = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
-      <base-button class = "mx-3" v-if="isLogined && !this.isEnter" type="success" @click="modals.entermessage = true">
+      <base-button class = "mx-3" v-if="isLogined && !this.isEnter && RoomData.ready_num < 22" type="success" @click="modals.entermessage = true">
         <h4 class="text-white">입장하기</h4>
       </base-button>
       <base-button v-if="isLogined && this.isEnter && !this.isHeader" type="success" @click="modals.outalert = true">
