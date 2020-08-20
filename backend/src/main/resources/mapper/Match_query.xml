@@ -6,10 +6,12 @@
    <!-- selectall  -->
    <select id="TListMain" resultType="com.spots.dto.TMatchInfo">
       select * from team_matching
+      order by ready_num
    </select>
    
    <select id="FListMain" resultType="com.spots.dto.FMatchInfo">
       select * from free_matching
+      order by ready_num
    </select>
    
     <!-- 리스트 필터  -->
@@ -31,6 +33,8 @@
         <if test = 'word != null'>
            and title like concat('%', #{word}, '%')
         </if>
+        
+        order by ready_num
     </select>
     
     <!-- state, city, dong 순서 -->
@@ -52,6 +56,8 @@
         <if test = 'word != null'>
            and title like concat('%', #{word}, '%')
         </if>
+        
+        order by ready_num
     </select>
     
     <!-- 매칭 방 중복 체크 head_uid -->
