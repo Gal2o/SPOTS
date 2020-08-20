@@ -85,7 +85,7 @@
         place_uid, price, head_price, matching_date,
         dong_code, title, manager_uid)
       values
-      ( #{head_uid}, #{home_team_uid}, 0, 0, 0, 0, 
+      ( #{head_uid}, #{home_team_uid}, 0, 0, 0, 1, 
         #{place_uid}, #{price}, 0, #{matching_date},
         #{dong_code}, #{title}, FLOOR(1 + (RAND() * 5)));
    </insert>
