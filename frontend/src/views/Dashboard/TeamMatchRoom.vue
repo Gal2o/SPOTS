@@ -79,7 +79,7 @@
           <h4 class="mb-0">매니저 평가</h4>
         </router-link>
       </base-button>
-      <base-button class = "mx-3" v-if="!isRoomFull && isHeader && !isCaptain" type="success" @click="modals.entermessage = true">
+      <base-button class = "mx-3" v-if="!isRoomFull && isHeader && !isCaptain && isFullteam" type="success" @click="modals.entermessage = true">
         <h4 class="text-white mb-0">입장하기</h4>
       </base-button>
       <base-button class = "mx-3" type="success" v-if="isHeader && isEnter && !isCaptain" @click="modals.outalert = true">
@@ -171,6 +171,7 @@ export default {
       isLogined: false,
       isRoomFull: false,
       isManager: false,
+      isFullteam: false,
       Manager: Object,
       RoomData: Object,
       team: {
@@ -213,6 +214,14 @@ export default {
             var kuid = this.$cookies.get("UserInfo").uid
             if (res.data[0].head_uid == kuid) {
               this.isHeader = true
+              var headData = new FormData();
+              headData.append('uid', kuid)
+              this.$axios.post(this.$SERVER_URL + "team/detail/", headData)
+                .then(res => {
+                  if (res.data.player_num >= 11) {
+                    this.isFullteam = true
+                  }
+                })
               this.isCaptain = true
             }
             this.team.Red = []

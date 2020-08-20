@@ -72,7 +72,7 @@
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
       <div class="col-md-4">
-        <base-button type="secondary" :disabled="!isEnterMatch" @click="modals = true">팀SPOT 만들기</base-button>
+        <base-button type="secondary" :disabled="!isEnterMatch || !isFullteam || !isHeader" @click="modals = true">팀SPOT 만들기</base-button>
 
         <modal :show.sync="modals" body-classes="p-0" modal-classes="modal-dialog modal-md">
           <card
@@ -251,6 +251,21 @@ export default {
        
         this.stadiumDatas = rest.data;
       })
+    var nowhere = new FormData()
+    nowhere.append('where', "")
+    this.$axios.post(this.$SERVER_URL + "team/list", nowhere)
+      .then(res => {
+        var myuid = this.$cookies.get('UserInfo').uid
+        var teamList = res.data;
+        for (var i=0; i < teamList.length; i++) {
+          if (teamList[i].captain_uid == myuid) {
+            this.isHeader = true;
+            if (teamList[i].player_num >= 11) {
+              this.isFullteam = true
+            }
+          }
+        }
+      })
      
   },
   watch: {
@@ -280,6 +295,8 @@ export default {
       },
       isEnterMatch: false,
       isLogined: false,
+      isFullteam: false,
+      isHeader: false,
       tabletitle: "팀 SPOT",
       TeamtableData: [],
       modals: false,
