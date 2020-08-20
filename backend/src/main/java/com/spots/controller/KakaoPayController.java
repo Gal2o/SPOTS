@@ -33,6 +33,8 @@ import com.spots.service.UserInfoService;
 @RestController
 public class KakaoPayController {
 	
+	String aws = "http://i3a408.p.ssafy.io";
+	
 	@ExceptionHandler
 	public ModelAndView handler(Exception ex) {
 		ModelAndView  mav = new ModelAndView("error/errorHandler");
@@ -43,7 +45,7 @@ public class KakaoPayController {
 	
 	@PostMapping(value="/kakaoPay")
 	public String login(@RequestParam String price,@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum,  @RequestParam int room_uid) {
-		System.out.println("통신"); 
+		//System.out.println("통신"); 
 		KakaoPayReadyVO kakaoPayReadyVO = new KakaoPayReadyVO();
 		RestTemplate restTemplate = new RestTemplate();
 	    String HOST = "https://kapi.kakao.com";

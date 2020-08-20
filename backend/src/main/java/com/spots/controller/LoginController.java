@@ -40,27 +40,20 @@ public class LoginController {
 		return mav;
 	}
 	
-
-	
 	@GetMapping(value="/") 
 	public String loginForm() {
 		return "user/login";
 	}
 		
-	//post諛⑹떇�쑝濡� /login�쓣 諛쏆븯�쓣�븣 媛숈씠 蹂대궡吏� id�� password瑜� 媛�吏�怨� �쉶�썝 �솗�씤�븿
 	@PostMapping(value="/login")
 	public UserInfo login(@RequestParam String email, @RequestParam String password) {
-	    
-		System.out.println("�뱾�뼱�샂");
-
-		System.out.println(loginService.login(email, password));
-
+		//System.out.println("�뱾�뼱�샂");
+		//System.out.println(loginService.login(email, password));
         return loginService.login(email, password);
 	}
 	
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
-
 		return "user/login";
 	}
 }

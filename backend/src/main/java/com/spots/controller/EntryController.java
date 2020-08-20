@@ -23,9 +23,10 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entry")
 	public int FreeMatchEntry(@RequestParam int team_entry_uid, @RequestParam int uid, @RequestParam int positionnum) {
-		System.out.println("자리배치 시작!!!!!");
-		System.out.println("team_entry_uid = " + team_entry_uid);
-		System.out.println("positionnum = " + positionnum);
+		/*
+		 * System.out.println("자리배치 시작!!!!!"); System.out.println("team_entry_uid = " +
+		 * team_entry_uid); System.out.println("positionnum = " + positionnum);
+		 */
 		System.out.println("uid = " + uid);
 		if(positionnum == 1)
 			return Entry.S1(team_entry_uid, uid);
@@ -59,12 +60,14 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entry/change")
 	public int FreeMatchEntryChange(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before, @RequestParam int positionnum_after, @RequestParam int team_entry_uid_after) {
-		System.out.println("자리변경 시작!!!!!");
-		System.out.println("team_entry_uid_before = " + team_entry_uid_before);
-		System.out.println("team_entry_uid_after = " + team_entry_uid_after);
-		System.out.println("positionnum_before = " + positionnum_before);
-		System.out.println("positionnum_after = " + positionnum_after);
-		System.out.println("uid = " + uid);
+		/*
+		 * System.out.println("자리변경 시작!!!!!");
+		 * System.out.println("team_entry_uid_before = " + team_entry_uid_before);
+		 * System.out.println("team_entry_uid_after = " + team_entry_uid_after);
+		 * System.out.println("positionnum_before = " + positionnum_before);
+		 * System.out.println("positionnum_after = " + positionnum_after);
+		 * System.out.println("uid = " + uid);
+		 */
 		if(positionnum_after == 1)
 			Entry.S1(team_entry_uid_after, uid);
 		else if(positionnum_after == 2)
@@ -124,10 +127,12 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entry/cancel")
 	public int FreeMatchEntryCancel(@RequestParam int team_entry_uid_before, @RequestParam int uid, @RequestParam int positionnum_before) {
-		System.out.println("자리취소 시작!!!!!");
-		System.out.println("team_entry_uid_before = " + team_entry_uid_before);
-		System.out.println("positionnum_before = " + positionnum_before);
-		System.out.println("uid = " + uid);
+		/*
+		 * System.out.println("자리취소 시작!!!!!");
+		 * System.out.println("team_entry_uid_before = " + team_entry_uid_before);
+		 * System.out.println("positionnum_before = " + positionnum_before);
+		 * System.out.println("uid = " + uid);
+		 */
 		if(positionnum_before == 1)
 			Entry.D1(team_entry_uid_before, uid);
 		else if(positionnum_before == 2)
@@ -159,27 +164,29 @@ public class EntryController {
 	
 	@PostMapping(value="/FreeMatchRoom/entrylist")
 	public EntryInfo entrylist(@RequestParam int team_entry_uid) {
-		System.out.println("리스트출력");
-		System.out.println("team_entry_uid = " + team_entry_uid);
+		/*
+		 * System.out.println("리스트출력"); System.out.println("team_entry_uid = " +
+		 * team_entry_uid);
+		 */
 		return Entry.entrylist(team_entry_uid);
 	}
 	
 	
 	@PostMapping(value="/FreeMatch/win")
 	public int FreeMatchWin(FMatchInfo dto) {
-		System.out.println("이긴경우");
+		//System.out.println("이긴경우");
 		return Entry.FWin(dto);
 	}
 	
 	@PostMapping(value="/FreeMatch/lose")
 	public int FreeMatchLose(FMatchInfo dto) {
-		System.out.println("진경우");
+		//System.out.println("진경우");
 		return Entry.FLose(dto);
 	}
 	
 	@PostMapping(value="/FreeMatch/draw")
 	public int FreeMatchDraw(FMatchInfo dto) {
-		System.out.println("비긴경우");
+		//System.out.println("비긴경우");
 		return Entry.FDraw(dto);
 	}
 	
@@ -187,32 +194,33 @@ public class EntryController {
 	@PostMapping(value="/FreeMatchRoom/updateuser")
 	public int FreeMatchupdate(DataInfo dto)
 	{
-		System.out.println("updateuser 시작");
-		System.out.println(dto);
+		/*
+		 * System.out.println("updateuser 시작"); System.out.println(dto);
+		 */
 		return Entry.Upuser(dto);
 	}
 	
 	@PostMapping(value="/TeamMatch/win")
 	public int TeamMatchWin(@RequestParam int h_uid, @RequestParam int a_uid) {
-		System.out.println("이긴경우");
+		//System.out.println("이긴경우");
 		return Entry.TWin(h_uid, a_uid);
 	}
 	
 	@PostMapping(value="/TeamMatch/lose")
 	public int TeamMatchLose(@RequestParam int h_uid, @RequestParam int a_uid) {
-		System.out.println("진경우");
+		//System.out.println("진경우");
 		return Entry.TLose(h_uid, a_uid);
 	}
 	
 	@PostMapping(value="/TeamMatch/draw")
 	public int TeamMatchDraw(@RequestParam int h_uid, @RequestParam int a_uid) {
-		System.out.println("비긴경우");
+		//System.out.println("비긴경우");
 		return Entry.TDraw(h_uid, a_uid);
 	}
 	
 	@PostMapping(value="/TeamMatchRoom/cancel")
 	public int FreeMatchEntryCancel(@RequestParam int team_matching_uid, @RequestParam int away_team_uid) {
-		System.out.println("팀매칭자리취소 시작!!!!!");
+		//System.out.println("팀매칭자리취소 시작!!!!!");
 		
 		return Entry.TD(team_matching_uid, away_team_uid);
 	}

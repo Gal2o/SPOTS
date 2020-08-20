@@ -38,7 +38,7 @@ public class placeController {
    
    @PostMapping(value="/place/detail")
    public PlaceInfo placeDetail(@RequestParam int uid) {
-      System.out.print(uid);
+      //System.out.print(uid);
       return placeInfoService.placeDetail(uid);
    }
    
