@@ -372,6 +372,13 @@ export default {
      
       this.$axios.post(this.$SERVER_URL + "TeamMatchAll", sidoData).then((res) => {
         this.TeamtableData = res.data;
+        for(var i=0; i < this.TeamtableData.length; i++) {
+          if (this.TeamtableData[i].ready_num >= 2) {
+            this.TeamtableData[i].wait = "신청종료"
+          } else {
+            this.TeamtableData[i].wait = "신청가능"
+          }
+        }
         this.selectpage();
         this.pagination = 1;
        

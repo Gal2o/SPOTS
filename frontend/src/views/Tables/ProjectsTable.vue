@@ -250,7 +250,7 @@ export default {
       .then((res) => {
         this.FreetableData = res.data;
         for(var i=0; i < this.FreetableData.length; i++) {
-          if (this.FreetableData[i].ready_num >= 2) {
+          if (this.FreetableData[i].ready_num >= 22) {
             this.FreetableData[i].wait = "신청종료"
           } else {
             this.FreetableData[i].wait = "신청가능"
@@ -391,6 +391,13 @@ export default {
       sidoData.append("word", this.sidolist[3]);
       this.$axios.post(this.$SERVER_URL + "FreeMatchAll", sidoData).then((res) => {
         this.FreetableData = res.data;
+        for(var i=0; i < this.FreetableData.length; i++) {
+          if (this.FreetableData[i].ready_num >= 22) {
+            this.FreetableData[i].wait = "신청종료"
+          } else {
+            this.FreetableData[i].wait = "신청가능"
+          }
+        }
         this.selectpage();
         this.pagination = 1;
       });
