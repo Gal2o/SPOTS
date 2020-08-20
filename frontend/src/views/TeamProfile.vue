@@ -498,9 +498,20 @@ export default {
       OutForm.append('uid', this.$cookies.get('UserInfo').uid)
       OutForm.append('team_uid', this.model.uid)
       this.$axios.post(this.$SERVER_URL + 'user/outTeam', OutForm)
-        .then(() => {
-       
-          this.$router.push({ name: '팀 리스트' })
+        .then(() => {          
+          var userform = new FormData()
+          userform.append('uid', this.$cookies.get('UserInfo').uid)
+          this.$axios.post(this.$SERVER_URL + "user/detail2/", userform)
+            .then((res) => {
+              console.log(res.data)
+              this.$cookies.remove('UserInfo')
+              this.$cookies.set('UserInfo', res.data)
+              console.log(this.$cookies.get('UserInfo'))
+              this.$router.push({ name: "팀 리스트" })
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
        
     },
