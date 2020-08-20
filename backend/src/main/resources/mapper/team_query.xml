@@ -7,7 +7,7 @@
 		insert into team
 		(team_name, team_intro, captain_uid, city_code) 
 		VALUES(
-			#{team_name},#{team_intro},#{captain_uid},#{city_code},
+			#{team_name},#{team_intro},#{captain_uid},#{city_code}
 		);
 		update user set team_uid = LAST_INSERT_ID() where uid = #{captain_uid};	
 	</insert>
