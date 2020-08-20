@@ -56,7 +56,10 @@
               <h2 class="text-white">나의 팀 프로필 보기!</h2>
             </base-button>
           </router-link>
-          <base-button v-if="!haveTeam" block type="info" size="lg" @click="modals.create = true">
+          <base-button v-if="isLogined && !haveTeam" block type="info" size="lg" @click="modals.create = true">
+            <h2 class="text-white mb-0">팀 만들기!</h2>
+          </base-button>
+          <base-button v-if="!isLogined" block type="info" size="lg" @click="modals.loginalert = true">
             <h2 class="text-white mb-0">팀 만들기!</h2>
           </base-button>
         </div>
@@ -137,6 +140,30 @@
         </template>
       </card>
     </modal>
+
+    <modal
+          :show.sync="modals.loginalert"
+          gradient="danger"
+          modal-classes="modal-danger modal-dialog-centered"
+        >
+          <div class="py-3 text-center">
+            <i class="ni ni-bell-55 ni-3x"></i>
+            <h4 class="heading mt-4">로그인을 하셔야 이용할 수 있습니다.</h4>
+            <p>로그인 페이지로 이동하셔서 로그인을 먼저 진행해주세요.</p>
+          </div>
+
+          <template slot="footer">
+            <router-link to="/login">
+              <base-button type="white">로그인하기</base-button>
+            </router-link>
+            <base-button
+              type="link"
+              text-color="white"
+              class="ml-auto"
+              @click="modals.loginalert = false"
+            >닫기</base-button>
+          </template>
+        </modal>
   </div>
 </template>
 
@@ -195,6 +222,7 @@ export default {
       searchWord: "",   
       modals: {
         create: false,
+        loginalert: false,
       },
       teamData: {
         nickname: "",
